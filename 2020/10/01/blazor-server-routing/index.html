@@ -1,74 +1,73 @@
-<!doctype html><html prefix="og: http://ogp.me/ns#"><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><title>Blazor Server Routing &#183; Maksym Postument</title><meta name=description content="Hello! Today I want to tell you how routing works in Blazor Server.
+<!doctype html><html lang=en><head><title>Blazor Server Routing :: mpostument.com</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Hello! Today I want to tell you how routing works in Blazor Server.
 Routing starts in the Startup.cs file. The following code will responsible for it
-app.UseRouting(); app.UseEndpoints(endpoints => { endpoints.MapBlazorHub(); endpoints.MapFallbackToPage(&#34;/_Host&#34;); }); app.UseRouting(); came from asp.net and adds route matching to the middleware pipeline. This middleware looks at the set of endpoints defined in the app, and selects the best match based on the request.
-app.UseEndpoints() adds endpoint execution to the middleware pipeline."><meta name=HandheldFriendly content="True"><meta name=MobileOptimized content="320"><meta name=generator content="Hugo 0.75.1"><meta name=robots content="index,follow"><meta name=viewport content="width=device-width,initial-scale=1"><meta property="og:title" content="Blazor Server Routing"><meta property="og:description" content="Hello! Today I want to tell you how routing works in Blazor Server.
+app.UseRouting(); app.UseEndpoints(endpoints =&amp;gt; { endpoints.MapBlazorHub(); endpoints.MapFallbackToPage(&amp;#34;/_Host&amp;#34;); }); app.UseRouting(); came from asp.net and adds route matching to the middleware pipeline. This middleware looks at the set of endpoints defined in the app, and selects the best match based on the request.
+app.UseEndpoints() adds endpoint execution to the middleware pipeline."><meta name=keywords content="Devops,AWS,Golang,Sharp"><meta name=robots content="noodp"><link rel=canonical href=/2020/10/01/blazor-server-routing/><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create','UA-176839804-1','auto');ga('send','pageview');}</script><link rel=stylesheet href=/assets/style.css><link rel=apple-touch-icon href=/img/apple-touch-icon-192x192.png><link rel="shortcut icon" href=/img/favicon/orange.png><meta name=twitter:card content="summary"><meta name=twitter:site content="mpostument.com"><meta name=twitter:creator content="Maksym Postument"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="Blazor Server Routing"><meta property="og:description" content="Hello! Today I want to tell you how routing works in Blazor Server.
 Routing starts in the Startup.cs file. The following code will responsible for it
-app.UseRouting(); app.UseEndpoints(endpoints => { endpoints.MapBlazorHub(); endpoints.MapFallbackToPage(&#34;/_Host&#34;); }); app.UseRouting(); came from asp.net and adds route matching to the middleware pipeline. This middleware looks at the set of endpoints defined in the app, and selects the best match based on the request.
-app.UseEndpoints() adds endpoint execution to the middleware pipeline."><meta property="og:type" content="article"><meta property="og:url" content="/2020/10/01/blazor-server-routing/"><link rel=stylesheet href=/dist/site.css><link rel=stylesheet href=/dist/syntax.css><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin,cyrillic-ext,latin-ext,cyrillic"><link rel=stylesheet href=https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css integrity=sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN crossorigin=anonymous></head><body><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create','UA-176839804-1','auto');ga('send','pageview');}</script><div id=wrapper><header class=site-header><div class=container><div class=site-title-wrapper><h1 class=site-title><a href=/>mpostument.com</a></h1><a class="button-square button-social hint--top" data-hint=Twitter aria-label=Twitter href=https://twitter.com/Maks_Postument rel=me><i class="fa fa-twitter" aria-hidden=true></i></a><a class="button-square button-social hint--top" data-hint=Github aria-label=Github href=https://github.com/mpostument rel=me><i class="fa fa-github-alt" aria-hidden=true></i></a><a class="button-square button-social hint--top" data-hint=Email aria-label="Send an Email" href=mailto:777rip777@gmail.com><i class="fa fa-envelope" aria-hidden=true></i></a></div><ul class=site-nav><li class=site-nav-item><a href=/about/>About</a></li><li class=site-nav-item><a href=/>Home</a></li><li class=site-nav-item><a href=/projects/>Projects</a></li></ul></div></header><div id=container><div class=container><article class=post-container itemscope itemtype=http://schema.org/BlogPosting><header class=post-header><h1 class=post-title itemprop="name headline">Blazor Server Routing</h1><p class=post-date><span>Published <time datetime=2020-10-01 itemprop=datePublished>Thu, Oct 1, 2020</time></span>
-<span>by</span>
-<span itemscope itemprop=author itemtype=https://schema.org/Person><span itemprop=name><a href=https://github.com/mpostument itemprop=url rel=author>Maksym Postument</a></span></span></p><p class="post-reading post-line"><span>3 min</span></p><nav class=LangNav>Language:
-<a href=/ua/2020/10/01/blazor-server-routing/>Ukrainian</a></nav></header><div class="post-content clearfix" itemprop=articleBody><p>Hello!
-Today I want to tell you how routing works in Blazor Server.<br>Routing starts in the <code>Startup.cs</code> file. The following code will responsible for it</p><div class=highlight><pre class=chroma><code class=language-csharp data-lang=csharp>    <span class=n>app</span><span class=p>.</span><span class=n>UseRouting</span><span class=p>();</span>
+app.UseRouting(); app.UseEndpoints(endpoints =&amp;gt; { endpoints.MapBlazorHub(); endpoints.MapFallbackToPage(&amp;#34;/_Host&amp;#34;); }); app.UseRouting(); came from asp.net and adds route matching to the middleware pipeline. This middleware looks at the set of endpoints defined in the app, and selects the best match based on the request.
+app.UseEndpoints() adds endpoint execution to the middleware pipeline."><meta property="og:url" content="/2020/10/01/blazor-server-routing/"><meta property="og:site_name" content="mpostument.com"><meta property="og:image" content="https://i.imgur.com/JN4OhTZ.png"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:section" content="C#"><meta property="article:published_time" content="2020-10-01 21:09:00 +0300 +0300"></head><body class=orange><div class="container center headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/post><div class=logo>mpostument.com</div></a></div><div class=menu-trigger>menu</div></div><nav class=menu><ul class="menu__inner menu__inner--desktop"><li><a href=/post/>Posts</a></li><li><a href=/projects/>Projects</a></li><li><a href=/tags/>Tags</a></li><div class=spacer></div><ul class=language-selector><ul class=language-selector-current><li>English ▾</li></ul><ul class="language-selector__more hidden"><li><a href=/>English</a></li><li><a href=/ua/>Ukraine</a></li></ul></ul></ul><ul class="menu__inner menu__inner--mobile"><li><a href=/post/>Posts</a></li><li><a href=/projects/>Projects</a></li><li><a href=/tags/>Tags</a></li><hr><li><a href=/>English</a></li><li><a href=/ua/>Ukraine</a></li></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=/2020/10/01/blazor-server-routing/>Blazor Server Routing</a></h1><div class=post-meta><span class=post-date>2020-10-01</span>
+<span class=post-author>:: Maksym Postument</span></div><span class=post-tags>#<a href=/tags/blazorserver/>BlazorServer</a>&nbsp;
+#<a href=/tags/.net/>.Net</a>&nbsp;</span>
+<img src=https://i.imgur.com/JN4OhTZ.png class=post-cover alt="Blazor Server Routing"><div class=post-content><div><p>Hello!
+Today I want to tell you how routing works in Blazor Server.<br>Routing starts in the <code>Startup.cs</code> file. The following code will responsible for it</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp>    app.UseRouting();
 
-    <span class=n>app</span><span class=p>.</span><span class=n>UseEndpoints</span><span class=p>(</span><span class=n>endpoints</span> <span class=p>=&gt;</span>
-    <span class=p>{</span>
-        <span class=n>endpoints</span><span class=p>.</span><span class=n>MapBlazorHub</span><span class=p>();</span>
-        <span class=n>endpoints</span><span class=p>.</span><span class=n>MapFallbackToPage</span><span class=p>(</span><span class=s>&#34;/_Host&#34;</span><span class=p>);</span>
-    <span class=p>});</span>
+    app.UseEndpoints(endpoints =&gt;
+    {
+        endpoints.MapBlazorHub();
+        endpoints.MapFallbackToPage(<span style=color:#e6db74>&#34;/_Host&#34;</span>);
+    });
 </code></pre></div><p><code>app.UseRouting();</code> came from asp.net and adds route matching to the middleware pipeline. This middleware looks at the set of endpoints defined in the app, and selects the best match based on the request.<br><code>app.UseEndpoints()</code> adds endpoint execution to the middleware pipeline. It runs the delegate associated with the selected endpoint.<br>In the middle of <code>app.UseEndpoints()</code> indicates <code>endpoints.MapBlazorHub()</code> here is set up SignalR routing. Setup is done automatically and you do not need to change anything here.
 The next element is <code>endpoints.MapFallbackToPage("/_ Host")</code> a backup route, it has the lowest priority, called in the case that no other more suitable routes are found. The parameters for <code>MapFallbackToPage</code> specify <code>/_Host</code>. This is the file to which it will be redirected.
-This file is located under <code>Pages</code> folder <code>_Host.cshtml</code>. It looks like regular html with some differences. The beginning of the file is indicated</p><div class=highlight><pre class=chroma><code class=language-csharp data-lang=csharp><span class=n>@page</span> <span class=s>&#34;/&#34;</span>
-<span class=n>@namespace</span> <span class=n>BlazorLearn</span><span class=p>.</span><span class=n>Pages</span>
-<span class=n>@addTagHelper</span> <span class=p>*,</span> <span class=n>Microsoft</span><span class=p>.</span><span class=n>AspNetCore</span><span class=p>.</span><span class=n>Mvc</span><span class=p>.</span><span class=n>TagHelpers</span>
-<span class=err>@</span><span class=p>{</span>
-    <span class=n>Layout</span> <span class=p>=</span> <span class=k>null</span><span class=p>;</span>
-<span class=p>}</span>
-</code></pre></div><p><code>@page "/"</code> indicate that this file will be opened if the url is accessed <code>/</code></p><p>The body renders the pages</p><div class=highlight><pre class=chroma><code class=language-csharp data-lang=csharp>    <span class=p>&lt;</span><span class=n>app</span><span class=p>&gt;</span>
-        <span class=p>&lt;</span><span class=n>component</span> <span class=n>type</span><span class=p>=</span><span class=s>&#34;typeof(App)&#34;</span> <span class=n>render</span><span class=p>-</span><span class=n>mode</span><span class=p>=</span><span class=s>&#34;ServerPrerendered&#34;</span> <span class=p>/&gt;</span>
-    <span class=p>&lt;/</span><span class=n>app</span><span class=p>&gt;</span>
+This file is located under <code>Pages</code> folder <code>_Host.cshtml</code>. It looks like regular html with some differences. The beginning of the file is indicated</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp>@page <span style=color:#e6db74>&#34;/&#34;</span>
+@namespace BlazorLearn.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<span style=color:#960050;background-color:#1e0010>@</span>{
+    Layout = <span style=color:#66d9ef>null</span>;
+}
+</code></pre></div><p><code>@page "/"</code> indicate that this file will be opened if the url is accessed <code>/</code></p><p>The body renders the pages</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp>    &lt;app&gt;
+        &lt;component type=<span style=color:#e6db74>&#34;typeof(App)&#34;</span> render-mode=<span style=color:#e6db74>&#34;ServerPrerendered&#34;</span> /&gt;
+    &lt;/app&gt;
 </code></pre></div><p>Here it is specified that we render and in what mode. <code>ServerPrerendered</code> renders first on the server and then displays to the client. <code>App</code> points to another <code>App.razor</code> file. This file determines which layout to display.
-If <code>routeData</code> exists corresponding page displayed, if this page has no layout then <code>MainLayout</code> will be used. If routeData does not exist then <code>MainLayout</code> and the text <code>Sorry, there's nothing at this address.</code></p><div class=highlight><pre class=chroma><code class=language-csharp data-lang=csharp><span class=p>&lt;</span><span class=n>Router</span> <span class=n>AppAssembly</span><span class=p>=</span><span class=s>&#34;@typeof(Program).Assembly&#34;</span><span class=p>&gt;</span>
-    <span class=p>&lt;</span><span class=n>Found</span> <span class=n>Context</span><span class=p>=</span><span class=s>&#34;routeData&#34;</span><span class=p>&gt;</span>
-        <span class=p>&lt;</span><span class=n>RouteView</span> <span class=n>RouteData</span><span class=p>=</span><span class=s>&#34;@routeData&#34;</span> <span class=n>DefaultLayout</span><span class=p>=</span><span class=s>&#34;@typeof(MainLayout)&#34;</span> <span class=p>/&gt;</span>
-    <span class=p>&lt;/</span><span class=n>Found</span><span class=p>&gt;</span>
-    <span class=p>&lt;</span><span class=n>NotFound</span><span class=p>&gt;</span>
-        <span class=p>&lt;</span><span class=n>LayoutView</span> <span class=n>Layout</span><span class=p>=</span><span class=s>&#34;@typeof(MainLayout)&#34;</span><span class=p>&gt;</span>
-            <span class=p>&lt;</span><span class=n>p</span><span class=p>&gt;</span><span class=n>Sorry</span><span class=p>,</span> <span class=n>there</span><span class=err>&#39;</span><span class=n>s</span> <span class=n>nothing</span> <span class=n>at</span> <span class=k>this</span> <span class=n>address</span><span class=p>.&lt;/</span><span class=n>p</span><span class=p>&gt;</span>
-        <span class=p>&lt;/</span><span class=n>LayoutView</span><span class=p>&gt;</span>
-    <span class=p>&lt;/</span><span class=n>NotFound</span><span class=p>&gt;</span>
-<span class=p>&lt;/</span><span class=n>Router</span><span class=p>&gt;</span>
-</code></pre></div><p>In the blazor server project there are several pages created initially. These are Counter, FetchData and Index. Each of them has a <code>@page</code> directive at the beginning. For counter it will be <code>@page "/counter"</code> for FetchData it will be <code>@page "/fetchdata"</code> and for Index <code>@page "/"</code>. So if you open any of these endpoints in the browser, the corresponding page will be opened.<br>Multiple <code>@page</code> values ​​can be specified for a single page. For example for Counter you can add</p><div class=highlight><pre class=chroma><code class=language-csharp data-lang=csharp><span class=n>@page</span> <span class=s>&#34;/counter&#34;</span>
-<span class=n>@page</span> <span class=s>&#34;/count&#34;</span>
+If <code>routeData</code> exists corresponding page displayed, if this page has no layout then <code>MainLayout</code> will be used. If routeData does not exist then <code>MainLayout</code> and the text <code>Sorry, there's nothing at this address.</code></p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp>&lt;Router AppAssembly=<span style=color:#e6db74>&#34;@typeof(Program).Assembly&#34;</span>&gt;
+    &lt;Found Context=<span style=color:#e6db74>&#34;routeData&#34;</span>&gt;
+        &lt;RouteView RouteData=<span style=color:#e6db74>&#34;@routeData&#34;</span> DefaultLayout=<span style=color:#e6db74>&#34;@typeof(MainLayout)&#34;</span> /&gt;
+    &lt;/Found&gt;
+    &lt;NotFound&gt;
+        &lt;LayoutView Layout=<span style=color:#e6db74>&#34;@typeof(MainLayout)&#34;</span>&gt;
+            &lt;p&gt;Sorry, there<span style=color:#960050;background-color:#1e0010>&#39;</span>s nothing at <span style=color:#66d9ef>this</span> address.&lt;/p&gt;
+        &lt;/LayoutView&gt;
+    &lt;/NotFound&gt;
+&lt;/Router&gt;
+</code></pre></div><p>In the blazor server project there are several pages created initially. These are Counter, FetchData and Index. Each of them has a <code>@page</code> directive at the beginning. For counter it will be <code>@page "/counter"</code> for FetchData it will be <code>@page "/fetchdata"</code> and for Index <code>@page "/"</code>. So if you open any of these endpoints in the browser, the corresponding page will be opened.<br>Multiple <code>@page</code> values ​​can be specified for a single page. For example for Counter you can add</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp>@page <span style=color:#e6db74>&#34;/counter&#34;</span>
+@page <span style=color:#e6db74>&#34;/count&#34;</span>
 </code></pre></div><p>And now the Counter page will open for both urls.<br><img src=https://i.imgur.com/J4m8Off.png alt=Count></p><p>You can also pass an initial value to Counter. Now when the pages are open it is always zero.
-To do this, add another <code>@page</code> that will look like <code>@page "/counter/{InitialValue: int}"</code> you can also add the same for count page. <code>InitialValue</code> will be a public parameter of type int. This will allow you to specify <code>localhost:5001/counter/123</code> in the url and counter will start from value 123. Next you need to write the code that will set this value. In the <code>@code</code> section you need to add a parameter with the same name <code>public int InitialValue {get; set; }</code> this parameter must have the attribute <code>[Parameter]</code>. In order to pass the value of <code>InitialValue</code> your need to call the method <code>OnParametersSet</code>.</p><div class=highlight><pre class=chroma><code class=language-csharp data-lang=csharp><span class=n>@page</span> <span class=s>&#34;/counter&#34;</span>
-<span class=n>@page</span> <span class=s>&#34;/count&#34;</span>
-<span class=n>@page</span> <span class=s>&#34;/counter/{InitialValue:int}&#34;</span>
-<span class=n>@page</span> <span class=s>&#34;/count/{InitialValue:int}&#34;</span>
+To do this, add another <code>@page</code> that will look like <code>@page "/counter/{InitialValue: int}"</code> you can also add the same for count page. <code>InitialValue</code> will be a public parameter of type int. This will allow you to specify <code>localhost:5001/counter/123</code> in the url and counter will start from value 123. Next you need to write the code that will set this value. In the <code>@code</code> section you need to add a parameter with the same name <code>public int InitialValue {get; set; }</code> this parameter must have the attribute <code>[Parameter]</code>. In order to pass the value of <code>InitialValue</code> your need to call the method <code>OnParametersSet</code>.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp>@page <span style=color:#e6db74>&#34;/counter&#34;</span>
+@page <span style=color:#e6db74>&#34;/count&#34;</span>
+@page <span style=color:#e6db74>&#34;/counter/{InitialValue:int}&#34;</span>
+@page <span style=color:#e6db74>&#34;/count/{InitialValue:int}&#34;</span>
 
-<span class=p>&lt;</span><span class=n>h1</span><span class=p>&gt;</span><span class=n>Counter</span><span class=p>&lt;/</span><span class=n>h1</span><span class=p>&gt;</span>
+&lt;h1&gt;Counter&lt;/h1&gt;
 
-<span class=p>&lt;</span><span class=n>p</span><span class=p>&gt;</span><span class=n>Current</span> <span class=n>count</span><span class=p>:</span> <span class=n>@currentCount</span><span class=p>&lt;/</span><span class=n>p</span><span class=p>&gt;</span>
+&lt;p&gt;Current count: @currentCount&lt;/p&gt;
 
-<span class=p>&lt;</span><span class=n>button</span> <span class=n>class</span><span class=p>=</span><span class=s>&#34;btn btn-primary&#34;</span> <span class=n>@onclick</span><span class=p>=</span><span class=s>&#34;IncrementCount&#34;</span><span class=p>&gt;</span><span class=n>Click</span> <span class=n>me</span><span class=p>&lt;/</span><span class=n>button</span><span class=p>&gt;</span>
+&lt;button class=<span style=color:#e6db74>&#34;btn btn-primary&#34;</span> @onclick=<span style=color:#e6db74>&#34;IncrementCount&#34;</span>&gt;Click me&lt;/button&gt;
 
-<span class=n>@code</span> <span class=p>{</span>
-<span class=na>    [Parameter]</span>
-    <span class=k>public</span> <span class=kt>int</span> <span class=n>InitialValue</span> <span class=p>{</span><span class=k>get</span><span class=p>;</span> <span class=k>set</span><span class=p>;</span> <span class=p>}</span>
-    <span class=k>private</span> <span class=kt>int</span> <span class=n>currentCount</span> <span class=p>=</span> <span class=m>0</span><span class=p>;</span>
+@code {
+<span style=color:#a6e22e>    [Parameter]</span>
+    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> InitialValue {<span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>int</span> currentCount = <span style=color:#ae81ff>0</span>;
 
-    <span class=k>protected</span> <span class=k>override</span> <span class=k>void</span> <span class=n>OnParametersSet</span><span class=p>()</span>
-    <span class=p>{</span>
-        <span class=k>base</span><span class=p>.</span><span class=n>OnParametersSet</span><span class=p>();</span>
-        <span class=n>currentCount</span> <span class=p>=</span> <span class=n>InitialValue</span><span class=p>;</span>
-    <span class=p>}</span>
+    <span style=color:#66d9ef>protected</span> <span style=color:#66d9ef>override</span> <span style=color:#66d9ef>void</span> OnParametersSet()
+    {
+        <span style=color:#66d9ef>base</span>.OnParametersSet();
+        currentCount = InitialValue;
+    }
 
-    <span class=k>private</span> <span class=k>void</span> <span class=n>IncrementCount</span><span class=p>()</span>
-    <span class=p>{</span>
-        <span class=n>currentCount</span><span class=p>++;</span>
-    <span class=p>}</span>
-<span class=p>}</span>
+    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> IncrementCount()
+    {
+        currentCount++;
+    }
+}
 </code></pre></div><p>And the result will be as follows
-<img src=https://i.imgur.com/n5MrYWK.png alt=Result></p><p>This post is based on a course from Tim Corey - <a href=https://iamtimcorey.com/p/blazor-server-in-depth>Blazor Server: In Depth</a></p></div><footer class="post-footer clearfix"><p class=post-tags><span>Tagged:</span>
-<a href=/tags/blazorserver/>BlazorServer</a>,
-<a href=/tags/.net/>.Net</a></p><div class=share><a class=icon-twitter href="https://twitter.com/share?text=Blazor%20Server%20Routing&url=%2f2020%2f10%2f01%2fblazor-server-routing%2f" onclick="window.open(this.href,'twitter-share','width=550,height=235');return false;" aria-label="Share on Twitter"><i class="fa fa-twitter" aria-hidden=true></i></a></div></footer></article></div></div></div><footer class=footer><div class=container><div class=site-title-wrapper><h1 class=site-title><a href=/>mpostument.com</a></h1><a class="button-square button-jump-top js-jump-top" href=# aria-label="Back to Top"><i class="fa fa-angle-up" aria-hidden=true></i></a></div><p class=footer-copyright><span>&copy; 2020 / Powered by <a href=https://gohugo.io/>Hugo</a></span></p><p class=footer-copyright><span><a href=https://github.com/roryg/ghostwriter>Ghostwriter theme</a> By <a href=http://jollygoodthemes.com>JollyGoodThemes</a></span>
-<span>/ <a href=https://github.com/jbub/ghostwriter>Ported</a> to Hugo By <a href=https://github.com/jbub>jbub</a></span></p></div></footer><script src=/js/jquery-1.11.3.min.js></script><script src=/js/jquery.fitvids.js></script><script src=/js/scripts.js></script></body></html>
+<img src=https://i.imgur.com/n5MrYWK.png alt=Result></p><p>This post is based on a course from Tim Corey - <a href=https://iamtimcorey.com/p/blazor-server-in-depth>Blazor Server: In Depth</a></p></div></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button next"><a href=/2020/09/30/nightfall-dlp-configuration/><span class=button__text>Nightfall Dlp Configuration</span>
+<span class=button__icon>→</span></a></span></div></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2020 Powered by <a href=http://gohugo.io>Hugo</a></span>
+<span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span></div></div></footer><script src=/assets/main.js></script><script src=/assets/prism.js></script><script src=/assets/languageSelector.js></script></div></body></html>
