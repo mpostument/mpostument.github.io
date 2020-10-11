@@ -1,0 +1,117 @@
+<!doctype html><html lang=ua><head><title>Blazor Server Logging :: mpostument.com</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Привіт!
+Сьогодні подивимось як налаштовувати логування в BlazorServer.
+Одразу після створення проекту в корені проекту буде файл appsettings.json.
+{ &amp;#34;Logging&amp;#34;: { &amp;#34;LogLevel&amp;#34;: { &amp;#34;Default&amp;#34;: &amp;#34;Information&amp;#34;, &amp;#34;Microsoft&amp;#34;: &amp;#34;Warning&amp;#34;, &amp;#34;Microsoft.Hosting.Lifetime&amp;#34;: &amp;#34;Information&amp;#34; } }, &amp;#34;AllowedHosts&amp;#34;: &amp;#34;*&amp;#34; } Саме тут вкзаано налаштування логування. LogLevel починається з Default який має значення Information. Це означає що по замовчуванні лог левел буде Information. Далі йде Microsoft з рівнем Warning, відповідно для namespace Microsoft рівень логування буде Warning. І в самому кінці Microsoft."><meta name=keywords content="BlazorServer,Blazor,.Net Core,.Net"><meta name=robots content="noodp"><link rel=canonical href=/ua/2020/10/10/blazor-server-logging/><script type=application/javascript>var doNotTrack=false;if(!doNotTrack){(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create','UA-176839804-1','auto');ga('send','pageview');}</script><link rel=stylesheet href=/assets/style.css><link rel=stylesheet href=/assets/blue.css><link rel=apple-touch-icon href=/img/apple-touch-icon-192x192.png><link rel="shortcut icon" href=/img/favicon/blue.png><meta name=twitter:card content="summary"><meta name=twitter:site content="mpostument.com"><meta name=twitter:creator content="Maks_Postument"><meta property="og:locale" content="ua"><meta property="og:type" content="article"><meta property="og:title" content="Blazor Server Logging"><meta property="og:description" content="Logging in blazor server"><meta property="og:url" content="/ua/2020/10/10/blazor-server-logging/"><meta property="og:site_name" content="mpostument.com"><meta property="og:image" content="https://i.imgur.com/WHAqB1N.png"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:section" content="C#"><meta property="article:section" content="Blazor"><meta property="article:published_time" content="2020-10-10 19:01:49 +0300 +0300"></head><body class=blue><div class="container center headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/ua><div class=logo>mpostument.com</div></a></div><div class=menu-trigger>menu</div></div><nav class=menu><ul class="menu__inner menu__inner--desktop"><li><a href=/ua>Home</a></li><li><a href=/ua/categories/>Categories</a></li><li><a href=/ua/tags/>Tags</a></li><div class=spacer></div><ul class=language-selector><ul class=language-selector-current><li>Ukraine ▾</li></ul><ul class="language-selector__more hidden"><li><a href=/>English</a></li><li><a href=/ua/>Ukraine</a></li></ul></ul></ul><ul class="menu__inner menu__inner--mobile"><li><a href=/ua>Home</a></li><li><a href=/ua/categories/>Categories</a></li><li><a href=/ua/tags/>Tags</a></li><hr><li><a href=/>English</a></li><li><a href=/ua/>Ukraine</a></li></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=/ua/2020/10/10/blazor-server-logging/>Blazor Server Logging</a></h1><div class=post-meta><span class=post-date>2020-10-10</span>
+<span class=post-author>:: Maksym Postument</span></div><span class=post-tags>#<a href=/ua/tags/blazorserver/>BlazorServer</a>&nbsp;
+#<a href=/ua/tags/.net/>.Net</a>&nbsp;</span>
+<img src=https://i.imgur.com/WHAqB1N.png class=post-cover alt="Blazor Server Logging"><div class=post-content><div><p>Привіт!</p><p>Сьогодні подивимось як налаштовувати логування в BlazorServer.<br>Одразу після створення проекту в корені проекту буде файл <code>appsettings.json</code>.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json>{
+  <span style=color:#f92672>&#34;Logging&#34;</span>: {
+    <span style=color:#f92672>&#34;LogLevel&#34;</span>: {
+      <span style=color:#f92672>&#34;Default&#34;</span>: <span style=color:#e6db74>&#34;Information&#34;</span>,
+      <span style=color:#f92672>&#34;Microsoft&#34;</span>: <span style=color:#e6db74>&#34;Warning&#34;</span>,
+      <span style=color:#f92672>&#34;Microsoft.Hosting.Lifetime&#34;</span>: <span style=color:#e6db74>&#34;Information&#34;</span>
+    }
+  },
+  <span style=color:#f92672>&#34;AllowedHosts&#34;</span>: <span style=color:#e6db74>&#34;*&#34;</span>
+}
+</code></pre></div><p>Саме тут вкзаано налаштування логування. <code>LogLevel</code> починається з <code>Default</code> який має значення <code>Information</code>. Це означає що по замовчуванні лог левел буде <code>Information</code>. Далі йде <code>Microsoft</code> з рівнем <code>Warning</code>, відповідно для namespace <code>Microsoft</code> рівень логування буде <code>Warning</code>. І в самому кінці <code>Microsoft.Hosting.Lifetime</code> має значення <code>Information</code>. Це означає що для всього namespace <code>Microsoft</code> окрім частини <code>Microsoft.Hosting.Lifetime</code> буде значення <code>Warning</code>.</p><p>Якщо змінити налаштування логування в цьому файлі і запустити аплікації нічого не зміниться. А все тому що в <code>launchSettings.json</code> вказано <code>"ASPNETCORE_ENVIRONMENT": "Development"</code>. І для development середовища використовується інший файл <code>appsettings.Development.json</code>. Знайти його можна якщо натиснути на стрілку біля <code>appsettings.json</code>.</p><p><img src=https://i.imgur.com/ecvHX8b.png alt=DevJson></p><p>Я поміняю всі рівні на <code>Debug</code> в <code>appsettings.Development.json</code>.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp>{
+  <span style=color:#e6db74>&#34;DetailedErrors&#34;</span>: <span style=color:#66d9ef>true</span>,
+  <span style=color:#e6db74>&#34;Logging&#34;</span>: {
+    <span style=color:#e6db74>&#34;LogLevel&#34;</span>: {
+      <span style=color:#e6db74>&#34;Default&#34;</span>: <span style=color:#e6db74>&#34;Debug&#34;</span>,
+      <span style=color:#e6db74>&#34;Microsoft&#34;</span>: <span style=color:#e6db74>&#34;Debug&#34;</span>,
+      <span style=color:#e6db74>&#34;Microsoft.Hosting.Lifetime&#34;</span>: <span style=color:#e6db74>&#34;Debug&#34;</span>
+    }
+  }
+}
+</code></pre></div><p>Після цього запущу аплікацію. І побачу багато логів в консолі.</p><p><img src=https://i.imgur.com/zSiopdQ.png alt=Debug><br>Якщо мені потрібно з усіх логів включити тільки якийсь конкретний я теж можу це зробити.
+Наприклад мені потрібно бачити логи з <code>Microsoft.AspNetCore.Components.RenderTree.Renderer</code> в <code>Debug</code> а всі інші в інфо. Для цього я добавлю його в <code>appsettings.Development.json</code></p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp>{
+  <span style=color:#e6db74>&#34;DetailedErrors&#34;</span>: <span style=color:#66d9ef>true</span>,
+  <span style=color:#e6db74>&#34;Logging&#34;</span>: {
+    <span style=color:#e6db74>&#34;LogLevel&#34;</span>: {
+      <span style=color:#e6db74>&#34;Default&#34;</span>: <span style=color:#e6db74>&#34;Information&#34;</span>,
+      <span style=color:#e6db74>&#34;Microsoft&#34;</span>: <span style=color:#e6db74>&#34;Warning&#34;</span>,
+      <span style=color:#e6db74>&#34;Microsoft.Hosting.Lifetime&#34;</span>: <span style=color:#e6db74>&#34;Information&#34;</span>,
+      <span style=color:#e6db74>&#34;Microsoft.AspNetCore.Components.RenderTree.Renderer&#34;</span>: <span style=color:#e6db74>&#34;Debug&#34;</span>
+    }
+  }
+}
+</code></pre></div><p>Після цього логи будуть виглядати ось так
+<img src=https://i.imgur.com/VSvNmol.png alt=Debug2></p><h2 id=logging-from-razor-pages>Logging from razor pages<a href=#logging-from-razor-pages class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Спробуєм відправити лог повідомлення з razor pages. Наприклад візьмемо сторінку <code>Counter.razor</code>.<br>Для використання логера спочатку потрібно імпортувати потрібний неймспейс <code>@using Microsoft.Extensions.Logging</code>. І за допомогою DI, ввести логер в сторінку <code>@inject ILogger&lt;Counter> Logger</code>. Тепер логер можна використувати в сторінці.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp>@page <span style=color:#e6db74>&#34;/counter&#34;</span>
+@using Microsoft.Extensions.Logging
+@inject ILogger&lt;Counter&gt; Logger
+
+&lt;h1&gt;Counter&lt;/h1&gt;
+
+&lt;p&gt;Current count: @currentCount&lt;/p&gt;
+
+&lt;button class=<span style=color:#e6db74>&#34;btn btn-primary&#34;</span> @onclick=<span style=color:#e6db74>&#34;IncrementCount&#34;</span>&gt;Click me&lt;/button&gt;
+
+@code {
+    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>int</span> currentCount = <span style=color:#ae81ff>0</span>;
+
+    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> IncrementCount()
+    {
+        currentCount++;
+        Logger.LogInformation(<span style=color:#e6db74>&#34;Button clicked, current count #{count}&#34;</span>, currentCount);
+    }
+}
+</code></pre></div><p>Кожен раз як я натискаю кнопку Click me. Повідомлення з&rsquo;являється в консолі.
+<img src=https://i.imgur.com/85IThm0.png alt=Clicked></p><h2 id=logging-from-class>Logging from class<a href=#logging-from-class class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Аналогічно лог повідомлення можна відправляти з класів за допомогою DI. Спочатку створюється обєкт <code>private readonly ILogger&lt;WeatherForecastService> _logger;</code> і за допомогою конструктора передаємо наш логер.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=color:#66d9ef>using</span> Microsoft.Extensions.Logging;
+<span style=color:#66d9ef>using</span> System;
+<span style=color:#66d9ef>using</span> System.Linq;
+<span style=color:#66d9ef>using</span> System.Threading.Tasks;
+
+<span style=color:#66d9ef>namespace</span> BlazorLearn.Data
+{
+    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>WeatherForecastService</span>
+    {
+        <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>readonly</span> ILogger&lt;WeatherForecastService&gt; _logger;
+        <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>readonly</span> <span style=color:#66d9ef>string</span>[] Summaries = <span style=color:#66d9ef>new</span>[]
+        {
+            <span style=color:#e6db74>&#34;Freezing&#34;</span>, <span style=color:#e6db74>&#34;Bracing&#34;</span>, <span style=color:#e6db74>&#34;Chilly&#34;</span>, <span style=color:#e6db74>&#34;Cool&#34;</span>, <span style=color:#e6db74>&#34;Mild&#34;</span>, <span style=color:#e6db74>&#34;Warm&#34;</span>, <span style=color:#e6db74>&#34;Balmy&#34;</span>, <span style=color:#e6db74>&#34;Hot&#34;</span>, <span style=color:#e6db74>&#34;Sweltering&#34;</span>, <span style=color:#e6db74>&#34;Scorching&#34;</span>
+        };
+
+        <span style=color:#66d9ef>public</span> WeatherForecastService(ILogger&lt;WeatherForecastService&gt; logger)
+        {
+            _logger = logger;
+        }
+
+        <span style=color:#66d9ef>public</span> Task&lt;WeatherForecast[]&gt; GetForecastAsync(DateTime startDate)
+        {
+            _logger.LogInformation(<span style=color:#e6db74>&#34;WeatherForecastService called&#34;</span>);
+            <span style=color:#66d9ef>var</span> rng = <span style=color:#66d9ef>new</span> Random();
+            <span style=color:#66d9ef>return</span> Task.FromResult(Enumerable.Range(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>5</span>).Select(index =&gt; <span style=color:#66d9ef>new</span> WeatherForecast
+            {
+                Date = startDate.AddDays(index),
+                TemperatureC = rng.Next(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>100</span>),
+                Summary = Summaries[rng.Next(Summaries.Length)]
+            }).ToArray());
+        }
+    }
+}
+
+</code></pre></div><p><img src=https://i.imgur.com/x2iCOZw.png alt=Class></p><h2 id=logger-configuration-from-code>Logger configuration from code<a href=#logger-configuration-from-code class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Якщо потрібно то логер можна конфігурвати з коду а не з <code>application.json</code>. Це можна зробити в <code>Program.cs</code> в методі <code>CreateHostBuilder</code>. По замовчуванні він має такий вигляд.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> IHostBuilder CreateHostBuilder(<span style=color:#66d9ef>string</span>[] args) =&gt;
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =&gt;
+                {
+                    webBuilder.UseStartup&lt;Startup&gt;();
+                });
+</code></pre></div><p>Для того щоб налаштувати логер до <code>CreateDefaultBuilder</code> потрібно добавити <code>ConfigureLogging</code></p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> IHostBuilder CreateHostBuilder(<span style=color:#66d9ef>string</span>[] args) =&gt;
+            Host.CreateDefaultBuilder(args)
+                .ConfigureLogging(logger =&gt;
+                {
+                    logger.ClearProviders();
+                    logger.SetMinimumLevel(LogLevel.Information);
+                    logger.AddConsole();
+                })
+                .ConfigureWebHostDefaults(webBuilder =&gt;
+                {
+                    webBuilder.UseStartup&lt;Startup&gt;();
+                });
+</code></pre></div><p><code>logger.ClearProviders()</code> очищає всі попередні налаштування. І після нього одразу можна добавлятий інший log provider, наприклад Seriolog чи будь який інший.
+<code>logger.SetMinimumLevel(LogLevel.Information)</code> - вказує мінімальний лог левел.
+<code>logger.AddConsole()</code> - добавляє вивід логів в консоль.</p></div></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button next"><a href=/ua/2020/10/07/blazor-dependency-injection/><span class=button__text>Blazor Dependency Injection</span>
+<span class=button__icon>→</span></a></span></div></div><div id=disqus_thread></div><script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return;}
+var d=document,s=d.createElement('script');s.async=true;s.src='//'+"mpostument-com"+'.disqus.com/embed.js';s.setAttribute('data-timestamp',+new Date());(d.head||d.body).appendChild(s);})();</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2020 Powered by <a href=http://gohugo.io>Hugo</a></span>
+<span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span></div></div></footer><script src=/assets/main.js></script><script src=/assets/prism.js></script><script src=/assets/languageSelector.js></script></div></body></html>
