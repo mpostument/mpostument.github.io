@@ -1,4 +1,76 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Github on mpostument.com</title><link>/ua/tags/github/</link><description>Recent content in Github on mpostument.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 30 Sep 2020 21:52:21 +0300</lastBuildDate><atom:link href="/ua/tags/github/index.xml" rel="self" type="application/rss+xml"/><item><title>Nightfall Dlp Configuration</title><link>/ua/2020/09/30/nightfall-dlp-configuration/</link><pubDate>Wed, 30 Sep 2020 21:52:21 +0300</pubDate><guid>/ua/2020/09/30/nightfall-dlp-configuration/</guid><description>Привіт!
 Хочу сьогодні розказати про DLP Nightfall. Він дозволяє сканувати Pull Request на наявність на наявність персональної інформації, api ключів та інше.
 Github Action Для Github Nightfall дає Action який можна використовувати для сканування Pull Request та Merge в бренчу. Для початку потрібно створити в корені репозиторія папку .github\workflows і в цій папці створити файл dlp.yml. Назва файлу можу бути будь якою.
-name: nightfalldlp on: push: branches: - master pull_request: jobs: run-nightfalldlp: name: nightfalldlp runs-on: ubuntu-latest steps: - name: Checkout Repo Action uses: actions/checkout@v2 - name: nightfallDLP action step uses: nightfallai/nightfall_dlp_action@v0.</description></item></channel></rss>
+name: nightfalldlp on: push: branches: - master pull_request: jobs: run-nightfalldlp: name: nightfalldlp runs-on: ubuntu-latest steps: - name: Checkout Repo Action uses: actions/checkout@v2 - name: nightfallDLP action step uses: nightfallai/nightfall_dlp_action@v0.</description><content>&lt;p>Привіт!&lt;/p>
+&lt;p>Хочу сьогодні розказати про DLP Nightfall. Він дозволяє сканувати Pull Request на наявність на наявність персональної інформації, api ключів та інше.&lt;/p>
+&lt;h2 id="github-action">Github Action&lt;/h2>
+&lt;p>Для Github Nightfall дає Action який можна використовувати для сканування Pull Request та Merge в бренчу.
+Для початку потрібно створити в корені репозиторія папку .github\workflows і в цій папці створити файл dlp.yml. Назва файлу можу бути будь якою.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfalldlp&lt;/span>
+&lt;span style="color:#f92672">on&lt;/span>:
+&lt;span style="color:#f92672">push&lt;/span>:
+&lt;span style="color:#f92672">branches&lt;/span>:
+- &lt;span style="color:#ae81ff">master&lt;/span>
+&lt;span style="color:#f92672">pull_request&lt;/span>:
+&lt;span style="color:#f92672">jobs&lt;/span>:
+&lt;span style="color:#f92672">run-nightfalldlp&lt;/span>:
+&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfalldlp&lt;/span>
+&lt;span style="color:#f92672">runs-on&lt;/span>: &lt;span style="color:#ae81ff">ubuntu-latest&lt;/span>
+&lt;span style="color:#f92672">steps&lt;/span>:
+- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Checkout Repo Action&lt;/span>
+&lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">actions/checkout@v2&lt;/span>
+- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfallDLP action step&lt;/span>
+&lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">nightfallai/nightfall_dlp_action@v0.0.7&lt;/span>
+&lt;span style="color:#f92672">env&lt;/span>:
+&lt;span style="color:#f92672">NIGHTFALL_API_KEY&lt;/span>: &lt;span style="color:#ae81ff">${{ secrets.NIGHTFALL_API_KEY }}&lt;/span>
+&lt;span style="color:#f92672">GITHUB_TOKEN&lt;/span>: &lt;span style="color:#ae81ff">${{ secrets.GITHUB_TOKEN }}&lt;/span>
+&lt;span style="color:#f92672">EVENT_BEFORE&lt;/span>: &lt;span style="color:#ae81ff">${{ github.event.before }}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>В секції on вказано що сканування запускати на push в master бренчу та на Pull Request.&lt;br>
+Action має два кроки, перший це клонувати репозиторій другий це запустити сканер.&lt;br>
+Для роботи сканера необхідно декілька env зміних. GITHUB_TOKEN використовується для того щоб сканер міг добавляти коментарі в PR значення його має бути &lt;code>secrets.GITHUB_TOKEN&lt;/code>&lt;br>
+&lt;img src="https://i.imgur.com/13N6AjR.png" alt="Comment">&lt;/p>
+&lt;p>EVENT_BEFORE потрібен потрібне у випадку якщо сканер запускається на push event. І значення в нього має бути &lt;code>github.event.before&lt;/code>&lt;br>
+NIGHTFALL_API_KEY остання потрібна зміна, отримати її можна зареєструвавшись на &lt;a href="https://nightfall.ai/api">nightfall.ai&lt;/a>. Після того NIGHTFALL_API_KEY отримано його потрібно добавити в GitHub Secrets&lt;br>
+&lt;img src="https://i.imgur.com/8y5a2FH.png" alt="Secret">&lt;/p>
+&lt;h2 id="nightfall-configuration">Nightfall Configuration&lt;/h2>
+&lt;p>Після того я з GitHub Action закінчено потрібно створити конфігураційни файл для Nightfall.&lt;br>
+Для цього створіть папку з назвою &lt;code>.nightfalldlp&lt;/code> і в ньому файл &lt;code>config.json&lt;/code>.&lt;br>
+Список детекторів які підтримує nightfall.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
+&lt;span style="color:#f92672">&amp;#34;detectors&amp;#34;&lt;/span>: [
+&lt;span style="color:#e6db74">&amp;#34;CREDIT_CARD_NUMBER&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;PHONE_NUMBER&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;API_KEY&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;CRYPTOGRAPHIC_KEY&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;RANDOMLY_GENERATED_TOKEN&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;US_SOCIAL_SECURITY_NUMBER&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;AMERICAN_BANKERS_CUSIP_ID&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;US_BANK_ROUTING_MICR&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;ICD9_CODE&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;ICD10_CODE&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;US_DRIVERS_LICENSE_NUMBER&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;US_PASSPORT&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;EMAIL_ADDRESS&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;IP_ADDRESS&amp;#34;&lt;/span>
+]
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Мій конфігураційни файл виглядає коротшим тому що з повним генерує велику кількість false positive алармів. Наприклад&lt;br>
+&lt;img src="https://i.imgur.com/0EGejo0.png" alt="FalseErrorSample">&lt;/p>
+&lt;p>Приклад мого файлу:&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
+&lt;span style="color:#f92672">&amp;#34;detectors&amp;#34;&lt;/span>: [
+&lt;span style="color:#e6db74">&amp;#34;API_KEY&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;CRYPTOGRAPHIC_KEY&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;RANDOMLY_GENERATED_TOKEN&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;EMAIL_ADDRESS&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;IP_ADDRESS&amp;#34;&lt;/span>
+]
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер це все потрібно закомітити сканер запуститься.&lt;br>
+Навіть при такій конфігурації сканер видає багато false positive аларміві результат я отримую щоразу&lt;br>
+&lt;img src="https://i.imgur.com/bJ1WWR2.png" alt="Error">
+Наприклад отримую такий еррор
+Suspicious content detected (3:&lt;em>&lt;strong>, type IP_ADDRESS) на &lt;code>&amp;quot;arn:aws:s3:::usershome/{{name}}-{{data}}/*&amp;quot;&lt;/code>&lt;br>
+Або Suspicious content detected (ke&lt;/strong>&lt;/em>*****, type RANDOMLY_GENERATED_TOKEN) на&lt;br>
+&lt;code>&amp;quot;Resource&amp;quot;: &amp;quot;arn:aws:kms:us-east-1:000000000:key/6a2b4d78-oy69-44ab-ce3d-43faca87fd14&amp;quot;&lt;/code>.&lt;br>
+Незважаючи на частину false positive сканер дозволяє знайти закомічені паролі та api ключі&lt;/p></content></item></channel></rss>

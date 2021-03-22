@@ -1,27 +1,859 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blazor on mpostument.com</title><link>/categories/blazor/</link><description>Recent content in Blazor on mpostument.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 17 Oct 2020 19:04:41 +0300</lastBuildDate><atom:link href="/categories/blazor/index.xml" rel="self" type="application/rss+xml"/><item><title>Blazor Server Authorization</title><link>/2020/10/17/blazor-server-authorization/</link><pubDate>Sat, 17 Oct 2020 19:04:41 +0300</pubDate><guid>/2020/10/17/blazor-server-authorization/</guid><description>Hello!
 Today we will look at how to add authorization to Blazor Server. To begin with we will create the new project in which authentication will be enabled.
 There are several additional files in the authentication project that are responsible for authentication. A connection string will also be added to the database in the configuration file.
-&amp;#34;ConnectionStrings&amp;#34;: { &amp;#34;DefaultConnection&amp;#34;: &amp;#34;Server=(localdb)\\mssqllocaldb;Database=aspnet-BlazorAuth-BD4B8646-B1A3-438C-8FFC-8C3A29438C24;Trusted_Connection=True;MultipleActiveResultSets=true&amp;#34; }, In the package management console, you need to run the Update-Database command to create the database and the required tables.</description></item><item><title>Blazor Forms</title><link>/2020/10/16/blazor-server-forms/</link><pubDate>Fri, 16 Oct 2020 16:09:30 +0300</pubDate><guid>/2020/10/16/blazor-server-forms/</guid><description>Hello!
+&amp;#34;ConnectionStrings&amp;#34;: { &amp;#34;DefaultConnection&amp;#34;: &amp;#34;Server=(localdb)\\mssqllocaldb;Database=aspnet-BlazorAuth-BD4B8646-B1A3-438C-8FFC-8C3A29438C24;Trusted_Connection=True;MultipleActiveResultSets=true&amp;#34; }, In the package management console, you need to run the Update-Database command to create the database and the required tables.</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>Today we will look at how to add authorization to Blazor Server.
+To begin with we will create the new project in which authentication will be enabled.&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/AlAyKDU.png" alt="Auth">&lt;/p>
+&lt;p>There are several additional files in the authentication project that are responsible for authentication. A connection string will also be added to the database in the configuration file.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json"> &lt;span style="color:#e6db74">&amp;#34;ConnectionStrings&amp;#34;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">:&lt;/span> {
+&lt;span style="color:#f92672">&amp;#34;DefaultConnection&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Server=(localdb)\\mssqllocaldb;Database=aspnet-BlazorAuth-BD4B8646-B1A3-438C-8FFC-8C3A29438C24;Trusted_Connection=True;MultipleActiveResultSets=true&amp;#34;&lt;/span>
+}&lt;span style="color:#960050;background-color:#1e0010">,&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>In the package management console, you need to run the &lt;code>Update-Database&lt;/code> command to create the database and the required tables.&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/KxYmGW2.png" alt="Update-Database">&lt;/p>
+&lt;p>Now you can run applications and try to log in.&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/81FVZaw.gif" alt="Login">&lt;/p>
+&lt;p>You can add roles to restrict access to certain pages depending on the role.&lt;/p>
+&lt;h2 id="autorization">Autorization&lt;/h2>
+&lt;p>Role support must be added to &lt;code>Startup.cs&lt;/code> in the &lt;code>ConfigureService&lt;/code> method.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> services.AddDefaultIdentity&amp;lt;IdentityUser&amp;gt;(options =&amp;gt; options.SignIn.RequireConfirmedAccount = &lt;span style="color:#66d9ef">true&lt;/span>)
+.AddRoles&amp;lt;IdentityRole&amp;gt;()
+.AddEntityFrameworkStores&amp;lt;ApplicationDbContext&amp;gt;();
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="generate-roles">Generate Roles&lt;/h2>
+&lt;p>I will add a new razor component to the &lt;code>Pages&lt;/code> folder. When you go to this page, basic roles will be created, it will be available via &lt;code>/addroles&lt;/code>. You also need to use DI to inject several objects.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/addroles&amp;#34;&lt;/span>
+@using Microsoft.AspNetCore.Identity
+@inject RoleManager&amp;lt;IdentityRole&amp;gt; RoleManager
+@inject UserManager&amp;lt;IdentityUser&amp;gt; UserManager
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>I will create roles using &lt;code>RoleManager&lt;/code>. To begin, create a list that will have all the necessary roles. Then I go through the cycle on all roles, if the role exists then nothing will happen. If not, a new role will be created.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task GenerateRoles()
+{
+&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> adminRole = &lt;span style="color:#e6db74">&amp;#34;Administrator&amp;#34;&lt;/span>;
+&lt;span style="color:#66d9ef">string&lt;/span>[] roles = { AdminRole };
+&lt;span style="color:#66d9ef">foreach&lt;/span> (&lt;span style="color:#66d9ef">var&lt;/span> role &lt;span style="color:#66d9ef">in&lt;/span> roles)
+{
+&lt;span style="color:#66d9ef">var&lt;/span> roleExist = &lt;span style="color:#66d9ef">await&lt;/span> RoleManager.RoleExistsAsync(role);
+&lt;span style="color:#66d9ef">if&lt;/span> (roleExist == &lt;span style="color:#66d9ef">false&lt;/span>)
+{
+&lt;span style="color:#66d9ef">await&lt;/span> RoleManager.CreateAsync(&lt;span style="color:#66d9ef">new&lt;/span> IdentityRole(role));
+}
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="create-admin">Create admin&lt;/h2>
+&lt;p>The next step is to add users to the roles. In &lt;code>appsettings.json&lt;/code> I will add a parameter that will contain the default admin email.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">&lt;span style="color:#e6db74">&amp;#34;AdminUser&amp;#34;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">:&lt;/span> &lt;span style="color:#e6db74">&amp;#34;777rip777@gmail.com&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>I&amp;rsquo;ll go back to the &lt;code>addroles&lt;/code> page and create a new method. I check if the user with the email from the configuration file exists, if, so I add it to the group &lt;code>Administrator&lt;/code>. In order to be able to read the data from the configuration file, you need to get an object of type &lt;code>IConfiguration&lt;/code>. Add &lt;code>@using Microsoft.Extensions.Configuration&lt;/code> and &lt;code>@inject IConfiguration config&lt;/code> at the top of the page.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task AddAdmin()
+{
+&lt;span style="color:#66d9ef">var&lt;/span> user = &lt;span style="color:#66d9ef">await&lt;/span> UserManager.FindByEmailAsync(config.GetValue&amp;lt;&lt;span style="color:#66d9ef">string&lt;/span>&amp;gt;(&lt;span style="color:#e6db74">&amp;#34;AdminUser&amp;#34;&lt;/span>));
+&lt;span style="color:#66d9ef">if&lt;/span> (user != &lt;span style="color:#66d9ef">null&lt;/span>)
+{
+&lt;span style="color:#66d9ef">await&lt;/span> UserManager.AddToRoleAsync(user, &lt;span style="color:#e6db74">&amp;#34;Administrator&amp;#34;&lt;/span>);
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>In order for these methods to be called when the pages are open, you need to call them in the method &lt;code>OnParametersSetAsync&lt;/code>.&lt;/p>
+&lt;p>Full code &lt;code>addroles&lt;/code> page.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/addroles&amp;#34;&lt;/span>
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.Extensions.Configuration
+@inject RoleManager&amp;lt;IdentityRole&amp;gt; RoleManager
+@inject UserManager&amp;lt;IdentityUser&amp;gt; UserManager
+@inject IConfiguration config
+@code {
+&lt;span style="color:#66d9ef">protected&lt;/span> &lt;span style="color:#66d9ef">override&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task OnParametersSetAsync()
+{
+&lt;span style="color:#66d9ef">await&lt;/span> GenerateRoles();
+&lt;span style="color:#66d9ef">await&lt;/span> AddAdmin();
+}
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task GenerateRoles()
+{
+&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> adminRole = &lt;span style="color:#e6db74">&amp;#34;Administrator&amp;#34;&lt;/span>;
+&lt;span style="color:#66d9ef">string&lt;/span>[] roles = { adminRole };
+&lt;span style="color:#66d9ef">foreach&lt;/span> (&lt;span style="color:#66d9ef">var&lt;/span> role &lt;span style="color:#66d9ef">in&lt;/span> roles)
+{
+&lt;span style="color:#66d9ef">var&lt;/span> roleExist = &lt;span style="color:#66d9ef">await&lt;/span> RoleManager.RoleExistsAsync(role);
+&lt;span style="color:#66d9ef">if&lt;/span> (roleExist == &lt;span style="color:#66d9ef">false&lt;/span>)
+{
+&lt;span style="color:#66d9ef">await&lt;/span> RoleManager.CreateAsync(&lt;span style="color:#66d9ef">new&lt;/span> IdentityRole(role));
+}
+}
+}
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task AddAdmin()
+{
+&lt;span style="color:#66d9ef">var&lt;/span> user = &lt;span style="color:#66d9ef">await&lt;/span> UserManager.FindByEmailAsync(config.GetValue&amp;lt;&lt;span style="color:#66d9ef">string&lt;/span>&amp;gt;(&lt;span style="color:#e6db74">&amp;#34;AdminUser&amp;#34;&lt;/span>));
+&lt;span style="color:#66d9ef">if&lt;/span> (user != &lt;span style="color:#66d9ef">null&lt;/span>)
+{
+&lt;span style="color:#66d9ef">await&lt;/span> UserManager.AddToRoleAsync(user, &lt;span style="color:#e6db74">&amp;#34;Administrator&amp;#34;&lt;/span>);
+}
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now opening the page &lt;code>/addroles&lt;/code> in the browser will create roles and the user (if user exist) to the role.&lt;/p>
+&lt;h2 id="restrict-access-to-pages">Restrict access to pages&lt;/h2>
+&lt;p>Now that we have roles, we can restrict access to the pages. For the &lt;code>FetchData&lt;/code> page, I will add &lt;code>@attribute [Authorize]&lt;/code>. This will give access to the page only for authorized users. And for the &lt;code>Counter&lt;/code> page I will specify &lt;code>@attribute [Authorize (Roles = &amp;quot;Administrator&amp;quot;)]&lt;/code> this will give access to the page only for users with the role of administrator.&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/KkE10dm.gif" alt="RolesDemo">&lt;/p>
+&lt;p>You can replace the Not Authorized error in &lt;code>App.razor&lt;/code> in the &lt;code>NotAutorized&lt;/code> section.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;CascadingAuthenticationState&amp;gt;
+&amp;lt;Router AppAssembly=&lt;span style="color:#e6db74">&amp;#34;@typeof(Program).Assembly&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;Found Context=&lt;span style="color:#e6db74">&amp;#34;routeData&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;AuthorizeRouteView RouteData=&lt;span style="color:#e6db74">&amp;#34;@routeData&amp;#34;&lt;/span> DefaultLayout=&lt;span style="color:#e6db74">&amp;#34;@typeof(MainLayout)&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;NotAuthorized&amp;gt;
+&amp;lt;h1&amp;gt;You don&lt;span style="color:#960050;background-color:#1e0010">&amp;#39;&lt;/span>t have access&amp;lt;/h1&amp;gt;
+&amp;lt;p&amp;gt;Ask your administrator to give you permission&amp;lt;/p&amp;gt;
+&amp;lt;/NotAuthorized&amp;gt;
+&amp;lt;/AuthorizeRouteView&amp;gt; /&amp;gt;
+&amp;lt;/Found&amp;gt;
+&amp;lt;NotFound&amp;gt;
+&amp;lt;LayoutView Layout=&lt;span style="color:#e6db74">&amp;#34;@typeof(MainLayout)&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;p&amp;gt;Sorry, there&lt;span style="color:#960050;background-color:#1e0010">&amp;#39;&lt;/span>s nothing at &lt;span style="color:#66d9ef">this&lt;/span> address.&amp;lt;/p&amp;gt;
+&amp;lt;/LayoutView&amp;gt;
+&amp;lt;/NotFound&amp;gt;
+&amp;lt;/Router&amp;gt;
+&amp;lt;/CascadingAuthenticationState&amp;gt;
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/wULUE6F.png" alt="AuthError">&lt;/p>
+&lt;p>You can also completely hide a site element for unregistered users. In &lt;code>NavMenu.razor&lt;/code> I will add menu items to &lt;code>&amp;lt;AuthorizeView&amp;gt;&amp;lt;/AuthorizeView&amp;gt;&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;div class=&lt;span style="color:#e6db74">&amp;#34;top-row pl-4 navbar navbar-dark&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;a class=&lt;span style="color:#e6db74">&amp;#34;navbar-brand&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>&amp;gt;BlazorAuth&amp;lt;/a&amp;gt;
+&amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;navbar-toggler&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;ToggleNavMenu&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;navbar-toggler-icon&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt;
+&amp;lt;/button&amp;gt;
+&amp;lt;/div&amp;gt;
+&amp;lt;div class=&lt;span style="color:#e6db74">&amp;#34;@NavMenuCssClass&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;ToggleNavMenu&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;ul class=&lt;span style="color:#e6db74">&amp;#34;nav flex-column&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;li class=&lt;span style="color:#e6db74">&amp;#34;nav-item px-3&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;NavLink class=&lt;span style="color:#e6db74">&amp;#34;nav-link&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span> Match=&lt;span style="color:#e6db74">&amp;#34;NavLinkMatch.All&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;oi oi-home&amp;#34;&lt;/span> aria-hidden=&lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt; Home
+&amp;lt;/NavLink&amp;gt;
+&amp;lt;/li&amp;gt;
+&amp;lt;AuthorizeView Roles=&lt;span style="color:#e6db74">&amp;#34;Administrator&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;li class=&lt;span style="color:#e6db74">&amp;#34;nav-item px-3&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;NavLink class=&lt;span style="color:#e6db74">&amp;#34;nav-link&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;counter&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;oi oi-plus&amp;#34;&lt;/span> aria-hidden=&lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt; Counter
+&amp;lt;/NavLink&amp;gt;
+&amp;lt;/li&amp;gt;
+&amp;lt;/AuthorizeView&amp;gt;
+&amp;lt;AuthorizeView&amp;gt;
+&amp;lt;li class=&lt;span style="color:#e6db74">&amp;#34;nav-item px-3&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;NavLink class=&lt;span style="color:#e6db74">&amp;#34;nav-link&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;fetchdata&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;oi oi-list-rich&amp;#34;&lt;/span> aria-hidden=&lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt; Fetch data
+&amp;lt;/NavLink&amp;gt;
+&amp;lt;/li&amp;gt;
+&amp;lt;/AuthorizeView&amp;gt;
+&amp;lt;/ul&amp;gt;
+&amp;lt;/div&amp;gt;
+@code {
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">bool&lt;/span> collapseNavMenu = &lt;span style="color:#66d9ef">true&lt;/span>;
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> NavMenuCssClass =&amp;gt; collapseNavMenu ? &lt;span style="color:#e6db74">&amp;#34;collapse&amp;#34;&lt;/span> : &lt;span style="color:#66d9ef">null&lt;/span>;
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> ToggleNavMenu()
+{
+collapseNavMenu = !collapseNavMenu;
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now &lt;code>counter&lt;/code> in the menu will be seen only by users with the role &lt;code>Administrator&lt;/code> and &lt;code>fetchdata&lt;/code> will be available to registered users.&lt;/p>
+&lt;p>In the &lt;code>index&lt;/code> page I will add messages to users to log in.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/&amp;#34;&lt;/span>
+&amp;lt;AuthorizeView&amp;gt;
+&amp;lt;Authorized&amp;gt;
+&amp;lt;h1&amp;gt;Thank you &lt;span style="color:#66d9ef">for&lt;/span> logging &lt;span style="color:#66d9ef">in&lt;/span>&amp;lt;/h1&amp;gt;
+&amp;lt;/Authorized&amp;gt;
+&amp;lt;NotAuthorized&amp;gt;
+&amp;lt;h3 class=&lt;span style="color:#e6db74">&amp;#34;text-danger&amp;#34;&lt;/span>&amp;gt;Log &lt;span style="color:#66d9ef">in&lt;/span> please&amp;lt;/h3&amp;gt;
+&amp;lt;/NotAuthorized&amp;gt;
+&amp;lt;/AuthorizeView&amp;gt;
+&amp;lt;AuthorizeView Roles=&lt;span style="color:#e6db74">&amp;#34;Administrator&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;Authorized&amp;gt;
+Welcome back Admin
+&amp;lt;/Authorized&amp;gt;
+&amp;lt;/AuthorizeView&amp;gt;
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>If the user is not logged in, there will be a message &lt;code>Log in please&lt;/code>. Otherwise, &lt;code>Thank you for logging in&lt;/code>. And if the user is an admin, there will be an additional message &lt;code>Welcome back Admin&lt;/code>.&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/ukU6vYG.gif" alt="RolesDemo2">&lt;/p></content></item><item><title>Blazor Forms</title><link>/2020/10/16/blazor-server-forms/</link><pubDate>Fri, 16 Oct 2020 16:09:30 +0300</pubDate><guid>/2020/10/16/blazor-server-forms/</guid><description>Hello!
 Let&amp;rsquo;s see how you can create a form in BlazorServer.
 Start with the model. I will create a file Models/User.cs, which will contain fields for the form.
-namespace BlazorLearn.Models { public class User { public string UserName { get; set; } public string LastName { get; set; } public string Email { get; set; } public int Age { get; set; } public string Gender { get; set; } } } For the model to be available in razor components, it must be added to _Imports.</description></item><item><title>Events in Blazor</title><link>/2020/10/15/events-in-blazor/</link><pubDate>Thu, 15 Oct 2020 11:37:56 +0300</pubDate><guid>/2020/10/15/events-in-blazor/</guid><description>Hello!
+namespace BlazorLearn.Models { public class User { public string UserName { get; set; } public string LastName { get; set; } public string Email { get; set; } public int Age { get; set; } public string Gender { get; set; } } } For the model to be available in razor components, it must be added to _Imports.</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>Let&amp;rsquo;s see how you can create a form in BlazorServer.&lt;br>
+Start with the model. I will create a file &lt;code>Models/User.cs&lt;/code>, which will contain fields for the form.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Models
+{
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">User&lt;/span>
+{
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> UserName { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> LastName { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> Email { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> Age { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> Gender { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>For the model to be available in razor components, it must be added to &lt;code>_Imports.razor&lt;/code> as &lt;code>@using BlazorLearn.Models&lt;/code>.&lt;/p>
+&lt;h2 id="basic-form">Basic Form&lt;/h2>
+&lt;p>Now I will create the razor component &lt;code>Register.razor&lt;/code> which will contain the form. To be able to open the form in the browser, I will add &lt;code>@page &amp;quot;/register&amp;quot;&lt;/code> at the top of the component. In the code section you need to create a new object of class &lt;code>User&lt;/code>, as well as an empty string in which the data will be written after the submission of the form. And I will add &lt;code>&amp;lt;p&amp;gt;@_formResult&amp;lt;/p&amp;gt;&lt;/code> to display the data entered after the submission.&lt;/p>
+&lt;p>Now let&amp;rsquo;s move on to the form itself.&lt;/p>
+&lt;p>In blazor, the form is created using the &lt;code>EditForm&lt;/code> tag to which you want to pass the model. We have an object of type &lt;code>User&lt;/code> which is created in the section &lt;code>code&lt;/code> - &lt;code>&amp;lt;EditForm Model = &amp;quot;_user&amp;quot;&amp;gt;&amp;lt;/EditForm&amp;gt;&lt;/code>. Now you need to add input fields to the form. For text tag will be &lt;code>&amp;lt;InputText&amp;gt;&amp;lt;/InputText&amp;gt;&lt;/code> for other data types have their own tags, for example &lt;code>InputNumber&lt;/code> for numeric types. I will add an input field for each element of the model. You can also call a method on events like &lt;code>OnValidSubmit&lt;/code> or &lt;code>OnInvalidSubmit&lt;/code>. For this purpose I will make a method &lt;code>HandleValidSubmit&lt;/code> which will write UserName and LastName from the form to empty string which was created in code section.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/register&amp;#34;&lt;/span>
+&amp;lt;p&amp;gt;@_formResult&amp;lt;/p&amp;gt;
+&amp;lt;EditForm Model=&lt;span style="color:#e6db74">&amp;#34;_user&amp;#34;&lt;/span> OnValidSubmit=&lt;span style="color:#e6db74">&amp;#34;HandleValidSubmit&amp;#34;&lt;/span> On&amp;gt;
+&amp;lt;InputText id=&lt;span style="color:#e6db74">&amp;#34;UserName&amp;#34;&lt;/span> @bind-Value=&lt;span style="color:#e6db74">&amp;#34;_user.UserName&amp;#34;&lt;/span>&amp;gt;&amp;lt;/InputText&amp;gt;
+&amp;lt;InputText id=&lt;span style="color:#e6db74">&amp;#34;LastName&amp;#34;&lt;/span> @bind-Value=&lt;span style="color:#e6db74">&amp;#34;_user.LastName&amp;#34;&lt;/span>&amp;gt;&amp;lt;/InputText&amp;gt;
+&amp;lt;InputText id=&lt;span style="color:#e6db74">&amp;#34;Email&amp;#34;&lt;/span> @bind-Value=&lt;span style="color:#e6db74">&amp;#34;_user.Email&amp;#34;&lt;/span>&amp;gt;&amp;lt;/InputText&amp;gt;
+&amp;lt;InputSelect id=&lt;span style="color:#e6db74">&amp;#34;Gender&amp;#34;&lt;/span> @bind-Value=&lt;span style="color:#e6db74">&amp;#34;_user.Gender&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;option &lt;span style="color:#66d9ef">value&lt;/span>=&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>&amp;gt;Select Gender&amp;lt;/option&amp;gt;
+&amp;lt;option &lt;span style="color:#66d9ef">value&lt;/span>=&lt;span style="color:#e6db74">&amp;#34;1&amp;#34;&lt;/span>&amp;gt;Male&amp;lt;/option&amp;gt;
+&amp;lt;option &lt;span style="color:#66d9ef">value&lt;/span>=&lt;span style="color:#e6db74">&amp;#34;2&amp;#34;&lt;/span>&amp;gt;Female&amp;lt;/option&amp;gt;
+&amp;lt;/InputSelect&amp;gt;
+&amp;lt;InputNumber id=&lt;span style="color:#e6db74">&amp;#34;Age&amp;#34;&lt;/span> @bind-Value=&lt;span style="color:#e6db74">&amp;#34;_user.Age&amp;#34;&lt;/span>&amp;gt;&amp;lt;/InputNumber&amp;gt;
+&amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;btn btn-primary&amp;#34;&lt;/span> type=&lt;span style="color:#e6db74">&amp;#34;submit&amp;#34;&lt;/span>&amp;gt;Submit&amp;lt;/button&amp;gt;
+&amp;lt;/EditForm&amp;gt;
+@code {
+&lt;span style="color:#66d9ef">private&lt;/span> User _user = &lt;span style="color:#66d9ef">new&lt;/span> User();
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> _formResult = &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>;
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> HandleValidSubmit()
+{
+_formResult = &lt;span style="color:#e6db74">$&amp;#34;{_user.UserName}, {_user.LastName} was created&amp;#34;&lt;/span>;
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/Iv4lXzE.gif" alt="FormNoValidation">&lt;/p>
+&lt;p>The form works, but in the Age field I entered -30 and no validation took place. Let&amp;rsquo;s now add validation&lt;/p>
+&lt;h2 id="form-validation">Form Validation&lt;/h2>
+&lt;p>Validation is added using attributes. Let&amp;rsquo;s go back to the model and make some changes.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> System.ComponentModel.DataAnnotations;
+&lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Models
+{
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">User&lt;/span>
+{
+&lt;span style="color:#a6e22e"> [Required]&lt;/span>
+&lt;span style="color:#a6e22e"> [StringLength(maximumLength: 20, MinimumLength = 5, ErrorMessage = &amp;#34;Invalid UserName length&amp;#34;)]&lt;/span>
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> UserName { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+&lt;span style="color:#a6e22e"> [Required]&lt;/span>
+&lt;span style="color:#a6e22e"> [StringLength(maximumLength: 10, MinimumLength = 5, ErrorMessage = &amp;#34;Invalid LastName length&amp;#34;)]&lt;/span>
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> LastName { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+&lt;span style="color:#a6e22e"> [Required]&lt;/span>
+&lt;span style="color:#a6e22e"> [EmailAddress(ErrorMessage = &amp;#34;Provide a valid email address&amp;#34;)]&lt;/span>
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> Email { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+&lt;span style="color:#a6e22e"> [Required]&lt;/span>
+&lt;span style="color:#a6e22e"> [Range(1, 100, ErrorMessage = &amp;#34;You need to enter valid range&amp;#34;)]&lt;/span>
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> Age { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> Gender { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Length validation is now enabled for &lt;code>UserName&lt;/code> and &lt;code>LestName&lt;/code> and these fields are also required. Email validation has been added for &lt;code>Email&lt;/code>. And for &lt;code>Age&lt;/code> added validation for number between 1 and 100. These fields are also required. No validation has been added for the &lt;code>Gender&lt;/code> field.&lt;/p>
+&lt;p>In order for validation to work place, you need to add a &lt;code>&amp;lt;DataAnnotationsValidator&amp;gt;&amp;lt;/DataAnnotationsValidator&amp;gt;&lt;/code> tag to the form.&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/fRcczCo.gif" alt="FormNoMessage">&lt;/p>
+&lt;p>Now the validation works but no messages are displayed when validation failed. I will add another tag &lt;code>&amp;lt;ValidationSummary&amp;gt;&amp;lt;/ValidationSummary&amp;gt;&lt;/code> to form. As a result, the form will look like this&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/register&amp;#34;&lt;/span>
+&amp;lt;p&amp;gt;@_formResult&amp;lt;/p&amp;gt;
+&amp;lt;EditForm Model=&lt;span style="color:#e6db74">&amp;#34;_user&amp;#34;&lt;/span> OnValidSubmit=&lt;span style="color:#e6db74">&amp;#34;HandleValidSubmit&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;DataAnnotationsValidator&amp;gt;&amp;lt;/DataAnnotationsValidator&amp;gt;
+&amp;lt;ValidationSummary&amp;gt;&amp;lt;/ValidationSummary&amp;gt;
+&amp;lt;label&amp;gt;
+First Name:
+&amp;lt;InputText id=&lt;span style="color:#e6db74">&amp;#34;UserName&amp;#34;&lt;/span> @bind-Value=&lt;span style="color:#e6db74">&amp;#34;_user.UserName&amp;#34;&lt;/span>&amp;gt;&amp;lt;/InputText&amp;gt;
+&amp;lt;/label&amp;gt;
+&amp;lt;label&amp;gt;
+Last Name:
+&amp;lt;InputText id=&lt;span style="color:#e6db74">&amp;#34;LastName&amp;#34;&lt;/span> @bind-Value=&lt;span style="color:#e6db74">&amp;#34;_user.LastName&amp;#34;&lt;/span>&amp;gt;&amp;lt;/InputText&amp;gt;
+&amp;lt;/label&amp;gt;
+&amp;lt;label&amp;gt;
+Email:
+&amp;lt;InputText id=&lt;span style="color:#e6db74">&amp;#34;Email&amp;#34;&lt;/span> @bind-Value=&lt;span style="color:#e6db74">&amp;#34;_user.Email&amp;#34;&lt;/span>&amp;gt;&amp;lt;/InputText&amp;gt;
+&amp;lt;/label&amp;gt;
+&amp;lt;label&amp;gt;
+Gender:
+&amp;lt;InputSelect id=&lt;span style="color:#e6db74">&amp;#34;Gender&amp;#34;&lt;/span> @bind-Value=&lt;span style="color:#e6db74">&amp;#34;_user.Gender&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;option &lt;span style="color:#66d9ef">value&lt;/span>=&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>&amp;gt;Select Gender&amp;lt;/option&amp;gt;
+&amp;lt;option &lt;span style="color:#66d9ef">value&lt;/span>=&lt;span style="color:#e6db74">&amp;#34;1&amp;#34;&lt;/span>&amp;gt;Male&amp;lt;/option&amp;gt;
+&amp;lt;option &lt;span style="color:#66d9ef">value&lt;/span>=&lt;span style="color:#e6db74">&amp;#34;2&amp;#34;&lt;/span>&amp;gt;Female&amp;lt;/option&amp;gt;
+&amp;lt;/InputSelect&amp;gt;
+&amp;lt;/label&amp;gt;
+&amp;lt;label&amp;gt;
+Age:
+&amp;lt;InputNumber id=&lt;span style="color:#e6db74">&amp;#34;Age&amp;#34;&lt;/span> @bind-Value=&lt;span style="color:#e6db74">&amp;#34;_user.Age&amp;#34;&lt;/span>&amp;gt;&amp;lt;/InputNumber&amp;gt;
+&amp;lt;/label&amp;gt;
+&amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;btn btn-primary&amp;#34;&lt;/span> type=&lt;span style="color:#e6db74">&amp;#34;submit&amp;#34;&lt;/span>&amp;gt;Submit&amp;lt;/button&amp;gt;
+&amp;lt;/EditForm&amp;gt;
+@code {
+&lt;span style="color:#66d9ef">private&lt;/span> User _user = &lt;span style="color:#66d9ef">new&lt;/span> User();
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> _formResult = &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>;
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> HandleValidSubmit()
+{
+_formResult = &lt;span style="color:#e6db74">$&amp;#34;{_user.UserName}, {_user.LastName} was created&amp;#34;&lt;/span>;
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/qgtdGQP.gif" alt="FinalResult">&lt;/p></content></item><item><title>Events in Blazor</title><link>/2020/10/15/events-in-blazor/</link><pubDate>Thu, 15 Oct 2020 11:37:56 +0300</pubDate><guid>/2020/10/15/events-in-blazor/</guid><description>Hello!
 Let&amp;rsquo;s see how you can transfer data from one component to another.
 Button I will create a component called ThumbButton which will contain two buttons. Depending on which button is pressed, the corresponding method will be called and the data will be transferred to the parrent component. @Onclick specifies which method will be executed when the button is pressed.
-To pass data to the parrent component, a property of type EventCallback&amp;lt;Thumb&amp;gt; is used, where Thumb is enum.</description></item><item><title>Component With Parameters</title><link>/2020/10/14/components-with-parameters/</link><pubDate>Wed, 14 Oct 2020 11:47:34 +0300</pubDate><guid>/2020/10/14/components-with-parameters/</guid><description>Hello!
+To pass data to the parrent component, a property of type EventCallback&amp;lt;Thumb&amp;gt; is used, where Thumb is enum.</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>Let&amp;rsquo;s see how you can transfer data from one component to another.&lt;/p>
+&lt;h2 id="button">Button&lt;/h2>
+&lt;p>I will create a component called &lt;code>ThumbButton&lt;/code> which will contain two buttons. Depending on which button is pressed, the corresponding method will be called and the data will be transferred to the parrent component. &lt;code>@Onclick&lt;/code> specifies which method will be executed when the button is pressed.&lt;/p>
+&lt;p>To pass data to the parrent component, a property of type &lt;code>EventCallback&amp;lt;Thumb&amp;gt;&lt;/code> is used, where &lt;code>Thumb&lt;/code> is enum. Instead of enum there can be any other type of data. In the method &lt;code>ThumbUp&lt;/code> and &lt;code>ThumbDown&lt;/code> I call &lt;code>OnVote.InvokeAsync&lt;/code> in which the corresponding enum is passed. This call passes data to the parrent component.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;btn btn-primary mx-2&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;ThumbUp&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;oi oi-thumb-up&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt;
+&amp;lt;/button&amp;gt;
+&amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;btn btn-danger mx-2&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;ThumbDown&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;oi oi-thumb-down&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt;
+&amp;lt;/button&amp;gt;
+@code {
+&lt;span style="color:#66d9ef">public&lt;/span> EventCallback&amp;lt;Thumb&amp;gt; OnVote { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> ThumbUp()
+{
+OnVote.InvokeAsync(Thumb.Up);
+}
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> ThumbDown()
+{
+OnVote.InvokeAsync(Thumb.Down);
+}
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">enum&lt;/span> Thumb
+{
+Up,
+Down
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>You can now reuse this component on any page.&lt;/p>
+&lt;h2 id="button-component-on-page">Button Component on page&lt;/h2>
+&lt;p>Now take the page &lt;code>Counter&lt;/code>. And add the newly created component with a button. Let&amp;rsquo;s start with the code. I will create two properties &lt;code>isThumbUp&lt;/code> and &lt;code>isThumbDown&lt;/code> of type &lt;code>bool&lt;/code>. Depending on which property is set to true, the corresponding data will be displayed. Also, if one of these properties becomes &lt;code>true&lt;/code>, the button will disappear.&lt;/p>
+&lt;p>To get data from a button component, you need a handler that will change the values ​​of &lt;code>isThumbUp&lt;/code> and &lt;code>isThumbDown&lt;/code> in response to the button press. It added in the same way as any other component. But method handler need to be added to retreive data &lt;code>&amp;lt;ThumbButton OnVote =&amp;quot;OnVotedHandler&amp;quot;&amp;gt;&amp;lt;/ThumbButton&amp;gt;&lt;/code>. The handler method must accept a parameter of the type received from the button. &lt;code>private void OnVotedHandler(ThumbButton.Thumb result)&lt;/code>. Depending on what value came to the input, the values ​​of the parameters &lt;code>isThumbUp&lt;/code> and &lt;code>isThumbDown&lt;/code> are set.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/counter&amp;#34;&lt;/span>
+&amp;lt;h1&amp;gt;Counter&amp;lt;/h1&amp;gt;
+&amp;lt;p&amp;gt;Current count: @currentCount&amp;lt;/p&amp;gt;
+&amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;btn btn-primary&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;IncrementCount&amp;#34;&lt;/span>&amp;gt;Click me&amp;lt;/button&amp;gt;
+@if (isThumbUp)
+{
+&amp;lt;p class=&lt;span style="color:#e6db74">&amp;#34;text-success&amp;#34;&lt;/span>&amp;gt;Your thumb &lt;span style="color:#66d9ef">is&lt;/span> up&amp;lt;/p&amp;gt;
+}
+@if (isThumbDown)
+{
+&amp;lt;p class=&lt;span style="color:#e6db74">&amp;#34;text-danger&amp;#34;&lt;/span>&amp;gt;Your thumb &lt;span style="color:#66d9ef">is&lt;/span> down&amp;lt;/p&amp;gt;
+}
+@if (!isThumbDown &amp;amp;&amp;amp; !isThumbUp)
+{
+&amp;lt;div class=&lt;span style="color:#e6db74">&amp;#34;row&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;div class=&lt;span style="color:#e6db74">&amp;#34;col-12&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;ThumbButton OnVote=&lt;span style="color:#e6db74">&amp;#34;OnVotedHandler&amp;#34;&lt;/span>&amp;gt;&amp;lt;/ThumbButton&amp;gt;
+&amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+}
+@code
+{
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">bool&lt;/span> isThumbUp = &lt;span style="color:#66d9ef">false&lt;/span>;
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">bool&lt;/span> isThumbDown = &lt;span style="color:#66d9ef">false&lt;/span>;
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> OnVotedHandler(ThumbButton.Thumb result)
+{
+&lt;span style="color:#66d9ef">if&lt;/span> (result == ThumbButton.Thumb.Up)
+{
+isThumbUp = &lt;span style="color:#66d9ef">true&lt;/span>;
+}
+&lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> (result == ThumbButton.Thumb.Down)
+{
+isThumbDown = &lt;span style="color:#66d9ef">true&lt;/span>;
+}
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/6Gu761a.gif" alt="EventDemo">&lt;/p></content></item><item><title>Component With Parameters</title><link>/2020/10/14/components-with-parameters/</link><pubDate>Wed, 14 Oct 2020 11:47:34 +0300</pubDate><guid>/2020/10/14/components-with-parameters/</guid><description>Hello!
 Let&amp;rsquo;s see how you can use components in BlazorServer and pass parameters to them. To do this, make two classes Student and School which will be displayed on the page. These classes will be in the Models folder.
-Model using System.Collections.Generic; namespace BlazorLearn.Models { public class School { public string Name { get; set; } public List&amp;lt;Student&amp;gt; Students { get; set; } } } namespace BlazorLearn.Models { public class Student { public string FirstName { get; set; } public string LastName { get; set; } } } Razor Component Now I will create razor components that will be responsible for displaying the data.</description></item><item><title>Create Page in Blazor</title><link>/2020/10/12/create-page-in-blazor/</link><pubDate>Mon, 12 Oct 2020 11:57:31 +0300</pubDate><guid>/2020/10/12/create-page-in-blazor/</guid><description>Hello!
+Model using System.Collections.Generic; namespace BlazorLearn.Models { public class School { public string Name { get; set; } public List&amp;lt;Student&amp;gt; Students { get; set; } } } namespace BlazorLearn.Models { public class Student { public string FirstName { get; set; } public string LastName { get; set; } } } Razor Component Now I will create razor components that will be responsible for displaying the data.</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>Let&amp;rsquo;s see how you can use components in BlazorServer and pass parameters to them.
+To do this, make two classes Student and School which will be displayed on the page. These classes will be in the Models folder.&lt;/p>
+&lt;h2 id="model">Model&lt;/h2>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> System.Collections.Generic;
+&lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Models
+{
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">School&lt;/span>
+{
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> Name { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+&lt;span style="color:#66d9ef">public&lt;/span> List&amp;lt;Student&amp;gt; Students { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Models
+{
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Student&lt;/span>
+{
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> FirstName { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> LastName { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="razor-component">Razor Component&lt;/h2>
+&lt;p>Now I will create razor components that will be responsible for displaying the data. In order for Models to be available for razor components you need to add &lt;code>@using BlazorLearn.Models&lt;/code>. This can be added to &lt;code>_Imports.razor&lt;/code> then Models will be available for all components or add to each component that needs a model.&lt;/p>
+&lt;p>You need to create three components, first will display information about students, the next will display information about the school and the last one will be responsible to combine both previous models.&lt;/p>
+&lt;p>Let&amp;rsquo;s start with the component - SchoolComponent&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;div&amp;gt;
+&amp;lt;p&amp;gt;@SchoolInfo.Name&amp;lt;/p&amp;gt;
+@StudentFragment
+&amp;lt;/div&amp;gt;
+@code {
+&lt;span style="color:#a6e22e"> [Parameter]&lt;/span>
+&lt;span style="color:#66d9ef">public&lt;/span> School SchoolInfo { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+&lt;span style="color:#a6e22e"> [Parameter]&lt;/span>
+&lt;span style="color:#66d9ef">public&lt;/span> RenderFragment StudentFragment { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>The amount of code is not so large, so I will store everything in .razor file sand will not create a separate class.
+In the code section, I create two properties, one of type &lt;code>School&lt;/code> which will contain information about the school and the other of type &lt;code>RenderFragment&lt;/code> this property will be responsible for displaying information about students.&lt;/p>
+&lt;p>The next component is StudentComponent&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;div&amp;gt;
+&amp;lt;p&amp;gt;@StudentInfo.FirstName @StudentInfo.LastName&amp;lt;/p&amp;gt;
+&amp;lt;/div&amp;gt;
+@code {
+&lt;span style="color:#a6e22e"> [Parameter]&lt;/span>
+&lt;span style="color:#66d9ef">public&lt;/span> Student StudentInfo { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>This component has one property of type &lt;code>Student&lt;/code> which will contain information about the student. The Html part will display the first and last name.&lt;/p>
+&lt;p>And now there is the last component that will also be a html page.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/school&amp;#34;&lt;/span>
+&amp;lt;div class=&lt;span style="color:#e6db74">&amp;#34;row&amp;#34;&lt;/span>&amp;gt;
+@foreach (&lt;span style="color:#66d9ef">var&lt;/span> s &lt;span style="color:#66d9ef">in&lt;/span> Schools)
+{
+&amp;lt;div class=&lt;span style="color:#e6db74">&amp;#34;col-4&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;SchoolComponent SchoolInfo=&lt;span style="color:#e6db74">&amp;#34;@s&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;StudentFragment&amp;gt;
+@if (s.Students.Count &amp;gt; &lt;span style="color:#ae81ff">0&lt;/span>)
+{
+&amp;lt;h3&amp;gt;Students&amp;lt;/h3&amp;gt;
+}
+@foreach (&lt;span style="color:#66d9ef">var&lt;/span> stu &lt;span style="color:#66d9ef">in&lt;/span> s.Students)
+{
+&amp;lt;StudentComponent StudentInfo=&lt;span style="color:#e6db74">&amp;#34;@stu&amp;#34;&lt;/span>&amp;gt;&amp;lt;/StudentComponent&amp;gt;
+}
+&amp;lt;/StudentFragment&amp;gt;
+&amp;lt;/SchoolComponent&amp;gt;
+&amp;lt;/div&amp;gt;
+}
+&amp;lt;/div&amp;gt;
+@code {
+&lt;span style="color:#66d9ef">public&lt;/span> List&amp;lt;School&amp;gt; Schools { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+&lt;span style="color:#66d9ef">public&lt;/span> AllSchools()
+{
+Schools = &lt;span style="color:#66d9ef">new&lt;/span> List&amp;lt;School&amp;gt;()
+{
+&lt;span style="color:#66d9ef">new&lt;/span> School()
+{
+Name = &lt;span style="color:#e6db74">&amp;#34;Hogwarts&amp;#34;&lt;/span>,
+Students = &lt;span style="color:#66d9ef">new&lt;/span> List&amp;lt;Student&amp;gt;()
+{
+&lt;span style="color:#66d9ef">new&lt;/span> Student()
+{
+FirstName = &lt;span style="color:#e6db74">&amp;#34;Harry&amp;#34;&lt;/span>,
+LastName = &lt;span style="color:#e6db74">&amp;#34;Potter&amp;#34;&lt;/span>
+},
+&lt;span style="color:#66d9ef">new&lt;/span> Student()
+{
+FirstName = &lt;span style="color:#e6db74">&amp;#34;Ron&amp;#34;&lt;/span>,
+LastName = &lt;span style="color:#e6db74">&amp;#34;Weasley&amp;#34;&lt;/span>
+}
+}
+},
+&lt;span style="color:#66d9ef">new&lt;/span> School()
+{
+Name = &lt;span style="color:#e6db74">&amp;#34;EmptySchool&amp;#34;&lt;/span>,
+Students = &lt;span style="color:#66d9ef">new&lt;/span> List&amp;lt;Student&amp;gt;()
+}
+};
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>There is more code here than in the previous components, so it makes sense to make it a separate class. But I&amp;rsquo;ll leave it here for now.&lt;br>
+In the code section one property of type &lt;code>List &amp;lt;School&amp;gt;&lt;/code> is created and in the constructor I add data to this list.&lt;/p>
+&lt;p>The Html part is more interesting, it starts with &lt;code>@page &amp;quot;/school&amp;quot;&lt;/code> and it allows to open in a browser endpoint /school and get to this page. Next is the rendering of components. To include a component on a page, simply specify &lt;code>&amp;lt;SchoolComponent&amp;gt;&amp;lt;/SchoolComponent&amp;gt;&lt;/code>. Since our SchoolComponent accepts the &lt;code>SchoolInfo&lt;/code> property, I can pass it as &lt;code>SchoolInfo=&lt;/code>. But this does not apply to the &lt;code>StudentFragment&lt;/code> property, it is passed as &lt;code>&amp;lt;StudentFragment&amp;gt;&amp;lt;/StudentFragment&amp;gt;&lt;/code>. Inside it, I display &lt;code>&amp;lt;h3&amp;gt;Students&amp;lt;/h3&amp;gt;&lt;/code> for each school if &lt;code>s.Students.Count&lt;/code> is greater than 0. And then I cycle through the students and display the component &lt;code>&amp;lt;StudentComponent StudentInfo=&amp;quot;@stu&amp;quot;&amp;gt;&amp;lt;/StudentComponent&amp;gt;&lt;/code> for each student.&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/kJ2Jn3v.png" alt="Students">&lt;/p></content></item><item><title>Create Page in Blazor</title><link>/2020/10/12/create-page-in-blazor/</link><pubDate>Mon, 12 Oct 2020 11:57:31 +0300</pubDate><guid>/2020/10/12/create-page-in-blazor/</guid><description>Hello!
 Today we will look at how you can create a new page in BlazorServer and add it to the menu.
 Add new page To do this, right-click on the Pages folder and select Razor Component...
 The following window will appear in which you need to enter the name and click Add.
 The page will be created with the following content:
-&amp;lt;h3&amp;gt;Test1&amp;lt;/h3&amp;gt; @code { } To be able to open it in the browser at the beginning of the file you need to add @page&amp;quot; /test1&amp;quot; where test1 is the name of the endpoint.</description></item><item><title>Blazor Server Logging</title><link>/2020/10/10/blazor-server-logging/</link><pubDate>Sat, 10 Oct 2020 19:01:49 +0300</pubDate><guid>/2020/10/10/blazor-server-logging/</guid><description>Hi!
+&amp;lt;h3&amp;gt;Test1&amp;lt;/h3&amp;gt; @code { } To be able to open it in the browser at the beginning of the file you need to add @page&amp;quot; /test1&amp;quot; where test1 is the name of the endpoint.</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>Today we will look at how you can create a new page in BlazorServer and add it to the menu.&lt;/p>
+&lt;h2 id="add-new-page">Add new page&lt;/h2>
+&lt;p>To do this, right-click on the &lt;code>Pages&lt;/code> folder and select &lt;code>Razor Component...&lt;/code>&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/LAORGw0.png" alt="RazorPages">&lt;/p>
+&lt;p>The following window will appear in which you need to enter the name and click &lt;code>Add&lt;/code>.&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/KpWZQZl.png" alt="AddPage">&lt;/p>
+&lt;p>The page will be created with the following content:&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;h3&amp;gt;Test1&amp;lt;/h3&amp;gt;
+@code {
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>To be able to open it in the browser at the beginning of the file you need to add &lt;code>@page&amp;quot; /test1&amp;quot;&lt;/code> where &lt;code>test1&lt;/code> is the name of the endpoint. And now run the application and enter it in the browser &lt;code>localhost:5001/test1&lt;/code>&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/5SioB5m.png" alt="TestPage1">&lt;/p>
+&lt;p>But our page is not displayed in the menu. Let&amp;rsquo;s add it now.&lt;/p>
+&lt;h2 id="add-page-in-menu">Add page in menu&lt;/h2>
+&lt;p>Select the file with menu &lt;code>Shared/NavMenu.razor&lt;/code>&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/y5KI2Pw.png" alt="Menu">&lt;/p>
+&lt;p>The file has the following content&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;div class=&lt;span style="color:#e6db74">&amp;#34;top-row pl-4 navbar navbar-dark&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;a class=&lt;span style="color:#e6db74">&amp;#34;navbar-brand&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>&amp;gt;BlazorLearn&amp;lt;/a&amp;gt;
+&amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;navbar-toggler&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;ToggleNavMenu&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;navbar-toggler-icon&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt;
+&amp;lt;/button&amp;gt;
+&amp;lt;/div&amp;gt;
+&amp;lt;div class=&lt;span style="color:#e6db74">&amp;#34;@NavMenuCssClass&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;ToggleNavMenu&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;ul class=&lt;span style="color:#e6db74">&amp;#34;nav flex-column&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;li class=&lt;span style="color:#e6db74">&amp;#34;nav-item px-3&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;NavLink class=&lt;span style="color:#e6db74">&amp;#34;nav-link&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span> Match=&lt;span style="color:#e6db74">&amp;#34;NavLinkMatch.All&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;oi oi-home&amp;#34;&lt;/span> aria-hidden=&lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt; Home
+&amp;lt;/NavLink&amp;gt;
+&amp;lt;/li&amp;gt;
+&amp;lt;li class=&lt;span style="color:#e6db74">&amp;#34;nav-item px-3&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;NavLink class=&lt;span style="color:#e6db74">&amp;#34;nav-link&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;counter&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;oi oi-plus&amp;#34;&lt;/span> aria-hidden=&lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt; Counter
+&amp;lt;/NavLink&amp;gt;
+&amp;lt;/li&amp;gt;
+&amp;lt;li class=&lt;span style="color:#e6db74">&amp;#34;nav-item px-3&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;NavLink class=&lt;span style="color:#e6db74">&amp;#34;nav-link&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;fetchdata&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;oi oi-list-rich&amp;#34;&lt;/span> aria-hidden=&lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt; Fetch data
+&amp;lt;/NavLink&amp;gt;
+&amp;lt;/li&amp;gt;
+&amp;lt;/ul&amp;gt;
+&amp;lt;/div&amp;gt;
+@code {
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">bool&lt;/span> collapseNavMenu = &lt;span style="color:#66d9ef">true&lt;/span>;
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> NavMenuCssClass =&amp;gt; collapseNavMenu ? &lt;span style="color:#e6db74">&amp;#34;collapse&amp;#34;&lt;/span> : &lt;span style="color:#66d9ef">null&lt;/span>;
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> ToggleNavMenu()
+{
+collapseNavMenu = !collapseNavMenu;
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>What we need is to add another element to &lt;code>@NavMenuCssClass&lt;/code>, it is this div that is responsible for displaying the menu elements. I will add the following item&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &amp;lt;li class=&lt;span style="color:#e6db74">&amp;#34;nav-item px-3&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;NavLink class=&lt;span style="color:#e6db74">&amp;#34;nav-link&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;test1&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;oi oi-aperture&amp;#34;&lt;/span> aria-hidden=&lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt; Test1
+&amp;lt;/NavLink&amp;gt;
+&amp;lt;/li&amp;gt;
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>href&lt;/code> - this is the endpoint of the page
+&lt;code>&amp;lt;span class=&amp;quot;oi oi-aperture&amp;quot; aria-hidden=&amp;quot;true&amp;quot;&amp;gt;&amp;lt;/span&amp;gt;&lt;/code> - adds an icon to the menu item&lt;/p>
+&lt;p>Start applications and get the result.&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/Jg9lW7t.png" alt="Test1Menu">&lt;/p>
+&lt;h2 id="folder-structure">Folder structure&lt;/h2>
+&lt;p>Pages can be organized into folders. For example, I will create a &lt;code>Demo&lt;/code> folder inside &lt;code>Pages&lt;/code> and move the page &lt;code>Test1.razor&lt;/code> to it.&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/3BZHInw.png" alt="DemoFolder">&lt;/p>
+&lt;p>After launching the application, the page will still work, even if we change it location. But with such a folder structure, it would be more logical to reflect this in the endopint. To do this in &lt;code>Test1.razor&lt;/code> i will change the endpoint from&lt;code>@page &amp;quot;/test1&amp;quot;&lt;/code>to&lt;code>@page &amp;quot;/demo/test1&amp;quot;&lt;/code>. Also, I need to make change in the &lt;code>NavMenu.razor&lt;/code> file from &lt;code>href = &amp;quot;test1&amp;quot;&lt;/code> to &lt;code>href = &amp;quot;demo/test1&amp;quot;&lt;/code>.&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/NtlshHK.png" alt="DemoPage">&lt;/p></content></item><item><title>Blazor Server Logging</title><link>/2020/10/10/blazor-server-logging/</link><pubDate>Sat, 10 Oct 2020 19:01:49 +0300</pubDate><guid>/2020/10/10/blazor-server-logging/</guid><description>Hi!
 Today we will see how to configure logging in BlazorServer. Immediately after creating a project, the appsettings.json file will be in the root of the project.
-{ &amp;#34;Logging&amp;#34;: { &amp;#34;LogLevel&amp;#34;: { &amp;#34;Default&amp;#34;: &amp;#34;Information&amp;#34;, &amp;#34;Microsoft&amp;#34;: &amp;#34;Warning&amp;#34;, &amp;#34;Microsoft.Hosting.Lifetime&amp;#34;: &amp;#34;Information&amp;#34; } }, &amp;#34;AllowedHosts&amp;#34;: &amp;#34;*&amp;#34; } This is where logging settings are set. LogLevel starts with Default which have value Information. This means that the default log level will be Information. Next is Microsoft with the Warning level, respectively for namespace Microsoft the login level will be Warning.</description></item><item><title>Blazor Dependency Injection</title><link>/2020/10/07/blazor-server-dependency-injection/</link><pubDate>Wed, 07 Oct 2020 21:15:25 +0300</pubDate><guid>/2020/10/07/blazor-server-dependency-injection/</guid><description>Hi!
+{ &amp;#34;Logging&amp;#34;: { &amp;#34;LogLevel&amp;#34;: { &amp;#34;Default&amp;#34;: &amp;#34;Information&amp;#34;, &amp;#34;Microsoft&amp;#34;: &amp;#34;Warning&amp;#34;, &amp;#34;Microsoft.Hosting.Lifetime&amp;#34;: &amp;#34;Information&amp;#34; } }, &amp;#34;AllowedHosts&amp;#34;: &amp;#34;*&amp;#34; } This is where logging settings are set. LogLevel starts with Default which have value Information. This means that the default log level will be Information. Next is Microsoft with the Warning level, respectively for namespace Microsoft the login level will be Warning.</description><content>&lt;p>Hi!&lt;/p>
+&lt;p>Today we will see how to configure logging in BlazorServer.
+Immediately after creating a project, the &lt;code>appsettings.json&lt;/code> file will be in the root of the project.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
+&lt;span style="color:#f92672">&amp;#34;Logging&amp;#34;&lt;/span>: {
+&lt;span style="color:#f92672">&amp;#34;LogLevel&amp;#34;&lt;/span>: {
+&lt;span style="color:#f92672">&amp;#34;Default&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Information&amp;#34;&lt;/span>,
+&lt;span style="color:#f92672">&amp;#34;Microsoft&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Warning&amp;#34;&lt;/span>,
+&lt;span style="color:#f92672">&amp;#34;Microsoft.Hosting.Lifetime&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Information&amp;#34;&lt;/span>
+}
+},
+&lt;span style="color:#f92672">&amp;#34;AllowedHosts&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;*&amp;#34;&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>This is where logging settings are set. &lt;code>LogLevel&lt;/code> starts with &lt;code>Default&lt;/code> which have value &lt;code>Information&lt;/code>. This means that the default log level will be &lt;code>Information&lt;/code>. Next is &lt;code>Microsoft&lt;/code> with the &lt;code>Warning&lt;/code> level, respectively for namespace &lt;code>Microsoft&lt;/code> the login level will be &lt;code>Warning&lt;/code>. And at the very end &lt;code>Microsoft.Hosting.Lifetime&lt;/code> with value &lt;code>Information&lt;/code>. This means that for all namespace &lt;code>Microsoft&lt;/code> except part &lt;code>Microsoft.Hosting.Lifetime&lt;/code> which is part of &lt;code>Microsoft&lt;/code> namespace log level will be &lt;code>Warning&lt;/code>.&lt;/p>
+&lt;p>If you change the logging settings in this file and run the application, nothing will change. And all because &lt;code>launchSettings.json&lt;/code> hase environement variable &lt;code>&amp;quot;ASPNETCORE_ENVIRONMENT&amp;quot;: &amp;quot;Development&amp;quot;&lt;/code>. And for development environment another file is used - &lt;code>appsettings.Development.json&lt;/code>. You can find it by clicking on the arrow next to &lt;code>appsettings.json&lt;/code>.&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/ecvHX8b.png" alt="DevJson">&lt;/p>
+&lt;p>I will change all levels to &lt;code>Debug&lt;/code> in &lt;code>appsettings.Development.json&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">{
+&lt;span style="color:#e6db74">&amp;#34;DetailedErrors&amp;#34;&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;Logging&amp;#34;&lt;/span>: {
+&lt;span style="color:#e6db74">&amp;#34;LogLevel&amp;#34;&lt;/span>: {
+&lt;span style="color:#e6db74">&amp;#34;Default&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Debug&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;Microsoft&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Debug&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;Microsoft.Hosting.Lifetime&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Debug&amp;#34;&lt;/span>
+}
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>After that I will launch the application. And there will be a lot of logs in the console.&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/zSiopdQ.png" alt="Debug">&lt;br>
+If I need to include from all logs only any concrete i can do it.
+For example, I need to see logs from &lt;code>Microsoft.AspNetCore.Components.RenderTree.Renderer&lt;/code> in &lt;code>Debug&lt;/code> and all others in info. To do this, I will add it to &lt;code>appsettings.Development.json&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">{
+&lt;span style="color:#e6db74">&amp;#34;DetailedErrors&amp;#34;&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;Logging&amp;#34;&lt;/span>: {
+&lt;span style="color:#e6db74">&amp;#34;LogLevel&amp;#34;&lt;/span>: {
+&lt;span style="color:#e6db74">&amp;#34;Default&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Information&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;Microsoft&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Warning&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;Microsoft.Hosting.Lifetime&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Information&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;Microsoft.AspNetCore.Components.RenderTree.Renderer&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Debug&amp;#34;&lt;/span>
+}
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>After that logs will look like this
+&lt;img src="https://i.imgur.com/VSvNmol.png" alt="Debug2">&lt;/p>
+&lt;h2 id="logging-from-razor-pages">Logging from razor pages&lt;/h2>
+&lt;p>Let&amp;rsquo;s try to send a log message from razor pages. For example, take the page &lt;code>Counter.razor&lt;/code>.
+To use the logger, you must first import the desired namespace &lt;code>@using Microsoft.Extensions.Logging&lt;/code>. And with DI, inject the logger in the page &lt;code>@inject ILogger&amp;lt;Counter&amp;gt; Logger&lt;/code>. Now you can use logger.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/counter&amp;#34;&lt;/span>
+@using Microsoft.Extensions.Logging
+@inject ILogger&amp;lt;Counter&amp;gt; Logger
+&amp;lt;h1&amp;gt;Counter&amp;lt;/h1&amp;gt;
+&amp;lt;p&amp;gt;Current count: @currentCount&amp;lt;/p&amp;gt;
+&amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;btn btn-primary&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;IncrementCount&amp;#34;&lt;/span>&amp;gt;Click me&amp;lt;/button&amp;gt;
+@code {
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> currentCount = &lt;span style="color:#ae81ff">0&lt;/span>;
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> IncrementCount()
+{
+currentCount++;
+Logger.LogInformation(&lt;span style="color:#e6db74">&amp;#34;Button clicked, current count #{count}&amp;#34;&lt;/span>, currentCount);
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Every time I press the &lt;code>Click me&lt;/code> button. The message appears in the console.
+&lt;img src="https://i.imgur.com/85IThm0.png" alt="Clicked">&lt;/p>
+&lt;h2 id="logging-from-class">Logging from class&lt;/h2>
+&lt;p>Similarly, log messages can be sent from classes using DI. First, the object &lt;code>private readonly ILogger&amp;lt;WeatherForecastService&amp;gt; _logger;&lt;/code> is created and with the help of the constructor i inject logger.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> Microsoft.Extensions.Logging;
+&lt;span style="color:#66d9ef">using&lt;/span> System;
+&lt;span style="color:#66d9ef">using&lt;/span> System.Linq;
+&lt;span style="color:#66d9ef">using&lt;/span> System.Threading.Tasks;
+&lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Data
+{
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">WeatherForecastService&lt;/span>
+{
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">readonly&lt;/span> ILogger&amp;lt;WeatherForecastService&amp;gt; _logger;
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">readonly&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>[] Summaries = &lt;span style="color:#66d9ef">new&lt;/span>[]
+{
+&lt;span style="color:#e6db74">&amp;#34;Freezing&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Bracing&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Chilly&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Cool&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Mild&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Warm&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Balmy&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Hot&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Sweltering&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Scorching&amp;#34;&lt;/span>
+};
+&lt;span style="color:#66d9ef">public&lt;/span> WeatherForecastService(ILogger&amp;lt;WeatherForecastService&amp;gt; logger)
+{
+_logger = logger;
+}
+&lt;span style="color:#66d9ef">public&lt;/span> Task&amp;lt;WeatherForecast[]&amp;gt; GetForecastAsync(DateTime startDate)
+{
+_logger.LogInformation(&lt;span style="color:#e6db74">&amp;#34;WeatherForecastService called&amp;#34;&lt;/span>);
+&lt;span style="color:#66d9ef">var&lt;/span> rng = &lt;span style="color:#66d9ef">new&lt;/span> Random();
+&lt;span style="color:#66d9ef">return&lt;/span> Task.FromResult(Enumerable.Range(&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">5&lt;/span>).Select(index =&amp;gt; &lt;span style="color:#66d9ef">new&lt;/span> WeatherForecast
+{
+Date = startDate.AddDays(index),
+TemperatureC = rng.Next(&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">100&lt;/span>),
+Summary = Summaries[rng.Next(Summaries.Length)]
+}).ToArray());
+}
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/x2iCOZw.png" alt="Class">&lt;/p>
+&lt;h2 id="logger-configuration-from-code">Logger configuration from code&lt;/h2>
+&lt;p>If necessary, the logger can be configured from code and not from &lt;code>application.json&lt;/code>. This can be done in &lt;code>Program.cs&lt;/code> in the &lt;code>CreateHostBuilder&lt;/code> method. By default, it looks like this.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> IHostBuilder CreateHostBuilder(&lt;span style="color:#66d9ef">string&lt;/span>[] args) =&amp;gt;
+Host.CreateDefaultBuilder(args)
+.ConfigureWebHostDefaults(webBuilder =&amp;gt;
+{
+webBuilder.UseStartup&amp;lt;Startup&amp;gt;();
+});
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>To configure the logger to &lt;code>CreateDefaultBuilder&lt;/code> you need to add &lt;code>ConfigureLogging&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> IHostBuilder CreateHostBuilder(&lt;span style="color:#66d9ef">string&lt;/span>[] args) =&amp;gt;
+Host.CreateDefaultBuilder(args)
+.ConfigureLogging(logger =&amp;gt;
+{
+logger.ClearProviders();
+logger.SetMinimumLevel(LogLevel.Information);
+logger.AddConsole();
+})
+.ConfigureWebHostDefaults(webBuilder =&amp;gt;
+{
+webBuilder.UseStartup&amp;lt;Startup&amp;gt;();
+});
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>logger.ClearProviders()&lt;/code> - clears all previous settings. And then you can immediately add another log provider, such as Seriolog or any other.
+&lt;code>logger.SetMinimumLevel(LogLevel.Information)&lt;/code> - indicates the minimum level log.
+&lt;code>logger.AddConsole()&lt;/code> - adds log output to the console.&lt;/p></content></item><item><title>Blazor Dependency Injection</title><link>/2020/10/07/blazor-server-dependency-injection/</link><pubDate>Wed, 07 Oct 2020 21:15:25 +0300</pubDate><guid>/2020/10/07/blazor-server-dependency-injection/</guid><description>Hi!
 Today we will talk about how dependency injection works in blazor server. If you are familiar with dependency injection in asp.net core then there are no differences.
 Dependency injection is configured in Startup.cs at the root of the project. After creating the project, it will look like this
-public void ConfigureServices(IServiceCollection services) { services.AddRazorPages(); services.AddServerSideBlazor(); services.AddSingleton&amp;lt;WeatherForecastService&amp;gt;(); } Let&amp;rsquo;s see what happens here. services.AddRazorPages() - adds razor pages support to the project services.</description></item><item><title>Blazor Server Error Handling</title><link>/2020/10/06/blazor-server-error-handling/</link><pubDate>Tue, 06 Oct 2020 19:31:30 +0300</pubDate><guid>/2020/10/06/blazor-server-error-handling/</guid><description>Hello!
+public void ConfigureServices(IServiceCollection services) { services.AddRazorPages(); services.AddServerSideBlazor(); services.AddSingleton&amp;lt;WeatherForecastService&amp;gt;(); } Let&amp;rsquo;s see what happens here. services.AddRazorPages() - adds razor pages support to the project services.</description><content>&lt;p>Hi!&lt;/p>
+&lt;p>Today we will talk about how dependency injection works in blazor server.
+If you are familiar with dependency injection in asp.net core then there are no differences.&lt;/p>
+&lt;p>Dependency injection is configured in &lt;code>Startup.cs&lt;/code> at the root of the project. After creating the project, it will look like this&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> ConfigureServices(IServiceCollection services)
+{
+services.AddRazorPages();
+services.AddServerSideBlazor();
+services.AddSingleton&amp;lt;WeatherForecastService&amp;gt;();
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Let&amp;rsquo;s see what happens here.
+&lt;code>services.AddRazorPages()&lt;/code> - adds razor pages support to the project
+&lt;code>services.AddServerSideBlazor()&lt;/code> - adds blazor server support to the project
+&lt;code>services.AddSingleton &amp;lt;WeatherForecastService&amp;gt;()&lt;/code> - registers the &lt;code>WeatherForecastService&lt;/code> class in DI.&lt;/p>
+&lt;p>&lt;code>WeatherForecastService&lt;/code> in the example is added as &lt;code>Singleton&lt;/code>. Other ways to add is &lt;code>Scoped&lt;/code> and &lt;code>Transient&lt;/code>. We will look at them in more detail below.&lt;/p>
+&lt;p>Let&amp;rsquo;s try to add a new class in DI and check how it works with different types (Singleton, Scoped, Transient).&lt;/p>
+&lt;p>To do this, in the &lt;code>Data&lt;/code> folder, create a file that will generate a random number.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> System;
+&lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Data
+{
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">RandomData&lt;/span>
+{
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">readonly&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> randomData;
+&lt;span style="color:#66d9ef">public&lt;/span> RandomData()
+{
+Random random = &lt;span style="color:#66d9ef">new&lt;/span> Random();
+randomData = random.Next();
+}
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> GetRandomData()
+{
+&lt;span style="color:#66d9ef">return&lt;/span> randomData;
+}
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>In the &lt;code>RandomData&lt;/code> class, a random number is generated in the constructor. And the &lt;code>GetRandomData&lt;/code> method returns it. In order to use a class in DI you need to create an interface. You can use it without interface. But thanks to the interface, you can easily replace this class with another implementation. This is how interface will look like.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Data
+{
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">interface&lt;/span> IRandomData
+{
+&lt;span style="color:#66d9ef">int&lt;/span> GetRandomData();
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="singleton">Singleton&lt;/h2>
+&lt;p>The class can now be registered in DI. Let&amp;rsquo;s start with Singleton. To do this in the &lt;code>Startup.cs&lt;/code> file in the method &lt;code>ConfigureServices&lt;/code> you need to add:&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">services.AddSingleton&amp;lt;IRandomData, RandomData&amp;gt;();
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now every time someone uses the &lt;code>IRandomData&lt;/code> interface, &lt;code>RandomData&lt;/code> will be called.
+Now in &lt;code>index.razor&lt;/code> I will call the &lt;code>GetRandomNumber&lt;/code> method.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/&amp;#34;&lt;/span>
+@using BlazorLearn.Data
+@inject IRandomData RandomData
+&amp;lt;h1&amp;gt;Hello, world!&amp;lt;/h1&amp;gt;
+Welcome to your &lt;span style="color:#66d9ef">new&lt;/span> app.
+Your random number &lt;span style="color:#66d9ef">is&lt;/span> @RandomData.GetRandomData()
+&amp;lt;SurveyPrompt Title=&lt;span style="color:#e6db74">&amp;#34;How is Blazor working for you?&amp;#34;&lt;/span> /&amp;gt;
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>@inject IRandomData RandomData&lt;/code> call constructor of our class.&lt;/p>
+&lt;p>Start application.
+&lt;img src="https://i.imgur.com/rentHkC.gif" alt="Singletone">&lt;/p>
+&lt;p>If I open the application in another browser or refresh page the random number will remain the same. This is how singleton works. The object is created once at the start of the application.&lt;/p>
+&lt;h2 id="scoped">Scoped&lt;/h2>
+&lt;p>Let&amp;rsquo;s see now how scoped works. Replace &lt;code>AddSingleton&lt;/code> with &lt;code>AddScoped&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">services.AddScoped&amp;lt;IRandomData, RandomData&amp;gt;();
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>And run the application. Now if I go to another page of the site and then go back the number will remain the same. But if I refresh the page, the number will change. Scoped objects are created once for each query.&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/kYOcBXY.gif" alt="Scoped">&lt;/p>
+&lt;h2 id="transient">Transient&lt;/h2>
+&lt;p>And the last type is &lt;code>Transient&lt;/code>. Now replace &lt;code>AddScoped&lt;/code> with &lt;code>AddTransient&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">services.AddTransient&amp;lt;IRandomData, RandomData&amp;gt;();
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Let&amp;rsquo;s run application. And now even if you switch from one tab to another the number changes every time.&lt;br>
+&lt;img src="https://i.imgur.com/ipleQaj.gif" alt="Transient">&lt;/p>
+&lt;h2 id="di-in-class">DI in Class&lt;/h2>
+&lt;p>Finally, let&amp;rsquo;s see how you can use the &lt;code>RandomData&lt;/code> class in another class with DI.
+For example, take &lt;code>Data/WeatherForecastService.cs&lt;/code>. In this class you need to make a variable of type &lt;code>IRandomData&lt;/code> and initialize it in the constructor. And now it can be used anywhere in this class.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> System;
+&lt;span style="color:#66d9ef">using&lt;/span> System.Linq;
+&lt;span style="color:#66d9ef">using&lt;/span> System.Threading.Tasks;
+&lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Data
+{
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">WeatherForecastService&lt;/span>
+{
+&lt;span style="color:#66d9ef">private&lt;/span> IRandomData _randomData;
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">readonly&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>[] Summaries = &lt;span style="color:#66d9ef">new&lt;/span>[]
+{
+&lt;span style="color:#e6db74">&amp;#34;Freezing&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Bracing&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Chilly&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Cool&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Mild&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Warm&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Balmy&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Hot&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Sweltering&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Scorching&amp;#34;&lt;/span>
+};
+&lt;span style="color:#66d9ef">public&lt;/span> WeatherForecastService(IRandomData randomData)
+{
+_randomData = randomData;
+}
+&lt;span style="color:#66d9ef">public&lt;/span> Task&amp;lt;WeatherForecast[]&amp;gt; GetForecastAsync(DateTime startDate)
+{
+&lt;span style="color:#66d9ef">var&lt;/span> rng = &lt;span style="color:#66d9ef">new&lt;/span> Random();
+&lt;span style="color:#66d9ef">return&lt;/span> Task.FromResult(Enumerable.Range(&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">5&lt;/span>).Select(index =&amp;gt; &lt;span style="color:#66d9ef">new&lt;/span> WeatherForecast
+{
+Date = startDate.AddDays(index),
+TemperatureC = _randomData.GetRandomData(),
+Summary = Summaries[rng.Next(Summaries.Length)]
+}).ToArray());
+}
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>_randomData.GetRandomData()&lt;/code> result I will write in variable &lt;code>TemperatureC&lt;/code>.Start application again. And on the &lt;code>FetchData&lt;/code> page, the temperature will be generated using &lt;code>GetRandomData&lt;/code>.&lt;br>
+&lt;img src="https://i.imgur.com/1Z4KBZm.png" alt="RandomData">&lt;/p>
+&lt;p>It is important that DI &lt;code>WeatherForecastService&lt;/code> and &lt;code>RandomData&lt;/code> are added equally.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> services.AddScoped&amp;lt;WeatherForecastService&amp;gt;();
+services.AddScoped&amp;lt;IRandomData, RandomData&amp;gt;();
+&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Blazor Server Error Handling</title><link>/2020/10/06/blazor-server-error-handling/</link><pubDate>Tue, 06 Oct 2020 19:31:30 +0300</pubDate><guid>/2020/10/06/blazor-server-error-handling/</guid><description>Hello!
 Today we will look at how you can change the error messages in Blazor Server. There are two types of errors page does not exist and exception. You can change the message that will be displayed in both cases. The first thing to consider is how to change the message displayed to the user in the case of exception.
-Exception Error In the Pages/_Host.cshtml file, this section is responsible for displaying the error:</description></item><item><title>Blazor Server Routing</title><link>/2020/10/01/blazor-server-routing/</link><pubDate>Thu, 01 Oct 2020 21:09:00 +0300</pubDate><guid>/2020/10/01/blazor-server-routing/</guid><description>Hello! Today I want to tell you how routing works in Blazor Server.
+Exception Error In the Pages/_Host.cshtml file, this section is responsible for displaying the error:</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>Today we will look at how you can change the error messages in Blazor Server. There are two types of errors page does not exist and exception. You can change the message that will be displayed in both cases.
+The first thing to consider is how to change the message displayed to the user in the case of exception.&lt;/p>
+&lt;h2 id="exception-error">Exception Error&lt;/h2>
+&lt;p>In the &lt;code>Pages/_Host.cshtml&lt;/code> file, this section is responsible for displaying the error:&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &amp;lt;div id=&lt;span style="color:#e6db74">&amp;#34;blazor-error-ui&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;environment include=&lt;span style="color:#e6db74">&amp;#34;Staging,Production&amp;#34;&lt;/span>&amp;gt;
+An error has occurred. This application may no longer respond until reloaded.
+&amp;lt;/environment&amp;gt;
+&amp;lt;environment include=&lt;span style="color:#e6db74">&amp;#34;Development&amp;#34;&lt;/span>&amp;gt;
+An unhandled exception has occurred. See browser dev tools &lt;span style="color:#66d9ef">for&lt;/span> details.
+&amp;lt;/environment&amp;gt;
+&amp;lt;a href=&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span> class=&lt;span style="color:#e6db74">&amp;#34;reload&amp;#34;&lt;/span>&amp;gt;Reload&amp;lt;/a&amp;gt;
+&amp;lt;a class=&lt;span style="color:#e6db74">&amp;#34;dismiss&amp;#34;&lt;/span>&amp;gt;&lt;span style="color:#960050;background-color:#1e0010">🗙&lt;/span>&amp;lt;/a&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Depending on &lt;code>environment&lt;/code> the required error is displayed. &lt;code>environment&lt;/code> is determined by the environment variable &lt;code>ASPNETCORE_ENVIRONMENT&lt;/code> if it is not specified then &lt;code>environment&lt;/code> corresponds to &lt;code>Production&lt;/code>. During development by default in &lt;code>Properties\launchSettings.json&lt;/code> it is specified as &lt;code>Development&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
+&lt;span style="color:#f92672">&amp;#34;BlazorLearn&amp;#34;&lt;/span>: {
+&lt;span style="color:#f92672">&amp;#34;commandName&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Project&amp;#34;&lt;/span>,
+&lt;span style="color:#f92672">&amp;#34;launchBrowser&amp;#34;&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>,
+&lt;span style="color:#f92672">&amp;#34;applicationUrl&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;https://localhost:5001;http://localhost:5000&amp;#34;&lt;/span>,
+&lt;span style="color:#f92672">&amp;#34;environmentVariables&amp;#34;&lt;/span>: {
+&lt;span style="color:#f92672">&amp;#34;ASPNETCORE_ENVIRONMENT&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Development&amp;#34;&lt;/span>
+}
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now I will change the message for the Development environment and get the following message.&lt;br>
+&lt;img src="https://i.imgur.com/7Z9XK94.png" alt="Error">&lt;/p>
+&lt;h2 id="page-not-found-error">Page not found error&lt;/h2>
+&lt;p>The message that is displayed when the page is not found is in the file &lt;code>App.razor&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &amp;lt;NotFound&amp;gt;
+&amp;lt;LayoutView Layout=&lt;span style="color:#e6db74">&amp;#34;@typeof(MainLayout)&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;p&amp;gt;Sorry, there&lt;span style="color:#960050;background-color:#1e0010">&amp;#39;&lt;/span>s nothing at &lt;span style="color:#66d9ef">this&lt;/span> address.&amp;lt;/p&amp;gt;
+&amp;lt;/LayoutView&amp;gt;
+&amp;lt;/NotFound&amp;gt;
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>There can be both a message and an entire html page. Replacing the text of the message I get:&lt;br>
+&lt;img src="https://i.imgur.com/XyheYSU.png" alt="NotExist">&lt;/p></content></item><item><title>Blazor Server Routing</title><link>/2020/10/01/blazor-server-routing/</link><pubDate>Thu, 01 Oct 2020 21:09:00 +0300</pubDate><guid>/2020/10/01/blazor-server-routing/</guid><description>Hello! Today I want to tell you how routing works in Blazor Server.
 Routing starts in the Startup.cs file. The following code will responsible for it
 app.UseRouting(); app.UseEndpoints(endpoints =&amp;gt; { endpoints.MapBlazorHub(); endpoints.MapFallbackToPage(&amp;#34;/_Host&amp;#34;); }); app.UseRouting(); came from asp.net and adds route matching to the middleware pipeline. This middleware looks at the set of endpoints defined in the app, and selects the best match based on the request.
-app.UseEndpoints() adds endpoint execution to the middleware pipeline.</description></item></channel></rss>
+app.UseEndpoints() adds endpoint execution to the middleware pipeline.</description><content>&lt;p>Hello!
+Today I want to tell you how routing works in Blazor Server.&lt;br>
+Routing starts in the &lt;code>Startup.cs&lt;/code> file. The following code will responsible for it&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> app.UseRouting();
+app.UseEndpoints(endpoints =&amp;gt;
+{
+endpoints.MapBlazorHub();
+endpoints.MapFallbackToPage(&lt;span style="color:#e6db74">&amp;#34;/_Host&amp;#34;&lt;/span>);
+});
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>app.UseRouting();&lt;/code> came from asp.net and adds route matching to the middleware pipeline. This middleware looks at the set of endpoints defined in the app, and selects the best match based on the request.&lt;br>
+&lt;code>app.UseEndpoints()&lt;/code> adds endpoint execution to the middleware pipeline. It runs the delegate associated with the selected endpoint.&lt;br>
+In the middle of &lt;code>app.UseEndpoints()&lt;/code> indicates &lt;code>endpoints.MapBlazorHub()&lt;/code> here is set up SignalR routing. Setup is done automatically and you do not need to change anything here.
+The next element is &lt;code>endpoints.MapFallbackToPage(&amp;quot;/_ Host&amp;quot;)&lt;/code> a backup route, it has the lowest priority, called in the case that no other more suitable routes are found. The parameters for &lt;code>MapFallbackToPage&lt;/code> specify &lt;code>/_Host&lt;/code>. This is the file to which it will be redirected.
+This file is located under &lt;code>Pages&lt;/code> folder &lt;code>_Host.cshtml&lt;/code>. It looks like regular html with some differences. The beginning of the file is indicated&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/&amp;#34;&lt;/span>
+@namespace BlazorLearn.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+&lt;span style="color:#960050;background-color:#1e0010">@&lt;/span>{
+Layout = &lt;span style="color:#66d9ef">null&lt;/span>;
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>@page &amp;quot;/&amp;quot;&lt;/code> indicate that this file will be opened if the url is accessed &lt;code>/&lt;/code>&lt;/p>
+&lt;p>The body renders the pages&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &amp;lt;app&amp;gt;
+&amp;lt;component type=&lt;span style="color:#e6db74">&amp;#34;typeof(App)&amp;#34;&lt;/span> render-mode=&lt;span style="color:#e6db74">&amp;#34;ServerPrerendered&amp;#34;&lt;/span> /&amp;gt;
+&amp;lt;/app&amp;gt;
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Here it is specified that we render and in what mode. &lt;code>ServerPrerendered&lt;/code> renders first on the server and then displays to the client. &lt;code>App&lt;/code> points to another &lt;code>App.razor&lt;/code> file. This file determines which layout to display.
+If &lt;code>routeData&lt;/code> exists corresponding page displayed, if this page has no layout then &lt;code>MainLayout&lt;/code> will be used. If routeData does not exist then &lt;code>MainLayout&lt;/code> and the text &lt;code>Sorry, there's nothing at this address.&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;Router AppAssembly=&lt;span style="color:#e6db74">&amp;#34;@typeof(Program).Assembly&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;Found Context=&lt;span style="color:#e6db74">&amp;#34;routeData&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;RouteView RouteData=&lt;span style="color:#e6db74">&amp;#34;@routeData&amp;#34;&lt;/span> DefaultLayout=&lt;span style="color:#e6db74">&amp;#34;@typeof(MainLayout)&amp;#34;&lt;/span> /&amp;gt;
+&amp;lt;/Found&amp;gt;
+&amp;lt;NotFound&amp;gt;
+&amp;lt;LayoutView Layout=&lt;span style="color:#e6db74">&amp;#34;@typeof(MainLayout)&amp;#34;&lt;/span>&amp;gt;
+&amp;lt;p&amp;gt;Sorry, there&lt;span style="color:#960050;background-color:#1e0010">&amp;#39;&lt;/span>s nothing at &lt;span style="color:#66d9ef">this&lt;/span> address.&amp;lt;/p&amp;gt;
+&amp;lt;/LayoutView&amp;gt;
+&amp;lt;/NotFound&amp;gt;
+&amp;lt;/Router&amp;gt;
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>In the blazor server project there are several pages created initially. These are Counter, FetchData and Index. Each of them has a &lt;code>@page&lt;/code> directive at the beginning. For counter it will be &lt;code>@page &amp;quot;/counter&amp;quot;&lt;/code> for FetchData it will be &lt;code>@page &amp;quot;/fetchdata&amp;quot;&lt;/code> and for Index &lt;code>@page &amp;quot;/&amp;quot;&lt;/code>. So if you open any of these endpoints in the browser, the corresponding page will be opened.&lt;br>
+Multiple &lt;code>@page&lt;/code> values ​​can be specified for a single page. For example for Counter you can add&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/counter&amp;#34;&lt;/span>
+@page &lt;span style="color:#e6db74">&amp;#34;/count&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>And now the Counter page will open for both urls.&lt;br>
+&lt;img src="https://i.imgur.com/J4m8Off.png" alt="Count">&lt;/p>
+&lt;p>You can also pass an initial value to Counter. Now when the pages are open it is always zero.
+To do this, add another &lt;code>@page&lt;/code> that will look like &lt;code>@page &amp;quot;/counter/{InitialValue: int}&amp;quot;&lt;/code> you can also add the same for count page. &lt;code>InitialValue&lt;/code> will be a public parameter of type int. This will allow you to specify &lt;code>localhost:5001/counter/123&lt;/code> in the url and counter will start from value 123. Next you need to write the code that will set this value. In the &lt;code>@code&lt;/code> section you need to add a parameter with the same name &lt;code>public int InitialValue {get; set; }&lt;/code> this parameter must have the attribute &lt;code>[Parameter]&lt;/code>. In order to pass the value of &lt;code>InitialValue&lt;/code> your need to call the method &lt;code>OnParametersSet&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/counter&amp;#34;&lt;/span>
+@page &lt;span style="color:#e6db74">&amp;#34;/count&amp;#34;&lt;/span>
+@page &lt;span style="color:#e6db74">&amp;#34;/counter/{InitialValue:int}&amp;#34;&lt;/span>
+@page &lt;span style="color:#e6db74">&amp;#34;/count/{InitialValue:int}&amp;#34;&lt;/span>
+&amp;lt;h1&amp;gt;Counter&amp;lt;/h1&amp;gt;
+&amp;lt;p&amp;gt;Current count: @currentCount&amp;lt;/p&amp;gt;
+&amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;btn btn-primary&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;IncrementCount&amp;#34;&lt;/span>&amp;gt;Click me&amp;lt;/button&amp;gt;
+@code {
+&lt;span style="color:#a6e22e"> [Parameter]&lt;/span>
+&lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> InitialValue {&lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> currentCount = &lt;span style="color:#ae81ff">0&lt;/span>;
+&lt;span style="color:#66d9ef">protected&lt;/span> &lt;span style="color:#66d9ef">override&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> OnParametersSet()
+{
+&lt;span style="color:#66d9ef">base&lt;/span>.OnParametersSet();
+currentCount = InitialValue;
+}
+&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> IncrementCount()
+{
+currentCount++;
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>And the result will be as follows
+&lt;img src="https://i.imgur.com/n5MrYWK.png" alt="Result">&lt;/p>
+&lt;p>This post is based on a course from Tim Corey - &lt;a href="https://iamtimcorey.com/p/blazor-server-in-depth">Blazor Server: In Depth&lt;/a>&lt;/p></content></item></channel></rss>

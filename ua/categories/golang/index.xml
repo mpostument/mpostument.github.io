@@ -1,25 +1,735 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Golang on mpostument.com</title><link>/ua/categories/golang/</link><description>Recent content in Golang on mpostument.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 06 Mar 2021 18:56:24 +0200</lastBuildDate><atom:link href="/ua/categories/golang/index.xml" rel="self" type="application/rss+xml"/><item><title>Latest post in GitHub readme</title><link>/ua/2021/03/06/latest_post_in_github_readme/</link><pubDate>Sat, 06 Mar 2021 18:56:24 +0200</pubDate><guid>/ua/2021/03/06/latest_post_in_github_readme/</guid><description>Привіт!
 Сьогодні покажу як автоматично генерувати GitHub Readme з останніми блог постами за допомогою go. В GitHub потрібно створити репозиторій з іменем GitHub профіля. Мій GitHub профайл називається mpostument, отже я створю репозиторій з таким самим іменем.
 Клоную репозиторій і в ньому викликаю go mod init, для того щоб ініціалізувати go модуль якй і буде генерувати readme. В корені репозиторія потрібно створити main.go який і буде здійснювати генерацію.
-На початку будуть імпорти та структура в яку будуть записуватись пости.</description></item><item><title>Ebs Auto Resize</title><link>/ua/2021/02/06/ebs-auto-resize/</link><pubDate>Sat, 06 Feb 2021 18:14:40 +0200</pubDate><guid>/ua/2021/02/06/ebs-auto-resize/</guid><description>Привіт!
+На початку будуть імпорти та структура в яку будуть записуватись пости.</description><content>&lt;p>Привіт!&lt;/p>
+&lt;p>Сьогодні покажу як автоматично генерувати GitHub Readme з останніми блог постами за допомогою go.
+В GitHub потрібно створити репозиторій з іменем GitHub профіля. Мій GitHub профайл називається mpostument, отже я створю репозиторій з таким самим іменем.&lt;/p>
+&lt;p>Клоную репозиторій і в ньому викликаю &lt;code>go mod init&lt;/code>, для того щоб ініціалізувати go модуль якй і буде генерувати readme.
+В корені репозиторія потрібно створити &lt;code>main.go&lt;/code> який і буде здійснювати генерацію.&lt;/p>
+&lt;p>На початку будуть імпорти та структура в яку будуть записуватись пости.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;os&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;strings&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;text/template&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/mmcdole/gofeed&amp;#34;&lt;/span>
+)
+&lt;span style="color:#66d9ef">type&lt;/span> &lt;span style="color:#a6e22e">ReadmeData&lt;/span> &lt;span style="color:#66d9ef">struct&lt;/span> {
+&lt;span style="color:#a6e22e">Title&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">Link&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>gofeed&lt;/code> модуль потрібний щоб читати rss feed на основі нього генерувати список постів.&lt;br>
+Сам код являється досить простим, читаю темплейт за допомогою &lt;code>template.ParseFiles&lt;/code>. Після цього створюємо &lt;code>gofeed.NewParser()&lt;/code> за допомогою якого отримаємо rss feed з мого сайту. Проходжусь циклом по списку усіх постів з rss feed та добавлю дані про пости в слайс який передам в темплейт і збережу в файл за допомогою &lt;code>template.Execute&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#a6e22e">template&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">template&lt;/span>.&lt;span style="color:#a6e22e">ParseFiles&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;README.tmpl&amp;#34;&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#a6e22e">fp&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">gofeed&lt;/span>.&lt;span style="color:#a6e22e">NewParser&lt;/span>()
+&lt;span style="color:#a6e22e">feed&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">fp&lt;/span>.&lt;span style="color:#a6e22e">ParseURL&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;https://mpostument.com/index.xml&amp;#34;&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#a6e22e">postList&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> []&lt;span style="color:#a6e22e">ReadmeData&lt;/span>{}
+&lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">index&lt;/span>, &lt;span style="color:#a6e22e">post&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">feed&lt;/span>.&lt;span style="color:#a6e22e">Items&lt;/span> {
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">index&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">7&lt;/span> {
+&lt;span style="color:#66d9ef">break&lt;/span>
+}
+&lt;span style="color:#a6e22e">readmeData&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ReadmeData&lt;/span>{
+&lt;span style="color:#a6e22e">Title&lt;/span>: &lt;span style="color:#a6e22e">post&lt;/span>.&lt;span style="color:#a6e22e">Title&lt;/span>,
+&lt;span style="color:#a6e22e">Link&lt;/span>: &lt;span style="color:#a6e22e">post&lt;/span>.&lt;span style="color:#a6e22e">Link&lt;/span>,
+}
+&lt;span style="color:#a6e22e">postList&lt;/span> = append(&lt;span style="color:#a6e22e">postList&lt;/span>, &lt;span style="color:#a6e22e">readmeData&lt;/span>)
+}
+&lt;span style="color:#a6e22e">f&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">Create&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;README.MD&amp;#34;&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">template&lt;/span>.&lt;span style="color:#a6e22e">Execute&lt;/span>(&lt;span style="color:#a6e22e">f&lt;/span>, &lt;span style="color:#a6e22e">postList&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Наступним кроком потрібно створити темплейт &lt;code>README.tmpl&lt;/code> з контентом:&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#960050;background-color:#1e0010">##&lt;/span> &lt;span style="color:#960050;background-color:#1e0010">📝&lt;/span> &lt;span style="color:#a6e22e">My&lt;/span> &lt;span style="color:#a6e22e">Latest&lt;/span> &lt;span style="color:#a6e22e">Blog&lt;/span> &lt;span style="color:#a6e22e">Posts&lt;/span>
+{{&lt;span style="color:#66d9ef">range&lt;/span> .}}
+&lt;span style="color:#f92672">-&lt;/span> [{{.&lt;span style="color:#a6e22e">Title&lt;/span>}}](&lt;span style="color:#a6e22e">https&lt;/span>:&lt;span style="color:#75715e">//mpostument.com{{.Link}}/)
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>{{&lt;span style="color:#a6e22e">end&lt;/span>}}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Якщо запустити код то створиться файл &lt;code>README.MD&lt;/code> з списком останніх постів.&lt;/p>
+&lt;p>Для того щоб GitHub readme генерувалось автоматично можна використати GitHubActions.&lt;br>
+В корені репозиторія потрібно створити папки &lt;code>.github/workflows&lt;/code>. І в ній створити файл &lt;code>generate_readme.yml&lt;/code>.
+Цей файл являється конфігурацією кроків які викличе GitHubActions, action буде запускатись що дня о півночі. Спочатку клонується репозиторій, встановиться go і завантажаться усі залежності, скомпілюється код, запуститься і згенерує Readme.md. І якщо будуть зміни в файлі вони закомітятся в репозиторій і будуть доступні в профілі.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Generate readme&lt;/span>
+&lt;span style="color:#f92672">on&lt;/span>:
+&lt;span style="color:#f92672">schedule&lt;/span>:
+- &lt;span style="color:#f92672">cron&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;0 0 * * *&amp;#34;&lt;/span>
+&lt;span style="color:#f92672">workflow_dispatch&lt;/span>:
+&lt;span style="color:#f92672">jobs&lt;/span>:
+&lt;span style="color:#f92672">update-readme-with-blog&lt;/span>:
+&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Update this repo&amp;#39;s README with latest blog posts&lt;/span>
+&lt;span style="color:#f92672">runs-on&lt;/span>: &lt;span style="color:#ae81ff">ubuntu-latest&lt;/span>
+&lt;span style="color:#f92672">steps&lt;/span>:
+- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Checkout&lt;/span>
+&lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">actions/checkout@v2&lt;/span>
+- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Setup go&lt;/span>
+&lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">actions/setup-go@v2&lt;/span>
+&lt;span style="color:#f92672">with&lt;/span>:
+&lt;span style="color:#f92672">go-version&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;1.16&amp;#34;&lt;/span>
+- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Go tidy&lt;/span>
+&lt;span style="color:#f92672">run&lt;/span>: &lt;span style="color:#ae81ff">go mod tidy&lt;/span>
+- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Build project&lt;/span>
+&lt;span style="color:#f92672">run&lt;/span>: &lt;span style="color:#ae81ff">go build&lt;/span>
+- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Generate readme&lt;/span>
+&lt;span style="color:#f92672">run&lt;/span>: &lt;span style="color:#ae81ff">./mpostument&lt;/span>
+- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Commit and push if changed&lt;/span>
+&lt;span style="color:#f92672">run&lt;/span>: |-&lt;span style="color:#e6db74">
+&lt;/span>&lt;span style="color:#e6db74"> git diff
+&lt;/span>&lt;span style="color:#e6db74"> git config --global user.email &amp;#34;actions@users.noreply.github.com&amp;#34;
+&lt;/span>&lt;span style="color:#e6db74"> git config --global user.name &amp;#34;README-bot&amp;#34;
+&lt;/span>&lt;span style="color:#e6db74"> git add -A
+&lt;/span>&lt;span style="color:#e6db74"> git commit -m &amp;#34;Updated readme content&amp;#34; || exit 0
+&lt;/span>&lt;span style="color:#e6db74"> git push&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Ebs Auto Resize</title><link>/ua/2021/02/06/ebs-auto-resize/</link><pubDate>Sat, 06 Feb 2021 18:14:40 +0200</pubDate><guid>/ua/2021/02/06/ebs-auto-resize/</guid><description>Привіт!
 Сьогодні зробимо скрипт для автоматичного ресайзу EBS volume за допомогою golang i AWS SDK version 2. Для того щоб це зробити потрібно виконати декілька кроків, отримати список волюмів, відфільтрувати тих в яких кількість вільної пам&amp;rsquo;яті менший ніж трешхолд, знайти ebs id який відповідає даному волюму. Зробити ресайз на заданий процент і збільшити розмір диску на файловій системі.
-Розпочну з структури в якій буде зберігатись вся інформація по диску та вкажу всі потрібні імпорти.</description></item><item><title>Failed Asg Event Notification</title><link>/ua/2021/01/03/failed-asg-event-notification/</link><pubDate>Sun, 03 Jan 2021 17:57:36 +0200</pubDate><guid>/ua/2021/01/03/failed-asg-event-notification/</guid><description>Привіт!
+Розпочну з структури в якій буде зберігатись вся інформація по диску та вкажу всі потрібні імпорти.</description><content>&lt;p>Привіт!&lt;/p>
+&lt;p>Сьогодні зробимо скрипт для автоматичного ресайзу EBS volume за допомогою golang i AWS SDK version 2.
+Для того щоб це зробити потрібно виконати декілька кроків, отримати список волюмів, відфільтрувати тих в яких кількість вільної пам&amp;rsquo;яті менший ніж трешхолд, знайти ebs id який відповідає даному волюму. Зробити ресайз на заданий процент і збільшити розмір диску на файловій системі.&lt;/p>
+&lt;p>Розпочну з структури в якій буде зберігатись вся інформація по диску та вкажу всі потрібні імпорти.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;context&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;errors&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;io/ioutil&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;math&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;net/http&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;os/exec&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;regexp&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;strings&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;time&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go-v2/aws&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go-v2/config&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go-v2/service/ec2&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go-v2/service/ec2/types&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/smithy-go&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/mvisonneau/go-ebsnvme/pkg/ebsnvme&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/shirou/gopsutil/v3/disk&amp;#34;&lt;/span>
+)
+&lt;span style="color:#66d9ef">type&lt;/span> &lt;span style="color:#a6e22e">DiskData&lt;/span> &lt;span style="color:#66d9ef">struct&lt;/span> {
+&lt;span style="color:#a6e22e">VolumeID&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">DeviceName&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">MountPoint&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">TotalUsed&lt;/span> &lt;span style="color:#66d9ef">float64&lt;/span>
+&lt;span style="color:#a6e22e">TotalSpace&lt;/span> &lt;span style="color:#66d9ef">uint64&lt;/span>
+&lt;span style="color:#a6e22e">FsType&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">VolumeSize&lt;/span> &lt;span style="color:#66d9ef">int32&lt;/span>
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Перший метод запише усю потрібну інформацію про диски в &lt;code>DiskData&lt;/code> структуру. Для того щоб отримати інформацію з системи буде використовуватись &lt;code>gopsutil&lt;/code>. Якщо ж в системі диск відображається як &lt;code>nvme&lt;/code> його треба привести до стандартного запису (/dev/sda) за яким можна буде фільтрувати потрібний диск. Але тільки цього буде не достатньо оскільки диски на різних серверах можуть бути змонтовані під однаковим іменем. Саме для цього буде потрібен instance id, який можна отримати з метаданих сервера.&lt;/p>
+&lt;p>Спочатку отримую список усіх дисків за допомогою &lt;code>disk.Partitions(false)&lt;/code>, також створюю ec2client i отримую instanceID. Ці методи будуть створені пізніше. Далі циклом проходжу по усіх дисках і перевіряю чи &lt;code>nvme&lt;/code> є в назві диску і за допомогою &lt;code>ebsnvme&lt;/code> отримую назву в форматі /dev/sda. І зберігаю результат в &lt;code>ebsDevice&lt;/code>. Якщо ж ні то міняю назву диска з &lt;code>xvd&lt;/code> на &lt;code>sd&lt;/code>. Саме такий формат потрібен для aws. Тепер можна зробити запит до aws для того щоб отримати volumeID. За допомогою метода &lt;code>Usage&lt;/code> отримую дані по використанню диска та записую в &lt;code>DiskData&lt;/code> структуру і добавлю в список, який в кінці метода повертається.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">filterDisks&lt;/span>() ([]&lt;span style="color:#a6e22e">DiskData&lt;/span>, &lt;span style="color:#66d9ef">error&lt;/span>) {
+&lt;span style="color:#a6e22e">parts&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">Partitions&lt;/span>(&lt;span style="color:#66d9ef">false&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">client&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">getEc2Client&lt;/span>()
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">instanceID&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">getInstanceID&lt;/span>()
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">diskData&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> []&lt;span style="color:#a6e22e">DiskData&lt;/span>{}
+&lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">p&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">parts&lt;/span> {
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">ebsDevice&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">strings&lt;/span>.&lt;span style="color:#a6e22e">Contains&lt;/span>(&lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Device&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;nvme&amp;#34;&lt;/span>) {
+&lt;span style="color:#a6e22e">volumeMapping&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ebsnvme&lt;/span>.&lt;span style="color:#a6e22e">ScanDevice&lt;/span>(&lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Device&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">ebsDevice&lt;/span> = &lt;span style="color:#a6e22e">volumeMapping&lt;/span>.&lt;span style="color:#a6e22e">Name&lt;/span>
+} &lt;span style="color:#66d9ef">else&lt;/span> {
+&lt;span style="color:#a6e22e">ebsDevice&lt;/span> = &lt;span style="color:#a6e22e">strings&lt;/span>.&lt;span style="color:#a6e22e">Replace&lt;/span>(&lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Device&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;xvd&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;sd&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">1&lt;/span>)
+}
+&lt;span style="color:#a6e22e">filter&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">DescribeVolumesInput&lt;/span>{&lt;span style="color:#a6e22e">Filters&lt;/span>: []&lt;span style="color:#a6e22e">types&lt;/span>.&lt;span style="color:#a6e22e">Filter&lt;/span>{
+{
+&lt;span style="color:#a6e22e">Name&lt;/span>: &lt;span style="color:#a6e22e">aws&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;attachment.device&amp;#34;&lt;/span>),
+&lt;span style="color:#a6e22e">Values&lt;/span>: []&lt;span style="color:#66d9ef">string&lt;/span>{
+&lt;span style="color:#a6e22e">ebsDevice&lt;/span>,
+},
+},
+{
+&lt;span style="color:#a6e22e">Name&lt;/span>: &lt;span style="color:#a6e22e">aws&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;attachment.instance-id&amp;#34;&lt;/span>),
+&lt;span style="color:#a6e22e">Values&lt;/span>: []&lt;span style="color:#66d9ef">string&lt;/span>{
+&lt;span style="color:#a6e22e">instanceID&lt;/span>,
+},
+},
+},
+}
+&lt;span style="color:#a6e22e">volumeInfo&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">DescribeVolumes&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Background&lt;/span>(), &lt;span style="color:#a6e22e">filter&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">usage&lt;/span>, &lt;span style="color:#a6e22e">_&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">Usage&lt;/span>(&lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Mountpoint&lt;/span>)
+&lt;span style="color:#a6e22e">disk&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">DiskData&lt;/span>{
+&lt;span style="color:#a6e22e">VolumeID&lt;/span>: &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">volumeInfo&lt;/span>.&lt;span style="color:#a6e22e">Volumes&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>].&lt;span style="color:#a6e22e">VolumeId&lt;/span>,
+&lt;span style="color:#a6e22e">DeviceName&lt;/span>: &lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Device&lt;/span>,
+&lt;span style="color:#a6e22e">MountPoint&lt;/span>: &lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Mountpoint&lt;/span>,
+&lt;span style="color:#a6e22e">TotalUsed&lt;/span>: &lt;span style="color:#a6e22e">usage&lt;/span>.&lt;span style="color:#a6e22e">UsedPercent&lt;/span>,
+&lt;span style="color:#a6e22e">TotalSpace&lt;/span>: &lt;span style="color:#a6e22e">usage&lt;/span>.&lt;span style="color:#a6e22e">Total&lt;/span>,
+&lt;span style="color:#a6e22e">VolumeSize&lt;/span>: &lt;span style="color:#a6e22e">volumeInfo&lt;/span>.&lt;span style="color:#a6e22e">Volumes&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>].&lt;span style="color:#a6e22e">Size&lt;/span>,
+&lt;span style="color:#a6e22e">FsType&lt;/span>: &lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Fstype&lt;/span>,
+}
+&lt;span style="color:#a6e22e">diskData&lt;/span> = append(&lt;span style="color:#a6e22e">diskData&lt;/span>, &lt;span style="color:#a6e22e">disk&lt;/span>)
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">diskData&lt;/span>, &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Потрібно створити методи які використовуються filterDisks, почну з getInstanceID. Цей метод робить запит до метаданих ec2 інстанса і отримує у відповідь InstanceID.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">getInstanceID&lt;/span>() (&lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#66d9ef">error&lt;/span>) {
+&lt;span style="color:#a6e22e">cfg&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">config&lt;/span>.&lt;span style="color:#a6e22e">LoadDefaultConfig&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">TODO&lt;/span>())
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">client&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">imds&lt;/span>.&lt;span style="color:#a6e22e">NewFromConfig&lt;/span>(&lt;span style="color:#a6e22e">cfg&lt;/span>)
+&lt;span style="color:#a6e22e">instanceID&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">GetInstanceIdentityDocument&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">TODO&lt;/span>(), &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">imds&lt;/span>.&lt;span style="color:#a6e22e">GetInstanceIdentityDocumentInput&lt;/span>{})
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">instanceID&lt;/span>.&lt;span style="color:#a6e22e">InstanceID&lt;/span>, &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>getEc2Client&lt;/code> з метаданих отримує назву регіону та повертає ec2 client.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">getEc2Client&lt;/span>() (&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">Client&lt;/span>, &lt;span style="color:#66d9ef">error&lt;/span>) {
+&lt;span style="color:#a6e22e">cfg&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">config&lt;/span>.&lt;span style="color:#a6e22e">LoadDefaultConfig&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">TODO&lt;/span>())
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">client&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">imds&lt;/span>.&lt;span style="color:#a6e22e">NewFromConfig&lt;/span>(&lt;span style="color:#a6e22e">cfg&lt;/span>)
+&lt;span style="color:#a6e22e">region&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">GetRegion&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">TODO&lt;/span>(), &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">imds&lt;/span>.&lt;span style="color:#a6e22e">GetRegionInput&lt;/span>{})
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">cfg&lt;/span>.&lt;span style="color:#a6e22e">Region&lt;/span> = &lt;span style="color:#a6e22e">region&lt;/span>.&lt;span style="color:#a6e22e">Region&lt;/span>
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">NewFromConfig&lt;/span>(&lt;span style="color:#a6e22e">cfg&lt;/span>), &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Залишилось вирахувати на скільки збільшити розмір диска.
+В цьому методі переводиться розмір диска отриманий в &lt;code>filterDisks&lt;/code> з байтів в гігабайт та визначається новий розмір диска.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">findNewSize&lt;/span>(&lt;span style="color:#a6e22e">oldSize&lt;/span> &lt;span style="color:#66d9ef">uint64&lt;/span>, &lt;span style="color:#a6e22e">increasePercent&lt;/span> &lt;span style="color:#66d9ef">float64&lt;/span>) &lt;span style="color:#66d9ef">int32&lt;/span> {
+&lt;span style="color:#a6e22e">gbSize&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> float64(&lt;span style="color:#a6e22e">oldSize&lt;/span>) &lt;span style="color:#f92672">/&lt;/span> &lt;span style="color:#a6e22e">math&lt;/span>.&lt;span style="color:#a6e22e">Pow&lt;/span>(&lt;span style="color:#ae81ff">1024&lt;/span>, &lt;span style="color:#ae81ff">3&lt;/span>)
+&lt;span style="color:#a6e22e">newSize&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> ((&lt;span style="color:#a6e22e">gbSize&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#a6e22e">increasePercent&lt;/span>) &lt;span style="color:#f92672">/&lt;/span> &lt;span style="color:#ae81ff">100&lt;/span>) &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#a6e22e">gbSize&lt;/span>
+&lt;span style="color:#66d9ef">return&lt;/span> int32(&lt;span style="color:#a6e22e">newSize&lt;/span>)
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Сам ресайз буде відбуватись в три кроки:&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>Збільшити розмір ebs&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Викликати grow part для того щоб збільшити розмір партишина якщо він існує.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Збільшити розмір файлової системи.&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>Розпочну з першого кроку.&lt;br>
+В цьому методі я отримую ec2 client за допомогою метода &lt;code>getEc2Client&lt;/code> та роблю &lt;code>ModifyVolume&lt;/code> запит до AWS. Тут важливо відфільтрувати певні помилки.
+Перша це &lt;code>VolumeModificationRateExceeded&lt;/code>. AWS дозволяє робити ресайз 1 раз в 6 годин, тому я не хочу щоб скрипт завершувався якщо ліміт перевищено, а перевіряв інші доступні диски.&lt;/p>
+&lt;p>Наступна помилка це &lt;code>IncorrectModificationState&lt;/code>. Після ресайзу диску в нього змінюється статут на &lt;code>Optimizing&lt;/code>, в такому випадку я теж не хочу завершувати роботу, а перейти до наступного диску.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">ebsResize&lt;/span>(&lt;span style="color:#a6e22e">newSize&lt;/span> &lt;span style="color:#66d9ef">int32&lt;/span>, &lt;span style="color:#a6e22e">volumeID&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) &lt;span style="color:#66d9ef">error&lt;/span> {
+&lt;span style="color:#a6e22e">client&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">getEc2Client&lt;/span>()
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Starting resize of ebs volume&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">volumeID&lt;/span>)
+&lt;span style="color:#a6e22e">input&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">ModifyVolumeInput&lt;/span>{&lt;span style="color:#a6e22e">VolumeId&lt;/span>: &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">volumeID&lt;/span>, &lt;span style="color:#a6e22e">Size&lt;/span>: &lt;span style="color:#a6e22e">newSize&lt;/span>}
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">ModifyVolume&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Background&lt;/span>(), &lt;span style="color:#a6e22e">input&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">ae&lt;/span> &lt;span style="color:#a6e22e">smithy&lt;/span>.&lt;span style="color:#a6e22e">APIError&lt;/span>
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">errors&lt;/span>.&lt;span style="color:#a6e22e">As&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>, &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">ae&lt;/span>) {
+&lt;span style="color:#66d9ef">switch&lt;/span> &lt;span style="color:#a6e22e">ae&lt;/span>.&lt;span style="color:#a6e22e">ErrorCode&lt;/span>() {
+&lt;span style="color:#66d9ef">case&lt;/span> &lt;span style="color:#e6db74">&amp;#34;VolumeModificationRateExceeded&amp;#34;&lt;/span>:
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Ebs was already resized, wait for 6 hours before next resize&amp;#34;&lt;/span>)
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">errVolumeRetryLater&lt;/span>
+&lt;span style="color:#66d9ef">case&lt;/span> &lt;span style="color:#e6db74">&amp;#34;IncorrectModificationState&amp;#34;&lt;/span>:
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">ae&lt;/span>.&lt;span style="color:#a6e22e">ErrorMessage&lt;/span>())
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">errVolumeRetryLater&lt;/span>
+}
+} &lt;span style="color:#66d9ef">else&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
+}
+}
+&lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">waitForEbsResize&lt;/span>(&lt;span style="color:#a6e22e">volumeID&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Після того як ресайз запущено потрібно дочекатись коли він завершиться, для цього я створю наступний метод &lt;code>waitForEbsResize&lt;/code>.
+Метод &lt;code>waitForEbsResize&lt;/code> за допомогою ec2 client робить запит типу &lt;code>DescribeVolumesModifications&lt;/code> і перевіряє чи статус диску &lt;code>modifying&lt;/code>. Якщо так чекаю 15 секунд і запускаю ще раз метод рекурсивно.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">waitForEbsResize&lt;/span>(&lt;span style="color:#a6e22e">volumeID&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) &lt;span style="color:#66d9ef">error&lt;/span> {
+&lt;span style="color:#a6e22e">client&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">getEc2Client&lt;/span>()
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">input&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">DescribeVolumesModificationsInput&lt;/span>{&lt;span style="color:#a6e22e">VolumeIds&lt;/span>: []&lt;span style="color:#66d9ef">string&lt;/span>{&lt;span style="color:#a6e22e">volumeID&lt;/span>}}
+&lt;span style="color:#a6e22e">status&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">DescribeVolumesModifications&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Background&lt;/span>(), &lt;span style="color:#a6e22e">input&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">status&lt;/span>.&lt;span style="color:#a6e22e">VolumesModifications&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>].&lt;span style="color:#a6e22e">ModificationState&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;modifying&amp;#34;&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Ebs modification in progress. Waiting for 15 second&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Sleep&lt;/span>(&lt;span style="color:#ae81ff">15&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Second&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">waitForEbsResize&lt;/span>(&lt;span style="color:#a6e22e">volumeID&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
+}
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер можна приступити до 2 кроку &lt;code>growPartition&lt;/code>.&lt;/p>
+&lt;p>Потрібно визначити чи є партішин, якщо його немає grow part викликати не потрібно. В залежності від того який тип диску я так і буду визначати чи є партішин. Потрібно зробити декілька перевірок. Перша чи в назві немає цифр. Якщо їх немає то це не партішин і робити growpart не потрібно. Наступна перевірка для nvme пристроїв. Якщо в назві є символ p отже це партішин. Наприклад &lt;code>/dev/nvme1n1&lt;/code> - диск і &lt;code>/dev/nvme0n1p1&lt;/code> - партішин. І останній випадок якщо є xvd в назві пристрою, ця перевірка лише для того щоб відфільтрувати звичайний ebs від nvme. І в залежності від кожного випадку викликається grow part для ebs - &lt;code>growpart /dev/xvdf 1&lt;/code> і для nvme - &lt;code>growpart /dev/nvme0n1 1&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">growPartition&lt;/span>(&lt;span style="color:#a6e22e">partition&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) &lt;span style="color:#66d9ef">error&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Starting growpart for&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span>)
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">cmd&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">exec&lt;/span>.&lt;span style="color:#a6e22e">Cmd&lt;/span>
+&lt;span style="color:#a6e22e">i&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">strings&lt;/span>.&lt;span style="color:#a6e22e">LastIndex&lt;/span>(&lt;span style="color:#a6e22e">partition&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;p&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">isLetter&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">regexp&lt;/span>.&lt;span style="color:#a6e22e">MustCompile&lt;/span>(&lt;span style="color:#e6db74">`^/dev/+[a-zA-Z]+$`&lt;/span>).&lt;span style="color:#a6e22e">MatchString&lt;/span>
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">isLetter&lt;/span>(&lt;span style="color:#a6e22e">partition&lt;/span>) {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Grow partition for&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;not required&amp;#34;&lt;/span>)
+} &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">i&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span> {
+&lt;span style="color:#a6e22e">cmd&lt;/span> = &lt;span style="color:#a6e22e">exec&lt;/span>.&lt;span style="color:#a6e22e">Command&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;growpart&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span>[:&lt;span style="color:#a6e22e">i&lt;/span>], &lt;span style="color:#a6e22e">partition&lt;/span>[&lt;span style="color:#a6e22e">i&lt;/span>&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>:])
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">cmd&lt;/span>.&lt;span style="color:#a6e22e">Run&lt;/span>()
+} &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">strings&lt;/span>.&lt;span style="color:#a6e22e">Contains&lt;/span>(&lt;span style="color:#a6e22e">partition&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;xvd&amp;#34;&lt;/span>) {
+&lt;span style="color:#a6e22e">re&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">regexp&lt;/span>.&lt;span style="color:#a6e22e">MustCompile&lt;/span>(&lt;span style="color:#e6db74">`\D+`&lt;/span>)
+&lt;span style="color:#a6e22e">m&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">re&lt;/span>.&lt;span style="color:#a6e22e">FindString&lt;/span>(&lt;span style="color:#a6e22e">partition&lt;/span>)
+&lt;span style="color:#a6e22e">cmd&lt;/span> = &lt;span style="color:#a6e22e">exec&lt;/span>.&lt;span style="color:#a6e22e">Command&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;growpart&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">m&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span>[len(&lt;span style="color:#a6e22e">m&lt;/span>):])
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">cmd&lt;/span>.&lt;span style="color:#a6e22e">Run&lt;/span>()
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Останні етап це збільшити розмір файлової системи. Як буде відбуватись ресайз залежить від файлової системи.
+Якщо це xfs то викликається &lt;code>xfs_growfs&lt;/code> в інших випадках це &lt;code>resize2fs&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">fsResize&lt;/span>(&lt;span style="color:#a6e22e">filesystem&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">mountPoint&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) &lt;span style="color:#66d9ef">error&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Starting system volume resize for&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span>)
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">cmd&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">exec&lt;/span>.&lt;span style="color:#a6e22e">Cmd&lt;/span>
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">filesystem&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;xfs&amp;#34;&lt;/span> {
+&lt;span style="color:#a6e22e">cmd&lt;/span> = &lt;span style="color:#a6e22e">exec&lt;/span>.&lt;span style="color:#a6e22e">Command&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;xfs_growfs&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;-d&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">mountPoint&lt;/span>)
+} &lt;span style="color:#66d9ef">else&lt;/span> {
+&lt;span style="color:#a6e22e">cmd&lt;/span> = &lt;span style="color:#a6e22e">exec&lt;/span>.&lt;span style="color:#a6e22e">Command&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;resize2fs&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span>)
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">cmd&lt;/span>.&lt;span style="color:#a6e22e">Run&lt;/span>()
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер залишилось викликати всі методи в правильному порядку:&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>Отримую список дисків&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Йду циклом по усіх дисках. Якщо умова &lt;code>disk.TotalUsed &amp;lt; 70&lt;/code> false то ресайз не потрібен.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Вираховую новий розмір диску&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Викликаю ebsResize&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Викликаю growPartition&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Викликаю fsResize&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#a6e22e">disksInfo&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">filterDisks&lt;/span>()
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">disk&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">disksInfo&lt;/span> {
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">TotalUsed&lt;/span> &amp;lt; &lt;span style="color:#ae81ff">70&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Resize for&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">DeviceName&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;not required&amp;#34;&lt;/span>)
+&lt;span style="color:#66d9ef">continue&lt;/span>
+}
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Starting resize of&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">DeviceName&lt;/span>)
+&lt;span style="color:#a6e22e">newSize&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">findNewSize&lt;/span>(&lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">TotalSpace&lt;/span>, &lt;span style="color:#ae81ff">30&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ebsResize&lt;/span>(int32(&lt;span style="color:#a6e22e">newSize&lt;/span>), &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">VolumeID&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#a6e22e">errVolumeRetryLater&lt;/span> {
+&lt;span style="color:#66d9ef">continue&lt;/span>
+} &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">growPartition&lt;/span>(&lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">DeviceName&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">fsResize&lt;/span>(&lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">FsType&lt;/span>, &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">MountPoint&lt;/span>, &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">DeviceName&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Через декілька секунд диск має новий розмір.&lt;/p></content></item><item><title>Failed Asg Event Notification</title><link>/ua/2021/01/03/failed-asg-event-notification/</link><pubDate>Sun, 03 Jan 2021 17:57:36 +0200</pubDate><guid>/ua/2021/01/03/failed-asg-event-notification/</guid><description>Привіт!
 Сьогодні хочу розказати як за допомогою AWS Lambda та Golang можна отримувати повідомлення в slack коли Autoscaling не зміг створити Ec2 сервер. Деплой я автоматизую за допомогою serverless.
 Почнемо з інсталяцію node та serverless. Я використовую nvm для управління версіями node.
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash nvm install v14.15.3 npm install -g serverless Створю папку та ініціалізую в ній go модуль.
-mkdir failed-asg cd failed-asg go mod init touch main.</description></item><item><title>Import Grafana Dashboards With Go</title><link>/ua/2020/12/23/import-grafana-dashboards-with-go/</link><pubDate>Wed, 23 Dec 2020 23:18:28 +0200</pubDate><guid>/ua/2020/12/23/import-grafana-dashboards-with-go/</guid><description>Привіт!
+mkdir failed-asg cd failed-asg go mod init touch main.</description><content>&lt;p>Привіт!&lt;/p>
+&lt;p>Сьогодні хочу розказати як за допомогою AWS Lambda та Golang можна отримувати повідомлення в slack коли Autoscaling не зміг створити Ec2 сервер. Деплой я автоматизую за допомогою serverless.&lt;/p>
+&lt;p>Почнемо з інсталяцію node та serverless. Я використовую &lt;a href="https://github.com/nvm-sh/nvm#install--update-script">nvm&lt;/a> для управління версіями node.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+nvm install v14.15.3
+npm install -g serverless
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Створю папку та ініціалізую в ній go модуль.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell">mkdir failed-asg
+cd failed-asg
+go mod init
+touch main.go
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>На початку буде package, імпорти та main. Main буде відповідальна за запуск handler функції.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;bytes&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;context&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;encoding/json&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;errors&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;io/ioutil&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;net/http&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;strings&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-lambda-go/events&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-lambda-go/lambda&amp;#34;&lt;/span>
+)
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#a6e22e">lambda&lt;/span>.&lt;span style="color:#a6e22e">Start&lt;/span>(&lt;span style="color:#a6e22e">handleRequest&lt;/span>)
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Основною функцією буде handleRequest. В ній сформується повідомлення на основі &lt;code>AutoScalingEvent&lt;/code> і відправиться повідомлення в slack.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">handleRequest&lt;/span>(&lt;span style="color:#a6e22e">ctx&lt;/span> &lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Context&lt;/span>, &lt;span style="color:#a6e22e">event&lt;/span> &lt;span style="color:#a6e22e">events&lt;/span>.&lt;span style="color:#a6e22e">AutoScalingEvent&lt;/span>) (&lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#66d9ef">error&lt;/span>) {
+&lt;span style="color:#a6e22e">url&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;https://hooks.slack.com/services/token&amp;#34;&lt;/span>
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">sb&lt;/span> &lt;span style="color:#a6e22e">strings&lt;/span>.&lt;span style="color:#a6e22e">Builder&lt;/span>
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;:siren: *EC2 Instance Launch Unsuccessful* :siren:\n&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;*Autoscaling Group Name*:&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#a6e22e">event&lt;/span>.&lt;span style="color:#a6e22e">Detail&lt;/span>[&lt;span style="color:#e6db74">&amp;#34;AutoScalingGroupName&amp;#34;&lt;/span>].(&lt;span style="color:#66d9ef">string&lt;/span>))
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;\n&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;*StatusMessage*:&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#a6e22e">event&lt;/span>.&lt;span style="color:#a6e22e">Detail&lt;/span>[&lt;span style="color:#e6db74">&amp;#34;StatusMessage&amp;#34;&lt;/span>].(&lt;span style="color:#66d9ef">string&lt;/span>))
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;\n&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">payload&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">map&lt;/span>[&lt;span style="color:#66d9ef">string&lt;/span>]&lt;span style="color:#66d9ef">interface&lt;/span>{}{
+&lt;span style="color:#e6db74">&amp;#34;username&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;ASGFailedEvents&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;channel&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;#test-db-alerts&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;text&amp;#34;&lt;/span>: &lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(),
+}
+&lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">SendSlackNotification&lt;/span>(&lt;span style="color:#a6e22e">url&lt;/span>, &lt;span style="color:#a6e22e">payload&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Not able to send slack message&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(), &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Url потрібно замінити на значення свого Slack Webhook.&lt;br>
+За допомогою &lt;code>strings.Builder&lt;/code> я формую повідомлення яке відправиться, добавлю в нього назву AutoScalingGroup та повідомлення з помилкою. Тоді формую &lt;code>payload&lt;/code> в якому потрібно вказати назву користувача від якого буде повідомлення, канал і сам text повідомлення та за допомогою &lt;code>SendSlackNotification&lt;/code> відправиться повідомлення в slack.&lt;/p>
+&lt;p>Перейдемо до створення метода &lt;code>SendSlackNotification&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">SendSlackNotification&lt;/span>(&lt;span style="color:#a6e22e">url&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">data&lt;/span> &lt;span style="color:#66d9ef">interface&lt;/span>{}) (&lt;span style="color:#a6e22e">bodyString&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#66d9ef">error&lt;/span>) {
+&lt;span style="color:#a6e22e">jsonString&lt;/span>, &lt;span style="color:#a6e22e">_&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">json&lt;/span>.&lt;span style="color:#a6e22e">Marshal&lt;/span>(&lt;span style="color:#a6e22e">data&lt;/span>)
+&lt;span style="color:#a6e22e">req&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">http&lt;/span>.&lt;span style="color:#a6e22e">NewRequest&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;POST&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">url&lt;/span>, &lt;span style="color:#a6e22e">bytes&lt;/span>.&lt;span style="color:#a6e22e">NewBuffer&lt;/span>(&lt;span style="color:#a6e22e">jsonString&lt;/span>))
+&lt;span style="color:#a6e22e">req&lt;/span>.&lt;span style="color:#a6e22e">Header&lt;/span>.&lt;span style="color:#a6e22e">Set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Content-Type&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;application/json&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">client&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">http&lt;/span>.&lt;span style="color:#a6e22e">Client&lt;/span>{}
+&lt;span style="color:#a6e22e">resp&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">Do&lt;/span>(&lt;span style="color:#a6e22e">req&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+panic(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#66d9ef">defer&lt;/span> &lt;span style="color:#a6e22e">resp&lt;/span>.&lt;span style="color:#a6e22e">Body&lt;/span>.&lt;span style="color:#a6e22e">Close&lt;/span>()
+&lt;span style="color:#a6e22e">body&lt;/span>, &lt;span style="color:#a6e22e">_&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ioutil&lt;/span>.&lt;span style="color:#a6e22e">ReadAll&lt;/span>(&lt;span style="color:#a6e22e">resp&lt;/span>.&lt;span style="color:#a6e22e">Body&lt;/span>)
+&lt;span style="color:#a6e22e">bodyString&lt;/span> = string(&lt;span style="color:#a6e22e">body&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">resp&lt;/span>.&lt;span style="color:#a6e22e">StatusCode&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#ae81ff">200&lt;/span> {
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Response Status:&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">resp&lt;/span>.&lt;span style="color:#a6e22e">Status&lt;/span>) &lt;span style="color:#75715e">// 200 OK
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Response Headers:&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">resp&lt;/span>.&lt;span style="color:#a6e22e">Header&lt;/span>)
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Response Body:&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">bodyString&lt;/span>)
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">bodyString&lt;/span>, &lt;span style="color:#a6e22e">errors&lt;/span>.&lt;span style="color:#a6e22e">New&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;can&amp;#39;t work with 42&amp;#34;&lt;/span>)
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">bodyString&lt;/span>, &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тут формується json з попереднього створеного &lt;code>payload&lt;/code> та за допомогою http здійснюється реквест до Webhook Url та перевіряється чи реквест був успіщоно відправлений.&lt;/p>
+&lt;p>Повернемось до serverless для деплою лямбди.&lt;br>
+В корені репозиторія створю файл serverless.yml з контентом&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">service&lt;/span>: &lt;span style="color:#ae81ff">asg-failed-events&lt;/span>
+&lt;span style="color:#f92672">provider&lt;/span>:
+&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">aws&lt;/span>
+&lt;span style="color:#f92672">runtime&lt;/span>: &lt;span style="color:#ae81ff">go1.x&lt;/span>
+&lt;span style="color:#f92672">package&lt;/span>:
+&lt;span style="color:#f92672">exclude&lt;/span>:
+- &lt;span style="color:#ae81ff">./**&lt;/span>
+&lt;span style="color:#f92672">include&lt;/span>:
+- &lt;span style="color:#ae81ff">./bin/**&lt;/span>
+&lt;span style="color:#f92672">functions&lt;/span>:
+&lt;span style="color:#f92672">lambda-time&lt;/span>:
+&lt;span style="color:#f92672">handler&lt;/span>: &lt;span style="color:#ae81ff">bin/failed-asg-event-notification&lt;/span>
+&lt;span style="color:#f92672">events&lt;/span>:
+- &lt;span style="color:#f92672">cloudwatchEvent&lt;/span>:
+&lt;span style="color:#f92672">event&lt;/span>:
+&lt;span style="color:#f92672">source&lt;/span>:
+- &lt;span style="color:#e6db74">&amp;#34;aws.autoscaling&amp;#34;&lt;/span>
+&lt;span style="color:#f92672">detail-type&lt;/span>:
+- &lt;span style="color:#e6db74">&amp;#34;EC2 Instance Launch Unsuccessful&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тут описується назва лямбди яка буде створена та що буде тригерити її, в цьому випадку це &lt;code>EC2 Instance Launch Unsuccessful&lt;/code> івент від &lt;code>aws.autoscaling&lt;/code>.&lt;/p>
+&lt;p>Тепер потрібно встановити всі залежності, скомпілювати код та задеплоїти.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell">go mod tidy
+OOS&lt;span style="color:#f92672">=&lt;/span>linux GOARCH&lt;span style="color:#f92672">=&lt;/span>amd64 go build -o bin/failed-asg-event-notification .
+sls deploy
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Після цього якщо відбудеться івент типу &lt;code>EC2 Instance Launch Unsuccessful&lt;/code> від &lt;code>aws.autoscaling&amp;quot;&lt;/code> відповідне повідомлення буде відправлено в slack.&lt;/p></content></item><item><title>Import Grafana Dashboards With Go</title><link>/ua/2020/12/23/import-grafana-dashboards-with-go/</link><pubDate>Wed, 23 Dec 2020 23:18:28 +0200</pubDate><guid>/ua/2020/12/23/import-grafana-dashboards-with-go/</guid><description>Привіт!
 В попередньому пості я показував як можна експортувати дашборди з Grafana. Тепер подивимось як їх можна імпортувати в Grafana.
 Як завжди на початку будуть імпорти та main функція
 package grafana import ( &amp;#34;context&amp;#34; &amp;#34;encoding/json&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;io/ioutil&amp;#34; &amp;#34;log&amp;#34; &amp;#34;os&amp;#34; &amp;#34;strings&amp;#34; &amp;#34;github.com/grafana-tools/sdk&amp;#34; ) func main() { } Додамо декілька параметрів:
-var ( filesInDir []os.FileInfo rawBoard []byte err error grafanaURL string apiKey string directory string ) В filesInDir будуть зберігатись усі прочитані дашборди з файлової системи.</description></item><item><title>Export Grafana Dashboards With Go</title><link>/ua/2020/12/19/export-grafana-dashboards-with-go/</link><pubDate>Sat, 19 Dec 2020 18:27:35 +0200</pubDate><guid>/ua/2020/12/19/export-grafana-dashboards-with-go/</guid><description>Привіт!
+var ( filesInDir []os.FileInfo rawBoard []byte err error grafanaURL string apiKey string directory string ) В filesInDir будуть зберігатись усі прочитані дашборди з файлової системи.</description><content>&lt;p>Привіт!&lt;/p>
+&lt;p>В попередньому &lt;a href="/ua/2020/12/19/export-grafana-dashboards-with-go/" title="пості">пості&lt;/a> я показував як можна експортувати дашборди з Grafana. Тепер подивимось як їх можна імпортувати в Grafana.&lt;/p>
+&lt;p>Як завжди на початку будуть імпорти та main функція&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">grafana&lt;/span>
+&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;context&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;encoding/json&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;io/ioutil&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;os&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;strings&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/grafana-tools/sdk&amp;#34;&lt;/span>
+)
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Додамо декілька параметрів:&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#66d9ef">var&lt;/span> (
+&lt;span style="color:#a6e22e">filesInDir&lt;/span> []&lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">FileInfo&lt;/span>
+&lt;span style="color:#a6e22e">rawBoard&lt;/span> []&lt;span style="color:#66d9ef">byte&lt;/span>
+&lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#66d9ef">error&lt;/span>
+&lt;span style="color:#a6e22e">grafanaURL&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">apiKey&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">directory&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+)
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>В &lt;code>filesInDir&lt;/code> будуть зберігатись усі прочитані дашборди з файлової системи. А в &lt;code>rawBoard&lt;/code> буде міститись сам контент файлів. &lt;code>directory&lt;/code> директорія в яку будуть зберігатись дашборди. &lt;code>grafanaURL&lt;/code> - Grafana url з портом в форматі &lt;code>http://127.0.0.1:3030&lt;/code> та &lt;code>apiKey&lt;/code> для авторизації в Grafana. В grafanaUR, apiKey та directory потрібно внести своє значення.&lt;/p>
+&lt;p>Створюю Grafana клієнт за допомогою якого буду робити запити до Grafana Api&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#a6e22e">ctx&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Background&lt;/span>()
+&lt;span style="color:#a6e22e">c&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">NewClient&lt;/span>(&lt;span style="color:#a6e22e">grafanaURL&lt;/span>, &lt;span style="color:#a6e22e">apiKey&lt;/span>, &lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">DefaultHTTPClient&lt;/span>)
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Залишилось прочитати файли і можна їх експортувати.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#a6e22e">filesInDir&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">ioutil&lt;/span>.&lt;span style="color:#a6e22e">ReadDir&lt;/span>(&lt;span style="color:#a6e22e">directory&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatal&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер циклом йду по усіх файлах. Але в директорії яку я читаю можуть бути іншій файли окрім .json тому буду перевіряти чи назва файлу закінчується на .json. Якщо файл все таки json записую його контент в &lt;code>rawBoard&lt;/code>. І перетворюю цей файл в структуру &lt;code>sdk.Board&lt;/code>. Також створюю об&amp;rsquo;єкт типу sdk.SetDashboardParams в якому вказую в яку папку імпортувати дашборд та чи перезаписати якщо такий дашборд вже існує. Коли всі параметри готові викликаю метод SetDashboard який і здійснить експорт.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">file&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">filesInDir&lt;/span> {
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">strings&lt;/span>.&lt;span style="color:#a6e22e">HasSuffix&lt;/span>(&lt;span style="color:#a6e22e">file&lt;/span>.&lt;span style="color:#a6e22e">Name&lt;/span>(), &lt;span style="color:#e6db74">&amp;#34;.json&amp;#34;&lt;/span>) {
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">rawBoard&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">ioutil&lt;/span>.&lt;span style="color:#a6e22e">ReadFile&lt;/span>(&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Sprintf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;%s/%s&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">directory&lt;/span>, &lt;span style="color:#a6e22e">file&lt;/span>.&lt;span style="color:#a6e22e">Name&lt;/span>())); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+&lt;span style="color:#66d9ef">continue&lt;/span>
+}
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">board&lt;/span> &lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">Board&lt;/span>
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">json&lt;/span>.&lt;span style="color:#a6e22e">Unmarshal&lt;/span>(&lt;span style="color:#a6e22e">rawBoard&lt;/span>, &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">board&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+&lt;span style="color:#66d9ef">continue&lt;/span>
+}
+&lt;span style="color:#a6e22e">params&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">SetDashboardParams&lt;/span>{
+&lt;span style="color:#a6e22e">FolderID&lt;/span>: &lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">DefaultFolderId&lt;/span>,
+&lt;span style="color:#a6e22e">Overwrite&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>,
+}
+&lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">c&lt;/span>.&lt;span style="color:#a6e22e">SetDashboard&lt;/span>(&lt;span style="color:#a6e22e">ctx&lt;/span>, &lt;span style="color:#a6e22e">board&lt;/span>, &lt;span style="color:#a6e22e">params&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Printf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;error on importing dashboard %s&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">board&lt;/span>.&lt;span style="color:#a6e22e">Title&lt;/span>)
+&lt;span style="color:#66d9ef">continue&lt;/span>
+}
+}
+}
+&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Export Grafana Dashboards With Go</title><link>/ua/2020/12/19/export-grafana-dashboards-with-go/</link><pubDate>Sat, 19 Dec 2020 18:27:35 +0200</pubDate><guid>/ua/2020/12/19/export-grafana-dashboards-with-go/</guid><description>Привіт!
 Сьогодні подивимось як за допомогою go можна експортувати дашборди з Grafana. Для взаємодії з Grafana я використаю sdk. Sdk можна встановити за допомогою go get github.com/grafana-tools/sdk.
 Почнемо писати код. На початку файлу буде package, імпорти та main функція
 package main import ( &amp;#34;context&amp;#34; &amp;#34;encoding/json&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;log&amp;#34; &amp;#34;os&amp;#34; &amp;#34;github.com/grafana-tools/sdk&amp;#34; ) func main() { } ) Додамо декілька параметрів:
-var ( boardLinks []sdk.FoundBoard rawBoard sdk.Board meta sdk.BoardProperties err error grafanaURL string apiKey string directory string ) В boardLinks будуть добавлятись ссилки на дашборди в Grafana.</description></item><item><title>Filter Ebs Snapshot By Date With Go</title><link>/ua/2020/12/05/filter-ebs-snapshot-by-date-with-go/</link><pubDate>Sat, 05 Dec 2020 17:53:29 +0200</pubDate><guid>/ua/2020/12/05/filter-ebs-snapshot-by-date-with-go/</guid><description>Привіт!
+var ( boardLinks []sdk.FoundBoard rawBoard sdk.Board meta sdk.BoardProperties err error grafanaURL string apiKey string directory string ) В boardLinks будуть добавлятись ссилки на дашборди в Grafana.</description><content>&lt;p>Привіт!&lt;/p>
+&lt;p>Сьогодні подивимось як за допомогою go можна експортувати дашборди з Grafana.
+Для взаємодії з Grafana я використаю &lt;a href="https://github.com/grafana-tools/sdk">sdk&lt;/a>. Sdk можна встановити за допомогою &lt;code>go get github.com/grafana-tools/sdk&lt;/code>.&lt;/p>
+&lt;p>Почнемо писати код. На початку файлу буде package, імпорти та main функція&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;context&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;encoding/json&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;os&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/grafana-tools/sdk&amp;#34;&lt;/span>
+)
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+}
+)
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Додамо декілька параметрів:&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#66d9ef">var&lt;/span> (
+&lt;span style="color:#a6e22e">boardLinks&lt;/span> []&lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">FoundBoard&lt;/span>
+&lt;span style="color:#a6e22e">rawBoard&lt;/span> &lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">Board&lt;/span>
+&lt;span style="color:#a6e22e">meta&lt;/span> &lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">BoardProperties&lt;/span>
+&lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#66d9ef">error&lt;/span>
+&lt;span style="color:#a6e22e">grafanaURL&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">apiKey&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">directory&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+)
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>В &lt;code>boardLinks&lt;/code> будуть добавлятись ссилки на дашборди в Grafana. В &lt;code>rawBoard&lt;/code> буде зберігатись дашборд. &lt;code>meta&lt;/code> буде використовуватись для того щоб отримати ім&amp;rsquo;я дашборда і зберегти його з таким іменем в файл. &lt;code>directory&lt;/code> директорія в яку будуть зберігатись дашборди. &lt;code>grafanaURL&lt;/code> - Grafana url з портом в форматі &lt;code>http://127.0.0.1:3030&lt;/code> та &lt;code>apiKey&lt;/code> для авторизації в Grafana. В grafanaUR, apiKey та directory потрібно внести своє значення.&lt;/p>
+&lt;p>Створюємо Grafana клієнт&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#a6e22e">ctx&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Background&lt;/span>()
+&lt;span style="color:#a6e22e">c&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">NewClient&lt;/span>(&lt;span style="color:#a6e22e">grafanaURL&lt;/span>, &lt;span style="color:#a6e22e">apiKey&lt;/span>, &lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">DefaultHTTPClient&lt;/span>)
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>І тепер за допомогою клієнта можна робити запити до Grafana api. І перше що можна отримати це список ссилок на дашборди&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">boardLinks&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">c&lt;/span>.&lt;span style="color:#a6e22e">Search&lt;/span>(&lt;span style="color:#a6e22e">ctx&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер як ссилки на дашборди отримано можна і отримати самі дашборди та записати їх в файл.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">link&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">boardLinks&lt;/span> {
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">rawBoard&lt;/span>, &lt;span style="color:#a6e22e">meta&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">c&lt;/span>.&lt;span style="color:#a6e22e">GetDashboardByUID&lt;/span>(&lt;span style="color:#a6e22e">ctx&lt;/span>, &lt;span style="color:#a6e22e">link&lt;/span>.&lt;span style="color:#a6e22e">UID&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Printf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;%s for %s\n&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>, &lt;span style="color:#a6e22e">link&lt;/span>.&lt;span style="color:#a6e22e">URI&lt;/span>)
+&lt;span style="color:#66d9ef">continue&lt;/span>
+}
+&lt;span style="color:#a6e22e">rawBoard&lt;/span>.&lt;span style="color:#a6e22e">ID&lt;/span> = &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;span style="color:#a6e22e">writeDashboardToFile&lt;/span>(&lt;span style="color:#a6e22e">directory&lt;/span>, &lt;span style="color:#a6e22e">rawBoard&lt;/span>, &lt;span style="color:#a6e22e">meta&lt;/span>.&lt;span style="color:#a6e22e">Slug&lt;/span>)
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Циклом я проходжу по усіх ссилках на дашборди в slice boardLinks і на кожного з них викликаю метод &lt;code>GetDashboardByUID&lt;/code>, якого в параметри передаю контекст та UID дашборда.&lt;/p>
+&lt;p>Також важливо щоб поле &lt;code>ID&lt;/code> було відсутнє, інакше Grafana не дозволить зробити експорт дашбордів. Через то що в sdk.Board воно має тип uint та omitempty я можу дати йому значення 0 і це поле не буде добавлено.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#a6e22e">ID&lt;/span> &lt;span style="color:#66d9ef">uint&lt;/span> &lt;span style="color:#e6db74">`json:&amp;#34;id,omitempty&amp;#34;`&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>І в кінці викликається метод writeDashboardToFile який приймає три параметри, директорія де зберігати дашборд, сам дашборд, та ім&amp;rsquo;я дашборда яке можна отримати з параметра meta.&lt;/p>
+&lt;p>Що залишилось це створити метод &lt;code>writeDashboardToFile&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">writeDashboardToFile&lt;/span>(&lt;span style="color:#a6e22e">directory&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">dashboard&lt;/span> &lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">Board&lt;/span>, &lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">tag&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) {
+&lt;span style="color:#66d9ef">var&lt;/span> (
+&lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#66d9ef">error&lt;/span>
+&lt;span style="color:#a6e22e">dashboardFile&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">File&lt;/span>
+&lt;span style="color:#a6e22e">fileName&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">Stat&lt;/span>(&lt;span style="color:#a6e22e">directory&lt;/span>); &lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">IsNotExist&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>) {
+&lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">MkdirAll&lt;/span>(&lt;span style="color:#a6e22e">directory&lt;/span>, &lt;span style="color:#ae81ff">0755&lt;/span>)
+}
+&lt;span style="color:#a6e22e">fileName&lt;/span> = &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Sprintf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;%s/%s.json&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">directory&lt;/span>, &lt;span style="color:#a6e22e">name&lt;/span>)
+&lt;span style="color:#a6e22e">dashboardFile&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">Create&lt;/span>(&lt;span style="color:#a6e22e">fileName&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Printf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;failed to create file for dashboard %s&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">fileName&lt;/span>)
+}
+&lt;span style="color:#66d9ef">defer&lt;/span> &lt;span style="color:#a6e22e">dashboardFile&lt;/span>.&lt;span style="color:#a6e22e">Close&lt;/span>()
+&lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">json&lt;/span>.&lt;span style="color:#a6e22e">NewEncoder&lt;/span>(&lt;span style="color:#a6e22e">dashboardFile&lt;/span>).&lt;span style="color:#a6e22e">Encode&lt;/span>(&lt;span style="color:#a6e22e">dashboard&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Printf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;failed to encode dashboard json to file %s&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">fileName&lt;/span>)
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>В цьому методі перевіряю чи існує директорія, якщо ж ні то створюю її. Далі в цій директорії я створюю файл з назвою дашборда і за допомогою &lt;code>json.NewEncoder&lt;/code> записую json в файл.&lt;/p>
+&lt;p>Наступним кроком на основі даного коду можна створити cli наприклад за допомогою cobra чи іншої бібліотеки.&lt;/p></content></item><item><title>Filter Ebs Snapshot By Date With Go</title><link>/ua/2020/12/05/filter-ebs-snapshot-by-date-with-go/</link><pubDate>Sat, 05 Dec 2020 17:53:29 +0200</pubDate><guid>/ua/2020/12/05/filter-ebs-snapshot-by-date-with-go/</guid><description>Привіт!
 Сьогодні подивимось як можна фільтрувати ebs снепшоти по даті за допомогою golang.
 Для початку створю папку і в ній ініціалізую go модуль
 mkdir snapshotFilter cd snapshotFilter go mod init snapshotFilter Потрібно створити main.go в якому буде код. Почнемо з main функції
-package main import ( &amp;#34;flag&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;log&amp;#34; &amp;#34;sort&amp;#34; &amp;#34;time&amp;#34; &amp;#34;github.com/aws/aws-sdk-go/aws&amp;#34; &amp;#34;github.com/aws/aws-sdk-go/aws/session&amp;#34; &amp;#34;github.com/aws/aws-sdk-go/service/ec2&amp;#34; ) func main() { sess := session.Must(session.NewSession()) ec2Client := ec2.New(sess) filterDate := flag.String(&amp;#34;snapshot-date&amp;#34;, time.Now().Format(time.RFC3339), &amp;#34;Provide snapshot creation date&amp;#34;) snapshotName := flag.</description></item><item><title>Get Lambdas in Vpc With Go</title><link>/ua/2020/09/01/get-lambdas-in-vpc-with-go/</link><pubDate>Tue, 01 Sep 2020 17:40:16 +0300</pubDate><guid>/ua/2020/09/01/get-lambdas-in-vpc-with-go/</guid><description>Привіт!
+package main import ( &amp;#34;flag&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;log&amp;#34; &amp;#34;sort&amp;#34; &amp;#34;time&amp;#34; &amp;#34;github.com/aws/aws-sdk-go/aws&amp;#34; &amp;#34;github.com/aws/aws-sdk-go/aws/session&amp;#34; &amp;#34;github.com/aws/aws-sdk-go/service/ec2&amp;#34; ) func main() { sess := session.Must(session.NewSession()) ec2Client := ec2.New(sess) filterDate := flag.String(&amp;#34;snapshot-date&amp;#34;, time.Now().Format(time.RFC3339), &amp;#34;Provide snapshot creation date&amp;#34;) snapshotName := flag.</description><content>&lt;p>Привіт!&lt;/p>
+&lt;p>Сьогодні подивимось як можна фільтрувати ebs снепшоти по даті за допомогою golang.&lt;/p>
+&lt;p>Для початку створю папку і в ній ініціалізую go модуль&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-bash" data-lang="bash">mkdir snapshotFilter
+cd snapshotFilter
+go mod init snapshotFilter
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Потрібно створити &lt;code>main.go&lt;/code> в якому буде код.
+Почнемо з main функції&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;flag&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;sort&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;time&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go/aws&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go/aws/session&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go/service/ec2&amp;#34;&lt;/span>
+)
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#a6e22e">sess&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">session&lt;/span>.&lt;span style="color:#a6e22e">Must&lt;/span>(&lt;span style="color:#a6e22e">session&lt;/span>.&lt;span style="color:#a6e22e">NewSession&lt;/span>())
+&lt;span style="color:#a6e22e">ec2Client&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">New&lt;/span>(&lt;span style="color:#a6e22e">sess&lt;/span>)
+&lt;span style="color:#a6e22e">filterDate&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">flag&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;snapshot-date&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Now&lt;/span>().&lt;span style="color:#a6e22e">Format&lt;/span>(&lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">RFC3339&lt;/span>), &lt;span style="color:#e6db74">&amp;#34;Provide snapshot creation date&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">snapshotName&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">flag&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;snapshot-name&amp;#34;&lt;/span>, &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Provide snapshot name&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">flag&lt;/span>.&lt;span style="color:#a6e22e">Parse&lt;/span>()
+&lt;span style="color:#a6e22e">parsedTime&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Parse&lt;/span>(&lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">RFC3339&lt;/span>, &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">filterDate&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Not able to parse time&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">snapshotName&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Please provide snapshot name&amp;#34;&lt;/span>)
+}
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">filterSnapshotByDate&lt;/span>(&lt;span style="color:#a6e22e">parsedTime&lt;/span>, &lt;span style="color:#a6e22e">snapshotName&lt;/span>, &lt;span style="color:#a6e22e">ec2Client&lt;/span>))
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Починається файл з назви package та імпортів. Наступним іде функція main.
+Тут створюється ec2 клієнт та параметер командного рядка &lt;code>filterDate&lt;/code> і &lt;code>snapshotName&lt;/code>. &lt;code>filterDate&lt;/code> буде використано для введення дати снепшоту з консолі. Якщо цей параметр не буде введено поточна дата буде використана в форматі RFC3339 (2006-01-02T15:04:05Z07:00). Для того щоб вказати це значення з консолі це буде виглядати так - &lt;code>go run main.go -snapshot-date=2020-03-20T06:24:05Z&lt;/code>. Аналогічно створюю параметер для імені снепшота, але якщо цей параметер не зазначено то програми завершиться з повідомленням &lt;code>Please provide snapshot name&lt;/code>. Також потрібно дату яку передав користувач типу string перетворити в тип time.Time. Я використаю метод time.Parse, першим аргументом потрібно передати layout, оскільки я знаю що мій формат це &lt;code>RFC3339&lt;/code> то я вкажу &lt;code>time.RFC3339&lt;/code>, другим параметром я передам значення що ввів користувач.
+&lt;code>filterSnapshotByDate(filterDate, snapshotName, ec2Client)&lt;/code> метод який буде робити фільтрацію.&lt;/p>
+&lt;p>Для того щоб відфільтрувати снепшот спочатку отримати список всі снепшотів. Я буду використовувати тег Name для того щоб отримати саме той снепшот який мені потрібно.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">filterSnapshotByDate&lt;/span>(&lt;span style="color:#a6e22e">filterDate&lt;/span> &lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Time&lt;/span>, &lt;span style="color:#a6e22e">snapshotName&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">client&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">EC2&lt;/span>) &lt;span style="color:#66d9ef">string&lt;/span> {
+&lt;span style="color:#a6e22e">input&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">DescribeSnapshotsInput&lt;/span>{&lt;span style="color:#a6e22e">Filters&lt;/span>: []&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">Filter&lt;/span>{
+{&lt;span style="color:#a6e22e">Name&lt;/span>: &lt;span style="color:#a6e22e">aws&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;tag:Name&amp;#34;&lt;/span>), &lt;span style="color:#a6e22e">Values&lt;/span>: []&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#66d9ef">string&lt;/span>{&lt;span style="color:#a6e22e">snapshotName&lt;/span>}},
+}}
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">result&lt;/span> []&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">Snapshot&lt;/span>
+&lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">DescribeSnapshotsPages&lt;/span>(&lt;span style="color:#a6e22e">input&lt;/span>,
+&lt;span style="color:#66d9ef">func&lt;/span>(&lt;span style="color:#a6e22e">page&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">DescribeSnapshotsOutput&lt;/span>, &lt;span style="color:#a6e22e">lastPage&lt;/span> &lt;span style="color:#66d9ef">bool&lt;/span>) &lt;span style="color:#66d9ef">bool&lt;/span> {
+&lt;span style="color:#a6e22e">result&lt;/span> = append(&lt;span style="color:#a6e22e">result&lt;/span>, &lt;span style="color:#a6e22e">page&lt;/span>.&lt;span style="color:#a6e22e">Snapshots&lt;/span>&lt;span style="color:#f92672">...&lt;/span>)
+&lt;span style="color:#66d9ef">return&lt;/span> !&lt;span style="color:#a6e22e">lastPage&lt;/span>
+})
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Was not able to get list of snapshots&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>В input параметрі я створю фільтр яким буду фільтрувати потрібні мені снепошти по імені. І далі за допомогою функції пагінації &lt;code>DescribeSnapshotsPages&lt;/code> я отримаю список усіх снепшотів та добавлю їх в список &lt;code>var result []*ec2.Snapshot&lt;/code>.&lt;/p>
+&lt;p>Для того щоб відфільтрувати снепшот по даті спочатку їх треба посортувати.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#a6e22e">sort&lt;/span>.&lt;span style="color:#a6e22e">Slice&lt;/span>(&lt;span style="color:#a6e22e">result&lt;/span>, &lt;span style="color:#66d9ef">func&lt;/span>(&lt;span style="color:#a6e22e">i&lt;/span>, &lt;span style="color:#a6e22e">j&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>) &lt;span style="color:#66d9ef">bool&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">result&lt;/span>[&lt;span style="color:#a6e22e">i&lt;/span>].&lt;span style="color:#a6e22e">StartTime&lt;/span>.&lt;span style="color:#a6e22e">After&lt;/span>(&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">result&lt;/span>[&lt;span style="color:#a6e22e">j&lt;/span>].&lt;span style="color:#a6e22e">StartTime&lt;/span>)
+})
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Через те що об&amp;rsquo;єкти які я фільтрую мають тип time.Time я не можу їх порівнювати за допомогою &amp;gt; чи &amp;lt;. Але для таких випадків в go є метод After. Саме за допомогою нього я посортую слайс з снепшотами.&lt;/p>
+&lt;p>Тепер можна фільтрувати снепшоти, для цього циклом я пройдусь по відсортованих снепшотах і коли дата введена користувачем буде більша чим дата снепошта я поверну id снепшота.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">snapshot&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">result&lt;/span> {
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">filterDate&lt;/span>.&lt;span style="color:#a6e22e">After&lt;/span>(&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">snapshot&lt;/span>.&lt;span style="color:#a6e22e">StartTime&lt;/span>) {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Found snapshot with date&amp;#34;&lt;/span>, &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">snapshot&lt;/span>.&lt;span style="color:#a6e22e">StartTime&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;which are closest date to&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">filterDate&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>)
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">snapshot&lt;/span>.&lt;span style="color:#a6e22e">SnapshotId&lt;/span>
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Якщо ж такого снепшота не буде знайдено то я поверну id останнього снепошта&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Not found spashot with specific date&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">filterDate&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;going to use latest&amp;#34;&lt;/span>, &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">result&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>].&lt;span style="color:#a6e22e">StartTime&lt;/span>)
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">result&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>].&lt;span style="color:#a6e22e">SnapshotId&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Get Lambdas in Vpc With Go</title><link>/ua/2020/09/01/get-lambdas-in-vpc-with-go/</link><pubDate>Tue, 01 Sep 2020 17:40:16 +0300</pubDate><guid>/ua/2020/09/01/get-lambdas-in-vpc-with-go/</guid><description>Привіт!
 Сьогодні я хочу розказати як за допомогою go можна отримати список всіх AWS Lambda які знаходяться в VPC. Для початку потрібно встановити golang. Останю версію можна завантажити з офіційного сайту.
 Після того як golang встановлено створіть папку для скриптів mkdir awsscripts
-Далі потрібно ініціалізувати go.mod файл. Цей файл в якому зберігаються всі залежності на стороні пакети, і одночасно зробить go код модулем. І в майбутньому його можна буде встановлювати за допомогою go get.</description></item></channel></rss>
+Далі потрібно ініціалізувати go.mod файл. Цей файл в якому зберігаються всі залежності на стороні пакети, і одночасно зробить go код модулем. І в майбутньому його можна буде встановлювати за допомогою go get.</description><content>&lt;p>Привіт!&lt;/p>
+&lt;p>Сьогодні я хочу розказати як за допомогою go можна отримати список всіх AWS Lambda які знаходяться в VPC.
+Для початку потрібно встановити golang. Останю версію можна завантажити з офіційного &lt;a href="https://golang.org/dl/">сайту&lt;/a>.&lt;/p>
+&lt;p>Після того як golang встановлено створіть папку для скриптів
+&lt;code>mkdir awsscripts&lt;/code>&lt;/p>
+&lt;p>Далі потрібно ініціалізувати go.mod файл. Цей файл в якому зберігаються всі залежності на стороні пакети, і одночасно зробить go код модулем. І в майбутньому його можна буде встановлювати за допомогою &lt;code>go get&lt;/code>. Для створення модуля потрібно викликати команду &lt;code>go mod init github.com/mpostument/awsscripts&lt;/code>. Де github&amp;hellip; це імя модуля. Якщо ви використовую іншу систему контролю версій це може бути вона, далі ім&amp;rsquo;я користувача та назва модуля.&lt;/p>
+&lt;p>Після того як модуль створено нам буде потрібен aws-sdk для роботи з aws. Встановити його можна командою &lt;code>go get github.com/aws/aws-sdk-go@latest&lt;/code> знаходячь в директорії з go.mod. Після цього в go mod добавится версія aws-sdk &lt;code>require github.com/aws/aws-sdk-go v1.34.14&lt;/code>. Надалі щоб оновити версію aws-sdk можна вручну поміняти версію в цьому файлі та запустити &lt;code>go mod tidy&lt;/code>.&lt;/p>
+&lt;p>З налаштуванням завершено і можна перейти до коду.&lt;br>
+Створіть в корені папки &lt;code>awsscripts&lt;/code> або ж в будь якій інші папці в середині &lt;code>awsscripts&lt;/code> файл &lt;code>lambdaInVpc.go&lt;/code> і відкрийте його.&lt;/p>
+&lt;p>Кожен go файл починається з &lt;code>package&lt;/code>. Оскільки нам потрібно запускати go файл на пряму а не імпортувати то &lt;code>package&lt;/code> має бути &lt;code>main&lt;/code>.&lt;/p>
+&lt;p>Також потрібно добавити список стороніх модулів які ми будемо використовувати&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go/aws/session&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go/service/lambda&amp;#34;&lt;/span>
+)
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Після списку імпортів іде метод &lt;code>main&lt;/code>, який є вхідною точкою в код. В &lt;code>main&lt;/code> ми створимо aws client.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#a6e22e">mySession&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">session&lt;/span>.&lt;span style="color:#a6e22e">Must&lt;/span>(&lt;span style="color:#a6e22e">session&lt;/span>.&lt;span style="color:#a6e22e">NewSession&lt;/span>())
+&lt;span style="color:#a6e22e">client&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">lambda&lt;/span>.&lt;span style="color:#a6e22e">New&lt;/span>(&lt;span style="color:#a6e22e">mySession&lt;/span>)
+&lt;span style="color:#a6e22e">lambdas&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">getLambdaFunctions&lt;/span>(&lt;span style="color:#a6e22e">client&lt;/span>)
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тут створюється aws сесія і lambda client, і викликається функці я &lt;code>getLambdaFunctions&lt;/code> в яку передається щойно створений client. Тепер приступимо до написання &lt;code>getLambdaFunctions&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">getLambdaFunctions&lt;/span>(&lt;span style="color:#a6e22e">client&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">lambda&lt;/span>.&lt;span style="color:#a6e22e">Lambda&lt;/span>) []&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">lambda&lt;/span>.&lt;span style="color:#a6e22e">FunctionConfiguration&lt;/span> {
+&lt;span style="color:#a6e22e">input&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">lambda&lt;/span>.&lt;span style="color:#a6e22e">ListFunctionsInput&lt;/span>{}
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">result&lt;/span> []&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">lambda&lt;/span>.&lt;span style="color:#a6e22e">FunctionConfiguration&lt;/span>
+&lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">ListFunctionsPages&lt;/span>(&lt;span style="color:#a6e22e">input&lt;/span>,
+&lt;span style="color:#66d9ef">func&lt;/span>(&lt;span style="color:#a6e22e">page&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">lambda&lt;/span>.&lt;span style="color:#a6e22e">ListFunctionsOutput&lt;/span>, &lt;span style="color:#a6e22e">lastPage&lt;/span> &lt;span style="color:#66d9ef">bool&lt;/span>) &lt;span style="color:#66d9ef">bool&lt;/span> {
+&lt;span style="color:#a6e22e">result&lt;/span> = append(&lt;span style="color:#a6e22e">result&lt;/span>, &lt;span style="color:#a6e22e">page&lt;/span>.&lt;span style="color:#a6e22e">Functions&lt;/span>&lt;span style="color:#f92672">...&lt;/span>)
+&lt;span style="color:#66d9ef">return&lt;/span> !&lt;span style="color:#a6e22e">lastPage&lt;/span>
+})
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatal&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Not able to get lambdas&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>)
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">result&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер розберемо що тут відбувається. Для того щоб отримати список лямбд потрібно викликати функцію &lt;code>ListFunctions&lt;/code>. Але оскільки ця метод повертає тільки 50 перших лямбд вона нам на підходить. Тому що якщо ї 51 і більше лямбд на aws акунті од всерівно поверне тільки перші 50. Але в aws є метод з пагінацією &lt;code>ListFunctionsPages&lt;/code>, і її можна тут використати. Метод приймає два параметра перший параметри пошуку &lt;code>ListFunctionsInput&lt;/code> в якій можна задати регіон, версію та ще декілька параметрів. І друга це метод пагінації.&lt;/p>
+&lt;p>На початку ми створюємо дві зміні це &lt;code>input&lt;/code> типу &lt;code>ListFunctionsInput&lt;/code> і &lt;code>result&lt;/code> типу &lt;code>[]*lambda.FunctionConfiguration&lt;/code>. &lt;code>Input&lt;/code> буде передаватись в функцію &lt;code>ListFunctionsPages&lt;/code> а &lt;code>result&lt;/code> буде використуватись для зберігання результату виконання.&lt;/p>
+&lt;p>Далі йде сам виклик &lt;code>ListFunctionsPages&lt;/code>. Ця метод вертає тільки помилку результат цієї метод присвоюється змінній err і далі йде первірка чи ця зміна не рівна &lt;code>nil&lt;/code>. Якщо ж метод вернула &lt;code>nil&lt;/code> то відбувається завершення програми і відображення помилки.&lt;/p>
+&lt;p>В самій функції &lt;code>ListFunctionsPages&lt;/code> відбувається виклик ще однієї функції яка добавляє результат виконання в зріз &lt;code>result&lt;/code>. Виклик внутрішньою функції здіюснюється декілька раз доки ми не дійдемо останьої сторінки. І в кінці вертаємо зріз &lt;code>result&lt;/code>.&lt;/p>
+&lt;p>Тепер коли отримали список всіх лямбд потрібно з них відфільтрувати ті які в VPC. Для цього повернемось знову в метод main і добавити там ітерації по всіх лямбдах з умовою.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">l&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">lambdas&lt;/span> {
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">l&lt;/span>.&lt;span style="color:#a6e22e">VpcConfig&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> len(&lt;span style="color:#a6e22e">l&lt;/span>.&lt;span style="color:#a6e22e">VpcConfig&lt;/span>.&lt;span style="color:#a6e22e">SubnetIds&lt;/span>) &amp;gt; &lt;span style="color:#ae81ff">0&lt;/span> {
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">l&lt;/span>.&lt;span style="color:#a6e22e">FunctionName&lt;/span>)
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тут ми ітеруємось по результату виконання &lt;code>getLambdaFunctions&lt;/code> і перевірємо чи &lt;code>VpcConfig&lt;/code> функції не рівний &lt;code>nil&lt;/code> і чи список subnet більше за нуль. Дві перевірки потрібні тому що для деяких лямбд &lt;code>VpcConfig&lt;/code> буде nil, а для інших буде map в якому будуть пусті списки. Наприклад&lt;/p>
+&lt;pre>&lt;code>&amp;lt;nil&amp;gt;
+&amp;lt;nil&amp;gt;
+{
+SecurityGroupIds: [],
+SubnetIds: [],
+VpcId: &amp;quot;&amp;quot;
+}
+&amp;lt;nil&amp;gt;
+&lt;/code>&lt;/pre>&lt;p>Тепер можна запустити код і отримати результат.&lt;br>
+&lt;code>go run lambdaInVpc.go&lt;/code>&lt;/p></content></item></channel></rss>

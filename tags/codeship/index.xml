@@ -1,3 +1,75 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Codeship on mpostument.com</title><link>/tags/codeship/</link><description>Recent content in Codeship on mpostument.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 16 Sep 2020 20:24:40 +0300</lastBuildDate><atom:link href="/tags/codeship/index.xml" rel="self" type="application/rss+xml"/><item><title>Deploy to ec2 with codedship</title><link>/2020/09/16/deploy-to-ec2-with-codeship/</link><pubDate>Wed, 16 Sep 2020 20:24:40 +0300</pubDate><guid>/2020/09/16/deploy-to-ec2-with-codeship/</guid><description>Hi there!
 Today I want to show how you can deploy code on AWS EC2 using CodeShip Basic. To do this, I will use the integration of Codeship with AWS CodeDeploy.
-CodeShip Configuration First you need to add a repository to CodeShip and go to the Deploy page Add a branch from which code will be deployed to ec2. In my case, the branch is master. Once the branch is added you need to scroll down to the Deployment section.</description></item></channel></rss>
+CodeShip Configuration First you need to add a repository to CodeShip and go to the Deploy page Add a branch from which code will be deployed to ec2. In my case, the branch is master. Once the branch is added you need to scroll down to the Deployment section.</description><content>&lt;p>Hi there!&lt;/p>
+&lt;p>Today I want to show how you can deploy code on AWS EC2 using CodeShip Basic.
+To do this, I will use the integration of Codeship with AWS CodeDeploy.&lt;/p>
+&lt;h2 id="codeship-configuration">CodeShip Configuration&lt;/h2>
+&lt;p>First you need to add a repository to CodeShip and go to the Deploy page
+&lt;img src="https://i.imgur.com/Zz2v8aZ.png" alt="Coeship1">&lt;/p>
+&lt;p>Add a branch from which code will be deployed to ec2. In my case, the branch is master.
+Once the branch is added you need to scroll down to the Deployment section. And select CodeDeploy
+&lt;img src="https://i.imgur.com/KVCmUDn.png" alt="Codeship2">&lt;/p>
+&lt;p>The following form will appear immediately
+&lt;img src="https://i.imgur.com/rfdRxKl.png" alt="CodeshipForm3">
+Here you need to enter the Access and Secret Keys of the AWS user who will perform the deployment. The user must have access to s3 and CodeDeploy.
+In the region, specify your AWS Region where the application is located. For me it&amp;rsquo;s us-east-1.&lt;br>
+&lt;code>Application&lt;/code>, &lt;code>GroupName&lt;/code> will need to be created in AWS. The value should be chosen so that it is clear which application will be deployed. &lt;code>S3 Bucket&lt;/code> can be as a general bucket where all deployments will be carried out or choose an individual name for one application. In my case it&amp;rsquo;s CodeShipEc2Deployment.&lt;br>
+And last is &lt;code>Config Name&lt;/code> you need to specify the configuration name in CodeDeploy. I will take the standard &lt;code>CodeDeployDefault.AllAtOnce&lt;/code>. This means that the deployment will occur at once on all ec2 instances&lt;/p>
+&lt;p>Now with CodeShip configuration over and you can start setting up AWS.&lt;/p>
+&lt;h2 id="codedeploy-configuration">CodeDeploy Configuration&lt;/h2>
+&lt;p>Open CodeDeploy service in AWS.&lt;br>
+&lt;img src="https://i.imgur.com/cTv6l3Y.png" alt="CodeDeploy">
+In the Deployment section, find Applications&lt;br>
+&lt;img src="https://i.imgur.com/BAZ6E6d.png" alt="Applications">&lt;br>
+Click Create Application. Enter the same name as in Codeship in the &lt;code>Application&lt;/code> section. Select EC2 as the Compute Platform
+&lt;img src="https://i.imgur.com/zAXUxuF.png" alt="CreateApplication">
+Open the newly created &lt;code>Application&lt;/code> and in &lt;code>Deployment Groups&lt;/code> select &lt;code>Create Deployment Group&lt;/code>&lt;br>
+&lt;img src="https://i.imgur.com/5wfA0VU.png" alt="DeploymentGroup">
+In &lt;code>Deployment group name&lt;/code> it is necessary to enter the same name which was specified in CodeShip.
+In &lt;code>ServiceRole&lt;/code> choose a role that will allow to carry out deployment on ec2. A good example of the role can be found &lt;a href="https://docs.aws.amazon.com/codedeploy/latest/userguide/getting-started-create-service-role.html">here&lt;/a>.&lt;/p>
+&lt;p>In &lt;code>Environment configuration&lt;/code>, select ec2. Then you need to specify which tag to use for the ec2 filter. For example it can be Key = Name, Value = ProductionApplication. Here you can use any tags that are on your ec2.&lt;br>
+&lt;img src="https://i.imgur.com/ffGKRQV.png" alt="Ec2Filter">&lt;/p>
+&lt;h2 id="ec2-configuration">Ec2 Configuration&lt;/h2>
+&lt;p>Another role will be required for ec2. What accesses it should have can be found &lt;a href="https://docs.aws.amazon.com/codedeploy/latest/userguide/instances-ec2-configure.html#instances-ec2-configure-2-verify-instance-profile-permissions">here&lt;/a>&lt;/p>
+&lt;p>Once the role is created, it must be added to the ec2 instance. To do this, select the desired ec2. Right-click and select Attach Role
+&lt;img src="https://i.imgur.com/uaIUcyg.png" alt="AttachRole">&lt;br>
+Find the role you created above in the list.&lt;br>
+Now you need to put the CodeDeploy Agent on the ec2 instance. To do this, connect to the server via ssh
+&lt;code>ssh -i private_key ec2-user@IP&lt;/code>. In my example i am using AmazonLinux. If you have another OS commands can be found &lt;a href="https://docs.aws.amazon.com/codedeploy/latest/userguide/codedeploy-agent-operations-install-cli.html">here&lt;/a>.&lt;/p>
+&lt;ul>
+&lt;li>Download the installation &lt;code>wget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install&lt;/code>&lt;/li>
+&lt;li>Provide permissions &lt;code>sudo chmod + x install&lt;/code>&lt;/li>
+&lt;li>Install agent &lt;code>sudo ./install auto&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>You can check if the agent is running with the &lt;code>sudo service codedeploy-agent status&lt;/code> command. The result should be similar to &lt;code>The AWS CodeDeploy agent is running as PID 32466&lt;/code>.&lt;br>
+You also need to create a folder that will contain the application &lt;code>mkdir /opt/application&lt;/code> and give permission to the user. I use ec2-user &lt;code>chown ec2-user:ec2-user /opt/application&lt;/code>&lt;/p>
+&lt;h2 id="deployment-script">Deployment Script&lt;/h2>
+&lt;p>At the root of the repository you need to create a file called &lt;code>appspec.yml&lt;/code>. Here you can find all options supported by this file - &lt;a href="https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html">AWS&lt;/a>.&lt;/p>
+&lt;p>Here is an example of my file:&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">version&lt;/span>: &lt;span style="color:#ae81ff">0.0&lt;/span>
+&lt;span style="color:#f92672">os&lt;/span>: &lt;span style="color:#ae81ff">linux&lt;/span>
+&lt;span style="color:#f92672">files&lt;/span>:
+- &lt;span style="color:#f92672">source&lt;/span>: &lt;span style="color:#ae81ff">/&lt;/span>
+&lt;span style="color:#f92672">destination&lt;/span>: &lt;span style="color:#ae81ff">/opt/application&lt;/span>
+&lt;span style="color:#f92672">permissions&lt;/span>:
+- &lt;span style="color:#f92672">object&lt;/span>: &lt;span style="color:#ae81ff">/opt/application&lt;/span>
+&lt;span style="color:#f92672">owner&lt;/span>: &lt;span style="color:#ae81ff">ec2-user&lt;/span>
+&lt;span style="color:#f92672">group&lt;/span>: &lt;span style="color:#ae81ff">ec2-user&lt;/span>
+&lt;span style="color:#f92672">hooks&lt;/span>:
+&lt;span style="color:#f92672">AfterInstall&lt;/span>:
+- &lt;span style="color:#f92672">location&lt;/span>: &lt;span style="color:#ae81ff">ops/deploybuild.sh&lt;/span>
+&lt;span style="color:#f92672">runas&lt;/span>: &lt;span style="color:#ae81ff">ec2-user&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>version&lt;/code> has a default value and does not need to be changed. 0.0 The only value is supported.&lt;br>
+&lt;code>os&lt;/code> can have two values windows or linux, my os is EC2 AmazonLinux, so I choose linux.&lt;br>
+&lt;code>files&lt;/code> indicates which files need to be copied to the server during deployment. &lt;code>source: /&lt;/code> means copy all files. &lt;code>destination&lt;/code> is where to copy.&lt;br>
+The &lt;code>permissions&lt;/code> specifies which permissions should have the files just copied.&lt;br>
+In the &lt;code>hooks&lt;/code> section is the application configuration. I use the &lt;code>AfterInstall&lt;/code> hook. This means that the script will run after the &lt;code>Install&lt;/code> step. During the &lt;code>Install&lt;/code> step, the files are copied to the server. The &lt;code>location&lt;/code> specifies which script to run and from its user. &lt;code>runas&lt;/code> means that the script will be called on behalf of the user. By default, the code-deploy agent is started from the root and runas at this stage will switch to ec2-user. You can also change the code-deploy agent to run immediately from ec2-user.&lt;/p>
+&lt;p>Next we need a deployment script. In the repository, I created the ops folder because the path to my script is &lt;code>- location: ops/deploybuild.sh&lt;/code>. And in this folder I created a script &lt;code>deploybuild.sh&lt;/code>.
+I have a node.js application for which you need to do yarn install and npm start. I will add it to the script&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-bash" data-lang="bash">&lt;span style="color:#75715e">#!/usr/bin/env bash
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>cd /opt/application
+yarn --ignore-engines
+cd examples/demo-app/
+&lt;span style="color:#f92672">(&lt;/span>npm run start-prod&lt;span style="color:#f92672">)&lt;/span>&amp;amp;
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>This is very basic script to start application. For production is better to use pm2 package to start js application.&lt;br>
+Now after every push to master branch code will be deployed.&lt;/p></content></item></channel></rss>

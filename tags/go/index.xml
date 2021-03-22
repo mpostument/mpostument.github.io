@@ -1,22 +1,731 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Go on mpostument.com</title><link>/tags/go/</link><description>Recent content in Go on mpostument.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 06 Mar 2021 18:56:24 +0200</lastBuildDate><atom:link href="/tags/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Latest post in GitHub readme</title><link>/2021/03/06/latest_post_in_github_readme/</link><pubDate>Sat, 06 Mar 2021 18:56:24 +0200</pubDate><guid>/2021/03/06/latest_post_in_github_readme/</guid><description>Hello!
 Today I will show how to automatically generate GitHub Readme with the latest blog posts using go. In GitHub you need to create a repository named as your GitHub profile. My GitHub profile is called mpostument, so I&amp;rsquo;ll create a repository with the same name.
-I clone the repository and call go mod init in it, in order to initialize the go module which will generate readme. At the root of the repository you need to create main.</description></item><item><title>Ebs Auto Resize</title><link>/2021/02/06/ebs-auto-resize/</link><pubDate>Sat, 06 Feb 2021 18:14:40 +0200</pubDate><guid>/2021/02/06/ebs-auto-resize/</guid><description>Hi there!
-Today we will make a script for automatic resizing of EBS volume using golang and AWS SDK version 2. To do this, I need to perform a few steps: get a list of volumes, filter those volumes in which the amount of free memory is less than the threshold, find the ebs id that corresponds to this volume. Resize by a specified percentage and increase the disk size on the file system.</description></item><item><title>Failed Asg Event Notification</title><link>/2021/01/03/failed-asg-event-notification/</link><pubDate>Sun, 03 Jan 2021 17:57:36 +0200</pubDate><guid>/2021/01/03/failed-asg-event-notification/</guid><description>Hello!
+I clone the repository and call go mod init in it, in order to initialize the go module which will generate readme. At the root of the repository you need to create main.</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>Today I will show how to automatically generate GitHub Readme with the latest blog posts using go.
+In GitHub you need to create a repository named as your GitHub profile. My GitHub profile is called mpostument, so I&amp;rsquo;ll create a repository with the same name.&lt;/p>
+&lt;p>I clone the repository and call &lt;code>go mod init&lt;/code> in it, in order to initialize the go module which will generate readme.
+At the root of the repository you need to create &lt;code>main.go&lt;/code> which will be executed.&lt;/p>
+&lt;p>In the beginning there will be imports and the structure in which posts will be stored.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;os&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;strings&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;text/template&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/mmcdole/gofeed&amp;#34;&lt;/span>
+)
+&lt;span style="color:#66d9ef">type&lt;/span> &lt;span style="color:#a6e22e">ReadmeData&lt;/span> &lt;span style="color:#66d9ef">struct&lt;/span> {
+&lt;span style="color:#a6e22e">Title&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">Link&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>The &lt;code>gofeed&lt;/code> module is needed to read the rss feed and generate a list of posts based on it.
+The code itself is quite simple, read the template using &lt;code>template.ParseFiles&lt;/code>. After that create &lt;code>gofeed.NewParser()&lt;/code> which will be used to get rss feed from my site. I loop through all posts from rss feed and add data about posts in a slice which I will transfer to a template and I will save in a file by means of &lt;code>template.Execute&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#a6e22e">template&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">template&lt;/span>.&lt;span style="color:#a6e22e">ParseFiles&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;README.tmpl&amp;#34;&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#a6e22e">fp&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">gofeed&lt;/span>.&lt;span style="color:#a6e22e">NewParser&lt;/span>()
+&lt;span style="color:#a6e22e">feed&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">fp&lt;/span>.&lt;span style="color:#a6e22e">ParseURL&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;https://mpostument.com/index.xml&amp;#34;&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#a6e22e">postList&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> []&lt;span style="color:#a6e22e">ReadmeData&lt;/span>{}
+&lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">index&lt;/span>, &lt;span style="color:#a6e22e">post&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">feed&lt;/span>.&lt;span style="color:#a6e22e">Items&lt;/span> {
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">index&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">7&lt;/span> {
+&lt;span style="color:#66d9ef">break&lt;/span>
+}
+&lt;span style="color:#a6e22e">readmeData&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ReadmeData&lt;/span>{
+&lt;span style="color:#a6e22e">Title&lt;/span>: &lt;span style="color:#a6e22e">post&lt;/span>.&lt;span style="color:#a6e22e">Title&lt;/span>,
+&lt;span style="color:#a6e22e">Link&lt;/span>: &lt;span style="color:#a6e22e">post&lt;/span>.&lt;span style="color:#a6e22e">Link&lt;/span>,
+}
+&lt;span style="color:#a6e22e">postList&lt;/span> = append(&lt;span style="color:#a6e22e">postList&lt;/span>, &lt;span style="color:#a6e22e">readmeData&lt;/span>)
+}
+&lt;span style="color:#a6e22e">f&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">Create&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;README.MD&amp;#34;&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">template&lt;/span>.&lt;span style="color:#a6e22e">Execute&lt;/span>(&lt;span style="color:#a6e22e">f&lt;/span>, &lt;span style="color:#a6e22e">postList&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>The next step is to create a template &lt;code>README.tmpl&lt;/code> with content:&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#960050;background-color:#1e0010">##&lt;/span> &lt;span style="color:#960050;background-color:#1e0010">📝&lt;/span> &lt;span style="color:#a6e22e">My&lt;/span> &lt;span style="color:#a6e22e">Latest&lt;/span> &lt;span style="color:#a6e22e">Blog&lt;/span> &lt;span style="color:#a6e22e">Posts&lt;/span>
+{{&lt;span style="color:#66d9ef">range&lt;/span> .}}
+&lt;span style="color:#f92672">-&lt;/span> [{{.&lt;span style="color:#a6e22e">Title&lt;/span>}}](&lt;span style="color:#a6e22e">https&lt;/span>:&lt;span style="color:#75715e">//mpostument.com{{.Link}}/)
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>{{&lt;span style="color:#a6e22e">end&lt;/span>}}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you run the code, it will create a file &lt;code>README.MD&lt;/code> with a list of recent posts.&lt;/p>
+&lt;p>You can use GithubActions to generate a GitHub readme automatically.
+You need to create the &lt;code>.github/workflows&lt;/code> folders at the root of the repository. And inside create a file &lt;code>generate_readme.yml&lt;/code>.
+This file is a configuration of the steps that GitHubActions will call. The action will run every day at midnight. First, the repository is cloned, go is installed and all dependencies are loaded, the code is compiled, script started and Readme.md is generated. And if there are changes in the file, they will be pushed in the repository and will be available in the profile.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Generate readme&lt;/span>
+&lt;span style="color:#f92672">on&lt;/span>:
+&lt;span style="color:#f92672">schedule&lt;/span>:
+- &lt;span style="color:#f92672">cron&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;0 0 * * *&amp;#34;&lt;/span>
+&lt;span style="color:#f92672">workflow_dispatch&lt;/span>:
+&lt;span style="color:#f92672">jobs&lt;/span>:
+&lt;span style="color:#f92672">update-readme-with-blog&lt;/span>:
+&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Update this repo&amp;#39;s README with latest blog posts&lt;/span>
+&lt;span style="color:#f92672">runs-on&lt;/span>: &lt;span style="color:#ae81ff">ubuntu-latest&lt;/span>
+&lt;span style="color:#f92672">steps&lt;/span>:
+- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Checkout&lt;/span>
+&lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">actions/checkout@v2&lt;/span>
+- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Setup go&lt;/span>
+&lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">actions/setup-go@v2&lt;/span>
+&lt;span style="color:#f92672">with&lt;/span>:
+&lt;span style="color:#f92672">go-version&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;1.16&amp;#34;&lt;/span>
+- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Go tidy&lt;/span>
+&lt;span style="color:#f92672">run&lt;/span>: &lt;span style="color:#ae81ff">go mod tidy&lt;/span>
+- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Build project&lt;/span>
+&lt;span style="color:#f92672">run&lt;/span>: &lt;span style="color:#ae81ff">go build&lt;/span>
+- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Generate readme&lt;/span>
+&lt;span style="color:#f92672">run&lt;/span>: &lt;span style="color:#ae81ff">./mpostument&lt;/span>
+- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Commit and push if changed&lt;/span>
+&lt;span style="color:#f92672">run&lt;/span>: |-&lt;span style="color:#e6db74">
+&lt;/span>&lt;span style="color:#e6db74"> git diff
+&lt;/span>&lt;span style="color:#e6db74"> git config --global user.email &amp;#34;actions@users.noreply.github.com&amp;#34;
+&lt;/span>&lt;span style="color:#e6db74"> git config --global user.name &amp;#34;README-bot&amp;#34;
+&lt;/span>&lt;span style="color:#e6db74"> git add -A
+&lt;/span>&lt;span style="color:#e6db74"> git commit -m &amp;#34;Updated readme content&amp;#34; || exit 0
+&lt;/span>&lt;span style="color:#e6db74"> git push&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Ebs Auto Resize</title><link>/2021/02/06/ebs-auto-resize/</link><pubDate>Sat, 06 Feb 2021 18:14:40 +0200</pubDate><guid>/2021/02/06/ebs-auto-resize/</guid><description>Hi there!
+Today we will make a script for automatic resizing of EBS volume using golang and AWS SDK version 2. To do this, I need to perform a few steps: get a list of volumes, filter those volumes in which the amount of free memory is less than the threshold, find the ebs id that corresponds to this volume. Resize by a specified percentage and increase the disk size on the file system.</description><content>&lt;p>Hi there!&lt;/p>
+&lt;p>Today we will make a script for automatic resizing of EBS volume using golang and AWS SDK version 2.
+To do this, I need to perform a few steps: get a list of volumes, filter those volumes in which the amount of free memory is less than the threshold, find the ebs id that corresponds to this volume. Resize by a specified percentage and increase the disk size on the file system.&lt;/p>
+&lt;p>I&amp;rsquo;ll start with the structure in which all the information on the disk will be stored and specify all the necessary imports.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;context&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;errors&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;io/ioutil&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;math&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;net/http&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;os/exec&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;regexp&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;strings&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;time&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go-v2/aws&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go-v2/config&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go-v2/service/ec2&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go-v2/service/ec2/types&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/smithy-go&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/mvisonneau/go-ebsnvme/pkg/ebsnvme&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/shirou/gopsutil/v3/disk&amp;#34;&lt;/span>
+)
+&lt;span style="color:#66d9ef">type&lt;/span> &lt;span style="color:#a6e22e">DiskData&lt;/span> &lt;span style="color:#66d9ef">struct&lt;/span> {
+&lt;span style="color:#a6e22e">VolumeID&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">DeviceName&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">MountPoint&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">TotalUsed&lt;/span> &lt;span style="color:#66d9ef">float64&lt;/span>
+&lt;span style="color:#a6e22e">TotalSpace&lt;/span> &lt;span style="color:#66d9ef">uint64&lt;/span>
+&lt;span style="color:#a6e22e">FsType&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">VolumeSize&lt;/span> &lt;span style="color:#66d9ef">int32&lt;/span>
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>The first method will write all the necessary information about the disks in the &lt;code>DiskData&lt;/code> structure. &lt;code>Gopsutil&lt;/code> will be used to retrieve information from the system. If in a system the disk is displayed as &lt;code>nvme&lt;/code> it needs to be brought to standard record (/dev/sda) which can be used to filter the necessary ebs volumes. But this alone will not be enough because disks on different servers can be mounted under the same name. To prevent modification of the wrong volume an instance id will be used as an additional condition in a filter. It can be obtained from the server metadata.&lt;/p>
+&lt;p>First I get a list of all disks using &lt;code>disk.Partitions(false)&lt;/code>, also I create ec2client and get instanceID from metadata. These methods will be created later. Next, in cycle, i loop through all the disks and check if &lt;code>nvme&lt;/code> is in the disk name. If yes with &lt;code>ebsnvme&lt;/code> i get disk name in format /dev/sda. And save the result in &lt;code>ebsDevice&lt;/code>. If not that I change a disk name from &lt;code>xvd&lt;/code> to &lt;code>sd&lt;/code>. This is the format required for AWS. Now I can query aws to get the volumeID. Using the &lt;code>Usage&lt;/code> method from AWS SDK. I get disk usage and write it to the &lt;code>DiskData&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">filterDisks&lt;/span>() ([]&lt;span style="color:#a6e22e">DiskData&lt;/span>, &lt;span style="color:#66d9ef">error&lt;/span>) {
+&lt;span style="color:#a6e22e">parts&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">Partitions&lt;/span>(&lt;span style="color:#66d9ef">false&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">client&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">getEc2Client&lt;/span>()
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">instanceID&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">getInstanceID&lt;/span>()
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">diskData&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> []&lt;span style="color:#a6e22e">DiskData&lt;/span>{}
+&lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">p&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">parts&lt;/span> {
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">ebsDevice&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">strings&lt;/span>.&lt;span style="color:#a6e22e">Contains&lt;/span>(&lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Device&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;nvme&amp;#34;&lt;/span>) {
+&lt;span style="color:#a6e22e">volumeMapping&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ebsnvme&lt;/span>.&lt;span style="color:#a6e22e">ScanDevice&lt;/span>(&lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Device&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">ebsDevice&lt;/span> = &lt;span style="color:#a6e22e">volumeMapping&lt;/span>.&lt;span style="color:#a6e22e">Name&lt;/span>
+} &lt;span style="color:#66d9ef">else&lt;/span> {
+&lt;span style="color:#a6e22e">ebsDevice&lt;/span> = &lt;span style="color:#a6e22e">strings&lt;/span>.&lt;span style="color:#a6e22e">Replace&lt;/span>(&lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Device&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;xvd&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;sd&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">1&lt;/span>)
+}
+&lt;span style="color:#a6e22e">filter&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">DescribeVolumesInput&lt;/span>{&lt;span style="color:#a6e22e">Filters&lt;/span>: []&lt;span style="color:#a6e22e">types&lt;/span>.&lt;span style="color:#a6e22e">Filter&lt;/span>{
+{
+&lt;span style="color:#a6e22e">Name&lt;/span>: &lt;span style="color:#a6e22e">aws&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;attachment.device&amp;#34;&lt;/span>),
+&lt;span style="color:#a6e22e">Values&lt;/span>: []&lt;span style="color:#66d9ef">string&lt;/span>{
+&lt;span style="color:#a6e22e">ebsDevice&lt;/span>,
+},
+},
+{
+&lt;span style="color:#a6e22e">Name&lt;/span>: &lt;span style="color:#a6e22e">aws&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;attachment.instance-id&amp;#34;&lt;/span>),
+&lt;span style="color:#a6e22e">Values&lt;/span>: []&lt;span style="color:#66d9ef">string&lt;/span>{
+&lt;span style="color:#a6e22e">instanceID&lt;/span>,
+},
+},
+},
+}
+&lt;span style="color:#a6e22e">volumeInfo&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">DescribeVolumes&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Background&lt;/span>(), &lt;span style="color:#a6e22e">filter&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">usage&lt;/span>, &lt;span style="color:#a6e22e">_&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">Usage&lt;/span>(&lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Mountpoint&lt;/span>)
+&lt;span style="color:#a6e22e">disk&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">DiskData&lt;/span>{
+&lt;span style="color:#a6e22e">VolumeID&lt;/span>: &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">volumeInfo&lt;/span>.&lt;span style="color:#a6e22e">Volumes&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>].&lt;span style="color:#a6e22e">VolumeId&lt;/span>,
+&lt;span style="color:#a6e22e">DeviceName&lt;/span>: &lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Device&lt;/span>,
+&lt;span style="color:#a6e22e">MountPoint&lt;/span>: &lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Mountpoint&lt;/span>,
+&lt;span style="color:#a6e22e">TotalUsed&lt;/span>: &lt;span style="color:#a6e22e">usage&lt;/span>.&lt;span style="color:#a6e22e">UsedPercent&lt;/span>,
+&lt;span style="color:#a6e22e">TotalSpace&lt;/span>: &lt;span style="color:#a6e22e">usage&lt;/span>.&lt;span style="color:#a6e22e">Total&lt;/span>,
+&lt;span style="color:#a6e22e">VolumeSize&lt;/span>: &lt;span style="color:#a6e22e">volumeInfo&lt;/span>.&lt;span style="color:#a6e22e">Volumes&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>].&lt;span style="color:#a6e22e">Size&lt;/span>,
+&lt;span style="color:#a6e22e">FsType&lt;/span>: &lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Fstype&lt;/span>,
+}
+&lt;span style="color:#a6e22e">diskData&lt;/span> = append(&lt;span style="color:#a6e22e">diskData&lt;/span>, &lt;span style="color:#a6e22e">disk&lt;/span>)
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">diskData&lt;/span>, &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>I need to create the methods used by filterDisks, starting from &lt;code>getInstanceID&lt;/code>. This method queries the ec2 instance metadata and receives an InstanceID in response.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">getInstanceID&lt;/span>() (&lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#66d9ef">error&lt;/span>) {
+&lt;span style="color:#a6e22e">cfg&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">config&lt;/span>.&lt;span style="color:#a6e22e">LoadDefaultConfig&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">TODO&lt;/span>())
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">client&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">imds&lt;/span>.&lt;span style="color:#a6e22e">NewFromConfig&lt;/span>(&lt;span style="color:#a6e22e">cfg&lt;/span>)
+&lt;span style="color:#a6e22e">instanceID&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">GetInstanceIdentityDocument&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">TODO&lt;/span>(), &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">imds&lt;/span>.&lt;span style="color:#a6e22e">GetInstanceIdentityDocumentInput&lt;/span>{})
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">instanceID&lt;/span>.&lt;span style="color:#a6e22e">InstanceID&lt;/span>, &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>getEc2Client&lt;/code> gets the region name from the metadata and returns the ec2 client.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">getEc2Client&lt;/span>() (&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">Client&lt;/span>, &lt;span style="color:#66d9ef">error&lt;/span>) {
+&lt;span style="color:#a6e22e">cfg&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">config&lt;/span>.&lt;span style="color:#a6e22e">LoadDefaultConfig&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">TODO&lt;/span>())
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">client&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">imds&lt;/span>.&lt;span style="color:#a6e22e">NewFromConfig&lt;/span>(&lt;span style="color:#a6e22e">cfg&lt;/span>)
+&lt;span style="color:#a6e22e">region&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">GetRegion&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">TODO&lt;/span>(), &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">imds&lt;/span>.&lt;span style="color:#a6e22e">GetRegionInput&lt;/span>{})
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">cfg&lt;/span>.&lt;span style="color:#a6e22e">Region&lt;/span> = &lt;span style="color:#a6e22e">region&lt;/span>.&lt;span style="color:#a6e22e">Region&lt;/span>
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">NewFromConfig&lt;/span>(&lt;span style="color:#a6e22e">cfg&lt;/span>), &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>What is left is to calculate what amounts of gigabytes disk should be resized.
+This method converts the disk size obtained in &lt;code>filterDisks&lt;/code> from bytes to gigabytes and determines new size of ebs volume.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">findNewSize&lt;/span>(&lt;span style="color:#a6e22e">oldSize&lt;/span> &lt;span style="color:#66d9ef">uint64&lt;/span>, &lt;span style="color:#a6e22e">increasePercent&lt;/span> &lt;span style="color:#66d9ef">float64&lt;/span>) &lt;span style="color:#66d9ef">int32&lt;/span> {
+&lt;span style="color:#a6e22e">gbSize&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> float64(&lt;span style="color:#a6e22e">oldSize&lt;/span>) &lt;span style="color:#f92672">/&lt;/span> &lt;span style="color:#a6e22e">math&lt;/span>.&lt;span style="color:#a6e22e">Pow&lt;/span>(&lt;span style="color:#ae81ff">1024&lt;/span>, &lt;span style="color:#ae81ff">3&lt;/span>)
+&lt;span style="color:#a6e22e">newSize&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> ((&lt;span style="color:#a6e22e">gbSize&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#a6e22e">increasePercent&lt;/span>) &lt;span style="color:#f92672">/&lt;/span> &lt;span style="color:#ae81ff">100&lt;/span>) &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#a6e22e">gbSize&lt;/span>
+&lt;span style="color:#66d9ef">return&lt;/span> int32(&lt;span style="color:#a6e22e">newSize&lt;/span>)
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>The resize will take place in three steps:&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>Increase the size of the ebs&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Call the grow part to increase the size of the particle if it exists.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Increase the size of the file system.&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>I&amp;rsquo;ll start with the first step.
+In this method, I get the ec2 client using the &lt;code>getEc2Client&lt;/code> method and make a &lt;code>ModifyVolume&lt;/code> request to AWS. Here it is important to filter out certain errors.
+The first is &lt;code>VolumeModificationRateExceeded&lt;/code>. AWS allows you to resize once every 6 hours, so I don&amp;rsquo;t want the script to fail if the limit is exceeded.&lt;/p>
+&lt;p>The next error is &lt;code>IncorrectModificationState&lt;/code>. After resizing the disk, its status changes to &lt;code>Optimizing&lt;/code>, in which case I also do not want to quit, and go to the next disk.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">ebsResize&lt;/span>(&lt;span style="color:#a6e22e">newSize&lt;/span> &lt;span style="color:#66d9ef">int32&lt;/span>, &lt;span style="color:#a6e22e">volumeID&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) &lt;span style="color:#66d9ef">error&lt;/span> {
+&lt;span style="color:#a6e22e">client&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">getEc2Client&lt;/span>()
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Starting resize of ebs volume&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">volumeID&lt;/span>)
+&lt;span style="color:#a6e22e">input&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">ModifyVolumeInput&lt;/span>{&lt;span style="color:#a6e22e">VolumeId&lt;/span>: &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">volumeID&lt;/span>, &lt;span style="color:#a6e22e">Size&lt;/span>: &lt;span style="color:#a6e22e">newSize&lt;/span>}
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">ModifyVolume&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Background&lt;/span>(), &lt;span style="color:#a6e22e">input&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">ae&lt;/span> &lt;span style="color:#a6e22e">smithy&lt;/span>.&lt;span style="color:#a6e22e">APIError&lt;/span>
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">errors&lt;/span>.&lt;span style="color:#a6e22e">As&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>, &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">ae&lt;/span>) {
+&lt;span style="color:#66d9ef">switch&lt;/span> &lt;span style="color:#a6e22e">ae&lt;/span>.&lt;span style="color:#a6e22e">ErrorCode&lt;/span>() {
+&lt;span style="color:#66d9ef">case&lt;/span> &lt;span style="color:#e6db74">&amp;#34;VolumeModificationRateExceeded&amp;#34;&lt;/span>:
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Ebs was already resized, wait for 6 hours before next resize&amp;#34;&lt;/span>)
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">errVolumeRetryLater&lt;/span>
+&lt;span style="color:#66d9ef">case&lt;/span> &lt;span style="color:#e6db74">&amp;#34;IncorrectModificationState&amp;#34;&lt;/span>:
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">ae&lt;/span>.&lt;span style="color:#a6e22e">ErrorMessage&lt;/span>())
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">errVolumeRetryLater&lt;/span>
+}
+} &lt;span style="color:#66d9ef">else&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
+}
+}
+&lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">waitForEbsResize&lt;/span>(&lt;span style="color:#a6e22e">volumeID&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Once the resize is started, I need to wait for it to complete, so I will create the following method &lt;code>waitForEbsResize&lt;/code>.
+The &lt;code>waitForEbsResize&lt;/code> method uses the ec2 client to make a request of type &lt;code>DescribeVolumesModifications&lt;/code> and checks whether the status of the disk is &lt;code>modifying&lt;/code>. If yes, it waits for 15 seconds and runs the method recursively again.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">waitForEbsResize&lt;/span>(&lt;span style="color:#a6e22e">volumeID&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) &lt;span style="color:#66d9ef">error&lt;/span> {
+&lt;span style="color:#a6e22e">client&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">getEc2Client&lt;/span>()
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">input&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">DescribeVolumesModificationsInput&lt;/span>{&lt;span style="color:#a6e22e">VolumeIds&lt;/span>: []&lt;span style="color:#66d9ef">string&lt;/span>{&lt;span style="color:#a6e22e">volumeID&lt;/span>}}
+&lt;span style="color:#a6e22e">status&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">DescribeVolumesModifications&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Background&lt;/span>(), &lt;span style="color:#a6e22e">input&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">status&lt;/span>.&lt;span style="color:#a6e22e">VolumesModifications&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>].&lt;span style="color:#a6e22e">ModificationState&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;modifying&amp;#34;&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Ebs modification in progress. Waiting for 15 second&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Sleep&lt;/span>(&lt;span style="color:#ae81ff">15&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Second&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">waitForEbsResize&lt;/span>(&lt;span style="color:#a6e22e">volumeID&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
+}
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now I can proceed to step 2 &lt;code>growPartition&lt;/code>.&lt;/p>
+&lt;p>I need to determine if there is a partition, if there is no partition grow part doesn&amp;rsquo;t need to be executed. Depending on what type of disk I will determine whether there are partitions or no. Several checks are required. The first check if there are no numbers in the device name. If they are not present then it is not partition and it is not required to do grow part. Next check for nvme devices. If there is a symbol p in the name, then it is a partition. For example &lt;code>/dev/nvme1n1&lt;/code> - disk and &lt;code>/dev/nvme0n1p1&lt;/code> - partition. And the last case if there is an xvd in the name of the device, this check only to filter usual ebs devices with numbers in the name. And depending on each case the growpart is executed. For ebs - &lt;code>growpart /dev/xvdf 1&lt;/code> and for nvme - &lt;code>growpart /dev/nvme0n1 1&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">growPartition&lt;/span>(&lt;span style="color:#a6e22e">partition&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) &lt;span style="color:#66d9ef">error&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Starting growpart for&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span>)
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">cmd&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">exec&lt;/span>.&lt;span style="color:#a6e22e">Cmd&lt;/span>
+&lt;span style="color:#a6e22e">i&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">strings&lt;/span>.&lt;span style="color:#a6e22e">LastIndex&lt;/span>(&lt;span style="color:#a6e22e">partition&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;p&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">isLetter&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">regexp&lt;/span>.&lt;span style="color:#a6e22e">MustCompile&lt;/span>(&lt;span style="color:#e6db74">`^/dev/+[a-zA-Z]+$`&lt;/span>).&lt;span style="color:#a6e22e">MatchString&lt;/span>
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">isLetter&lt;/span>(&lt;span style="color:#a6e22e">partition&lt;/span>) {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Grow partition for&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;not required&amp;#34;&lt;/span>)
+} &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">i&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span> {
+&lt;span style="color:#a6e22e">cmd&lt;/span> = &lt;span style="color:#a6e22e">exec&lt;/span>.&lt;span style="color:#a6e22e">Command&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;growpart&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span>[:&lt;span style="color:#a6e22e">i&lt;/span>], &lt;span style="color:#a6e22e">partition&lt;/span>[&lt;span style="color:#a6e22e">i&lt;/span>&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>:])
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">cmd&lt;/span>.&lt;span style="color:#a6e22e">Run&lt;/span>()
+} &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">strings&lt;/span>.&lt;span style="color:#a6e22e">Contains&lt;/span>(&lt;span style="color:#a6e22e">partition&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;xvd&amp;#34;&lt;/span>) {
+&lt;span style="color:#a6e22e">re&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">regexp&lt;/span>.&lt;span style="color:#a6e22e">MustCompile&lt;/span>(&lt;span style="color:#e6db74">`\D+`&lt;/span>)
+&lt;span style="color:#a6e22e">m&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">re&lt;/span>.&lt;span style="color:#a6e22e">FindString&lt;/span>(&lt;span style="color:#a6e22e">partition&lt;/span>)
+&lt;span style="color:#a6e22e">cmd&lt;/span> = &lt;span style="color:#a6e22e">exec&lt;/span>.&lt;span style="color:#a6e22e">Command&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;growpart&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">m&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span>[len(&lt;span style="color:#a6e22e">m&lt;/span>):])
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">cmd&lt;/span>.&lt;span style="color:#a6e22e">Run&lt;/span>()
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>The last step is to increase the size of the file system. How the resize will take place depends on the file system.
+If it is xfs then called &lt;code>xfs_growfs&lt;/code> in other cases it is &lt;code>resize2fs&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">fsResize&lt;/span>(&lt;span style="color:#a6e22e">filesystem&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">mountPoint&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) &lt;span style="color:#66d9ef">error&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Starting system volume resize for&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span>)
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">cmd&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">exec&lt;/span>.&lt;span style="color:#a6e22e">Cmd&lt;/span>
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">filesystem&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;xfs&amp;#34;&lt;/span> {
+&lt;span style="color:#a6e22e">cmd&lt;/span> = &lt;span style="color:#a6e22e">exec&lt;/span>.&lt;span style="color:#a6e22e">Command&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;xfs_growfs&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;-d&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">mountPoint&lt;/span>)
+} &lt;span style="color:#66d9ef">else&lt;/span> {
+&lt;span style="color:#a6e22e">cmd&lt;/span> = &lt;span style="color:#a6e22e">exec&lt;/span>.&lt;span style="color:#a6e22e">Command&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;resize2fs&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span>)
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">cmd&lt;/span>.&lt;span style="color:#a6e22e">Run&lt;/span>()
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now it remains to call all the methods in the correct order:&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>Get a list of disks&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Loop in a cycle on all of disks. If the condition &lt;code>disk.TotalUsed &amp;lt; 70&lt;/code> is false then resize not required.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Calculate the new disk size&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Call ebsResize&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Call growPartition&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Call fsResize&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#a6e22e">disksInfo&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">filterDisks&lt;/span>()
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">disk&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">disksInfo&lt;/span> {
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">TotalUsed&lt;/span> &amp;lt; &lt;span style="color:#ae81ff">70&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Resize for&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">DeviceName&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;not required&amp;#34;&lt;/span>)
+&lt;span style="color:#66d9ef">continue&lt;/span>
+}
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Starting resize of&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">DeviceName&lt;/span>)
+&lt;span style="color:#a6e22e">newSize&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">findNewSize&lt;/span>(&lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">TotalSpace&lt;/span>, &lt;span style="color:#ae81ff">30&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ebsResize&lt;/span>(int32(&lt;span style="color:#a6e22e">newSize&lt;/span>), &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">VolumeID&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#a6e22e">errVolumeRetryLater&lt;/span> {
+&lt;span style="color:#66d9ef">continue&lt;/span>
+} &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">growPartition&lt;/span>(&lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">DeviceName&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">fsResize&lt;/span>(&lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">FsType&lt;/span>, &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">MountPoint&lt;/span>, &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">DeviceName&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>After a few seconds, the disk has a new size.&lt;/p></content></item><item><title>Failed Asg Event Notification</title><link>/2021/01/03/failed-asg-event-notification/</link><pubDate>Sun, 03 Jan 2021 17:57:36 +0200</pubDate><guid>/2021/01/03/failed-asg-event-notification/</guid><description>Hello!
 Today I want to show how with the help of AWS Lambda and Golang you can get messages in slack when Autoscaling could not create an Ec2 server. Deploy I automate using serverless.
 Let&amp;rsquo;s start with the installation of node and serverless. I use nvm to manage node versions.
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash nvm install v14.15.3 npm install -g serverless I will create a folder and initialize the go module in it.</description></item><item><title>Import Grafana Dashboards With Go</title><link>/2020/12/23/import-grafana-dashboards-with-go/</link><pubDate>Wed, 23 Dec 2020 23:18:28 +0200</pubDate><guid>/2020/12/23/import-grafana-dashboards-with-go/</guid><description>Hello!
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash nvm install v14.15.3 npm install -g serverless I will create a folder and initialize the go module in it.</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>Today I want to show how with the help of AWS Lambda and Golang you can get messages in slack when Autoscaling could not create an Ec2 server. Deploy I automate using serverless.&lt;/p>
+&lt;p>Let&amp;rsquo;s start with the installation of node and serverless. I use &lt;a href="https://github.com/nvm-sh/nvm#install--update-script">nvm&lt;/a> to manage node versions.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+nvm install v14.15.3
+npm install -g serverless
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>I will create a folder and initialize the go module in it.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell">mkdir failed-asg
+cd failed-asg
+go mod init
+touch main.go
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>In the beginning, there will be a package, imports, and main function. Main function will be responsible for executing the handler function.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;bytes&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;context&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;encoding/json&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;errors&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;io/ioutil&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;net/http&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;strings&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-lambda-go/events&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-lambda-go/lambda&amp;#34;&lt;/span>
+)
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#a6e22e">lambda&lt;/span>.&lt;span style="color:#a6e22e">Start&lt;/span>(&lt;span style="color:#a6e22e">handleRequest&lt;/span>)
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>The main function will be handleRequest. It will generate a message based on &lt;code>AutoScalingEvent&lt;/code> and send a message to slack.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">handleRequest&lt;/span>(&lt;span style="color:#a6e22e">ctx&lt;/span> &lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Context&lt;/span>, &lt;span style="color:#a6e22e">event&lt;/span> &lt;span style="color:#a6e22e">events&lt;/span>.&lt;span style="color:#a6e22e">AutoScalingEvent&lt;/span>) (&lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#66d9ef">error&lt;/span>) {
+&lt;span style="color:#a6e22e">url&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;https://hooks.slack.com/services/token&amp;#34;&lt;/span>
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">sb&lt;/span> &lt;span style="color:#a6e22e">strings&lt;/span>.&lt;span style="color:#a6e22e">Builder&lt;/span>
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;:siren: *EC2 Instance Launch Unsuccessful* :siren:\n&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;*Autoscaling Group Name*:&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#a6e22e">event&lt;/span>.&lt;span style="color:#a6e22e">Detail&lt;/span>[&lt;span style="color:#e6db74">&amp;#34;AutoScalingGroupName&amp;#34;&lt;/span>].(&lt;span style="color:#66d9ef">string&lt;/span>))
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;\n&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;*StatusMessage*:&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#a6e22e">event&lt;/span>.&lt;span style="color:#a6e22e">Detail&lt;/span>[&lt;span style="color:#e6db74">&amp;#34;StatusMessage&amp;#34;&lt;/span>].(&lt;span style="color:#66d9ef">string&lt;/span>))
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;\n&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">payload&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">map&lt;/span>[&lt;span style="color:#66d9ef">string&lt;/span>]&lt;span style="color:#66d9ef">interface&lt;/span>{}{
+&lt;span style="color:#e6db74">&amp;#34;username&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;ASGFailedEvents&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;channel&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;#test-db-alerts&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;text&amp;#34;&lt;/span>: &lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(),
+}
+&lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">SendSlackNotification&lt;/span>(&lt;span style="color:#a6e22e">url&lt;/span>, &lt;span style="color:#a6e22e">payload&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Not able to send slack message&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(), &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Url needs to be replaced with the value of your Slack Webhook.
+Using &lt;code>strings.Builder&lt;/code> I create a message to be sent, by adding to it the name AutoScalingGroup and an error message. Then I form &lt;code>payload&lt;/code> in which it is necessary to specify the name of the user from whom message will be sent, the channel and the text of the message and &lt;code>SendSlackNotification&lt;/code> will send the message.&lt;/p>
+&lt;p>Let&amp;rsquo;s move on to creating the &lt;code>SendSlackNotification&lt;/code> function.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">SendSlackNotification&lt;/span>(&lt;span style="color:#a6e22e">url&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">data&lt;/span> &lt;span style="color:#66d9ef">interface&lt;/span>{}) (&lt;span style="color:#a6e22e">bodyString&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#66d9ef">error&lt;/span>) {
+&lt;span style="color:#a6e22e">jsonString&lt;/span>, &lt;span style="color:#a6e22e">_&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">json&lt;/span>.&lt;span style="color:#a6e22e">Marshal&lt;/span>(&lt;span style="color:#a6e22e">data&lt;/span>)
+&lt;span style="color:#a6e22e">req&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">http&lt;/span>.&lt;span style="color:#a6e22e">NewRequest&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;POST&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">url&lt;/span>, &lt;span style="color:#a6e22e">bytes&lt;/span>.&lt;span style="color:#a6e22e">NewBuffer&lt;/span>(&lt;span style="color:#a6e22e">jsonString&lt;/span>))
+&lt;span style="color:#a6e22e">req&lt;/span>.&lt;span style="color:#a6e22e">Header&lt;/span>.&lt;span style="color:#a6e22e">Set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Content-Type&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;application/json&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">client&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">http&lt;/span>.&lt;span style="color:#a6e22e">Client&lt;/span>{}
+&lt;span style="color:#a6e22e">resp&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">Do&lt;/span>(&lt;span style="color:#a6e22e">req&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+panic(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#66d9ef">defer&lt;/span> &lt;span style="color:#a6e22e">resp&lt;/span>.&lt;span style="color:#a6e22e">Body&lt;/span>.&lt;span style="color:#a6e22e">Close&lt;/span>()
+&lt;span style="color:#a6e22e">body&lt;/span>, &lt;span style="color:#a6e22e">_&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ioutil&lt;/span>.&lt;span style="color:#a6e22e">ReadAll&lt;/span>(&lt;span style="color:#a6e22e">resp&lt;/span>.&lt;span style="color:#a6e22e">Body&lt;/span>)
+&lt;span style="color:#a6e22e">bodyString&lt;/span> = string(&lt;span style="color:#a6e22e">body&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">resp&lt;/span>.&lt;span style="color:#a6e22e">StatusCode&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#ae81ff">200&lt;/span> {
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Response Status:&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">resp&lt;/span>.&lt;span style="color:#a6e22e">Status&lt;/span>) &lt;span style="color:#75715e">// 200 OK
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Response Headers:&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">resp&lt;/span>.&lt;span style="color:#a6e22e">Header&lt;/span>)
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Response Body:&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">bodyString&lt;/span>)
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">bodyString&lt;/span>, &lt;span style="color:#a6e22e">errors&lt;/span>.&lt;span style="color:#a6e22e">New&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;can&amp;#39;t work with 42&amp;#34;&lt;/span>)
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">bodyString&lt;/span>, &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Here json is formed from the previously created &lt;code>payload&lt;/code> and with the help of http the request made to Webhook Url. Then it is checked whether the request was successfully sent.&lt;/p>
+&lt;p>Let&amp;rsquo;s go back to serverless for lambda deployment.
+At the root of the repository, I create a file &lt;code>serverless.yml&lt;/code> with content&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">service&lt;/span>: &lt;span style="color:#ae81ff">asg-failed-events&lt;/span>
+&lt;span style="color:#f92672">provider&lt;/span>:
+&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">aws&lt;/span>
+&lt;span style="color:#f92672">runtime&lt;/span>: &lt;span style="color:#ae81ff">go1.x&lt;/span>
+&lt;span style="color:#f92672">package&lt;/span>:
+&lt;span style="color:#f92672">exclude&lt;/span>:
+- &lt;span style="color:#ae81ff">./**&lt;/span>
+&lt;span style="color:#f92672">include&lt;/span>:
+- &lt;span style="color:#ae81ff">./bin/**&lt;/span>
+&lt;span style="color:#f92672">functions&lt;/span>:
+&lt;span style="color:#f92672">lambda-time&lt;/span>:
+&lt;span style="color:#f92672">handler&lt;/span>: &lt;span style="color:#ae81ff">bin/failed-asg-event-notification&lt;/span>
+&lt;span style="color:#f92672">events&lt;/span>:
+- &lt;span style="color:#f92672">cloudwatchEvent&lt;/span>:
+&lt;span style="color:#f92672">event&lt;/span>:
+&lt;span style="color:#f92672">source&lt;/span>:
+- &lt;span style="color:#e6db74">&amp;#34;aws.autoscaling&amp;#34;&lt;/span>
+&lt;span style="color:#f92672">detail-type&lt;/span>:
+- &lt;span style="color:#e6db74">&amp;#34;EC2 Instance Launch Unsuccessful&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>This configuration describes the name of the lambda that will be created and lambda trigger, in this case, it is &lt;code>EC2 Instance Launch Unsuccessful&lt;/code> event from &lt;code>aws.autoscaling&lt;/code> passed to the lambda by &lt;code>cloudwatchEvent&lt;/code>.&lt;/p>
+&lt;p>Now you need to install all the dependencies, compile the code and deploy.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell">go mod tidy
+OOS&lt;span style="color:#f92672">=&lt;/span>linux GOARCH&lt;span style="color:#f92672">=&lt;/span>amd64 go build -o bin/failed-asg-event-notification .
+sls deploy
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>After that, if there is an event of the type &lt;code>EC2 Instance Launch Unsuccessful&lt;/code> from &lt;code>aws.autoscaling&lt;/code> the corresponding message will be sent to the slack.&lt;/p></content></item><item><title>Import Grafana Dashboards With Go</title><link>/2020/12/23/import-grafana-dashboards-with-go/</link><pubDate>Wed, 23 Dec 2020 23:18:28 +0200</pubDate><guid>/2020/12/23/import-grafana-dashboards-with-go/</guid><description>Hello!
 In the previous post I showed how you can export dashboards from Grafana. Now let&amp;rsquo;s see how they can be imported into Grafana.
 As always at the beginning there will be imports and main function
 package grafana import ( &amp;#34;context&amp;#34; &amp;#34;encoding/json&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;io/ioutil&amp;#34; &amp;#34;log&amp;#34; &amp;#34;os&amp;#34; &amp;#34;strings&amp;#34; &amp;#34;github.com/grafana-tools/sdk&amp;#34; ) func main() { } I will add some parameters:
-var ( filesInDir []os.FileInfo rawBoard []byte err error grafanaURL string apiKey string directory string ) filesInDir will store all dashboards from the file system.</description></item><item><title>Export Grafana Dashboards With Go</title><link>/2020/12/19/export-grafana-dashboards-with-go/</link><pubDate>Sat, 19 Dec 2020 18:27:35 +0200</pubDate><guid>/2020/12/19/export-grafana-dashboards-with-go/</guid><description>Hello!
+var ( filesInDir []os.FileInfo rawBoard []byte err error grafanaURL string apiKey string directory string ) filesInDir will store all dashboards from the file system.</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>In the previous &lt;a href="/2020/12/19/export-grafana-dashboards-with-go/" title="post">post&lt;/a> I showed how you can export dashboards from Grafana. Now let&amp;rsquo;s see how they can be imported into Grafana.&lt;/p>
+&lt;p>As always at the beginning there will be imports and main function&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">grafana&lt;/span>
+&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;context&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;encoding/json&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;io/ioutil&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;os&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;strings&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/grafana-tools/sdk&amp;#34;&lt;/span>
+)
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>I will add some parameters:&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#66d9ef">var&lt;/span> (
+&lt;span style="color:#a6e22e">filesInDir&lt;/span> []&lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">FileInfo&lt;/span>
+&lt;span style="color:#a6e22e">rawBoard&lt;/span> []&lt;span style="color:#66d9ef">byte&lt;/span>
+&lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#66d9ef">error&lt;/span>
+&lt;span style="color:#a6e22e">grafanaURL&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">apiKey&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">directory&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+)
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>filesInDir&lt;/code> will store all dashboards from the file system. And &lt;code>rawBoard&lt;/code> will contain the content of the file. &lt;code>directory&lt;/code> directory in which dashboards will be read from. &lt;code>grafanaURL&lt;/code> - Grafana url with port in the format &lt;code>http://127.0.0.1: 3030&lt;/code> and &lt;code>apiKey&lt;/code> for authorization in Grafana. You need to enter your value in grafanaUR, apiKey and directory.&lt;/p>
+&lt;p>I am creating a Grafana client with which I will make requests to Grafana Api&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#a6e22e">ctx&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Background&lt;/span>()
+&lt;span style="color:#a6e22e">c&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">NewClient&lt;/span>(&lt;span style="color:#a6e22e">grafanaURL&lt;/span>, &lt;span style="color:#a6e22e">apiKey&lt;/span>, &lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">DefaultHTTPClient&lt;/span>)
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>What left is to read the files and export them.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#a6e22e">filesInDir&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">ioutil&lt;/span>.&lt;span style="color:#a6e22e">ReadDir&lt;/span>(&lt;span style="color:#a6e22e">directory&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatal&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now I loop through all files. Dashboards should be in json, if there other files except for json i need to skip them. If the file is json I write its content in &lt;code>rawBoard&lt;/code>. And I am unmarshal this file into structure &lt;code>sdk.Board&lt;/code>. I also create an object of type sdk.SetDashboardParams in which I specify in which folder to import the dashboard and whether to overwrite if such dashboard already exists. When all the parameters are ready, I call the &lt;code>SetDashboard&lt;/code> method, which will export.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">file&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">filesInDir&lt;/span> {
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">strings&lt;/span>.&lt;span style="color:#a6e22e">HasSuffix&lt;/span>(&lt;span style="color:#a6e22e">file&lt;/span>.&lt;span style="color:#a6e22e">Name&lt;/span>(), &lt;span style="color:#e6db74">&amp;#34;.json&amp;#34;&lt;/span>) {
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">rawBoard&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">ioutil&lt;/span>.&lt;span style="color:#a6e22e">ReadFile&lt;/span>(&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Sprintf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;%s/%s&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">directory&lt;/span>, &lt;span style="color:#a6e22e">file&lt;/span>.&lt;span style="color:#a6e22e">Name&lt;/span>())); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+&lt;span style="color:#66d9ef">continue&lt;/span>
+}
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">board&lt;/span> &lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">Board&lt;/span>
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">json&lt;/span>.&lt;span style="color:#a6e22e">Unmarshal&lt;/span>(&lt;span style="color:#a6e22e">rawBoard&lt;/span>, &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">board&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+&lt;span style="color:#66d9ef">continue&lt;/span>
+}
+&lt;span style="color:#a6e22e">params&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">SetDashboardParams&lt;/span>{
+&lt;span style="color:#a6e22e">FolderID&lt;/span>: &lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">DefaultFolderId&lt;/span>,
+&lt;span style="color:#a6e22e">Overwrite&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>,
+}
+&lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">c&lt;/span>.&lt;span style="color:#a6e22e">SetDashboard&lt;/span>(&lt;span style="color:#a6e22e">ctx&lt;/span>, &lt;span style="color:#a6e22e">board&lt;/span>, &lt;span style="color:#a6e22e">params&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Printf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;error on importing dashboard %s&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">board&lt;/span>.&lt;span style="color:#a6e22e">Title&lt;/span>)
+&lt;span style="color:#66d9ef">continue&lt;/span>
+}
+}
+}
+&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Export Grafana Dashboards With Go</title><link>/2020/12/19/export-grafana-dashboards-with-go/</link><pubDate>Sat, 19 Dec 2020 18:27:35 +0200</pubDate><guid>/2020/12/19/export-grafana-dashboards-with-go/</guid><description>Hello!
 Let&amp;rsquo;s check how you can use go to export dashboards from Grafana. For interaction with Grafana I use sdk. Sdk can be installed using go get github.com/grafana-tools/sdk.
 Let&amp;rsquo;s start writing code. At the beginning of the file will be the package, import and main function
 package main import ( &amp;#34;context&amp;#34; &amp;#34;encoding/json&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;log&amp;#34; &amp;#34;os&amp;#34; &amp;#34;github.com/grafana-tools/sdk&amp;#34; ) func main() { } ) I will add some parameters:
-var ( boardLinks []sdk.</description></item><item><title>Filter Ebs Snapshot By Date With Go</title><link>/2020/12/05/filter-ebs-snapshot-by-date-with-go/</link><pubDate>Sat, 05 Dec 2020 17:53:29 +0200</pubDate><guid>/2020/12/05/filter-ebs-snapshot-by-date-with-go/</guid><description>Hello!
+var ( boardLinks []sdk.</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>Let&amp;rsquo;s check how you can use go to export dashboards from Grafana.
+For interaction with Grafana I use &lt;a href="https://github.com/grafana-tools/sdk">sdk&lt;/a>. Sdk can be installed using &lt;code>go get github.com/grafana-tools/sdk&lt;/code>.&lt;/p>
+&lt;p>Let&amp;rsquo;s start writing code. At the beginning of the file will be the package, import and main function&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;context&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;encoding/json&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;os&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/grafana-tools/sdk&amp;#34;&lt;/span>
+)
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+}
+)
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>I will add some parameters:&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#66d9ef">var&lt;/span> (
+&lt;span style="color:#a6e22e">boardLinks&lt;/span> []&lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">FoundBoard&lt;/span>
+&lt;span style="color:#a6e22e">rawBoard&lt;/span> &lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">Board&lt;/span>
+&lt;span style="color:#a6e22e">meta&lt;/span> &lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">BoardProperties&lt;/span>
+&lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#66d9ef">error&lt;/span>
+&lt;span style="color:#a6e22e">grafanaURL&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">apiKey&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">directory&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+)
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Links to dashboards in Grafana will be added to &lt;code>boardLinks&lt;/code>. The &lt;code>rawBoard&lt;/code> will store the dashboard itself. &lt;code>meta&lt;/code> will be used to get the name of the dashboard and save it with that name in a file. &lt;code>directory&lt;/code> directory in which dashboards will be stored. &lt;code>grafanaURL&lt;/code> - Grafana url with port in the format &lt;code>http:/127.0.0.1:3030&lt;/code> and &lt;code>apiKey&lt;/code> for authorization in Grafana. You need to enter your value in grafanaUR, apiKey and directory.&lt;/p>
+&lt;p>Next i am creating a Grafana client&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#a6e22e">ctx&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Background&lt;/span>()
+&lt;span style="color:#a6e22e">c&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">NewClient&lt;/span>(&lt;span style="color:#a6e22e">grafanaURL&lt;/span>, &lt;span style="color:#a6e22e">apiKey&lt;/span>, &lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">DefaultHTTPClient&lt;/span>)
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>And now with the help of the client you can make requests to Grafana api. And the first thing you can get is a list of links to dashboards&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">boardLinks&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">c&lt;/span>.&lt;span style="color:#a6e22e">Search&lt;/span>(&lt;span style="color:#a6e22e">ctx&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now that the link to the dashboards has been obtained, you can get the dashboards themselves and write them to a file.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">link&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">boardLinks&lt;/span> {
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">rawBoard&lt;/span>, &lt;span style="color:#a6e22e">meta&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">c&lt;/span>.&lt;span style="color:#a6e22e">GetDashboardByUID&lt;/span>(&lt;span style="color:#a6e22e">ctx&lt;/span>, &lt;span style="color:#a6e22e">link&lt;/span>.&lt;span style="color:#a6e22e">UID&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Printf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;%s for %s\n&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>, &lt;span style="color:#a6e22e">link&lt;/span>.&lt;span style="color:#a6e22e">URI&lt;/span>)
+&lt;span style="color:#66d9ef">continue&lt;/span>
+}
+&lt;span style="color:#a6e22e">rawBoard&lt;/span>.&lt;span style="color:#a6e22e">ID&lt;/span> = &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;span style="color:#a6e22e">writeDashboardToFile&lt;/span>(&lt;span style="color:#a6e22e">directory&lt;/span>, &lt;span style="color:#a6e22e">rawBoard&lt;/span>, &lt;span style="color:#a6e22e">meta&lt;/span>.&lt;span style="color:#a6e22e">Slug&lt;/span>)
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>In a cycle I pass on all links to dashboards in slice boardLinks and on each of them I call method &lt;code>GetDashboardByUID&lt;/code> which I accept in parameters a context and UID of a dashboard.&lt;/p>
+&lt;p>It is also important that the &lt;code>ID&lt;/code> field is not present in saved dashboard, otherwise Grafana will not allow you to export it. Because in sdk.Board it has type uint and omitempty I can give it a value of 0 and this field will not be added.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#a6e22e">ID&lt;/span> &lt;span style="color:#66d9ef">uint&lt;/span> &lt;span style="color:#e6db74">`json:&amp;#34;id,omitempty&amp;#34;`&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>And in the end the writeDashboardToFile method which accepts three parameters the directory where to store a dashboard, the dashboard itself, and the name of a dashboard which can be received from parameter meta.&lt;/p>
+&lt;p>What is left is to create the &lt;code>writeDashboardToFile&lt;/code> method&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">writeDashboardToFile&lt;/span>(&lt;span style="color:#a6e22e">directory&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">dashboard&lt;/span> &lt;span style="color:#a6e22e">sdk&lt;/span>.&lt;span style="color:#a6e22e">Board&lt;/span>, &lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">tag&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) {
+&lt;span style="color:#66d9ef">var&lt;/span> (
+&lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#66d9ef">error&lt;/span>
+&lt;span style="color:#a6e22e">dashboardFile&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">File&lt;/span>
+&lt;span style="color:#a6e22e">fileName&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">Stat&lt;/span>(&lt;span style="color:#a6e22e">directory&lt;/span>); &lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">IsNotExist&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>) {
+&lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">MkdirAll&lt;/span>(&lt;span style="color:#a6e22e">directory&lt;/span>, &lt;span style="color:#ae81ff">0755&lt;/span>)
+}
+&lt;span style="color:#a6e22e">fileName&lt;/span> = &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Sprintf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;%s/%s.json&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">directory&lt;/span>, &lt;span style="color:#a6e22e">name&lt;/span>)
+&lt;span style="color:#a6e22e">dashboardFile&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">Create&lt;/span>(&lt;span style="color:#a6e22e">fileName&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Printf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;failed to create file for dashboard %s&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">fileName&lt;/span>)
+}
+&lt;span style="color:#66d9ef">defer&lt;/span> &lt;span style="color:#a6e22e">dashboardFile&lt;/span>.&lt;span style="color:#a6e22e">Close&lt;/span>()
+&lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">json&lt;/span>.&lt;span style="color:#a6e22e">NewEncoder&lt;/span>(&lt;span style="color:#a6e22e">dashboardFile&lt;/span>).&lt;span style="color:#a6e22e">Encode&lt;/span>(&lt;span style="color:#a6e22e">dashboard&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Printf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;failed to encode dashboard json to file %s&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">fileName&lt;/span>)
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>In this method I check if there is a directory, if not I create it. Next in this directory, I create a file for dashboard using meta parameter as name and use &lt;code>json.NewEncoder&lt;/code> to write json to a file.&lt;/p></content></item><item><title>Filter Ebs Snapshot By Date With Go</title><link>/2020/12/05/filter-ebs-snapshot-by-date-with-go/</link><pubDate>Sat, 05 Dec 2020 17:53:29 +0200</pubDate><guid>/2020/12/05/filter-ebs-snapshot-by-date-with-go/</guid><description>Hello!
 Today I will show how you can filter ebs snapshots by date with golang.
 To begin with I will create a folder and in it, I will initialize the go module
 mkdir snapshotFilter cd snapshotFilter go mod init snapshotFilter You need to create main.go which will contain the code. Let&amp;rsquo;s start with the main function and imports
-package main import ( &amp;#34;flag&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;log&amp;#34; &amp;#34;sort&amp;#34; &amp;#34;time&amp;#34; &amp;#34;github.com/aws/aws-sdk-go/aws&amp;#34; &amp;#34;github.com/aws/aws-sdk-go/aws/session&amp;#34; &amp;#34;github.com/aws/aws-sdk-go/service/ec2&amp;#34; ) func main() { sess := session.</description></item><item><title>Get Lambdas in Vpc With Go</title><link>/2020/09/01/get-lambdas-in-vpc-with-go/</link><pubDate>Tue, 01 Sep 2020 17:40:16 +0300</pubDate><guid>/2020/09/01/get-lambdas-in-vpc-with-go/</guid><description>Hi there!
+package main import ( &amp;#34;flag&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;log&amp;#34; &amp;#34;sort&amp;#34; &amp;#34;time&amp;#34; &amp;#34;github.com/aws/aws-sdk-go/aws&amp;#34; &amp;#34;github.com/aws/aws-sdk-go/aws/session&amp;#34; &amp;#34;github.com/aws/aws-sdk-go/service/ec2&amp;#34; ) func main() { sess := session.</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>Today I will show how you can filter ebs snapshots by date with golang.&lt;/p>
+&lt;p>To begin with I will create a folder and in it, I will initialize the go module&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-bash" data-lang="bash">mkdir snapshotFilter
+cd snapshotFilter
+go mod init snapshotFilter
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>You need to create &lt;code>main.go&lt;/code> which will contain the code.
+Let&amp;rsquo;s start with the main function and imports&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;flag&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;sort&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;time&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go/aws&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go/aws/session&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go/service/ec2&amp;#34;&lt;/span>
+)
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#a6e22e">sess&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">session&lt;/span>.&lt;span style="color:#a6e22e">Must&lt;/span>(&lt;span style="color:#a6e22e">session&lt;/span>.&lt;span style="color:#a6e22e">NewSession&lt;/span>())
+&lt;span style="color:#a6e22e">ec2Client&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">New&lt;/span>(&lt;span style="color:#a6e22e">sess&lt;/span>)
+&lt;span style="color:#a6e22e">filterDate&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">flag&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;snapshot-date&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Now&lt;/span>().&lt;span style="color:#a6e22e">Format&lt;/span>(&lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">RFC3339&lt;/span>), &lt;span style="color:#e6db74">&amp;#34;Provide snapshot creation date&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">snapshotName&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">flag&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;snapshot-name&amp;#34;&lt;/span>, &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Provide snapshot name&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">flag&lt;/span>.&lt;span style="color:#a6e22e">Parse&lt;/span>()
+&lt;span style="color:#a6e22e">parsedTime&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Parse&lt;/span>(&lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">RFC3339&lt;/span>, &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">filterDate&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Not able to parse time&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">snapshotName&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Please provide snapshot name&amp;#34;&lt;/span>)
+}
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">filterSnapshotByDate&lt;/span>(&lt;span style="color:#a6e22e">parsedTime&lt;/span>, &lt;span style="color:#a6e22e">snapshotName&lt;/span>, &lt;span style="color:#a6e22e">ec2Client&lt;/span>))
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>The file starts with the name of the package and the imports. Next is the main function.
+Main function creates the ec2 client, &lt;code>snapshotName&lt;/code> and the &lt;code>filterDate&lt;/code> command line parameter. These parameters will be used to enter the date of the snapshot from the terminal and also snapshot name. If &lt;code>filterDate&lt;/code> parameter is not entered the current date will be used in RFC3339 format (2006-01-02T15: 04: 05Z07: 00). To specify this value from the console it will look like this - &lt;code>go run main.go -snapshot-date=2020-03-20T06:24:05Z&lt;/code>. If &lt;code>snapshotName&lt;/code> parameter is not specified, the program will end with the message &lt;code>Please provide snapshot name&lt;/code>. I also need to convert the date passed by the user of type string to type time.Time. I will use the time.Parse method, the first argument is the layout, and because I know that my format is &lt;code>RFC3339&lt;/code> I can specify &lt;code>time.RFC3339&lt;/code>, the second parameter it is the time value provided by the user.
+&lt;code>filterSnapshotByDate(filterDate, snapshotName, ec2Client)&lt;/code> this is the method that will do the filtering.&lt;/p>
+&lt;p>To filter a snapshot, first get a list of all snapshots. I will use the Name tag to get exactly the snapshot I need.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">filterSnapshotByDate&lt;/span>(&lt;span style="color:#a6e22e">filterDate&lt;/span> &lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Time&lt;/span>, &lt;span style="color:#a6e22e">snapshotName&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">client&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">EC2&lt;/span>) &lt;span style="color:#66d9ef">string&lt;/span> {
+&lt;span style="color:#a6e22e">input&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">DescribeSnapshotsInput&lt;/span>{&lt;span style="color:#a6e22e">Filters&lt;/span>: []&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">Filter&lt;/span>{
+{&lt;span style="color:#a6e22e">Name&lt;/span>: &lt;span style="color:#a6e22e">aws&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;tag:Name&amp;#34;&lt;/span>), &lt;span style="color:#a6e22e">Values&lt;/span>: []&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#66d9ef">string&lt;/span>{&lt;span style="color:#a6e22e">snapshotName&lt;/span>}},
+}}
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">result&lt;/span> []&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">Snapshot&lt;/span>
+&lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">DescribeSnapshotsPages&lt;/span>(&lt;span style="color:#a6e22e">input&lt;/span>,
+&lt;span style="color:#66d9ef">func&lt;/span>(&lt;span style="color:#a6e22e">page&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">DescribeSnapshotsOutput&lt;/span>, &lt;span style="color:#a6e22e">lastPage&lt;/span> &lt;span style="color:#66d9ef">bool&lt;/span>) &lt;span style="color:#66d9ef">bool&lt;/span> {
+&lt;span style="color:#a6e22e">result&lt;/span> = append(&lt;span style="color:#a6e22e">result&lt;/span>, &lt;span style="color:#a6e22e">page&lt;/span>.&lt;span style="color:#a6e22e">Snapshots&lt;/span>&lt;span style="color:#f92672">...&lt;/span>)
+&lt;span style="color:#66d9ef">return&lt;/span> !&lt;span style="color:#a6e22e">lastPage&lt;/span>
+})
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Was not able to get list of snapshots&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>In the input variable, I will create a filter that will filter the snapshots by name. And then using the pagination function &lt;code>DescribeSnapshotsPages&lt;/code> I will get a list of all snapshots and add them to the list &lt;code>var result []*ec2.Snapshot&lt;/code>.&lt;/p>
+&lt;p>In order to filter the snapshot by date, I must first sort them.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#a6e22e">sort&lt;/span>.&lt;span style="color:#a6e22e">Slice&lt;/span>(&lt;span style="color:#a6e22e">result&lt;/span>, &lt;span style="color:#66d9ef">func&lt;/span>(&lt;span style="color:#a6e22e">i&lt;/span>, &lt;span style="color:#a6e22e">j&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>) &lt;span style="color:#66d9ef">bool&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">result&lt;/span>[&lt;span style="color:#a6e22e">i&lt;/span>].&lt;span style="color:#a6e22e">StartTime&lt;/span>.&lt;span style="color:#a6e22e">After&lt;/span>(&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">result&lt;/span>[&lt;span style="color:#a6e22e">j&lt;/span>].&lt;span style="color:#a6e22e">StartTime&lt;/span>)
+})
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Because the objects I filter are of type time.Time, I can&amp;rsquo;t compare them with &amp;gt; or &amp;lt;. For such cases go has an After method. With his help I sort the slice with snapshots.&lt;/p>
+&lt;p>Now I can filter the snapshots, with cycle I will walk through the sorted snapshots and when the date entered by the user will be greater than the date of the snapshot I will return the snapshot id.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">snapshot&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">result&lt;/span> {
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">filterDate&lt;/span>.&lt;span style="color:#a6e22e">After&lt;/span>(&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">snapshot&lt;/span>.&lt;span style="color:#a6e22e">StartTime&lt;/span>) {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Found snapshot with date&amp;#34;&lt;/span>, &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">snapshot&lt;/span>.&lt;span style="color:#a6e22e">StartTime&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;which are the closest date to&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">filterDate&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>)
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">snapshot&lt;/span>.&lt;span style="color:#a6e22e">SnapshotId&lt;/span>
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>If such a snapshot is not found, I will return the id of the last snapshot&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Not found spashot with specific date&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">filterDate&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;going to use latest&amp;#34;&lt;/span>, &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">result&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>].&lt;span style="color:#a6e22e">StartTime&lt;/span>)
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">result&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>].&lt;span style="color:#a6e22e">SnapshotId&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Get Lambdas in Vpc With Go</title><link>/2020/09/01/get-lambdas-in-vpc-with-go/</link><pubDate>Tue, 01 Sep 2020 17:40:16 +0300</pubDate><guid>/2020/09/01/get-lambdas-in-vpc-with-go/</guid><description>Hi there!
 Today I want to tell you how with go you can get a list of all AWS Lambda that are in the VPC. First you need to install golang. The latest version can be downloaded from the official website.
 Once golang is installed, create a folder for the scripts mkdir awsscripts
-Next you need to initialize the go.mod file. This file stores all the dependencies on external packages, and at the same time will make the go code module.</description></item></channel></rss>
+Next you need to initialize the go.mod file. This file stores all the dependencies on external packages, and at the same time will make the go code module.</description><content>&lt;p>Hi there!&lt;/p>
+&lt;p>Today I want to tell you how with go you can get a list of all AWS Lambda that are in the VPC.
+First you need to install golang. The latest version can be downloaded from the official &lt;a href="https://golang.org/dl/">website&lt;/a>.&lt;/p>
+&lt;p>Once golang is installed, create a folder for the scripts
+&lt;code>mkdir awsscripts&lt;/code>&lt;/p>
+&lt;p>Next you need to initialize the go.mod file. This file stores all the dependencies on external packages, and at the same time will make the go code module. And in the future it can be installed with &lt;code>go get&lt;/code>. To create a module you need to call the command &lt;code>go mod init github.com/mpostument/awsscripts&lt;/code>. Where github&amp;hellip; is the name of the module. If you use another version control system, it could be it, then the user name and module name.&lt;/p>
+&lt;p>Once the module is created we will need aws-sdk to work with aws. You can install it with the command &lt;code>go get github.com/aws/aws-sdk-go@latest&lt;/code>. Run it in the directory with go.mod. After that in go mod the version aws-sdk will be added &lt;code>require github.com/aws/aws-sdk-go v1.34.14&lt;/code>. In the future, to update the version of aws-sdk. Manually change the version in this file and run &lt;code>go mod tidy&lt;/code>.&lt;/p>
+&lt;p>The setting is complete and you can go to the code.
+Create a &lt;code>lambdaInVpc.go&lt;/code> file in the root of the &lt;code>awsscripts&lt;/code> folder or in any other folder inside of the &lt;code>awsscripts&lt;/code> and open it.&lt;/p>
+&lt;p>Each go file starts with &lt;code>package&lt;/code>. Since we need to run the go file directly instead of importing &lt;code>package&lt;/code> should be &lt;code>main&lt;/code>.&lt;/p>
+&lt;p>You also need to add a list of third-party modules that we will use&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go/aws/session&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go/service/lambda&amp;#34;&lt;/span>
+)
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>The list of imports is followed by the &lt;code>main&lt;/code> method, which is the entry point into the code. In &lt;code>main&lt;/code> we will create an aws client.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#a6e22e">mySession&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">session&lt;/span>.&lt;span style="color:#a6e22e">Must&lt;/span>(&lt;span style="color:#a6e22e">session&lt;/span>.&lt;span style="color:#a6e22e">NewSession&lt;/span>())
+&lt;span style="color:#a6e22e">client&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">lambda&lt;/span>.&lt;span style="color:#a6e22e">New&lt;/span>(&lt;span style="color:#a6e22e">mySession&lt;/span>)
+&lt;span style="color:#a6e22e">lambdas&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">getLambdaFunctions&lt;/span>(&lt;span style="color:#a6e22e">client&lt;/span>)
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>This creates an aws session and a lambda client, and method &lt;code>getLambdaFunctions&lt;/code> executed. As parameter it take newly created client. Now let&amp;rsquo;s start writing &lt;code>getLambdaFunctions&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">getLambdaFunctions&lt;/span>(&lt;span style="color:#a6e22e">client&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">lambda&lt;/span>.&lt;span style="color:#a6e22e">Lambda&lt;/span>) []&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">lambda&lt;/span>.&lt;span style="color:#a6e22e">FunctionConfiguration&lt;/span> {
+&lt;span style="color:#a6e22e">input&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">lambda&lt;/span>.&lt;span style="color:#a6e22e">ListFunctionsInput&lt;/span>{}
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">result&lt;/span> []&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">lambda&lt;/span>.&lt;span style="color:#a6e22e">FunctionConfiguration&lt;/span>
+&lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">ListFunctionsPages&lt;/span>(&lt;span style="color:#a6e22e">input&lt;/span>,
+&lt;span style="color:#66d9ef">func&lt;/span>(&lt;span style="color:#a6e22e">page&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">lambda&lt;/span>.&lt;span style="color:#a6e22e">ListFunctionsOutput&lt;/span>, &lt;span style="color:#a6e22e">lastPage&lt;/span> &lt;span style="color:#66d9ef">bool&lt;/span>) &lt;span style="color:#66d9ef">bool&lt;/span> {
+&lt;span style="color:#a6e22e">result&lt;/span> = append(&lt;span style="color:#a6e22e">result&lt;/span>, &lt;span style="color:#a6e22e">page&lt;/span>.&lt;span style="color:#a6e22e">Functions&lt;/span>&lt;span style="color:#f92672">...&lt;/span>)
+&lt;span style="color:#66d9ef">return&lt;/span> !&lt;span style="color:#a6e22e">lastPage&lt;/span>
+})
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatal&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Not able to get lambdas&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>)
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">result&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now let&amp;rsquo;s look at what&amp;rsquo;s going on here. To get the list of lambdas it is necessary to call method &lt;code>ListFunctions&lt;/code>. But since this method returns only the first 50 lambdas, it does not suit us. Because if there are 51 or more lambdas on aws, the account will still return only the first 50. But aws has a method with pagination &lt;code>ListFunctionsPages&lt;/code>, and it can be used here. The method takes two parameters, the first search parameter &lt;code>ListFunctionsInput&lt;/code> in which you can specify the region, version and several other parameters. And the second is the method of pagination.&lt;/p>
+&lt;p>In the beginning we create two variables &lt;code>input&lt;/code> of type &lt;code>ListFunctionsInput&lt;/code> and &lt;code>result&lt;/code> of type&lt;code>[]*lambda.FunctionConfiguration&lt;/code>. &lt;code>Input&lt;/code> will be passed to the &lt;code>ListFunctionsPages&lt;/code> function and &lt;code>result&lt;/code> will be used to store the execution result.&lt;/p>
+&lt;p>Then comes the call of &lt;code>ListFunctionsPages&lt;/code>. This method returns only an error, the result of this method is assigned to the variable err and then there is a check whether this varialbe is not equal to &lt;code>nil&lt;/code>. If the method returned &lt;code>nil&lt;/code> then the program is terminated and the error is displayed.&lt;/p>
+&lt;p>In the function &lt;code>ListFunctionsPages&lt;/code> there is a call of one more function which adds result of execution in a slice &lt;code>result&lt;/code>. The internal function is called several times until we reach the last page. And in the end we return &lt;code>result&lt;/code>.&lt;/p>
+&lt;p>Now that you have received a list of all lambdas, you need to filter out those in the VPC. For this purpose we will return again to the main method and to add there iterations on all lambdas with a condition.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">l&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">lambdas&lt;/span> {
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">l&lt;/span>.&lt;span style="color:#a6e22e">VpcConfig&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> len(&lt;span style="color:#a6e22e">l&lt;/span>.&lt;span style="color:#a6e22e">VpcConfig&lt;/span>.&lt;span style="color:#a6e22e">SubnetIds&lt;/span>) &amp;gt; &lt;span style="color:#ae81ff">0&lt;/span> {
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">l&lt;/span>.&lt;span style="color:#a6e22e">FunctionName&lt;/span>)
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Here we iterate on result of execution of &lt;code>getLambdaFunctions&lt;/code> and we will check up whether &lt;code>VpcConfig&lt;/code> of function is not equal &lt;code>nil&lt;/code> and whether the list of subnet is more than zero. Two checks are necessary because for some lambdas &lt;code>VpcConfig&lt;/code> will be nil, and for others there will be a map in which there will be empty lists. Example&lt;/p>
+&lt;pre>&lt;code>&amp;lt;nil&amp;gt;
+&amp;lt;nil&amp;gt;
+{
+SecurityGroupIds: [],
+SubnetIds: [],
+VpcId: &amp;quot;&amp;quot;
+}
+&amp;lt;nil&amp;gt;
+&lt;/code>&lt;/pre>&lt;p>Now you can run the code and get the result.&lt;br>
+&lt;code>go run lambdaInVpc.go&lt;/code>&lt;/p></content></item></channel></rss>

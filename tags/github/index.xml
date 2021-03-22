@@ -1,2 +1,75 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Github on mpostument.com</title><link>/tags/github/</link><description>Recent content in Github on mpostument.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 30 Sep 2020 21:52:21 +0300</lastBuildDate><atom:link href="/tags/github/index.xml" rel="self" type="application/rss+xml"/><item><title>Nightfall Dlp Configuration</title><link>/2020/09/30/nightfall-dlp-configuration/</link><pubDate>Wed, 30 Sep 2020 21:52:21 +0300</pubDate><guid>/2020/09/30/nightfall-dlp-configuration/</guid><description>Hi there!
-I want to talk today about DLP Nightfall. The Nightfall DLP Action scans your code commits upon Pull Request for sensitive information - like credentials &amp;amp; secrets, PII, credit card numbers &amp;amp; more - and posts review comments to your code hosting service automatically. The Nightfall DLP Action is intended to be used as a part of your CI to simplify the development process, improve your security, and ensure you never accidentally leak secrets or other sensitive information via an accidental commit.</description></item></channel></rss>
+I want to talk today about DLP Nightfall. The Nightfall DLP Action scans your code commits upon Pull Request for sensitive information - like credentials &amp;amp; secrets, PII, credit card numbers &amp;amp; more - and posts review comments to your code hosting service automatically. The Nightfall DLP Action is intended to be used as a part of your CI to simplify the development process, improve your security, and ensure you never accidentally leak secrets or other sensitive information via an accidental commit.</description><content>&lt;p>Hi there!&lt;/p>
+&lt;p>I want to talk today about DLP Nightfall. The Nightfall DLP Action scans your code commits upon Pull Request for sensitive information - like credentials &amp;amp; secrets, PII, credit card numbers &amp;amp; more - and posts review comments to your code hosting service automatically. The Nightfall DLP Action is intended to be used as a part of your CI to simplify the development process, improve your security, and ensure you never accidentally leak secrets or other sensitive information via an accidental commit.&lt;br>
+I tried to implement DLP with Github Actions and want to share my results&lt;/p>
+&lt;h2 id="github-action">Github Action&lt;/h2>
+&lt;p>Nightfall gives GitHub Action which can be used to scan Pull Request and Push in the branch.
+First you need to create a &lt;code>.github\workflows&lt;/code> folder in the root of the repository and create a dlp.yml file in this folder. The file name can be any.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfalldlp&lt;/span>
+&lt;span style="color:#f92672">on&lt;/span>:
+&lt;span style="color:#f92672">push&lt;/span>:
+&lt;span style="color:#f92672">branches&lt;/span>:
+- &lt;span style="color:#ae81ff">master&lt;/span>
+&lt;span style="color:#f92672">pull_request&lt;/span>:
+&lt;span style="color:#f92672">jobs&lt;/span>:
+&lt;span style="color:#f92672">run-nightfalldlp&lt;/span>:
+&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfalldlp&lt;/span>
+&lt;span style="color:#f92672">runs-on&lt;/span>: &lt;span style="color:#ae81ff">ubuntu-latest&lt;/span>
+&lt;span style="color:#f92672">steps&lt;/span>:
+- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Checkout Repo Action&lt;/span>
+&lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">actions/checkout@v2&lt;/span>
+- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfallDLP action step&lt;/span>
+&lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">nightfallai/nightfall_dlp_action@v0.0.7&lt;/span>
+&lt;span style="color:#f92672">env&lt;/span>:
+&lt;span style="color:#f92672">NIGHTFALL_API_KEY&lt;/span>: &lt;span style="color:#ae81ff">${{ secrets.NIGHTFALL_API_KEY }}&lt;/span>
+&lt;span style="color:#f92672">GITHUB_TOKEN&lt;/span>: &lt;span style="color:#ae81ff">${{ secrets.GITHUB_TOKEN }}&lt;/span>
+&lt;span style="color:#f92672">EVENT_BEFORE&lt;/span>: &lt;span style="color:#ae81ff">${{ github.event.before }}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>In the &lt;code>on&lt;/code> section it is specified that to start scanning on push in master branch and on Pull Request.
+Action has two steps, the first is to clone the repository the second is to run the scanner.
+Several env variables are required for the scanner to work. GITHUB_TOKEN is used so that the scanner can add comments to the PR it should have value &lt;code>secrets.GITHUB_TOKEN&lt;/code>&lt;br>
+&lt;img src="https://i.imgur.com/13N6AjR.png" alt="Comment">&lt;/p>
+&lt;p>EVENT_BEFORE is required if the scanner starts at a push event. And its value must be &lt;code>github.event.before&lt;/code>&lt;br>
+NIGHTFALL_API_KEY the last required variable, you can get it by registering at &lt;a href="https://nightfall.ai/api">nightfall.ai&lt;/a>. Once NIGHTFALL_API_KEY is received it needs to be added to GitHub Secrets&lt;br>
+&lt;img src="https://i.imgur.com/8y5a2FH.png" alt="Secret">&lt;/p>
+&lt;h2 id="nightfall-configuration">Nightfall Configuration&lt;/h2>
+&lt;p>Now when i finished with GitHub Action I need to create a configuration file for Nightfall.
+To do this, create a folder named &lt;code>.nightfalldlp&lt;/code> and the file &lt;code>config.json&lt;/code> in it.
+List of detectors that support nightfall.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
+&lt;span style="color:#f92672">&amp;#34;detectors&amp;#34;&lt;/span>: [
+&lt;span style="color:#e6db74">&amp;#34;CREDIT_CARD_NUMBER&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;PHONE_NUMBER&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;API_KEY&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;CRYPTOGRAPHIC_KEY&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;RANDOMLY_GENERATED_TOKEN&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;US_SOCIAL_SECURITY_NUMBER&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;AMERICAN_BANKERS_CUSIP_ID&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;US_BANK_ROUTING_MICR&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;ICD9_CODE&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;ICD10_CODE&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;US_DRIVERS_LICENSE_NUMBER&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;US_PASSPORT&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;EMAIL_ADDRESS&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;IP_ADDRESS&amp;#34;&lt;/span>
+]
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>My configuration file looks shorter because the full one generates a lot of false-positive alarms. Example&lt;br>
+&lt;img src="https://i.imgur.com/0EGejo0.png" alt="FalseErrorSample">&lt;/p>
+&lt;p>Example of my file:&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
+&lt;span style="color:#f92672">&amp;#34;detectors&amp;#34;&lt;/span>: [
+&lt;span style="color:#e6db74">&amp;#34;API_KEY&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;CRYPTOGRAPHIC_KEY&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;RANDOMLY_GENERATED_TOKEN&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;EMAIL_ADDRESS&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;IP_ADDRESS&amp;#34;&lt;/span>
+]
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now it&amp;rsquo;s all you need to push configuration for scanner to start.&lt;br>
+Even with this configuration, the scanner gives a lot of false-positive alarm results&lt;br>
+&lt;img src="https://i.imgur.com/bJ1WWR2.png" alt="Error">
+For example, I get such a error
+&lt;code>Suspicious content detected (3:***, type IP_ADDRESS)&lt;/code> on &lt;code>&amp;quot;arn:aws:s3:::usershome/{{name}}-{{data}}/*&amp;quot;&lt;/code>&lt;br>
+Or &lt;code>Suspicious content detected (ke********, type RANDOMLY_GENERATED_TOKEN)&lt;/code> on&lt;br>
+&lt;code>&amp;quot;Resource&amp;quot;: &amp;quot;arn:aws:kms:us-east-1:000000000:key/6a2b4d78-oy69-44ab-ce3d-43faca87fd14&amp;quot;&lt;/code>.&lt;br>
+Despite the false-positive part, the scanner allows you to find cluttered passwords and api keys&lt;/p></content></item></channel></rss>

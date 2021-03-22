@@ -1,7 +1,376 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AWS on mpostument.com</title><link>/ua/categories/aws/</link><description>Recent content in AWS on mpostument.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 06 Feb 2021 18:14:40 +0200</lastBuildDate><atom:link href="/ua/categories/aws/index.xml" rel="self" type="application/rss+xml"/><item><title>Ebs Auto Resize</title><link>/ua/2021/02/06/ebs-auto-resize/</link><pubDate>Sat, 06 Feb 2021 18:14:40 +0200</pubDate><guid>/ua/2021/02/06/ebs-auto-resize/</guid><description>Привіт!
 Сьогодні зробимо скрипт для автоматичного ресайзу EBS volume за допомогою golang i AWS SDK version 2. Для того щоб це зробити потрібно виконати декілька кроків, отримати список волюмів, відфільтрувати тих в яких кількість вільної пам&amp;rsquo;яті менший ніж трешхолд, знайти ebs id який відповідає даному волюму. Зробити ресайз на заданий процент і збільшити розмір диску на файловій системі.
-Розпочну з структури в якій буде зберігатись вся інформація по диску та вкажу всі потрібні імпорти.</description></item><item><title>Failed Asg Event Notification</title><link>/ua/2021/01/03/failed-asg-event-notification/</link><pubDate>Sun, 03 Jan 2021 17:57:36 +0200</pubDate><guid>/ua/2021/01/03/failed-asg-event-notification/</guid><description>Привіт!
+Розпочну з структури в якій буде зберігатись вся інформація по диску та вкажу всі потрібні імпорти.</description><content>&lt;p>Привіт!&lt;/p>
+&lt;p>Сьогодні зробимо скрипт для автоматичного ресайзу EBS volume за допомогою golang i AWS SDK version 2.
+Для того щоб це зробити потрібно виконати декілька кроків, отримати список волюмів, відфільтрувати тих в яких кількість вільної пам&amp;rsquo;яті менший ніж трешхолд, знайти ebs id який відповідає даному волюму. Зробити ресайз на заданий процент і збільшити розмір диску на файловій системі.&lt;/p>
+&lt;p>Розпочну з структури в якій буде зберігатись вся інформація по диску та вкажу всі потрібні імпорти.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;context&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;errors&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;io/ioutil&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;math&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;net/http&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;os/exec&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;regexp&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;strings&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;time&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go-v2/aws&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go-v2/config&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go-v2/service/ec2&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go-v2/service/ec2/types&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/smithy-go&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/mvisonneau/go-ebsnvme/pkg/ebsnvme&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/shirou/gopsutil/v3/disk&amp;#34;&lt;/span>
+)
+&lt;span style="color:#66d9ef">type&lt;/span> &lt;span style="color:#a6e22e">DiskData&lt;/span> &lt;span style="color:#66d9ef">struct&lt;/span> {
+&lt;span style="color:#a6e22e">VolumeID&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">DeviceName&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">MountPoint&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">TotalUsed&lt;/span> &lt;span style="color:#66d9ef">float64&lt;/span>
+&lt;span style="color:#a6e22e">TotalSpace&lt;/span> &lt;span style="color:#66d9ef">uint64&lt;/span>
+&lt;span style="color:#a6e22e">FsType&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">VolumeSize&lt;/span> &lt;span style="color:#66d9ef">int32&lt;/span>
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Перший метод запише усю потрібну інформацію про диски в &lt;code>DiskData&lt;/code> структуру. Для того щоб отримати інформацію з системи буде використовуватись &lt;code>gopsutil&lt;/code>. Якщо ж в системі диск відображається як &lt;code>nvme&lt;/code> його треба привести до стандартного запису (/dev/sda) за яким можна буде фільтрувати потрібний диск. Але тільки цього буде не достатньо оскільки диски на різних серверах можуть бути змонтовані під однаковим іменем. Саме для цього буде потрібен instance id, який можна отримати з метаданих сервера.&lt;/p>
+&lt;p>Спочатку отримую список усіх дисків за допомогою &lt;code>disk.Partitions(false)&lt;/code>, також створюю ec2client i отримую instanceID. Ці методи будуть створені пізніше. Далі циклом проходжу по усіх дисках і перевіряю чи &lt;code>nvme&lt;/code> є в назві диску і за допомогою &lt;code>ebsnvme&lt;/code> отримую назву в форматі /dev/sda. І зберігаю результат в &lt;code>ebsDevice&lt;/code>. Якщо ж ні то міняю назву диска з &lt;code>xvd&lt;/code> на &lt;code>sd&lt;/code>. Саме такий формат потрібен для aws. Тепер можна зробити запит до aws для того щоб отримати volumeID. За допомогою метода &lt;code>Usage&lt;/code> отримую дані по використанню диска та записую в &lt;code>DiskData&lt;/code> структуру і добавлю в список, який в кінці метода повертається.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">filterDisks&lt;/span>() ([]&lt;span style="color:#a6e22e">DiskData&lt;/span>, &lt;span style="color:#66d9ef">error&lt;/span>) {
+&lt;span style="color:#a6e22e">parts&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">Partitions&lt;/span>(&lt;span style="color:#66d9ef">false&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">client&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">getEc2Client&lt;/span>()
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">instanceID&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">getInstanceID&lt;/span>()
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">diskData&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> []&lt;span style="color:#a6e22e">DiskData&lt;/span>{}
+&lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">p&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">parts&lt;/span> {
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">ebsDevice&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">strings&lt;/span>.&lt;span style="color:#a6e22e">Contains&lt;/span>(&lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Device&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;nvme&amp;#34;&lt;/span>) {
+&lt;span style="color:#a6e22e">volumeMapping&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ebsnvme&lt;/span>.&lt;span style="color:#a6e22e">ScanDevice&lt;/span>(&lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Device&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">ebsDevice&lt;/span> = &lt;span style="color:#a6e22e">volumeMapping&lt;/span>.&lt;span style="color:#a6e22e">Name&lt;/span>
+} &lt;span style="color:#66d9ef">else&lt;/span> {
+&lt;span style="color:#a6e22e">ebsDevice&lt;/span> = &lt;span style="color:#a6e22e">strings&lt;/span>.&lt;span style="color:#a6e22e">Replace&lt;/span>(&lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Device&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;xvd&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;sd&amp;#34;&lt;/span>, &lt;span style="color:#ae81ff">1&lt;/span>)
+}
+&lt;span style="color:#a6e22e">filter&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">DescribeVolumesInput&lt;/span>{&lt;span style="color:#a6e22e">Filters&lt;/span>: []&lt;span style="color:#a6e22e">types&lt;/span>.&lt;span style="color:#a6e22e">Filter&lt;/span>{
+{
+&lt;span style="color:#a6e22e">Name&lt;/span>: &lt;span style="color:#a6e22e">aws&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;attachment.device&amp;#34;&lt;/span>),
+&lt;span style="color:#a6e22e">Values&lt;/span>: []&lt;span style="color:#66d9ef">string&lt;/span>{
+&lt;span style="color:#a6e22e">ebsDevice&lt;/span>,
+},
+},
+{
+&lt;span style="color:#a6e22e">Name&lt;/span>: &lt;span style="color:#a6e22e">aws&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;attachment.instance-id&amp;#34;&lt;/span>),
+&lt;span style="color:#a6e22e">Values&lt;/span>: []&lt;span style="color:#66d9ef">string&lt;/span>{
+&lt;span style="color:#a6e22e">instanceID&lt;/span>,
+},
+},
+},
+}
+&lt;span style="color:#a6e22e">volumeInfo&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">DescribeVolumes&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Background&lt;/span>(), &lt;span style="color:#a6e22e">filter&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">usage&lt;/span>, &lt;span style="color:#a6e22e">_&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">Usage&lt;/span>(&lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Mountpoint&lt;/span>)
+&lt;span style="color:#a6e22e">disk&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">DiskData&lt;/span>{
+&lt;span style="color:#a6e22e">VolumeID&lt;/span>: &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">volumeInfo&lt;/span>.&lt;span style="color:#a6e22e">Volumes&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>].&lt;span style="color:#a6e22e">VolumeId&lt;/span>,
+&lt;span style="color:#a6e22e">DeviceName&lt;/span>: &lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Device&lt;/span>,
+&lt;span style="color:#a6e22e">MountPoint&lt;/span>: &lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Mountpoint&lt;/span>,
+&lt;span style="color:#a6e22e">TotalUsed&lt;/span>: &lt;span style="color:#a6e22e">usage&lt;/span>.&lt;span style="color:#a6e22e">UsedPercent&lt;/span>,
+&lt;span style="color:#a6e22e">TotalSpace&lt;/span>: &lt;span style="color:#a6e22e">usage&lt;/span>.&lt;span style="color:#a6e22e">Total&lt;/span>,
+&lt;span style="color:#a6e22e">VolumeSize&lt;/span>: &lt;span style="color:#a6e22e">volumeInfo&lt;/span>.&lt;span style="color:#a6e22e">Volumes&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>].&lt;span style="color:#a6e22e">Size&lt;/span>,
+&lt;span style="color:#a6e22e">FsType&lt;/span>: &lt;span style="color:#a6e22e">p&lt;/span>.&lt;span style="color:#a6e22e">Fstype&lt;/span>,
+}
+&lt;span style="color:#a6e22e">diskData&lt;/span> = append(&lt;span style="color:#a6e22e">diskData&lt;/span>, &lt;span style="color:#a6e22e">disk&lt;/span>)
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">diskData&lt;/span>, &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Потрібно створити методи які використовуються filterDisks, почну з getInstanceID. Цей метод робить запит до метаданих ec2 інстанса і отримує у відповідь InstanceID.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">getInstanceID&lt;/span>() (&lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#66d9ef">error&lt;/span>) {
+&lt;span style="color:#a6e22e">cfg&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">config&lt;/span>.&lt;span style="color:#a6e22e">LoadDefaultConfig&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">TODO&lt;/span>())
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">client&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">imds&lt;/span>.&lt;span style="color:#a6e22e">NewFromConfig&lt;/span>(&lt;span style="color:#a6e22e">cfg&lt;/span>)
+&lt;span style="color:#a6e22e">instanceID&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">GetInstanceIdentityDocument&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">TODO&lt;/span>(), &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">imds&lt;/span>.&lt;span style="color:#a6e22e">GetInstanceIdentityDocumentInput&lt;/span>{})
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">instanceID&lt;/span>.&lt;span style="color:#a6e22e">InstanceID&lt;/span>, &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>getEc2Client&lt;/code> з метаданих отримує назву регіону та повертає ec2 client.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">getEc2Client&lt;/span>() (&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">Client&lt;/span>, &lt;span style="color:#66d9ef">error&lt;/span>) {
+&lt;span style="color:#a6e22e">cfg&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">config&lt;/span>.&lt;span style="color:#a6e22e">LoadDefaultConfig&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">TODO&lt;/span>())
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">client&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">imds&lt;/span>.&lt;span style="color:#a6e22e">NewFromConfig&lt;/span>(&lt;span style="color:#a6e22e">cfg&lt;/span>)
+&lt;span style="color:#a6e22e">region&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">GetRegion&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">TODO&lt;/span>(), &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">imds&lt;/span>.&lt;span style="color:#a6e22e">GetRegionInput&lt;/span>{})
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">cfg&lt;/span>.&lt;span style="color:#a6e22e">Region&lt;/span> = &lt;span style="color:#a6e22e">region&lt;/span>.&lt;span style="color:#a6e22e">Region&lt;/span>
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">NewFromConfig&lt;/span>(&lt;span style="color:#a6e22e">cfg&lt;/span>), &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Залишилось вирахувати на скільки збільшити розмір диска.
+В цьому методі переводиться розмір диска отриманий в &lt;code>filterDisks&lt;/code> з байтів в гігабайт та визначається новий розмір диска.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">findNewSize&lt;/span>(&lt;span style="color:#a6e22e">oldSize&lt;/span> &lt;span style="color:#66d9ef">uint64&lt;/span>, &lt;span style="color:#a6e22e">increasePercent&lt;/span> &lt;span style="color:#66d9ef">float64&lt;/span>) &lt;span style="color:#66d9ef">int32&lt;/span> {
+&lt;span style="color:#a6e22e">gbSize&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> float64(&lt;span style="color:#a6e22e">oldSize&lt;/span>) &lt;span style="color:#f92672">/&lt;/span> &lt;span style="color:#a6e22e">math&lt;/span>.&lt;span style="color:#a6e22e">Pow&lt;/span>(&lt;span style="color:#ae81ff">1024&lt;/span>, &lt;span style="color:#ae81ff">3&lt;/span>)
+&lt;span style="color:#a6e22e">newSize&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> ((&lt;span style="color:#a6e22e">gbSize&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#a6e22e">increasePercent&lt;/span>) &lt;span style="color:#f92672">/&lt;/span> &lt;span style="color:#ae81ff">100&lt;/span>) &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#a6e22e">gbSize&lt;/span>
+&lt;span style="color:#66d9ef">return&lt;/span> int32(&lt;span style="color:#a6e22e">newSize&lt;/span>)
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Сам ресайз буде відбуватись в три кроки:&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>Збільшити розмір ebs&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Викликати grow part для того щоб збільшити розмір партишина якщо він існує.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Збільшити розмір файлової системи.&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;p>Розпочну з першого кроку.&lt;br>
+В цьому методі я отримую ec2 client за допомогою метода &lt;code>getEc2Client&lt;/code> та роблю &lt;code>ModifyVolume&lt;/code> запит до AWS. Тут важливо відфільтрувати певні помилки.
+Перша це &lt;code>VolumeModificationRateExceeded&lt;/code>. AWS дозволяє робити ресайз 1 раз в 6 годин, тому я не хочу щоб скрипт завершувався якщо ліміт перевищено, а перевіряв інші доступні диски.&lt;/p>
+&lt;p>Наступна помилка це &lt;code>IncorrectModificationState&lt;/code>. Після ресайзу диску в нього змінюється статут на &lt;code>Optimizing&lt;/code>, в такому випадку я теж не хочу завершувати роботу, а перейти до наступного диску.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">ebsResize&lt;/span>(&lt;span style="color:#a6e22e">newSize&lt;/span> &lt;span style="color:#66d9ef">int32&lt;/span>, &lt;span style="color:#a6e22e">volumeID&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) &lt;span style="color:#66d9ef">error&lt;/span> {
+&lt;span style="color:#a6e22e">client&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">getEc2Client&lt;/span>()
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Starting resize of ebs volume&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">volumeID&lt;/span>)
+&lt;span style="color:#a6e22e">input&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">ModifyVolumeInput&lt;/span>{&lt;span style="color:#a6e22e">VolumeId&lt;/span>: &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">volumeID&lt;/span>, &lt;span style="color:#a6e22e">Size&lt;/span>: &lt;span style="color:#a6e22e">newSize&lt;/span>}
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">ModifyVolume&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Background&lt;/span>(), &lt;span style="color:#a6e22e">input&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">ae&lt;/span> &lt;span style="color:#a6e22e">smithy&lt;/span>.&lt;span style="color:#a6e22e">APIError&lt;/span>
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">errors&lt;/span>.&lt;span style="color:#a6e22e">As&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>, &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">ae&lt;/span>) {
+&lt;span style="color:#66d9ef">switch&lt;/span> &lt;span style="color:#a6e22e">ae&lt;/span>.&lt;span style="color:#a6e22e">ErrorCode&lt;/span>() {
+&lt;span style="color:#66d9ef">case&lt;/span> &lt;span style="color:#e6db74">&amp;#34;VolumeModificationRateExceeded&amp;#34;&lt;/span>:
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Ebs was already resized, wait for 6 hours before next resize&amp;#34;&lt;/span>)
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">errVolumeRetryLater&lt;/span>
+&lt;span style="color:#66d9ef">case&lt;/span> &lt;span style="color:#e6db74">&amp;#34;IncorrectModificationState&amp;#34;&lt;/span>:
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">ae&lt;/span>.&lt;span style="color:#a6e22e">ErrorMessage&lt;/span>())
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">errVolumeRetryLater&lt;/span>
+}
+} &lt;span style="color:#66d9ef">else&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
+}
+}
+&lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">waitForEbsResize&lt;/span>(&lt;span style="color:#a6e22e">volumeID&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Після того як ресайз запущено потрібно дочекатись коли він завершиться, для цього я створю наступний метод &lt;code>waitForEbsResize&lt;/code>.
+Метод &lt;code>waitForEbsResize&lt;/code> за допомогою ec2 client робить запит типу &lt;code>DescribeVolumesModifications&lt;/code> і перевіряє чи статус диску &lt;code>modifying&lt;/code>. Якщо так чекаю 15 секунд і запускаю ще раз метод рекурсивно.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">waitForEbsResize&lt;/span>(&lt;span style="color:#a6e22e">volumeID&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) &lt;span style="color:#66d9ef">error&lt;/span> {
+&lt;span style="color:#a6e22e">client&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">getEc2Client&lt;/span>()
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
+}
+&lt;span style="color:#a6e22e">input&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">DescribeVolumesModificationsInput&lt;/span>{&lt;span style="color:#a6e22e">VolumeIds&lt;/span>: []&lt;span style="color:#66d9ef">string&lt;/span>{&lt;span style="color:#a6e22e">volumeID&lt;/span>}}
+&lt;span style="color:#a6e22e">status&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">DescribeVolumesModifications&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Background&lt;/span>(), &lt;span style="color:#a6e22e">input&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">status&lt;/span>.&lt;span style="color:#a6e22e">VolumesModifications&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>].&lt;span style="color:#a6e22e">ModificationState&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;modifying&amp;#34;&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Ebs modification in progress. Waiting for 15 second&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Sleep&lt;/span>(&lt;span style="color:#ae81ff">15&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Second&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">waitForEbsResize&lt;/span>(&lt;span style="color:#a6e22e">volumeID&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
+}
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер можна приступити до 2 кроку &lt;code>growPartition&lt;/code>.&lt;/p>
+&lt;p>Потрібно визначити чи є партішин, якщо його немає grow part викликати не потрібно. В залежності від того який тип диску я так і буду визначати чи є партішин. Потрібно зробити декілька перевірок. Перша чи в назві немає цифр. Якщо їх немає то це не партішин і робити growpart не потрібно. Наступна перевірка для nvme пристроїв. Якщо в назві є символ p отже це партішин. Наприклад &lt;code>/dev/nvme1n1&lt;/code> - диск і &lt;code>/dev/nvme0n1p1&lt;/code> - партішин. І останній випадок якщо є xvd в назві пристрою, ця перевірка лише для того щоб відфільтрувати звичайний ebs від nvme. І в залежності від кожного випадку викликається grow part для ebs - &lt;code>growpart /dev/xvdf 1&lt;/code> і для nvme - &lt;code>growpart /dev/nvme0n1 1&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">growPartition&lt;/span>(&lt;span style="color:#a6e22e">partition&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) &lt;span style="color:#66d9ef">error&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Starting growpart for&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span>)
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">cmd&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">exec&lt;/span>.&lt;span style="color:#a6e22e">Cmd&lt;/span>
+&lt;span style="color:#a6e22e">i&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">strings&lt;/span>.&lt;span style="color:#a6e22e">LastIndex&lt;/span>(&lt;span style="color:#a6e22e">partition&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;p&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">isLetter&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">regexp&lt;/span>.&lt;span style="color:#a6e22e">MustCompile&lt;/span>(&lt;span style="color:#e6db74">`^/dev/+[a-zA-Z]+$`&lt;/span>).&lt;span style="color:#a6e22e">MatchString&lt;/span>
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">isLetter&lt;/span>(&lt;span style="color:#a6e22e">partition&lt;/span>) {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Grow partition for&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;not required&amp;#34;&lt;/span>)
+} &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">i&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span> {
+&lt;span style="color:#a6e22e">cmd&lt;/span> = &lt;span style="color:#a6e22e">exec&lt;/span>.&lt;span style="color:#a6e22e">Command&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;growpart&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span>[:&lt;span style="color:#a6e22e">i&lt;/span>], &lt;span style="color:#a6e22e">partition&lt;/span>[&lt;span style="color:#a6e22e">i&lt;/span>&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>:])
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">cmd&lt;/span>.&lt;span style="color:#a6e22e">Run&lt;/span>()
+} &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">strings&lt;/span>.&lt;span style="color:#a6e22e">Contains&lt;/span>(&lt;span style="color:#a6e22e">partition&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;xvd&amp;#34;&lt;/span>) {
+&lt;span style="color:#a6e22e">re&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">regexp&lt;/span>.&lt;span style="color:#a6e22e">MustCompile&lt;/span>(&lt;span style="color:#e6db74">`\D+`&lt;/span>)
+&lt;span style="color:#a6e22e">m&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">re&lt;/span>.&lt;span style="color:#a6e22e">FindString&lt;/span>(&lt;span style="color:#a6e22e">partition&lt;/span>)
+&lt;span style="color:#a6e22e">cmd&lt;/span> = &lt;span style="color:#a6e22e">exec&lt;/span>.&lt;span style="color:#a6e22e">Command&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;growpart&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">m&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span>[len(&lt;span style="color:#a6e22e">m&lt;/span>):])
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">cmd&lt;/span>.&lt;span style="color:#a6e22e">Run&lt;/span>()
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Останні етап це збільшити розмір файлової системи. Як буде відбуватись ресайз залежить від файлової системи.
+Якщо це xfs то викликається &lt;code>xfs_growfs&lt;/code> в інших випадках це &lt;code>resize2fs&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">fsResize&lt;/span>(&lt;span style="color:#a6e22e">filesystem&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">mountPoint&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) &lt;span style="color:#66d9ef">error&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Starting system volume resize for&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span>)
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">cmd&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">exec&lt;/span>.&lt;span style="color:#a6e22e">Cmd&lt;/span>
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">filesystem&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;xfs&amp;#34;&lt;/span> {
+&lt;span style="color:#a6e22e">cmd&lt;/span> = &lt;span style="color:#a6e22e">exec&lt;/span>.&lt;span style="color:#a6e22e">Command&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;xfs_growfs&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;-d&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">mountPoint&lt;/span>)
+} &lt;span style="color:#66d9ef">else&lt;/span> {
+&lt;span style="color:#a6e22e">cmd&lt;/span> = &lt;span style="color:#a6e22e">exec&lt;/span>.&lt;span style="color:#a6e22e">Command&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;resize2fs&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">partition&lt;/span>)
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">cmd&lt;/span>.&lt;span style="color:#a6e22e">Run&lt;/span>()
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер залишилось викликати всі методи в правильному порядку:&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>Отримую список дисків&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Йду циклом по усіх дисках. Якщо умова &lt;code>disk.TotalUsed &amp;lt; 70&lt;/code> false то ресайз не потрібен.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Вираховую новий розмір диску&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Викликаю ebsResize&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Викликаю growPartition&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Викликаю fsResize&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#a6e22e">disksInfo&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">filterDisks&lt;/span>()
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">disk&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">disksInfo&lt;/span> {
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">TotalUsed&lt;/span> &amp;lt; &lt;span style="color:#ae81ff">70&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Resize for&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">DeviceName&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;not required&amp;#34;&lt;/span>)
+&lt;span style="color:#66d9ef">continue&lt;/span>
+}
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Starting resize of&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">DeviceName&lt;/span>)
+&lt;span style="color:#a6e22e">newSize&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">findNewSize&lt;/span>(&lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">TotalSpace&lt;/span>, &lt;span style="color:#ae81ff">30&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ebsResize&lt;/span>(int32(&lt;span style="color:#a6e22e">newSize&lt;/span>), &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">VolumeID&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#a6e22e">errVolumeRetryLater&lt;/span> {
+&lt;span style="color:#66d9ef">continue&lt;/span>
+} &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">growPartition&lt;/span>(&lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">DeviceName&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">fsResize&lt;/span>(&lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">FsType&lt;/span>, &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">MountPoint&lt;/span>, &lt;span style="color:#a6e22e">disk&lt;/span>.&lt;span style="color:#a6e22e">DeviceName&lt;/span>); &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Через декілька секунд диск має новий розмір.&lt;/p></content></item><item><title>Failed Asg Event Notification</title><link>/ua/2021/01/03/failed-asg-event-notification/</link><pubDate>Sun, 03 Jan 2021 17:57:36 +0200</pubDate><guid>/ua/2021/01/03/failed-asg-event-notification/</guid><description>Привіт!
 Сьогодні хочу розказати як за допомогою AWS Lambda та Golang можна отримувати повідомлення в slack коли Autoscaling не зміг створити Ec2 сервер. Деплой я автоматизую за допомогою serverless.
 Почнемо з інсталяцію node та serverless. Я використовую nvm для управління версіями node.
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash nvm install v14.15.3 npm install -g serverless Створю папку та ініціалізую в ній go модуль.
-mkdir failed-asg cd failed-asg go mod init touch main.</description></item></channel></rss>
+mkdir failed-asg cd failed-asg go mod init touch main.</description><content>&lt;p>Привіт!&lt;/p>
+&lt;p>Сьогодні хочу розказати як за допомогою AWS Lambda та Golang можна отримувати повідомлення в slack коли Autoscaling не зміг створити Ec2 сервер. Деплой я автоматизую за допомогою serverless.&lt;/p>
+&lt;p>Почнемо з інсталяцію node та serverless. Я використовую &lt;a href="https://github.com/nvm-sh/nvm#install--update-script">nvm&lt;/a> для управління версіями node.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+nvm install v14.15.3
+npm install -g serverless
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Створю папку та ініціалізую в ній go модуль.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell">mkdir failed-asg
+cd failed-asg
+go mod init
+touch main.go
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>На початку буде package, імпорти та main. Main буде відповідальна за запуск handler функції.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;bytes&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;context&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;encoding/json&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;errors&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;io/ioutil&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;net/http&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;strings&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-lambda-go/events&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-lambda-go/lambda&amp;#34;&lt;/span>
+)
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#a6e22e">lambda&lt;/span>.&lt;span style="color:#a6e22e">Start&lt;/span>(&lt;span style="color:#a6e22e">handleRequest&lt;/span>)
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Основною функцією буде handleRequest. В ній сформується повідомлення на основі &lt;code>AutoScalingEvent&lt;/code> і відправиться повідомлення в slack.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">handleRequest&lt;/span>(&lt;span style="color:#a6e22e">ctx&lt;/span> &lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Context&lt;/span>, &lt;span style="color:#a6e22e">event&lt;/span> &lt;span style="color:#a6e22e">events&lt;/span>.&lt;span style="color:#a6e22e">AutoScalingEvent&lt;/span>) (&lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#66d9ef">error&lt;/span>) {
+&lt;span style="color:#a6e22e">url&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;https://hooks.slack.com/services/token&amp;#34;&lt;/span>
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">sb&lt;/span> &lt;span style="color:#a6e22e">strings&lt;/span>.&lt;span style="color:#a6e22e">Builder&lt;/span>
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;:siren: *EC2 Instance Launch Unsuccessful* :siren:\n&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;*Autoscaling Group Name*:&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#a6e22e">event&lt;/span>.&lt;span style="color:#a6e22e">Detail&lt;/span>[&lt;span style="color:#e6db74">&amp;#34;AutoScalingGroupName&amp;#34;&lt;/span>].(&lt;span style="color:#66d9ef">string&lt;/span>))
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;\n&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;*StatusMessage*:&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#a6e22e">event&lt;/span>.&lt;span style="color:#a6e22e">Detail&lt;/span>[&lt;span style="color:#e6db74">&amp;#34;StatusMessage&amp;#34;&lt;/span>].(&lt;span style="color:#66d9ef">string&lt;/span>))
+&lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">WriteString&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;\n&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">payload&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">map&lt;/span>[&lt;span style="color:#66d9ef">string&lt;/span>]&lt;span style="color:#66d9ef">interface&lt;/span>{}{
+&lt;span style="color:#e6db74">&amp;#34;username&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;ASGFailedEvents&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;channel&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;#test-db-alerts&amp;#34;&lt;/span>,
+&lt;span style="color:#e6db74">&amp;#34;text&amp;#34;&lt;/span>: &lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(),
+}
+&lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">SendSlackNotification&lt;/span>(&lt;span style="color:#a6e22e">url&lt;/span>, &lt;span style="color:#a6e22e">payload&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Not able to send slack message&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">sb&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(), &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Url потрібно замінити на значення свого Slack Webhook.&lt;br>
+За допомогою &lt;code>strings.Builder&lt;/code> я формую повідомлення яке відправиться, добавлю в нього назву AutoScalingGroup та повідомлення з помилкою. Тоді формую &lt;code>payload&lt;/code> в якому потрібно вказати назву користувача від якого буде повідомлення, канал і сам text повідомлення та за допомогою &lt;code>SendSlackNotification&lt;/code> відправиться повідомлення в slack.&lt;/p>
+&lt;p>Перейдемо до створення метода &lt;code>SendSlackNotification&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">SendSlackNotification&lt;/span>(&lt;span style="color:#a6e22e">url&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">data&lt;/span> &lt;span style="color:#66d9ef">interface&lt;/span>{}) (&lt;span style="color:#a6e22e">bodyString&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#66d9ef">error&lt;/span>) {
+&lt;span style="color:#a6e22e">jsonString&lt;/span>, &lt;span style="color:#a6e22e">_&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">json&lt;/span>.&lt;span style="color:#a6e22e">Marshal&lt;/span>(&lt;span style="color:#a6e22e">data&lt;/span>)
+&lt;span style="color:#a6e22e">req&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">http&lt;/span>.&lt;span style="color:#a6e22e">NewRequest&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;POST&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">url&lt;/span>, &lt;span style="color:#a6e22e">bytes&lt;/span>.&lt;span style="color:#a6e22e">NewBuffer&lt;/span>(&lt;span style="color:#a6e22e">jsonString&lt;/span>))
+&lt;span style="color:#a6e22e">req&lt;/span>.&lt;span style="color:#a6e22e">Header&lt;/span>.&lt;span style="color:#a6e22e">Set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Content-Type&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;application/json&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">client&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">http&lt;/span>.&lt;span style="color:#a6e22e">Client&lt;/span>{}
+&lt;span style="color:#a6e22e">resp&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">Do&lt;/span>(&lt;span style="color:#a6e22e">req&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+panic(&lt;span style="color:#a6e22e">err&lt;/span>)
+}
+&lt;span style="color:#66d9ef">defer&lt;/span> &lt;span style="color:#a6e22e">resp&lt;/span>.&lt;span style="color:#a6e22e">Body&lt;/span>.&lt;span style="color:#a6e22e">Close&lt;/span>()
+&lt;span style="color:#a6e22e">body&lt;/span>, &lt;span style="color:#a6e22e">_&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ioutil&lt;/span>.&lt;span style="color:#a6e22e">ReadAll&lt;/span>(&lt;span style="color:#a6e22e">resp&lt;/span>.&lt;span style="color:#a6e22e">Body&lt;/span>)
+&lt;span style="color:#a6e22e">bodyString&lt;/span> = string(&lt;span style="color:#a6e22e">body&lt;/span>)
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">resp&lt;/span>.&lt;span style="color:#a6e22e">StatusCode&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#ae81ff">200&lt;/span> {
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Response Status:&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">resp&lt;/span>.&lt;span style="color:#a6e22e">Status&lt;/span>) &lt;span style="color:#75715e">// 200 OK
+&lt;/span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Response Headers:&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">resp&lt;/span>.&lt;span style="color:#a6e22e">Header&lt;/span>)
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Response Body:&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">bodyString&lt;/span>)
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">bodyString&lt;/span>, &lt;span style="color:#a6e22e">errors&lt;/span>.&lt;span style="color:#a6e22e">New&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;can&amp;#39;t work with 42&amp;#34;&lt;/span>)
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">bodyString&lt;/span>, &lt;span style="color:#66d9ef">nil&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тут формується json з попереднього створеного &lt;code>payload&lt;/code> та за допомогою http здійснюється реквест до Webhook Url та перевіряється чи реквест був успіщоно відправлений.&lt;/p>
+&lt;p>Повернемось до serverless для деплою лямбди.&lt;br>
+В корені репозиторія створю файл serverless.yml з контентом&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">service&lt;/span>: &lt;span style="color:#ae81ff">asg-failed-events&lt;/span>
+&lt;span style="color:#f92672">provider&lt;/span>:
+&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">aws&lt;/span>
+&lt;span style="color:#f92672">runtime&lt;/span>: &lt;span style="color:#ae81ff">go1.x&lt;/span>
+&lt;span style="color:#f92672">package&lt;/span>:
+&lt;span style="color:#f92672">exclude&lt;/span>:
+- &lt;span style="color:#ae81ff">./**&lt;/span>
+&lt;span style="color:#f92672">include&lt;/span>:
+- &lt;span style="color:#ae81ff">./bin/**&lt;/span>
+&lt;span style="color:#f92672">functions&lt;/span>:
+&lt;span style="color:#f92672">lambda-time&lt;/span>:
+&lt;span style="color:#f92672">handler&lt;/span>: &lt;span style="color:#ae81ff">bin/failed-asg-event-notification&lt;/span>
+&lt;span style="color:#f92672">events&lt;/span>:
+- &lt;span style="color:#f92672">cloudwatchEvent&lt;/span>:
+&lt;span style="color:#f92672">event&lt;/span>:
+&lt;span style="color:#f92672">source&lt;/span>:
+- &lt;span style="color:#e6db74">&amp;#34;aws.autoscaling&amp;#34;&lt;/span>
+&lt;span style="color:#f92672">detail-type&lt;/span>:
+- &lt;span style="color:#e6db74">&amp;#34;EC2 Instance Launch Unsuccessful&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тут описується назва лямбди яка буде створена та що буде тригерити її, в цьому випадку це &lt;code>EC2 Instance Launch Unsuccessful&lt;/code> івент від &lt;code>aws.autoscaling&lt;/code>.&lt;/p>
+&lt;p>Тепер потрібно встановити всі залежності, скомпілювати код та задеплоїти.&lt;/p>
+&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell">go mod tidy
+OOS&lt;span style="color:#f92672">=&lt;/span>linux GOARCH&lt;span style="color:#f92672">=&lt;/span>amd64 go build -o bin/failed-asg-event-notification .
+sls deploy
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Після цього якщо відбудеться івент типу &lt;code>EC2 Instance Launch Unsuccessful&lt;/code> від &lt;code>aws.autoscaling&amp;quot;&lt;/code> відповідне повідомлення буде відправлено в slack.&lt;/p></content></item></channel></rss>

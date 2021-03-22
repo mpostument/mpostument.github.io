@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Projects on mpostument.com</title><link>/projects/</link><description>Recent content in Projects on mpostument.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 13 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="/projects/index.xml" rel="self" type="application/rss+xml"/><item><title>ebs-autoresize</title><link>/projects/ebs-autoresize/</link><pubDate>Sat, 13 Feb 2021 00:00:00 +0000</pubDate><guid>/projects/ebs-autoresize/</guid><description>About project ebs-autoresize provides a command line tool to automatically resize AWS EBS based on used spaced. Can be used with cron for regular disk size check and resize.
 Install Download the latest binary from releases
-Docs https://github.com/mpostument/ebs-autoresize/blob/master/README.MD</description></item><item><title>grafana-sync</title><link>/projects/grafana-sync/</link><pubDate>Sat, 19 Dec 2020 00:00:00 +0000</pubDate><guid>/projects/grafana-sync/</guid><description>About project grafana-sync provides a command line tool to ease import grafana dashboards in json format and export them back to grafana.
+Docs https://github.com/mpostument/ebs-autoresize/blob/master/README.MD</description><content>&lt;h2 id="about-project">About project&lt;/h2>
+&lt;p>ebs-autoresize provides a command line tool to automatically resize AWS EBS based on used spaced. Can be used with cron for regular disk size check and resize.&lt;/p>
+&lt;h2 id="install">Install&lt;/h2>
+&lt;p>Download the latest binary from &lt;a href="https://github.com/mpostument/ebs-autoresize/releases">releases&lt;/a>&lt;/p>
+&lt;h2 id="docs">Docs&lt;/h2>
+&lt;p>&lt;a href="https://github.com/mpostument/ebs-autoresize/blob/master/README.MD">https://github.com/mpostument/ebs-autoresize/blob/master/README.MD&lt;/a>&lt;/p></content></item><item><title>grafana-sync</title><link>/projects/grafana-sync/</link><pubDate>Sat, 19 Dec 2020 00:00:00 +0000</pubDate><guid>/projects/grafana-sync/</guid><description>About project grafana-sync provides a command line tool to ease import grafana dashboards in json format and export them back to grafana.
 Install Download the latest binary from releases
-Docs https://github.com/mpostument/grafana-sync/blob/master/README.MD</description></item><item><title>AWSTagHelper</title><link>/projects/awstaghelper/</link><pubDate>Fri, 21 Aug 2020 00:00:00 +0000</pubDate><guid>/projects/awstaghelper/</guid><description>About project Tags are critical to managing AWS resources at scale. AWSTagHelper provides a command line tool to ease adding and managing tags to and from CSV files across the wide range of AWS resources.
+Docs https://github.com/mpostument/grafana-sync/blob/master/README.MD</description><content>&lt;h2 id="about-project">About project&lt;/h2>
+&lt;p>grafana-sync provides a command line tool to ease import grafana dashboards in json format and export them back to grafana.&lt;/p>
+&lt;h2 id="install">Install&lt;/h2>
+&lt;p>Download the latest binary from &lt;a href="https://github.com/mpostument/grafana-sync/releases">releases&lt;/a>&lt;/p>
+&lt;h2 id="docs">Docs&lt;/h2>
+&lt;p>&lt;a href="https://github.com/mpostument/grafana-sync/blob/master/README.MD">https://github.com/mpostument/grafana-sync/blob/master/README.MD&lt;/a>&lt;/p></content></item><item><title>AWSTagHelper</title><link>/projects/awstaghelper/</link><pubDate>Fri, 21 Aug 2020 00:00:00 +0000</pubDate><guid>/projects/awstaghelper/</guid><description>About project Tags are critical to managing AWS resources at scale. AWSTagHelper provides a command line tool to ease adding and managing tags to and from CSV files across the wide range of AWS resources.
 Install Download the latest binary from releases
-Docs https://github.com/mpostument/awstaghelper/blob/master/README.MD</description></item><item><title>SteamWishlistScraper</title><link>/projects/steamwishlistscraper/</link><pubDate>Wed, 29 May 2019 00:00:00 +0000</pubDate><guid>/projects/steamwishlistscraper/</guid><description>About project Scrape your steam wishlist in text format
+Docs https://github.com/mpostument/awstaghelper/blob/master/README.MD</description><content>&lt;h2 id="about-project">About project&lt;/h2>
+&lt;p>Tags are critical to managing AWS resources at scale. AWSTagHelper provides a command line tool to ease adding and managing tags to and from CSV files across the wide range of AWS resources.&lt;/p>
+&lt;h2 id="install">Install&lt;/h2>
+&lt;p>Download the latest binary from &lt;a href="https://github.com/mpostument/awstaghelper/releases">releases&lt;/a>&lt;/p>
+&lt;h2 id="docs">Docs&lt;/h2>
+&lt;p>&lt;a href="https://github.com/mpostument/awstaghelper/blob/master/README.MD">https://github.com/mpostument/awstaghelper/blob/master/README.MD&lt;/a>&lt;/p></content></item><item><title>SteamWishlistScraper</title><link>/projects/steamwishlistscraper/</link><pubDate>Wed, 29 May 2019 00:00:00 +0000</pubDate><guid>/projects/steamwishlistscraper/</guid><description>About project Scrape your steam wishlist in text format
 Install Download the latest binary from releases
-Docs https://github.com/mpostument/SteamWishlistScraper/blob/master/README.MD</description></item></channel></rss>
+Docs https://github.com/mpostument/SteamWishlistScraper/blob/master/README.MD</description><content>&lt;h2 id="about-project">About project&lt;/h2>
+&lt;p>Scrape your steam wishlist in text format&lt;/p>
+&lt;h2 id="install">Install&lt;/h2>
+&lt;p>Download the latest binary from &lt;a href="https://github.com/mpostument/SteamWishlistScraper/releases">releases&lt;/a>&lt;/p>
+&lt;h2 id="docs">Docs&lt;/h2>
+&lt;p>&lt;a href="https://github.com/mpostument/SteamWishlistScraper/blob/master/README.MD">https://github.com/mpostument/SteamWishlistScraper/blob/master/README.MD&lt;/a>&lt;/p></content></item></channel></rss>
