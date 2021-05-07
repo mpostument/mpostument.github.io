@@ -80,14 +80,14 @@ Your random number &lt;span style="color:#66d9ef">is&lt;/span> @RandomData.GetRa
 {
 &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">WeatherForecastService&lt;/span>
 {
-&lt;span style="color:#66d9ef">private&lt;/span> IRandomData _randomData;
+&lt;span style="color:#66d9ef">private&lt;/span> IRandomData &lt;span style="color:#ae81ff">_&lt;/span>randomData;
 &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">readonly&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>[] Summaries = &lt;span style="color:#66d9ef">new&lt;/span>[]
 {
 &lt;span style="color:#e6db74">&amp;#34;Freezing&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Bracing&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Chilly&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Cool&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Mild&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Warm&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Balmy&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Hot&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Sweltering&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Scorching&amp;#34;&lt;/span>
 };
 &lt;span style="color:#66d9ef">public&lt;/span> WeatherForecastService(IRandomData randomData)
 {
-_randomData = randomData;
+&lt;span style="color:#ae81ff">_&lt;/span>randomData = randomData;
 }
 &lt;span style="color:#66d9ef">public&lt;/span> Task&amp;lt;WeatherForecast[]&amp;gt; GetForecastAsync(DateTime startDate)
 {
@@ -95,7 +95,7 @@ _randomData = randomData;
 &lt;span style="color:#66d9ef">return&lt;/span> Task.FromResult(Enumerable.Range(&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">5&lt;/span>).Select(index =&amp;gt; &lt;span style="color:#66d9ef">new&lt;/span> WeatherForecast
 {
 Date = startDate.AddDays(index),
-TemperatureC = _randomData.GetRandomData(),
+TemperatureC = &lt;span style="color:#ae81ff">_&lt;/span>randomData.GetRandomData(),
 Summary = Summaries[rng.Next(Summaries.Length)]
 }).ToArray());
 }

@@ -59,7 +59,7 @@ Your random number <span style=color:#66d9ef>is</span> @RandomData.GetRandomData
 {
     <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>WeatherForecastService</span>
     {
-        <span style=color:#66d9ef>private</span> IRandomData _randomData;
+        <span style=color:#66d9ef>private</span> IRandomData <span style=color:#ae81ff>_</span>randomData;
 
         <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>readonly</span> <span style=color:#66d9ef>string</span>[] Summaries = <span style=color:#66d9ef>new</span>[]
         {
@@ -68,7 +68,7 @@ Your random number <span style=color:#66d9ef>is</span> @RandomData.GetRandomData
 
         <span style=color:#66d9ef>public</span> WeatherForecastService(IRandomData randomData)
         {
-            _randomData = randomData;
+            <span style=color:#ae81ff>_</span>randomData = randomData;
         }
 
         <span style=color:#66d9ef>public</span> Task&lt;WeatherForecast[]&gt; GetForecastAsync(DateTime startDate)
@@ -77,7 +77,7 @@ Your random number <span style=color:#66d9ef>is</span> @RandomData.GetRandomData
             <span style=color:#66d9ef>return</span> Task.FromResult(Enumerable.Range(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>5</span>).Select(index =&gt; <span style=color:#66d9ef>new</span> WeatherForecast
             {
                 Date = startDate.AddDays(index),
-                TemperatureC = _randomData.GetRandomData(),
+                TemperatureC = <span style=color:#ae81ff>_</span>randomData.GetRandomData(),
                 Summary = Summaries[rng.Next(Summaries.Length)]
             }).ToArray());
         }

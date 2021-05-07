@@ -63,7 +63,7 @@
 {
     <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>WeatherForecastService</span>
     {
-        <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>readonly</span> ILogger&lt;WeatherForecastService&gt; _logger;
+        <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>readonly</span> ILogger&lt;WeatherForecastService&gt; <span style=color:#ae81ff>_l</span>ogger;
         <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>readonly</span> <span style=color:#66d9ef>string</span>[] Summaries = <span style=color:#66d9ef>new</span>[]
         {
             <span style=color:#e6db74>&#34;Freezing&#34;</span>, <span style=color:#e6db74>&#34;Bracing&#34;</span>, <span style=color:#e6db74>&#34;Chilly&#34;</span>, <span style=color:#e6db74>&#34;Cool&#34;</span>, <span style=color:#e6db74>&#34;Mild&#34;</span>, <span style=color:#e6db74>&#34;Warm&#34;</span>, <span style=color:#e6db74>&#34;Balmy&#34;</span>, <span style=color:#e6db74>&#34;Hot&#34;</span>, <span style=color:#e6db74>&#34;Sweltering&#34;</span>, <span style=color:#e6db74>&#34;Scorching&#34;</span>
@@ -71,12 +71,12 @@
 
         <span style=color:#66d9ef>public</span> WeatherForecastService(ILogger&lt;WeatherForecastService&gt; logger)
         {
-            _logger = logger;
+            <span style=color:#ae81ff>_l</span>ogger = logger;
         }
 
         <span style=color:#66d9ef>public</span> Task&lt;WeatherForecast[]&gt; GetForecastAsync(DateTime startDate)
         {
-            _logger.LogInformation(<span style=color:#e6db74>&#34;WeatherForecastService called&#34;</span>);
+            <span style=color:#ae81ff>_l</span>ogger.LogInformation(<span style=color:#e6db74>&#34;WeatherForecastService called&#34;</span>);
             <span style=color:#66d9ef>var</span> rng = <span style=color:#66d9ef>new</span> Random();
             <span style=color:#66d9ef>return</span> Task.FromResult(Enumerable.Range(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>5</span>).Select(index =&gt; <span style=color:#66d9ef>new</span> WeatherForecast
             {
