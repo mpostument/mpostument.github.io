@@ -7,7 +7,7 @@
 Для початку створимо новий проект в якому включемо автентифікацію.&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/AlAyKDU.png" alt="Auth">&lt;/p>
 &lt;p>В проекті з автентифікацією присутні декілька додаткових файлів, які відповідають за автентифікацію. Також в конфігураційному файлі буде добавлено connection string до бази даних.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json"> &lt;span style="color:#e6db74">&amp;#34;ConnectionStrings&amp;#34;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">:&lt;/span> {
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json"> &lt;span style="color:#e6db74">&amp;#34;ConnectionStrings&amp;#34;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">:&lt;/span> {
 &lt;span style="color:#f92672">&amp;#34;DefaultConnection&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Server=(localdb)\\mssqllocaldb;Database=aspnet-BlazorAuth-BD4B8646-B1A3-438C-8FFC-8C3A29438C24;Trusted_Connection=True;MultipleActiveResultSets=true&amp;#34;&lt;/span>
 }&lt;span style="color:#960050;background-color:#1e0010">,&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>В package management консолі потрібно запустити команду &lt;code>Update-Database&lt;/code> для того щоб створити базу даних та потрібні таблиці.&lt;/p>
@@ -17,17 +17,17 @@
 &lt;p>Тепер можна добавити ролі для того щоб обмежувати доступ до певних сторінок в залежності від ролі.&lt;/p>
 &lt;h2 id="autorization">Autorization&lt;/h2>
 &lt;p>Підтримку ролей потрібно добавити в &lt;code>Startup.cs&lt;/code> в методі &lt;code>ConfigureService&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> services.AddDefaultIdentity&amp;lt;IdentityUser&amp;gt;(options =&amp;gt; options.SignIn.RequireConfirmedAccount = &lt;span style="color:#66d9ef">true&lt;/span>)
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> services.AddDefaultIdentity&amp;lt;IdentityUser&amp;gt;(options =&amp;gt; options.SignIn.RequireConfirmedAccount = &lt;span style="color:#66d9ef">true&lt;/span>)
 .AddRoles&amp;lt;IdentityRole&amp;gt;()
 .AddEntityFrameworkStores&amp;lt;ApplicationDbContext&amp;gt;();
 &lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="generate-roles">Generate Roles&lt;/h2>
 &lt;p>Добавлю новий razor компонент в папку &lt;code>Pages&lt;/code>. При переходні на цю сторінку буду створюватись базові ролі, вона буде доступна за шляхом &lt;code>/addroles&lt;/code>. Також потрібно за допомогою DI взяти декілька обєктів.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/addroles&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/addroles&amp;#34;&lt;/span>
 @using Microsoft.AspNetCore.Identity
 @inject RoleManager&amp;lt;IdentityRole&amp;gt; RoleManager
 @inject UserManager&amp;lt;IdentityUser&amp;gt; UserManager
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Створювати ролі буду за допомогою &lt;code>RoleManager&lt;/code>. Для початку створити список в якому будуть всі потрібні ролі. Далі іду циклом по усіх ролях, якщо роль існує то нічого не відбудеться. Якщо ж ні то нова роль буде створена.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task GenerateRoles()
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task GenerateRoles()
 {
 &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> adminRole = &lt;span style="color:#e6db74">&amp;#34;Administrator&amp;#34;&lt;/span>;
 &lt;span style="color:#66d9ef">string&lt;/span>[] roles = { AdminRole };
@@ -42,9 +42,9 @@
 }
 &lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="create-admin">Create admin&lt;/h2>
 &lt;p>Наступним кроком потрібно додати користувачів до ролей. В &lt;code>appsettings.json&lt;/code> я добавлю параметр який буде містити email дефолтного адміна.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">&lt;span style="color:#e6db74">&amp;#34;AdminUser&amp;#34;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">:&lt;/span> &lt;span style="color:#e6db74">&amp;#34;777rip777@gmail.com&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">&lt;span style="color:#e6db74">&amp;#34;AdminUser&amp;#34;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">:&lt;/span> &lt;span style="color:#e6db74">&amp;#34;777rip777@gmail.com&amp;#34;&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Повернусь назад до &lt;code>addroles&lt;/code> сторінки і створю новий метод. Перевіряю чи користувач з емейлом з конфігураційног файлу існує, якщо так то добавляю його в групу &lt;code>Administrator&lt;/code>. Для того щоб можна було прочитати дані з конфігураційного файлу потрібо отримати об&amp;rsquo;єкт типу &lt;code>IConfiguration&lt;/code>. Вверху сторінки добавити &lt;code>@using Microsoft.Extensions.Configuration&lt;/code> i &lt;code>@inject IConfiguration config&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task AddAdmin()
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task AddAdmin()
 {
 &lt;span style="color:#66d9ef">var&lt;/span> user = &lt;span style="color:#66d9ef">await&lt;/span> UserManager.FindByEmailAsync(config.GetValue&amp;lt;&lt;span style="color:#66d9ef">string&lt;/span>&amp;gt;(&lt;span style="color:#e6db74">&amp;#34;AdminUser&amp;#34;&lt;/span>));
 &lt;span style="color:#66d9ef">if&lt;/span> (user != &lt;span style="color:#66d9ef">null&lt;/span>)
@@ -54,7 +54,7 @@
 }
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Для того щоб ці методи викликались при відкриті сторінки потрібно викликати їх в методі &lt;code>OnParametersSetAsync&lt;/code>.&lt;/p>
 &lt;p>Повний код &lt;code>addroles&lt;/code> сторінки&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/addroles&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/addroles&amp;#34;&lt;/span>
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.Extensions.Configuration
 @inject RoleManager&amp;lt;IdentityRole&amp;gt; RoleManager
@@ -93,7 +93,7 @@
 &lt;p>Тепер коли в нас є ролі можна обмежити доступ до сторінок. Для сторінки &lt;code>FetchData&lt;/code> я добавлю &lt;code>@attribute [Authorize]&lt;/code>. Це дасть доступ до сторінки тільки авторизованим користувачам. А для сторінки &lt;code>Counter&lt;/code> я вкажу &lt;code>@attribute [Authorize(Roles = &amp;quot;Administrator&amp;quot;)]&lt;/code> це дасть доступ до сторінки тільки користувачам з ролю адміністратор.&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/KkE10dm.gif" alt="RolesDemo">&lt;/p>
 &lt;p>Замінити Not Autorized помилку можна в &lt;code>App.razor&lt;/code> в &lt;code>NotAutorized&lt;/code> секції.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;CascadingAuthenticationState&amp;gt;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;CascadingAuthenticationState&amp;gt;
 &amp;lt;Router AppAssembly=&lt;span style="color:#e6db74">&amp;#34;@typeof(Program).Assembly&amp;#34;&lt;/span>&amp;gt;
 &amp;lt;Found Context=&lt;span style="color:#e6db74">&amp;#34;routeData&amp;#34;&lt;/span>&amp;gt;
 &amp;lt;AuthorizeRouteView RouteData=&lt;span style="color:#e6db74">&amp;#34;@routeData&amp;#34;&lt;/span> DefaultLayout=&lt;span style="color:#e6db74">&amp;#34;@typeof(MainLayout)&amp;#34;&lt;/span>&amp;gt;
@@ -112,7 +112,7 @@
 &amp;lt;/CascadingAuthenticationState&amp;gt;
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/wULUE6F.png" alt="AuthError">&lt;/p>
 &lt;p>Також можна повністю сховати елемент сайту для не зареєстрованих користувачів. В &lt;code>NavMenu.razor&lt;/code> я добавлю елементи меню в &lt;code>&amp;lt;AuthorizeView&amp;gt;&amp;lt;/AuthorizeView&amp;gt;&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;div class=&lt;span style="color:#e6db74">&amp;#34;top-row pl-4 navbar navbar-dark&amp;#34;&lt;/span>&amp;gt;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;div class=&lt;span style="color:#e6db74">&amp;#34;top-row pl-4 navbar navbar-dark&amp;#34;&lt;/span>&amp;gt;
 &amp;lt;a class=&lt;span style="color:#e6db74">&amp;#34;navbar-brand&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>&amp;gt;BlazorAuth&amp;lt;/a&amp;gt;
 &amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;navbar-toggler&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;ToggleNavMenu&amp;#34;&lt;/span>&amp;gt;
 &amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;navbar-toggler-icon&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt;
@@ -151,7 +151,7 @@ collapseNavMenu = !collapseNavMenu;
 }
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер &lt;code>counter&lt;/code> в меню будуть бачити тільки користувачі з ролю &lt;code>Administrator&lt;/code> а &lt;code>fetchdata&lt;/code> буде доступна зареєстрованим користувачам.&lt;/p>
 &lt;p>В &lt;code>index&lt;/code> сторінку добавлю повідомлення користувачам щоб залогувались.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/&amp;#34;&lt;/span>
 &amp;lt;AuthorizeView&amp;gt;
 &amp;lt;Authorized&amp;gt;
 &amp;lt;h1&amp;gt;Thank you &lt;span style="color:#66d9ef">for&lt;/span> logging &lt;span style="color:#66d9ef">in&lt;/span>&amp;lt;/h1&amp;gt;

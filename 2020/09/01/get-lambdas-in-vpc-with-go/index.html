@@ -1,23 +1,123 @@
-<!doctype html><html lang=en><head><title>Get Lambdas in Vpc With Go :: mpostument.com</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Get all your lambda in VPC with golang"><meta name=keywords content="Golang,AWS,Devops"><meta name=robots content="noodp"><link rel=canonical href=/2020/09/01/get-lambdas-in-vpc-with-go/><script async src="https://www.googletagmanager.com/gtag/js?id=G-SBRJXS94DC"></script><script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-SBRJXS94DC',{anonymize_ip:!1})}</script><link rel=stylesheet href=/assets/style.css><link rel=stylesheet href=/assets/blue.css><link rel=apple-touch-icon href=/img/apple-touch-icon-192x192.png><link rel="shortcut icon" href=/img/favicon/blue.png><meta name=twitter:card content="summary"><meta name=twitter:site content="mpostument.com"><meta name=twitter:creator content="Maks_Postument"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="Get Lambdas in Vpc With Go"><meta property="og:description" content="Get all your lambda in VPC with golang"><meta property="og:url" content="/2020/09/01/get-lambdas-in-vpc-with-go/"><meta property="og:site_name" content="mpostument.com"><meta property="og:image" content="https://i.imgur.com/buHP8rF.png"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:section" content="Devops"><meta property="article:section" content="Golang"><meta property="article:published_time" content="2020-09-01 17:40:16 +0300 +0300"><p align=center style=background-color:#23b0ff>Sign up for my <a href=https://tinyletter.com/mpostument>email newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of new blog posts.</p></head><body class=blue><div class="container center headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/><div class=logo>mpostument.com</div></a></div><div class=menu-trigger>menu</div></div><nav class=menu><ul class="menu__inner menu__inner--desktop"><li><a href=/>Home</a></li><li><a href=/categories/>Categories</a></li><li><a href=/tags/>Tags</a></li><li><a href=/projects/>Projects</a></li><div class=spacer></div><ul class=language-selector><ul class=language-selector-current><li>English ▾</li></ul><ul class="language-selector__more hidden"><li><a href=/>English</a></li><li><a href=/ua/>Ukraine</a></li></ul></ul></ul><ul class="menu__inner menu__inner--mobile"><li><a href=/>Home</a></li><li><a href=/categories/>Categories</a></li><li><a href=/tags/>Tags</a></li><li><a href=/projects/>Projects</a></li><hr><li><a href=/>English</a></li><li><a href=/ua/>Ukraine</a></li></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=/2020/09/01/get-lambdas-in-vpc-with-go/>Get Lambdas in Vpc With Go</a></h1><div class=post-meta><span class=post-date>2020-09-01</span>
-<span class=post-author>:: Maksym Postument</span></div><span class=post-tags>#<a href=/tags/aws/>AWS</a>&nbsp;
+<!doctype html><html lang=en>
+<head>
+<title>Get Lambdas in Vpc With Go :: mpostument.com</title>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Get all your lambda in VPC with golang">
+<meta name=keywords content="Golang,AWS,Devops">
+<meta name=robots content="noodp">
+<link rel=canonical href=/2020/09/01/get-lambdas-in-vpc-with-go/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBRJXS94DC"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-SBRJXS94DC',{anonymize_ip:!1})}</script>
+<link rel=stylesheet href=/assets/style.css>
+<link rel=stylesheet href=/assets/blue.css>
+<link rel=apple-touch-icon href=/img/apple-touch-icon-192x192.png>
+<link rel="shortcut icon" href=/img/favicon/blue.png>
+<meta name=twitter:card content="summary">
+<meta name=twitter:site content="mpostument.com">
+<meta name=twitter:creator content="Maks_Postument">
+<meta property="og:locale" content="en">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Get Lambdas in Vpc With Go">
+<meta property="og:description" content="Get all your lambda in VPC with golang">
+<meta property="og:url" content="/2020/09/01/get-lambdas-in-vpc-with-go/">
+<meta property="og:site_name" content="mpostument.com">
+<meta property="og:image" content="https://i.imgur.com/buHP8rF.png">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+<meta property="article:section" content="Devops">
+<meta property="article:section" content="Golang">
+<meta property="article:published_time" content="2020-09-01 17:40:16 +0300 +0300">
+<p align=center style=background-color:#23b0ff> Sign up for my <a href=https://tinyletter.com/mpostument>email newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of new blog posts.</p>
+</head>
+<body class=blue>
+<div class="container center headings--one-size">
+<header class=header>
+<div class=header__inner>
+<div class=header__logo>
+<a href=/>
+<div class=logo>
+mpostument.com
+</div>
+</a>
+</div>
+<div class=menu-trigger>menu</div>
+</div>
+<nav class=menu>
+<ul class="menu__inner menu__inner--desktop">
+<li><a href=/>Home</a></li>
+<li><a href=/categories/>Categories</a></li>
+<li><a href=/tags/>Tags</a></li>
+<li><a href=/projects/>Projects</a></li>
+<div class=spacer></div>
+<ul class=language-selector>
+<ul class=language-selector-current>
+<li>English ▾</li>
+</ul>
+<ul class="language-selector__more hidden">
+<li><a href=/>English</a></li>
+<li><a href=/ua/>Ukraine</a></li>
+</ul>
+</ul>
+</ul>
+<ul class="menu__inner menu__inner--mobile">
+<li><a href=/>Home</a></li>
+<li><a href=/categories/>Categories</a></li>
+<li><a href=/tags/>Tags</a></li>
+<li><a href=/projects/>Projects</a></li>
+<hr>
+<li>
+<a href=/>English</a>
+</li>
+<li>
+<a href=/ua/>Ukraine</a>
+</li>
+</ul>
+</nav>
+</header>
+<div class=content>
+<div class=post>
+<h1 class=post-title>
+<a href=/2020/09/01/get-lambdas-in-vpc-with-go/>Get Lambdas in Vpc With Go</a></h1>
+<div class=post-meta>
+<span class=post-date>
+2020-09-01
+</span>
+<span class=post-author>:: Maksym Postument</span>
+</div>
+<span class=post-tags>
+#<a href=/tags/aws/>AWS</a>&nbsp;
 #<a href=/tags/go/>Go</a>&nbsp;
-#<a href=/tags/devops/>Devops</a>&nbsp;</span>
-<img src=https://i.imgur.com/buHP8rF.png class=post-cover alt="Get Lambdas in Vpc With Go"><div class=post-content><div><p>Hi there!</p><p>Today I want to tell you how with go you can get a list of all AWS Lambda that are in the VPC.
-First you need to install golang. The latest version can be downloaded from the official <a href=https://golang.org/dl/>website</a>.</p><p>Once golang is installed, create a folder for the scripts
-<code>mkdir awsscripts</code></p><p>Next you need to initialize the go.mod file. This file stores all the dependencies on external packages, and at the same time will make the go code module. And in the future it can be installed with <code>go get</code>. To create a module you need to call the command <code>go mod init github.com/mpostument/awsscripts</code>. Where github&mldr; is the name of the module. If you use another version control system, it could be it, then the user name and module name.</p><p>Once the module is created we will need aws-sdk to work with aws. You can install it with the command <code>go get github.com/aws/aws-sdk-go@latest</code>. Run it in the directory with go.mod. After that in go mod the version aws-sdk will be added <code>require github.com/aws/aws-sdk-go v1.34.14</code>. In the future, to update the version of aws-sdk. Manually change the version in this file and run <code>go mod tidy</code>.</p><p>The setting is complete and you can go to the code.
-Create a <code>lambdaInVpc.go</code> file in the root of the <code>awsscripts</code> folder or in any other folder inside of the <code>awsscripts</code> and open it.</p><p>Each go file starts with <code>package</code>. Since we need to run the go file directly instead of importing <code>package</code> should be <code>main</code>.</p><p>You also need to add a list of third-party modules that we will use</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>import</span> (
+#<a href=/tags/devops/>Devops</a>&nbsp;
+</span>
+<img src=https://i.imgur.com/buHP8rF.png class=post-cover alt="Get Lambdas in Vpc With Go">
+<div class=post-content><div>
+<p>Hi there!</p>
+<p>Today I want to tell you how with go you can get a list of all AWS Lambda that are in the VPC.
+First you need to install golang. The latest version can be downloaded from the official <a href=https://golang.org/dl/>website</a>.</p>
+<p>Once golang is installed, create a folder for the scripts
+<code>mkdir awsscripts</code></p>
+<p>Next you need to initialize the go.mod file. This file stores all the dependencies on external packages, and at the same time will make the go code module. And in the future it can be installed with <code>go get</code>. To create a module you need to call the command <code>go mod init github.com/mpostument/awsscripts</code>. Where github&mldr; is the name of the module. If you use another version control system, it could be it, then the user name and module name.</p>
+<p>Once the module is created we will need aws-sdk to work with aws. You can install it with the command <code>go get github.com/aws/aws-sdk-go@latest</code>. Run it in the directory with go.mod. After that in go mod the version aws-sdk will be added <code>require github.com/aws/aws-sdk-go v1.34.14</code>. In the future, to update the version of aws-sdk. Manually change the version in this file and run <code>go mod tidy</code>.</p>
+<p>The setting is complete and you can go to the code.
+Create a <code>lambdaInVpc.go</code> file in the root of the <code>awsscripts</code> folder or in any other folder inside of the <code>awsscripts</code> and open it.</p>
+<p>Each go file starts with <code>package</code>. Since we need to run the go file directly instead of importing <code>package</code> should be <code>main</code>.</p>
+<p>You also need to add a list of third-party modules that we will use</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>import</span> (
 	<span style=color:#e6db74>&#34;fmt&#34;</span>
 	<span style=color:#e6db74>&#34;log&#34;</span>
 
 	<span style=color:#e6db74>&#34;github.com/aws/aws-sdk-go/aws/session&#34;</span>
 	<span style=color:#e6db74>&#34;github.com/aws/aws-sdk-go/service/lambda&#34;</span>
 )
-</code></pre></div><p>The list of imports is followed by the <code>main</code> method, which is the entry point into the code. In <code>main</code> we will create an aws client.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</code></pre></div><p>The list of imports is followed by the <code>main</code> method, which is the entry point into the code. In <code>main</code> we will create an aws client.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
     <span style=color:#a6e22e>mySession</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>session</span>.<span style=color:#a6e22e>Must</span>(<span style=color:#a6e22e>session</span>.<span style=color:#a6e22e>NewSession</span>())
     <span style=color:#a6e22e>client</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>lambda</span>.<span style=color:#a6e22e>New</span>(<span style=color:#a6e22e>mySession</span>)
     <span style=color:#a6e22e>lambdas</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>getLambdaFunctions</span>(<span style=color:#a6e22e>client</span>)
 }
-</code></pre></div><p>This creates an aws session and a lambda client, and method <code>getLambdaFunctions</code> executed. As parameter it take newly created client. Now let&rsquo;s start writing <code>getLambdaFunctions</code>.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>getLambdaFunctions</span>(<span style=color:#a6e22e>client</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>lambda</span>.<span style=color:#a6e22e>Lambda</span>) []<span style=color:#f92672>*</span><span style=color:#a6e22e>lambda</span>.<span style=color:#a6e22e>FunctionConfiguration</span> {
+</code></pre></div><p>This creates an aws session and a lambda client, and method <code>getLambdaFunctions</code> executed. As parameter it take newly created client. Now let&rsquo;s start writing <code>getLambdaFunctions</code>.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>getLambdaFunctions</span>(<span style=color:#a6e22e>client</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>lambda</span>.<span style=color:#a6e22e>Lambda</span>) []<span style=color:#f92672>*</span><span style=color:#a6e22e>lambda</span>.<span style=color:#a6e22e>FunctionConfiguration</span> {
 	<span style=color:#a6e22e>input</span> <span style=color:#f92672>:=</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>lambda</span>.<span style=color:#a6e22e>ListFunctionsInput</span>{}
 
 	<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>result</span> []<span style=color:#f92672>*</span><span style=color:#a6e22e>lambda</span>.<span style=color:#a6e22e>FunctionConfiguration</span>
@@ -33,12 +133,18 @@ Create a <code>lambdaInVpc.go</code> file in the root of the <code>awsscripts</c
 	}
 	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>result</span>
 }
-</code></pre></div><p>Now let&rsquo;s look at what&rsquo;s going on here. To get the list of lambdas it is necessary to call method <code>ListFunctions</code>. But since this method returns only the first 50 lambdas, it does not suit us. Because if there are 51 or more lambdas on aws, the account will still return only the first 50. But aws has a method with pagination <code>ListFunctionsPages</code>, and it can be used here. The method takes two parameters, the first search parameter <code>ListFunctionsInput</code> in which you can specify the region, version and several other parameters. And the second is the method of pagination.</p><p>In the beginning we create two variables <code>input</code> of type <code>ListFunctionsInput</code> and <code>result</code> of type<code>[]*lambda.FunctionConfiguration</code>. <code>Input</code> will be passed to the <code>ListFunctionsPages</code> function and <code>result</code> will be used to store the execution result.</p><p>Then comes the call of <code>ListFunctionsPages</code>. This method returns only an error, the result of this method is assigned to the variable err and then there is a check whether this varialbe is not equal to <code>nil</code>. If the method returned <code>nil</code> then the program is terminated and the error is displayed.</p><p>In the function <code>ListFunctionsPages</code> there is a call of one more function which adds result of execution in a slice <code>result</code>. The internal function is called several times until we reach the last page. And in the end we return <code>result</code>.</p><p>Now that you have received a list of all lambdas, you need to filter out those in the VPC. For this purpose we will return again to the main method and to add there iterations on all lambdas with a condition.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>l</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>lambdas</span> {
+</code></pre></div><p>Now let&rsquo;s look at what&rsquo;s going on here. To get the list of lambdas it is necessary to call method <code>ListFunctions</code>. But since this method returns only the first 50 lambdas, it does not suit us. Because if there are 51 or more lambdas on aws, the account will still return only the first 50. But aws has a method with pagination <code>ListFunctionsPages</code>, and it can be used here. The method takes two parameters, the first search parameter <code>ListFunctionsInput</code> in which you can specify the region, version and several other parameters. And the second is the method of pagination.</p>
+<p>In the beginning we create two variables <code>input</code> of type <code>ListFunctionsInput</code> and <code>result</code> of type<code>[]*lambda.FunctionConfiguration</code>. <code>Input</code> will be passed to the <code>ListFunctionsPages</code> function and <code>result</code> will be used to store the execution result.</p>
+<p>Then comes the call of <code>ListFunctionsPages</code>. This method returns only an error, the result of this method is assigned to the variable err and then there is a check whether this varialbe is not equal to <code>nil</code>. If the method returned <code>nil</code> then the program is terminated and the error is displayed.</p>
+<p>In the function <code>ListFunctionsPages</code> there is a call of one more function which adds result of execution in a slice <code>result</code>. The internal function is called several times until we reach the last page. And in the end we return <code>result</code>.</p>
+<p>Now that you have received a list of all lambdas, you need to filter out those in the VPC. For this purpose we will return again to the main method and to add there iterations on all lambdas with a condition.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>l</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>lambdas</span> {
 		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>l</span>.<span style=color:#a6e22e>VpcConfig</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> <span style=color:#f92672>&amp;&amp;</span> len(<span style=color:#a6e22e>l</span>.<span style=color:#a6e22e>VpcConfig</span>.<span style=color:#a6e22e>SubnetIds</span>) &gt; <span style=color:#ae81ff>0</span> {
 			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#f92672>*</span><span style=color:#a6e22e>l</span>.<span style=color:#a6e22e>FunctionName</span>)
 		}
     }
-</code></pre></div><p>Here we iterate on result of execution of <code>getLambdaFunctions</code> and we will check up whether <code>VpcConfig</code> of function is not equal <code>nil</code> and whether the list of subnet is more than zero. Two checks are necessary because for some lambdas <code>VpcConfig</code> will be nil, and for others there will be a map in which there will be empty lists. Example</p><pre><code>&lt;nil&gt;
+</code></pre></div><p>Here we iterate on result of execution of <code>getLambdaFunctions</code> and we will check up whether <code>VpcConfig</code> of function is not equal <code>nil</code> and whether the list of subnet is more than zero. Two checks are necessary because for some lambdas <code>VpcConfig</code> will be nil, and for others there will be a map in which there will be empty lists. Example</p>
+<pre><code>&lt;nil&gt;
 &lt;nil&gt;
 {
   SecurityGroupIds: [],
@@ -46,8 +152,46 @@ Create a <code>lambdaInVpc.go</code> file in the root of the <code>awsscripts</c
   VpcId: &quot;&quot;
 }
 &lt;nil&gt;
-</code></pre><p>Now you can run the code and get the result.<br><code>go run lambdaInVpc.go</code></p></div></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button previous"><a href=/2020/09/16/deploy-to-ec2-with-codeship/><span class=button__icon>←</span>
-<span class=button__text>Deploy to ec2 with codedship</span></a></span>
-<span class="button next"><a href=/2020/08/31/build-dotnet-core-with-travis/><span class=button__text>Build Dotnet Core With Travis</span>
-<span class=button__icon>→</span></a></span></div></div><div id=disqus_thread></div><script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//mpostument-com.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2021 Powered by <a href=http://gohugo.io>Hugo</a></span>
-<span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span></div></div></footer><script src=/assets/main.js></script><script src=/assets/prism.js></script><script src=/assets/languageSelector.js></script></div></body></html>
+</code></pre><p>Now you can run the code and get the result.<br>
+<code>go run lambdaInVpc.go</code></p>
+</div></div>
+<div class=pagination>
+<div class=pagination__title>
+<span class=pagination__title-h>Read other posts</span>
+<hr>
+</div>
+<div class=pagination__buttons>
+<span class="button previous">
+<a href=/2020/09/16/deploy-to-ec2-with-codeship/>
+<span class=button__icon>←</span>
+<span class=button__text>Deploy to ec2 with codedship</span>
+</a>
+</span>
+<span class="button next">
+<a href=/2020/08/31/build-dotnet-core-with-travis/>
+<span class=button__text>Build Dotnet Core With Travis</span>
+<span class=button__icon>→</span>
+</a>
+</span>
+</div>
+</div>
+<div id=disqus_thread></div>
+<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//mpostument-com.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
+<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
+<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
+</div>
+</div>
+<footer class=footer>
+<div class=footer__inner>
+<div class=copyright>
+<span>© 2021 Powered by <a href=http://gohugo.io>Hugo</a></span>
+<span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span>
+</div>
+</div>
+</footer>
+<script src=/assets/main.js></script>
+<script src=/assets/prism.js></script>
+<script src=/assets/languageSelector.js></script>
+</div>
+</body>
+</html>

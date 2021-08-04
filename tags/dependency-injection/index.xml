@@ -5,7 +5,7 @@ public void ConfigureServices(IServiceCollection services) { services.AddRazorPa
 &lt;p>Today we will talk about how dependency injection works in blazor server.
 If you are familiar with dependency injection in asp.net core then there are no differences.&lt;/p>
 &lt;p>Dependency injection is configured in &lt;code>Startup.cs&lt;/code> at the root of the project. After creating the project, it will look like this&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> ConfigureServices(IServiceCollection services)
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> ConfigureServices(IServiceCollection services)
 {
 services.AddRazorPages();
 services.AddServerSideBlazor();
@@ -18,7 +18,7 @@ services.AddSingleton&amp;lt;WeatherForecastService&amp;gt;();
 &lt;p>&lt;code>WeatherForecastService&lt;/code> in the example is added as &lt;code>Singleton&lt;/code>. Other ways to add is &lt;code>Scoped&lt;/code> and &lt;code>Transient&lt;/code>. We will look at them in more detail below.&lt;/p>
 &lt;p>Let&amp;rsquo;s try to add a new class in DI and check how it works with different types (Singleton, Scoped, Transient).&lt;/p>
 &lt;p>To do this, in the &lt;code>Data&lt;/code> folder, create a file that will generate a random number.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> System;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> System;
 &lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Data
 {
 &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">RandomData&lt;/span>
@@ -36,7 +36,7 @@ randomData = random.Next();
 }
 }
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>In the &lt;code>RandomData&lt;/code> class, a random number is generated in the constructor. And the &lt;code>GetRandomData&lt;/code> method returns it. In order to use a class in DI you need to create an interface. You can use it without interface. But thanks to the interface, you can easily replace this class with another implementation. This is how interface will look like.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Data
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Data
 {
 &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">interface&lt;/span> IRandomData
 {
@@ -45,10 +45,10 @@ randomData = random.Next();
 }
 &lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="singleton">Singleton&lt;/h2>
 &lt;p>The class can now be registered in DI. Let&amp;rsquo;s start with Singleton. To do this in the &lt;code>Startup.cs&lt;/code> file in the method &lt;code>ConfigureServices&lt;/code> you need to add:&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">services.AddSingleton&amp;lt;IRandomData, RandomData&amp;gt;();
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">services.AddSingleton&amp;lt;IRandomData, RandomData&amp;gt;();
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Now every time someone uses the &lt;code>IRandomData&lt;/code> interface, &lt;code>RandomData&lt;/code> will be called.
 Now in &lt;code>index.razor&lt;/code> I will call the &lt;code>GetRandomNumber&lt;/code> method.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/&amp;#34;&lt;/span>
 @using BlazorLearn.Data
 @inject IRandomData RandomData
 &amp;lt;h1&amp;gt;Hello, world!&amp;lt;/h1&amp;gt;
@@ -61,18 +61,18 @@ Your random number &lt;span style="color:#66d9ef">is&lt;/span> @RandomData.GetRa
 &lt;p>If I open the application in another browser or refresh page the random number will remain the same. This is how singleton works. The object is created once at the start of the application.&lt;/p>
 &lt;h2 id="scoped">Scoped&lt;/h2>
 &lt;p>Let&amp;rsquo;s see now how scoped works. Replace &lt;code>AddSingleton&lt;/code> with &lt;code>AddScoped&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">services.AddScoped&amp;lt;IRandomData, RandomData&amp;gt;();
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">services.AddScoped&amp;lt;IRandomData, RandomData&amp;gt;();
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>And run the application. Now if I go to another page of the site and then go back the number will remain the same. But if I refresh the page, the number will change. Scoped objects are created once for each query.&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/kYOcBXY.gif" alt="Scoped">&lt;/p>
 &lt;h2 id="transient">Transient&lt;/h2>
 &lt;p>And the last type is &lt;code>Transient&lt;/code>. Now replace &lt;code>AddScoped&lt;/code> with &lt;code>AddTransient&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">services.AddTransient&amp;lt;IRandomData, RandomData&amp;gt;();
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">services.AddTransient&amp;lt;IRandomData, RandomData&amp;gt;();
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Let&amp;rsquo;s run application. And now even if you switch from one tab to another the number changes every time.&lt;br>
 &lt;img src="https://i.imgur.com/ipleQaj.gif" alt="Transient">&lt;/p>
 &lt;h2 id="di-in-class">DI in Class&lt;/h2>
 &lt;p>Finally, let&amp;rsquo;s see how you can use the &lt;code>RandomData&lt;/code> class in another class with DI.
 For example, take &lt;code>Data/WeatherForecastService.cs&lt;/code>. In this class you need to make a variable of type &lt;code>IRandomData&lt;/code> and initialize it in the constructor. And now it can be used anywhere in this class.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> System;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> System;
 &lt;span style="color:#66d9ef">using&lt;/span> System.Linq;
 &lt;span style="color:#66d9ef">using&lt;/span> System.Threading.Tasks;
 &lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Data
@@ -103,6 +103,6 @@ Summary = Summaries[rng.Next(Summaries.Length)]
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>_randomData.GetRandomData()&lt;/code> result I will write in variable &lt;code>TemperatureC&lt;/code>.Start application again. And on the &lt;code>FetchData&lt;/code> page, the temperature will be generated using &lt;code>GetRandomData&lt;/code>.&lt;br>
 &lt;img src="https://i.imgur.com/1Z4KBZm.png" alt="RandomData">&lt;/p>
 &lt;p>It is important that DI &lt;code>WeatherForecastService&lt;/code> and &lt;code>RandomData&lt;/code> are added equally.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> services.AddScoped&amp;lt;WeatherForecastService&amp;gt;();
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> services.AddScoped&amp;lt;WeatherForecastService&amp;gt;();
 services.AddScoped&amp;lt;IRandomData, RandomData&amp;gt;();
 &lt;/code>&lt;/pre>&lt;/div></content></item></channel></rss>

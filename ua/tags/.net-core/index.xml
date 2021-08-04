@@ -7,7 +7,7 @@
 Для початку створимо новий проект в якому включемо автентифікацію.&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/AlAyKDU.png" alt="Auth">&lt;/p>
 &lt;p>В проекті з автентифікацією присутні декілька додаткових файлів, які відповідають за автентифікацію. Також в конфігураційному файлі буде добавлено connection string до бази даних.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json"> &lt;span style="color:#e6db74">&amp;#34;ConnectionStrings&amp;#34;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">:&lt;/span> {
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json"> &lt;span style="color:#e6db74">&amp;#34;ConnectionStrings&amp;#34;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">:&lt;/span> {
 &lt;span style="color:#f92672">&amp;#34;DefaultConnection&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Server=(localdb)\\mssqllocaldb;Database=aspnet-BlazorAuth-BD4B8646-B1A3-438C-8FFC-8C3A29438C24;Trusted_Connection=True;MultipleActiveResultSets=true&amp;#34;&lt;/span>
 }&lt;span style="color:#960050;background-color:#1e0010">,&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>В package management консолі потрібно запустити команду &lt;code>Update-Database&lt;/code> для того щоб створити базу даних та потрібні таблиці.&lt;/p>
@@ -17,17 +17,17 @@
 &lt;p>Тепер можна добавити ролі для того щоб обмежувати доступ до певних сторінок в залежності від ролі.&lt;/p>
 &lt;h2 id="autorization">Autorization&lt;/h2>
 &lt;p>Підтримку ролей потрібно добавити в &lt;code>Startup.cs&lt;/code> в методі &lt;code>ConfigureService&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> services.AddDefaultIdentity&amp;lt;IdentityUser&amp;gt;(options =&amp;gt; options.SignIn.RequireConfirmedAccount = &lt;span style="color:#66d9ef">true&lt;/span>)
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> services.AddDefaultIdentity&amp;lt;IdentityUser&amp;gt;(options =&amp;gt; options.SignIn.RequireConfirmedAccount = &lt;span style="color:#66d9ef">true&lt;/span>)
 .AddRoles&amp;lt;IdentityRole&amp;gt;()
 .AddEntityFrameworkStores&amp;lt;ApplicationDbContext&amp;gt;();
 &lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="generate-roles">Generate Roles&lt;/h2>
 &lt;p>Добавлю новий razor компонент в папку &lt;code>Pages&lt;/code>. При переходні на цю сторінку буду створюватись базові ролі, вона буде доступна за шляхом &lt;code>/addroles&lt;/code>. Також потрібно за допомогою DI взяти декілька обєктів.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/addroles&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/addroles&amp;#34;&lt;/span>
 @using Microsoft.AspNetCore.Identity
 @inject RoleManager&amp;lt;IdentityRole&amp;gt; RoleManager
 @inject UserManager&amp;lt;IdentityUser&amp;gt; UserManager
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Створювати ролі буду за допомогою &lt;code>RoleManager&lt;/code>. Для початку створити список в якому будуть всі потрібні ролі. Далі іду циклом по усіх ролях, якщо роль існує то нічого не відбудеться. Якщо ж ні то нова роль буде створена.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task GenerateRoles()
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task GenerateRoles()
 {
 &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> adminRole = &lt;span style="color:#e6db74">&amp;#34;Administrator&amp;#34;&lt;/span>;
 &lt;span style="color:#66d9ef">string&lt;/span>[] roles = { AdminRole };
@@ -42,9 +42,9 @@
 }
 &lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="create-admin">Create admin&lt;/h2>
 &lt;p>Наступним кроком потрібно додати користувачів до ролей. В &lt;code>appsettings.json&lt;/code> я добавлю параметр який буде містити email дефолтного адміна.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">&lt;span style="color:#e6db74">&amp;#34;AdminUser&amp;#34;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">:&lt;/span> &lt;span style="color:#e6db74">&amp;#34;777rip777@gmail.com&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">&lt;span style="color:#e6db74">&amp;#34;AdminUser&amp;#34;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">:&lt;/span> &lt;span style="color:#e6db74">&amp;#34;777rip777@gmail.com&amp;#34;&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Повернусь назад до &lt;code>addroles&lt;/code> сторінки і створю новий метод. Перевіряю чи користувач з емейлом з конфігураційног файлу існує, якщо так то добавляю його в групу &lt;code>Administrator&lt;/code>. Для того щоб можна було прочитати дані з конфігураційного файлу потрібо отримати об&amp;rsquo;єкт типу &lt;code>IConfiguration&lt;/code>. Вверху сторінки добавити &lt;code>@using Microsoft.Extensions.Configuration&lt;/code> i &lt;code>@inject IConfiguration config&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task AddAdmin()
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task AddAdmin()
 {
 &lt;span style="color:#66d9ef">var&lt;/span> user = &lt;span style="color:#66d9ef">await&lt;/span> UserManager.FindByEmailAsync(config.GetValue&amp;lt;&lt;span style="color:#66d9ef">string&lt;/span>&amp;gt;(&lt;span style="color:#e6db74">&amp;#34;AdminUser&amp;#34;&lt;/span>));
 &lt;span style="color:#66d9ef">if&lt;/span> (user != &lt;span style="color:#66d9ef">null&lt;/span>)
@@ -54,7 +54,7 @@
 }
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Для того щоб ці методи викликались при відкриті сторінки потрібно викликати їх в методі &lt;code>OnParametersSetAsync&lt;/code>.&lt;/p>
 &lt;p>Повний код &lt;code>addroles&lt;/code> сторінки&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/addroles&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/addroles&amp;#34;&lt;/span>
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.Extensions.Configuration
 @inject RoleManager&amp;lt;IdentityRole&amp;gt; RoleManager
@@ -93,7 +93,7 @@
 &lt;p>Тепер коли в нас є ролі можна обмежити доступ до сторінок. Для сторінки &lt;code>FetchData&lt;/code> я добавлю &lt;code>@attribute [Authorize]&lt;/code>. Це дасть доступ до сторінки тільки авторизованим користувачам. А для сторінки &lt;code>Counter&lt;/code> я вкажу &lt;code>@attribute [Authorize(Roles = &amp;quot;Administrator&amp;quot;)]&lt;/code> це дасть доступ до сторінки тільки користувачам з ролю адміністратор.&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/KkE10dm.gif" alt="RolesDemo">&lt;/p>
 &lt;p>Замінити Not Autorized помилку можна в &lt;code>App.razor&lt;/code> в &lt;code>NotAutorized&lt;/code> секції.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;CascadingAuthenticationState&amp;gt;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;CascadingAuthenticationState&amp;gt;
 &amp;lt;Router AppAssembly=&lt;span style="color:#e6db74">&amp;#34;@typeof(Program).Assembly&amp;#34;&lt;/span>&amp;gt;
 &amp;lt;Found Context=&lt;span style="color:#e6db74">&amp;#34;routeData&amp;#34;&lt;/span>&amp;gt;
 &amp;lt;AuthorizeRouteView RouteData=&lt;span style="color:#e6db74">&amp;#34;@routeData&amp;#34;&lt;/span> DefaultLayout=&lt;span style="color:#e6db74">&amp;#34;@typeof(MainLayout)&amp;#34;&lt;/span>&amp;gt;
@@ -112,7 +112,7 @@
 &amp;lt;/CascadingAuthenticationState&amp;gt;
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/wULUE6F.png" alt="AuthError">&lt;/p>
 &lt;p>Також можна повністю сховати елемент сайту для не зареєстрованих користувачів. В &lt;code>NavMenu.razor&lt;/code> я добавлю елементи меню в &lt;code>&amp;lt;AuthorizeView&amp;gt;&amp;lt;/AuthorizeView&amp;gt;&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;div class=&lt;span style="color:#e6db74">&amp;#34;top-row pl-4 navbar navbar-dark&amp;#34;&lt;/span>&amp;gt;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;div class=&lt;span style="color:#e6db74">&amp;#34;top-row pl-4 navbar navbar-dark&amp;#34;&lt;/span>&amp;gt;
 &amp;lt;a class=&lt;span style="color:#e6db74">&amp;#34;navbar-brand&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>&amp;gt;BlazorAuth&amp;lt;/a&amp;gt;
 &amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;navbar-toggler&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;ToggleNavMenu&amp;#34;&lt;/span>&amp;gt;
 &amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;navbar-toggler-icon&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt;
@@ -151,7 +151,7 @@ collapseNavMenu = !collapseNavMenu;
 }
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер &lt;code>counter&lt;/code> в меню будуть бачити тільки користувачі з ролю &lt;code>Administrator&lt;/code> а &lt;code>fetchdata&lt;/code> буде доступна зареєстрованим користувачам.&lt;/p>
 &lt;p>В &lt;code>index&lt;/code> сторінку добавлю повідомлення користувачам щоб залогувались.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/&amp;#34;&lt;/span>
 &amp;lt;AuthorizeView&amp;gt;
 &amp;lt;Authorized&amp;gt;
 &amp;lt;h1&amp;gt;Thank you &lt;span style="color:#66d9ef">for&lt;/span> logging &lt;span style="color:#66d9ef">in&lt;/span>&amp;lt;/h1&amp;gt;
@@ -172,7 +172,7 @@ Welcome back Admin
 namespace BlazorLearn.Models { public class User { public string UserName { get; set; } public string LastName { get; set; } public string Email { get; set; } public int Age { get; set; } public string Gender { get; set; } } } Для того щоб модель була доступна для razor компонентів її потрібно добавити в _Imports.</description><content>&lt;p>Привіт!&lt;/p>
 &lt;p>Подивимось як можна створити форму в BlazorServer.&lt;br>
 Розпочнемо з моделі. Створю файл &lt;code>Models/User.cs&lt;/code>, який буде містити поля для форми.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Models
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Models
 {
 &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">User&lt;/span>
 {
@@ -188,7 +188,7 @@ namespace BlazorLearn.Models { public class User { public string UserName { get;
 &lt;p>Тепер я створю razor компонент &lt;code>Register.razor&lt;/code> який буде містити в собі форму. Для того щоб форму можна було відкрити в браузері зверху сторінки добавлю &lt;code>@page &amp;quot;/register&amp;quot;&lt;/code>. В code секції потрібно створити новий обєкт класу &lt;code>User&lt;/code>, і також пусту стрінгу в яку буде записано дані після сабміту форми. І добавлю &lt;code>&amp;lt;p&amp;gt;@_formResult&amp;lt;/p&amp;gt;&lt;/code> для того щоб відобразити внесені дані після сабміту.&lt;/p>
 &lt;p>Тепер перейдемо до самої форми.&lt;/p>
 &lt;p>В blazor форма створюється за допомогою тегу &lt;code>EditForm&lt;/code> в який потрібно передати модель. В нас це об&amp;rsquo;єкт типу &lt;code>User&lt;/code> який створено в секції &lt;code>code&lt;/code> - &lt;code>&amp;lt;EditForm Model=&amp;quot;_user&amp;quot;&amp;gt;&amp;lt;/EditForm&amp;gt;&lt;/code>. Тепер в форму потрібно добавити input поля. Для тексту це буде &lt;code>&amp;lt;InputText&amp;gt;&amp;lt;/InputText&amp;gt;&lt;/code> для інших типів даних є свої теги, наприклад &lt;code>InputNumber&lt;/code> для числових типів. Добавлю інпут поле для кожного елемента з моделі. Також в формі можна викликати метод на івенти типу &lt;code>OnValidSubmit&lt;/code> чи &lt;code>OnInvalidSubmit&lt;/code>. Для цього я зроблю метод &lt;code>HandleValidSubmit&lt;/code> який запише в UserName i LastName з формив пусту стрінгу створену вище.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/register&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/register&amp;#34;&lt;/span>
 &amp;lt;p&amp;gt;@_formResult&amp;lt;/p&amp;gt;
 &amp;lt;EditForm Model=&lt;span style="color:#e6db74">&amp;#34;_user&amp;#34;&lt;/span> OnValidSubmit=&lt;span style="color:#e6db74">&amp;#34;HandleValidSubmit&amp;#34;&lt;/span> On&amp;gt;
 &amp;lt;InputText id=&lt;span style="color:#e6db74">&amp;#34;UserName&amp;#34;&lt;/span> @bind-Value=&lt;span style="color:#e6db74">&amp;#34;_user.UserName&amp;#34;&lt;/span>&amp;gt;&amp;lt;/InputText&amp;gt;
@@ -214,7 +214,7 @@ namespace BlazorLearn.Models { public class User { public string UserName { get;
 &lt;p>Форма працює, але в полі Age я ввів -30 і ніякої валідації не відбулось. Добавимо тепер валідацію&lt;/p>
 &lt;h2 id="form-validation">Form Validation&lt;/h2>
 &lt;p>Валідація добавляється за допомогою атрибутів. Повернемось до моделі і внесемо декілька змін.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> System.ComponentModel.DataAnnotations;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> System.ComponentModel.DataAnnotations;
 &lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Models
 {
 &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">User&lt;/span>
@@ -238,7 +238,7 @@ namespace BlazorLearn.Models { public class User { public string UserName { get;
 &lt;p>Для того щоб валідація відбувалась потрібно добавити &lt;code>&amp;lt;DataAnnotationsValidator&amp;gt;&amp;lt;/DataAnnotationsValidator&amp;gt;&lt;/code> тег в форму.&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/fRcczCo.gif" alt="FormNoMessage">&lt;/p>
 &lt;p>Тепер валідація працює але ніякі повідомлення не відображаються. Для повідомлень я добавлю ще один тег &lt;code>&amp;lt;ValidationSummary&amp;gt;&amp;lt;/ValidationSummary&amp;gt;&lt;/code>. В результаті форма набуде такого вигляду&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/register&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/register&amp;#34;&lt;/span>
 &amp;lt;p&amp;gt;@_formResult&amp;lt;/p&amp;gt;
 &amp;lt;EditForm Model=&lt;span style="color:#e6db74">&amp;#34;_user&amp;#34;&lt;/span> OnValidSubmit=&lt;span style="color:#e6db74">&amp;#34;HandleValidSubmit&amp;#34;&lt;/span>&amp;gt;
 &amp;lt;DataAnnotationsValidator&amp;gt;&amp;lt;/DataAnnotationsValidator&amp;gt;
@@ -285,7 +285,7 @@ Button Я створю компонент з назвою ThumbButton який �
 &lt;h2 id="button">Button&lt;/h2>
 &lt;p>Я створю компонент з назвою &lt;code>ThumbButton&lt;/code> який буде містити дві кнопки. В залежності яка кнопка натиснута буде викликатись відповідний метод і передавати дані в parrent компонент. В &lt;code>@onclick&lt;/code> вказується який метод буде викликатись при настискані кнопки.&lt;/p>
 &lt;p>Для того щоб передати дані в parrent компонент використовується властивість типу &lt;code>EventCallback&amp;lt;Thumb&amp;gt;&lt;/code>, де &lt;code>Thumb&lt;/code> це enum. Замість enum може бути будь який інший тип даних. В метод &lt;code>ThumbUp&lt;/code> i &lt;code>ThumbDown&lt;/code> викликаю &lt;code>OnVote.InvokeAsync&lt;/code> в який передається відповідний enum. Цей виклик передає дані в parrent компонент.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;btn btn-primary mx-2&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;ThumbUp&amp;#34;&lt;/span>&amp;gt;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;btn btn-primary mx-2&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;ThumbUp&amp;#34;&lt;/span>&amp;gt;
 &amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;oi oi-thumb-up&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt;
 &amp;lt;/button&amp;gt;
 &amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;btn btn-danger mx-2&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;ThumbDown&amp;#34;&lt;/span>&amp;gt;
@@ -311,7 +311,7 @@ Down
 &lt;h2 id="button-component-on-page">Button Component on page&lt;/h2>
 &lt;p>Тепер візьмемо сторінку &lt;code>Counter&lt;/code>. І добавимо щойно створений компонент з кнопкою. Розпочнемо з коду. Я створю дві властивості &lt;code>isThumbUp&lt;/code> i &lt;code>isThumbDown&lt;/code> типу &lt;code>bool&lt;/code>. В залежності від того яка властивість набуде значення true, відповідні дані будуть відображатись. Також якщо одна з цих властивостей набуде значення &lt;code>true&lt;/code> кнопка зникне.&lt;/p>
 &lt;p>Для того щоб отримати дані з компонента кнопки, потрібен хендлер який буде міняти значення &lt;code>isThumbUp&lt;/code> i &lt;code>isThumbDown&lt;/code> у відповідь на натискання кнопки &lt;code>&amp;lt;ThumbButton OnVote=&amp;quot;OnVotedHandler&amp;quot;&amp;gt;&amp;lt;/ThumbButton&amp;gt;&lt;/code>. Метод хендлер має приймати на вхід параметер типу який передається з кнопки. &lt;code>private void OnVotedHandler(ThumbButton.Thumb result)&lt;/code>. В залежності від того яке значення прийшло на вхід встановлюється значення параметрів &lt;code>isThumbUp&lt;/code> i &lt;code>isThumbDown&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/counter&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/counter&amp;#34;&lt;/span>
 &amp;lt;h1&amp;gt;Counter&amp;lt;/h1&amp;gt;
 &amp;lt;p&amp;gt;Current count: @currentCount&amp;lt;/p&amp;gt;
 &amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;btn btn-primary&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;IncrementCount&amp;#34;&lt;/span>&amp;gt;Click me&amp;lt;/button&amp;gt;
@@ -353,7 +353,7 @@ Model using System.Collections.Generic; namespace BlazorLearn.Models { public cl
 &lt;p>Подивимось як можна використовувати компоненти в BlazorServer та передавати параметри в них.
 Для цього зробимо два класи Student i School які будемо відображати на сторінці. Ці класи будуть в папці Models.&lt;/p>
 &lt;h2 id="model">Model&lt;/h2>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> System.Collections.Generic;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> System.Collections.Generic;
 &lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Models
 {
 &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">School&lt;/span>
@@ -362,7 +362,7 @@ Model using System.Collections.Generic; namespace BlazorLearn.Models { public cl
 &lt;span style="color:#66d9ef">public&lt;/span> List&amp;lt;Student&amp;gt; Students { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
 }
 }
-&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Models
+&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Models
 {
 &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Student&lt;/span>
 {
@@ -374,7 +374,7 @@ Model using System.Collections.Generic; namespace BlazorLearn.Models { public cl
 &lt;p>Тепер я створю razor компоненти які будуть відповідати за відображення даних. Для того щоб Models був доступний для razor компонентів потрібно добавити &lt;code>@using BlazorLearn.Models&lt;/code> це можна добавити в &lt;code>_Imports.razor&lt;/code> і тоді Models буде доступний для усіх компонентів або ж добавити в кожний компонент якому потрібна модель.&lt;/p>
 &lt;p>Потрібно створити три компонента, перший для відображання інформації про студентів, наступний для інформації про школу і останій це буде сторінка яка буде включати в себе два попередні компоненти.&lt;/p>
 &lt;p>Почнемо з компонента - SchoolComponent&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;div&amp;gt;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;div&amp;gt;
 &amp;lt;p&amp;gt;@SchoolInfo.Name&amp;lt;/p&amp;gt;
 @StudentFragment
 &amp;lt;/div&amp;gt;
@@ -387,7 +387,7 @@ Model using System.Collections.Generic; namespace BlazorLearn.Models { public cl
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Кількість коду не велика тому я все зберігатиму в .razor і не буду створювати окремий клас.
 В code секції я створюю дві властивості, одна типу &lt;code>School&lt;/code> яка буде містити інформацію про школу а інший типу &lt;code>RenderFragment&lt;/code> ця властивість відбповідатиме за відображення інформації про студентів.&lt;/p>
 &lt;p>Наступний компонент - StudentComponent&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;div&amp;gt;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;div&amp;gt;
 &amp;lt;p&amp;gt;@StudentInfo.FirstName @StudentInfo.LastName&amp;lt;/p&amp;gt;
 &amp;lt;/div&amp;gt;
 @code {
@@ -396,7 +396,7 @@ Model using System.Collections.Generic; namespace BlazorLearn.Models { public cl
 }
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Цей компонент має одну властивість типу &lt;code>Student&lt;/code> в якій буде міститись інформація про студента. Html частина буде відображати ім&amp;rsquo;я та прізвище.&lt;/p>
 &lt;p>І тепер залишився останій компонент який водночас буде повноціною сторінкою.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/school&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/school&amp;#34;&lt;/span>
 &amp;lt;div class=&lt;span style="color:#e6db74">&amp;#34;row&amp;#34;&lt;/span>&amp;gt;
 @foreach (&lt;span style="color:#66d9ef">var&lt;/span> s &lt;span style="color:#66d9ef">in&lt;/span> Schools)
 {
@@ -458,7 +458,7 @@ Code in client Перший варіант це зберігати код на �
 &lt;h2 id="code-in-client">Code in client&lt;/h2>
 &lt;p>Перший варіант це зберігати код на клієнті (в razor файлі).
 Візьмемо &lt;code>Counter.razor&lt;/code> файл в якому поєднується html та c# код.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/counter&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/counter&amp;#34;&lt;/span>
 &amp;lt;h1&amp;gt;Counter&amp;lt;/h1&amp;gt;
 &amp;lt;p&amp;gt;Current count: @currentCount&amp;lt;/p&amp;gt;
 &amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;btn btn-primary&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;IncrementCount&amp;#34;&lt;/span>&amp;gt;Click me&amp;lt;/button&amp;gt;
@@ -473,7 +473,7 @@ currentCount++;
 З сторони html є кнопка &lt;code>Click me&lt;/code> яка викликає c# метод &lt;code>IncrementCount&lt;/code> та вивід зміної &lt;code>currentCount&lt;/code> на сторінку. Цей варіант варто використовувати тільки якщо кількість коду зовсім не значна.&lt;/p>
 &lt;h2 id="inheritance">Inheritance&lt;/h2>
 &lt;p>Інший варіант це створити новий клас який буде наслідувати razor сторінка. Цей клас має наслідуватись від &lt;code>ComponentBase&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> Microsoft.AspNetCore.Components;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> Microsoft.AspNetCore.Components;
 &lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Pages
 {
 &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">CounterBase&lt;/span> : ComponentBase
@@ -488,13 +488,13 @@ currentCount++;
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Я перемітив код з &lt;code>Counter.razor&lt;/code> в новий клас &lt;code>CounterBase&lt;/code>.
 Тільки в цьому випадку прийдеться змінити модифікатор доступу з &lt;code>private&lt;/code> на &lt;code>protected&lt;/code>.
 В &lt;code>Counter.razor&lt;/code> потрібно добавити &lt;code>@inherits CounterBase&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/counter&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/counter&amp;#34;&lt;/span>
 @inherits CounterBase
 &amp;lt;h1&amp;gt;Counter&amp;lt;/h1&amp;gt;
 &amp;lt;p&amp;gt;Current count: @currentCount&amp;lt;/p&amp;gt;
 &amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;btn btn-primary&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;IncrementCount&amp;#34;&lt;/span>&amp;gt;Click me&amp;lt;/button&amp;gt;
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Щоб добавити логер чи інший компонент, конструктор використати не получиться. Але є інший спосіб, через властивість з модифікаторо &lt;code>Inject&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> Microsoft.AspNetCore.Components;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> Microsoft.AspNetCore.Components;
 &lt;span style="color:#66d9ef">using&lt;/span> Microsoft.Extensions.Logging;
 &lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Pages
 {
@@ -513,7 +513,7 @@ currentCount++;
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/8xpWTSv.png" alt="Inheritance">&lt;/p>
 &lt;h2 id="partial-class">Partial class&lt;/h2>
 &lt;p>Третій варінт з використанням partial класів. Для цього я створю новий partial клас з такою ж назвою як і razor сторінка.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Pages
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Pages
 {
 &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">partial&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Counter&lt;/span>
 {
@@ -525,12 +525,12 @@ currentCount++;
 }
 }
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Модифікатори доступу можуть залишитись private, а в самій razor сторінці змінювати нічого не потрібно.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/counter&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/counter&amp;#34;&lt;/span>
 &amp;lt;h1&amp;gt;Counter&amp;lt;/h1&amp;gt;
 &amp;lt;p&amp;gt;Current count: @currentCount&amp;lt;/p&amp;gt;
 &amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;btn btn-primary&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;IncrementCount&amp;#34;&lt;/span>&amp;gt;Click me&amp;lt;/button&amp;gt;
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Logger чи інші компоненти з DI добавляються так само як і в другому варінті. За допогою властивостей з атрибутом &lt;code>Inject&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#a6e22e"> [Inject]&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#a6e22e"> [Inject]&lt;/span>
 &lt;span style="color:#66d9ef">public&lt;/span> ILogger&amp;lt;Counter&amp;gt; Logger { &lt;span style="color:#66d9ef">get&lt;/span>; &lt;span style="color:#66d9ef">set&lt;/span>; }
 &lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Create Page in Blazor</title><link>/ua/2020/10/12/create-page-in-blazor/</link><pubDate>Mon, 12 Oct 2020 11:57:31 +0300</pubDate><guid>/ua/2020/10/12/create-page-in-blazor/</guid><description>Привіт!
 Сьогодні розглянемо як можна створити нову сторінку в BlazorServer та добавити її в меню.
@@ -545,7 +545,7 @@ Add new page Для цього натисність правою кнопкою 
 &lt;p>Зявиться наступне вікно в якому потрібно обрати назву та натиснути &lt;code>Add&lt;/code>&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/KpWZQZl.png" alt="AddPage">&lt;/p>
 &lt;p>Сторінка буде створена з наступним контентом:&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;h3&amp;gt;Test1&amp;lt;/h3&amp;gt;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;h3&amp;gt;Test1&amp;lt;/h3&amp;gt;
 @code {
 }
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Для того щоб її можна було відкрити в браузері на початку файла потрібно добавити &lt;code>@page &amp;quot;/test1&amp;quot;&lt;/code> де &lt;code>test1&lt;/code> це назва ендпоінта. І тепер якщо запустити аплікацію та в браузері ввести &lt;code>localhost:5001/test1&lt;/code>&lt;/p>
@@ -555,7 +555,7 @@ Add new page Для цього натисність правою кнопкою 
 &lt;p>За меню відбовідай файл &lt;code>Shared/NavMenu.razor&lt;/code>&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/y5KI2Pw.png" alt="Menu">&lt;/p>
 &lt;p>Файл має наступний контент&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;div class=&lt;span style="color:#e6db74">&amp;#34;top-row pl-4 navbar navbar-dark&amp;#34;&lt;/span>&amp;gt;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;div class=&lt;span style="color:#e6db74">&amp;#34;top-row pl-4 navbar navbar-dark&amp;#34;&lt;/span>&amp;gt;
 &amp;lt;a class=&lt;span style="color:#e6db74">&amp;#34;navbar-brand&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>&amp;gt;BlazorLearn&amp;lt;/a&amp;gt;
 &amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;navbar-toggler&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;ToggleNavMenu&amp;#34;&lt;/span>&amp;gt;
 &amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;navbar-toggler-icon&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt;
@@ -589,7 +589,7 @@ collapseNavMenu = !collapseNavMenu;
 }
 }
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Що нам потрібно це добавити ще один елемент в &lt;code>@NavMenuCssClass&lt;/code>, саме цей div відповідає за відображення елементів меню. Я добавлю наступний елемент&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &amp;lt;li class=&lt;span style="color:#e6db74">&amp;#34;nav-item px-3&amp;#34;&lt;/span>&amp;gt;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &amp;lt;li class=&lt;span style="color:#e6db74">&amp;#34;nav-item px-3&amp;#34;&lt;/span>&amp;gt;
 &amp;lt;NavLink class=&lt;span style="color:#e6db74">&amp;#34;nav-link&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;test1&amp;#34;&lt;/span>&amp;gt;
 &amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;oi oi-aperture&amp;#34;&lt;/span> aria-hidden=&lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt; Test1
 &amp;lt;/NavLink&amp;gt;
@@ -608,7 +608,7 @@ collapseNavMenu = !collapseNavMenu;
 { &amp;#34;Logging&amp;#34;: { &amp;#34;LogLevel&amp;#34;: { &amp;#34;Default&amp;#34;: &amp;#34;Information&amp;#34;, &amp;#34;Microsoft&amp;#34;: &amp;#34;Warning&amp;#34;, &amp;#34;Microsoft.Hosting.Lifetime&amp;#34;: &amp;#34;Information&amp;#34; } }, &amp;#34;AllowedHosts&amp;#34;: &amp;#34;*&amp;#34; } Саме тут вкзаано налаштування логування. LogLevel починається з Default який має значення Information. Це означає що по замовчуванні лог левел буде Information. Далі йде Microsoft з рівнем Warning, відповідно для namespace Microsoft рівень логування буде Warning. І в самому кінці Microsoft.</description><content>&lt;p>Привіт!&lt;/p>
 &lt;p>Сьогодні подивимось як налаштовувати логування в BlazorServer.&lt;br>
 Одразу після створення проекту в корені проекту буде файл &lt;code>appsettings.json&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
 &lt;span style="color:#f92672">&amp;#34;Logging&amp;#34;&lt;/span>: {
 &lt;span style="color:#f92672">&amp;#34;LogLevel&amp;#34;&lt;/span>: {
 &lt;span style="color:#f92672">&amp;#34;Default&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Information&amp;#34;&lt;/span>,
@@ -622,7 +622,7 @@ collapseNavMenu = !collapseNavMenu;
 &lt;p>Якщо змінити налаштування логування в цьому файлі і запустити аплікації нічого не зміниться. А все тому що в &lt;code>launchSettings.json&lt;/code> вказано &lt;code>&amp;quot;ASPNETCORE_ENVIRONMENT&amp;quot;: &amp;quot;Development&amp;quot;&lt;/code>. І для development середовища використовується інший файл &lt;code>appsettings.Development.json&lt;/code>. Знайти його можна якщо натиснути на стрілку біля &lt;code>appsettings.json&lt;/code>.&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/ecvHX8b.png" alt="DevJson">&lt;/p>
 &lt;p>Я поміняю всі рівні на &lt;code>Debug&lt;/code> в &lt;code>appsettings.Development.json&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">{
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">{
 &lt;span style="color:#e6db74">&amp;#34;DetailedErrors&amp;#34;&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>,
 &lt;span style="color:#e6db74">&amp;#34;Logging&amp;#34;&lt;/span>: {
 &lt;span style="color:#e6db74">&amp;#34;LogLevel&amp;#34;&lt;/span>: {
@@ -636,7 +636,7 @@ collapseNavMenu = !collapseNavMenu;
 &lt;p>&lt;img src="https://i.imgur.com/zSiopdQ.png" alt="Debug">&lt;br>
 Якщо мені потрібно з усіх логів включити тільки якийсь конкретний я теж можу це зробити.
 Наприклад мені потрібно бачити логи з &lt;code>Microsoft.AspNetCore.Components.RenderTree.Renderer&lt;/code> в &lt;code>Debug&lt;/code> а всі інші в інфо. Для цього я добавлю його в &lt;code>appsettings.Development.json&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">{
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">{
 &lt;span style="color:#e6db74">&amp;#34;DetailedErrors&amp;#34;&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>,
 &lt;span style="color:#e6db74">&amp;#34;Logging&amp;#34;&lt;/span>: {
 &lt;span style="color:#e6db74">&amp;#34;LogLevel&amp;#34;&lt;/span>: {
@@ -652,7 +652,7 @@ collapseNavMenu = !collapseNavMenu;
 &lt;h2 id="logging-from-razor-pages">Logging from razor pages&lt;/h2>
 &lt;p>Спробуєм відправити лог повідомлення з razor pages. Наприклад візьмемо сторінку &lt;code>Counter.razor&lt;/code>.&lt;br>
 Для використання логера спочатку потрібно імпортувати потрібний неймспейс &lt;code>@using Microsoft.Extensions.Logging&lt;/code>. І за допомогою DI, ввести логер в сторінку &lt;code>@inject ILogger&amp;lt;Counter&amp;gt; Logger&lt;/code>. Тепер логер можна використувати в сторінці.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/counter&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/counter&amp;#34;&lt;/span>
 @using Microsoft.Extensions.Logging
 @inject ILogger&amp;lt;Counter&amp;gt; Logger
 &amp;lt;h1&amp;gt;Counter&amp;lt;/h1&amp;gt;
@@ -670,7 +670,7 @@ Logger.LogInformation(&lt;span style="color:#e6db74">&amp;#34;Button clicked, cu
 &lt;img src="https://i.imgur.com/85IThm0.png" alt="Clicked">&lt;/p>
 &lt;h2 id="logging-from-class">Logging from class&lt;/h2>
 &lt;p>Аналогічно лог повідомлення можна відправляти з класів за допомогою DI. Спочатку створюється обєкт &lt;code>private readonly ILogger&amp;lt;WeatherForecastService&amp;gt; _logger;&lt;/code> і за допомогою конструктора передаємо наш логер.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> Microsoft.Extensions.Logging;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> Microsoft.Extensions.Logging;
 &lt;span style="color:#66d9ef">using&lt;/span> System;
 &lt;span style="color:#66d9ef">using&lt;/span> System.Linq;
 &lt;span style="color:#66d9ef">using&lt;/span> System.Threading.Tasks;
@@ -703,14 +703,14 @@ Summary = Summaries[rng.Next(Summaries.Length)]
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/x2iCOZw.png" alt="Class">&lt;/p>
 &lt;h2 id="logger-configuration-from-code">Logger configuration from code&lt;/h2>
 &lt;p>Якщо потрібно то логер можна конфігурвати з коду а не з &lt;code>application.json&lt;/code>. Це можна зробити в &lt;code>Program.cs&lt;/code> в методі &lt;code>CreateHostBuilder&lt;/code>. По замовчуванні він має такий вигляд.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> IHostBuilder CreateHostBuilder(&lt;span style="color:#66d9ef">string&lt;/span>[] args) =&amp;gt;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> IHostBuilder CreateHostBuilder(&lt;span style="color:#66d9ef">string&lt;/span>[] args) =&amp;gt;
 Host.CreateDefaultBuilder(args)
 .ConfigureWebHostDefaults(webBuilder =&amp;gt;
 {
 webBuilder.UseStartup&amp;lt;Startup&amp;gt;();
 });
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Для того щоб налаштувати логер до &lt;code>CreateDefaultBuilder&lt;/code> потрібно добавити &lt;code>ConfigureLogging&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> IHostBuilder CreateHostBuilder(&lt;span style="color:#66d9ef">string&lt;/span>[] args) =&amp;gt;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> IHostBuilder CreateHostBuilder(&lt;span style="color:#66d9ef">string&lt;/span>[] args) =&amp;gt;
 Host.CreateDefaultBuilder(args)
 .ConfigureLogging(logger =&amp;gt;
 {
@@ -733,7 +733,7 @@ services.AddSingleton&amp;lt;WeatherForecastService&amp;gt;() - реєструє
 &lt;p>Сьогодні поговоримо як працює dependency injection в blazor server.
 Якщо ви знайому з dependency injection в asp.net core то відміностей тут немає.
 Dependency injection налаштовуєтся в &lt;code>Startup.cs&lt;/code> в корені проекта. Одразу після створення проекту це матиме ось такий вигляд&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> ConfigureServices(IServiceCollection services)
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> ConfigureServices(IServiceCollection services)
 {
 services.AddRazorPages();
 services.AddServerSideBlazor();
@@ -746,7 +746,7 @@ services.AddSingleton&amp;lt;WeatherForecastService&amp;gt;();
 &lt;p>&lt;code>WeatherForecastService&lt;/code> в прикладі добавлється як &lt;code>Singleton&lt;/code>. Може бути ще &lt;code>Scoped&lt;/code> i &lt;code>Transient&lt;/code>. Детальніше на них подивимось далі.&lt;/p>
 &lt;p>Спробуєм добавити новий клас в DI і перевірити як він працює з різними типами (Singleton, Scoped, Transient).&lt;/p>
 &lt;p>Для цього в папці &lt;code>Data&lt;/code> я створю файл який буде генерувати випадкове число.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> System;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> System;
 &lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Data
 {
 &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">RandomData&lt;/span>
@@ -764,7 +764,7 @@ randomData = random.Next();
 }
 }
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>В класі &lt;code>RandomData&lt;/code> в конструкторі генерується випадкове число. А метод &lt;code>GetRandomData&lt;/code> вертає його. Для того щоб використати клас в DI потрібно створити інтерфейс. Можна користуватись і без інтерфейса. Aле завдяки інтерфейсу легко можна замінити в реалізації цей клас на інший. Так буде виглядати інтерфейс.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Data
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Data
 {
 &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">interface&lt;/span> IRandomData
 {
@@ -773,10 +773,10 @@ randomData = random.Next();
 }
 &lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="singleton">Singleton&lt;/h2>
 &lt;p>Тепер клас можна зареєструвати в DI. Поченемо з Singleton. Для цього в &lt;code>Startup.cs&lt;/code> файлі в методі &lt;code>ConfigureServices&lt;/code> потрібно добавити:&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">services.AddSingleton&amp;lt;IRandomData, RandomData&amp;gt;();
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">services.AddSingleton&amp;lt;IRandomData, RandomData&amp;gt;();
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер кожен раз як хтось буде використовувати інтерфейс &lt;code>IRandomData&lt;/code> буде підставлено &lt;code>RandomData&lt;/code>.
 Тепер в &lt;code>index.razor&lt;/code> я викличу &lt;code>GetRandomNumber&lt;/code> метод.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/&amp;#34;&lt;/span>
 @using BlazorLearn.Data
 @inject IRandomData RandomData
 &amp;lt;h1&amp;gt;Hello, world!&amp;lt;/h1&amp;gt;
@@ -788,18 +788,18 @@ Your random number &lt;span style="color:#66d9ef">is&lt;/span> @RandomData.GetRa
 &lt;p>Якщо я відкрию аплікацію в іншому браузері випадкове число залишиться таким самим. Саме так працює singleton. Об&amp;rsquo;єкт створюється один раз при старті аплікації.&lt;/p>
 &lt;h2 id="scoped">Scoped&lt;/h2>
 &lt;p>Прдивимось тепер як працює scoped. Замінимо &lt;code>AddSingleton&lt;/code> на &lt;code>AddScoped&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">services.AddScoped&amp;lt;IRandomData, RandomData&amp;gt;();
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">services.AddScoped&amp;lt;IRandomData, RandomData&amp;gt;();
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>І запустимо аплцікацїю. Тепер якщо я перейду на іншу сторінку сайту а потім повернусь назад число залишиться таким самим. А от якщо я оновлю сторінку то число поміняться. Scoped обєкти створюються один раз на кожен запит.&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/kYOcBXY.gif" alt="Scoped">&lt;/p>
 &lt;h2 id="transient">Transient&lt;/h2>
 &lt;p>І останій тип це &lt;code>Transient&lt;/code>. Тепер замінимо &lt;code>AddScoped&lt;/code> на &lt;code>AddTransient&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">services.AddTransient&amp;lt;IRandomData, RandomData&amp;gt;();
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">services.AddTransient&amp;lt;IRandomData, RandomData&amp;gt;();
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Запустимо аплікацію. І тепер навіть якщо перейти з однієї вкладки на іншу число змінюється кожен раз.&lt;br>
 &lt;img src="https://i.imgur.com/ipleQaj.gif" alt="Transient">&lt;/p>
 &lt;h2 id="di-in-class">DI in Class&lt;/h2>
 &lt;p>І на кінець подивимось як можна використати &lt;code>RandomData&lt;/code> клас в іншому класі за допомогою DI.&lt;br>
 Для прикладу візьмемо &lt;code>Data/WeatherForecastService.cs&lt;/code>. В цьому класі потрібно зробити зміну типу &lt;code>IRandomData&lt;/code> і ініціалізувати її в конструкторі. І тепер її можна використовувати в будь якому місці цього класу.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> System;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="color:#66d9ef">using&lt;/span> System;
 &lt;span style="color:#66d9ef">using&lt;/span> System.Linq;
 &lt;span style="color:#66d9ef">using&lt;/span> System.Threading.Tasks;
 &lt;span style="color:#66d9ef">namespace&lt;/span> BlazorLearn.Data
@@ -830,7 +830,7 @@ Summary = Summaries[rng.Next(Summaries.Length)]
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>_randomData.GetRandomData()&lt;/code> я запишу в зміну &lt;code>TemperatureC&lt;/code> і запущу аплікацію. На сторінці &lt;code>FetchData&lt;/code> буде тепература зегенерована за допомогою &lt;code>GetRandomData&lt;/code>.&lt;br>
 &lt;img src="https://i.imgur.com/1Z4KBZm.png" alt="RandomData">&lt;/p>
 &lt;p>Важливо щоб в DI &lt;code>WeatherForecastService&lt;/code> та &lt;code>RandomData&lt;/code> були одинаково добавлені.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> services.AddScoped&amp;lt;WeatherForecastService&amp;gt;();
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> services.AddScoped&amp;lt;WeatherForecastService&amp;gt;();
 services.AddScoped&amp;lt;IRandomData, RandomData&amp;gt;();
 &lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Blazor Server Error Handling</title><link>/ua/2020/10/06/blazor-server-error-handling/</link><pubDate>Tue, 06 Oct 2020 19:31:30 +0300</pubDate><guid>/ua/2020/10/06/blazor-server-error-handling/</guid><description>Привіт!
 Сьогодні подивимось як можна поміняти еррор меседжі в Blazor Server. Є два типи помилок неіснуює сторінка або ексепшин. Можна міняти повідомлення яке буде відображатись в двох випадках. Першим розглянемо як поміняти повідомлення яке відображається користувача у випадку ексепшина.
@@ -840,7 +840,7 @@ Exception Error В файлі Pages/_Host.cshtml даний участок ві�
 Першим розглянемо як поміняти повідомлення яке відображається користувача у випадку ексепшина.&lt;/p>
 &lt;h2 id="exception-error">Exception Error&lt;/h2>
 &lt;p>В файлі &lt;code>Pages/_Host.cshtml&lt;/code> даний участок відповідає за відображення помилки:&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &amp;lt;div id=&lt;span style="color:#e6db74">&amp;#34;blazor-error-ui&amp;#34;&lt;/span>&amp;gt;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &amp;lt;div id=&lt;span style="color:#e6db74">&amp;#34;blazor-error-ui&amp;#34;&lt;/span>&amp;gt;
 &amp;lt;environment include=&lt;span style="color:#e6db74">&amp;#34;Staging,Production&amp;#34;&lt;/span>&amp;gt;
 An error has occurred. This application may no longer respond until reloaded.
 &amp;lt;/environment&amp;gt;
@@ -851,7 +851,7 @@ An unhandled exception has occurred. See browser dev tools &lt;span style="color
 &amp;lt;a class=&lt;span style="color:#e6db74">&amp;#34;dismiss&amp;#34;&lt;/span>&amp;gt;&lt;span style="color:#960050;background-color:#1e0010">🗙&lt;/span>&amp;lt;/a&amp;gt;
 &amp;lt;/div&amp;gt;
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>В залежності від &lt;code>environment&lt;/code> потрібна помилка відображається. &lt;code>environment&lt;/code> визначається енваєрмент зміною &lt;code>ASPNETCORE_ENVIRONMENT&lt;/code> якщо вона не вказана то &lt;code>environment&lt;/code> відповідає &lt;code>Production&lt;/code>. Під часу девелопменту по дефолту в &lt;code>Properties\launchSettings.json&lt;/code> зазначено як &lt;code>Development&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
 &lt;span style="color:#f92672">&amp;#34;BlazorLearn&amp;#34;&lt;/span>: {
 &lt;span style="color:#f92672">&amp;#34;commandName&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Project&amp;#34;&lt;/span>,
 &lt;span style="color:#f92672">&amp;#34;launchBrowser&amp;#34;&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>,
@@ -865,7 +865,7 @@ An unhandled exception has occurred. See browser dev tools &lt;span style="color
 &lt;p>&lt;img src="https://i.imgur.com/7Z9XK94.png" alt="Error">&lt;/p>
 &lt;h2 id="page-not-found-error">Page not found error&lt;/h2>
 &lt;p>Повідомлення яке відображається коли сторінку не знайдено знаходиться в файлі &lt;code>App.razor&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &amp;lt;NotFound&amp;gt;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &amp;lt;NotFound&amp;gt;
 &amp;lt;LayoutView Layout=&lt;span style="color:#e6db74">&amp;#34;@typeof(MainLayout)&amp;#34;&lt;/span>&amp;gt;
 &amp;lt;p&amp;gt;Sorry, there&lt;span style="color:#960050;background-color:#1e0010">&amp;#39;&lt;/span>s nothing at &lt;span style="color:#66d9ef">this&lt;/span> address.&amp;lt;/p&amp;gt;
 &amp;lt;/LayoutView&amp;gt;
@@ -877,7 +877,7 @@ app.UseRouting(); app.UseEndpoints(endpoints =&amp;gt; { endpoints.MapBlazorHub(
 app.UseEndpoints() додає ендпоніт в middleware pipeline. Він запускає делегат якому відповідає ендпоінт.</description><content>&lt;p>Привіт!
 Сьогодні я хочу розказати як працює роутінг в Blazor Server.&lt;br>
 Роутінг починається в файлі &lt;code>Startup.cs&lt;/code>. За це відбовідає наступний код&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> app.UseRouting();
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> app.UseRouting();
 app.UseEndpoints(endpoints =&amp;gt;
 {
 endpoints.MapBlazorHub();
@@ -888,7 +888,7 @@ endpoints.MapFallbackToPage(&lt;span style="color:#e6db74">&amp;#34;/_Host&amp;#
 В середині &lt;code>app.UseEndpoints()&lt;/code> вказується &lt;code>endpoints.MapBlazorHub()&lt;/code> тут налаштовується SignalR підключення. Налаштування здійснюється автоматично і змінювати тут нічого не потрібно.&lt;br>
 Наступний елемент це &lt;code>endpoints.MapFallbackToPage(&amp;quot;/_Host&amp;quot;)&lt;/code> є резервним маршрутом, в нього найнижчий пріорітет, викликається в тому випадку якщо інших більш підходящих маршрутів не знайдено. В параметрах до &lt;code>MapFallbackToPage&lt;/code> вказано &lt;code>/_Host&lt;/code>. Це файл до якого буде перенаправлено.&lt;br>
 Цей файл знаходиться за шляхом &lt;code>Pages/_Host.cshtml&lt;/code>. Виглядає він схоже до звичайного html з деякими відміностями. На почтаку файла вказано&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/&amp;#34;&lt;/span>
 @namespace BlazorLearn.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 &lt;span style="color:#960050;background-color:#1e0010">@&lt;/span>{
@@ -896,12 +896,12 @@ Layout = &lt;span style="color:#66d9ef">null&lt;/span>;
 }
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>@page &amp;quot;/&amp;quot;&lt;/code> означай що цей файл буде відкрито якщо в url буде звернення до &lt;code>/&lt;/code>&lt;/p>
 &lt;p>В body відбувається рендер сторінок&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &amp;lt;app&amp;gt;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &amp;lt;app&amp;gt;
 &amp;lt;component type=&lt;span style="color:#e6db74">&amp;#34;typeof(App)&amp;#34;&lt;/span> render-mode=&lt;span style="color:#e6db74">&amp;#34;ServerPrerendered&amp;#34;&lt;/span> /&amp;gt;
 &amp;lt;/app&amp;gt;
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Тут вказано що ми рендеремо і в якому режимі. &lt;code>ServerPrerendered&lt;/code> рендерить спочатку на сервері і тоді відображає клієнту. &lt;code>App&lt;/code> вказує ще на одинй файл &lt;code>App.razor&lt;/code>. Цей файл визначає який layout відображати.
 Якщо &lt;code>routeData&lt;/code> існує відобразити її, якщо ця сторінка не має layout то &lt;code>MainLayout&lt;/code> буде використано. Якщо ж routeData не існує то буде відображено &lt;code>MainLayout&lt;/code> і текст &lt;code>Sorry, there's nothing at this address.&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;Router AppAssembly=&lt;span style="color:#e6db74">&amp;#34;@typeof(Program).Assembly&amp;#34;&lt;/span>&amp;gt;
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;Router AppAssembly=&lt;span style="color:#e6db74">&amp;#34;@typeof(Program).Assembly&amp;#34;&lt;/span>&amp;gt;
 &amp;lt;Found Context=&lt;span style="color:#e6db74">&amp;#34;routeData&amp;#34;&lt;/span>&amp;gt;
 &amp;lt;RouteView RouteData=&lt;span style="color:#e6db74">&amp;#34;@routeData&amp;#34;&lt;/span> DefaultLayout=&lt;span style="color:#e6db74">&amp;#34;@typeof(MainLayout)&amp;#34;&lt;/span> /&amp;gt;
 &amp;lt;/Found&amp;gt;
@@ -913,13 +913,13 @@ Layout = &lt;span style="color:#66d9ef">null&lt;/span>;
 &amp;lt;/Router&amp;gt;
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>В blazor server проекті одразу є створенні декілька сторінок. Це Counter, FetchData i Index. В кожній з них на початку вказано &lt;code>@page&lt;/code>. Для counter це буде &lt;code>@page &amp;quot;/counter&amp;quot;&lt;/code> для FetchData це буде &lt;code>@page &amp;quot;/fetchdata&amp;quot;&lt;/code> і для Index &lt;code>@page &amp;quot;/&amp;quot;&lt;/code>. Отже якщо відкрити в браузері будь який з цих ендпоінтів відповідна сторінка буде відкрита.&lt;br>
 Для одінєї сторінки може бути вказано декілька значень &lt;code>@page&lt;/code>. Наприклад для Counter можна добавити&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/counter&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/counter&amp;#34;&lt;/span>
 @page &lt;span style="color:#e6db74">&amp;#34;/count&amp;#34;&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>І тепер Counter сторінка буде відкриватись для обох url.&lt;br>
 &lt;img src="https://i.imgur.com/J4m8Off.png" alt="Count">&lt;/p>
 &lt;p>Для Counter також можна передавати початкове зазначення. Зараз при відкриті сторінки воно завжди рівне нулю.
 Для цього потрібно добавити ще один &lt;code>@page&lt;/code> який буде виглядати &lt;code>@page &amp;quot;/counter/{InitialValue:int}&amp;quot;&lt;/code> також можна добавити такий самий для count. &lt;code>InitialValue&lt;/code> буде публічний параметр типу int. Це дасть з могу в url вказувати &lt;code>localhost:5001/counter/123&lt;/code>. Далі потрібно написати код який буде встановалювати це значення. В &lt;code>@code&lt;/code> секції потрібно добавити параметер з такою самою назвою &lt;code>public int InitialValue {get; set; }&lt;/code> цей параметр має мати атрибут &lt;code>[Parameter]&lt;/code>. Для того щоб передати значення &lt;code>InitialValue&lt;/code> потрібно викликати метод &lt;code>OnParametersSet&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/counter&amp;#34;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/counter&amp;#34;&lt;/span>
 @page &lt;span style="color:#e6db74">&amp;#34;/count&amp;#34;&lt;/span>
 @page &lt;span style="color:#e6db74">&amp;#34;/counter/{InitialValue:int}&amp;#34;&lt;/span>
 @page &lt;span style="color:#e6db74">&amp;#34;/count/{InitialValue:int}&amp;#34;&lt;/span>
@@ -952,7 +952,7 @@ language: csharp mono: none dotnet: 3.1.4 solution: awstaghelper.sln install: - 
 &lt;h2 id="travisyml-конфігурація">.travis.yml Конфігурація&lt;/h2>
 &lt;p>Наступним кроком потрібно створити .travis.yml файл в корені репозиторія.
 Приклад мого конфігураційного файлу:&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="color:#f92672">language&lt;/span>: &lt;span style="color:#ae81ff">csharp&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="color:#f92672">language&lt;/span>: &lt;span style="color:#ae81ff">csharp&lt;/span>
 &lt;span style="color:#f92672">mono&lt;/span>: &lt;span style="color:#ae81ff">none&lt;/span>
 &lt;span style="color:#f92672">dotnet&lt;/span>: &lt;span style="color:#ae81ff">3.1.4&lt;/span>
 &lt;span style="color:#f92672">solution&lt;/span>: &lt;span style="color:#ae81ff">awstaghelper.sln&lt;/span>

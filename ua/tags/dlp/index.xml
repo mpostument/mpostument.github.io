@@ -6,7 +6,7 @@ name: nightfalldlp on: push: branches: - master pull_request: jobs: run-nightfal
 &lt;h2 id="github-action">Github Action&lt;/h2>
 &lt;p>Для Github Nightfall дає Action який можна використовувати для сканування Pull Request та Merge в бренчу.
 Для початку потрібно створити в корені репозиторія папку .github\workflows і в цій папці створити файл dlp.yml. Назва файлу можу бути будь якою.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfalldlp&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfalldlp&lt;/span>
 &lt;span style="color:#f92672">on&lt;/span>:
 &lt;span style="color:#f92672">push&lt;/span>:
 &lt;span style="color:#f92672">branches&lt;/span>:
@@ -36,7 +36,7 @@ NIGHTFALL_API_KEY остання потрібна зміна, отримати �
 &lt;p>Після того я з GitHub Action закінчено потрібно створити конфігураційни файл для Nightfall.&lt;br>
 Для цього створіть папку з назвою &lt;code>.nightfalldlp&lt;/code> і в ньому файл &lt;code>config.json&lt;/code>.&lt;br>
 Список детекторів які підтримує nightfall.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
 &lt;span style="color:#f92672">&amp;#34;detectors&amp;#34;&lt;/span>: [
 &lt;span style="color:#e6db74">&amp;#34;CREDIT_CARD_NUMBER&amp;#34;&lt;/span>,
 &lt;span style="color:#e6db74">&amp;#34;PHONE_NUMBER&amp;#34;&lt;/span>,
@@ -57,7 +57,7 @@ NIGHTFALL_API_KEY остання потрібна зміна, отримати �
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Мій конфігураційни файл виглядає коротшим тому що з повним генерує велику кількість false positive алармів. Наприклад&lt;br>
 &lt;img src="https://i.imgur.com/0EGejo0.png" alt="FalseErrorSample">&lt;/p>
 &lt;p>Приклад мого файлу:&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
 &lt;span style="color:#f92672">&amp;#34;detectors&amp;#34;&lt;/span>: [
 &lt;span style="color:#e6db74">&amp;#34;API_KEY&amp;#34;&lt;/span>,
 &lt;span style="color:#e6db74">&amp;#34;CRYPTOGRAPHIC_KEY&amp;#34;&lt;/span>,

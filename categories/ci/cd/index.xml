@@ -37,7 +37,7 @@ GitHub setup In github you need to create two repositories, one is for .md files
 &lt;p>&lt;img src="https://i.imgur.com/GnsuIEm.png" alt="Repository">&lt;/p>
 &lt;p>Code will be deployed to &lt;code>mpostument.github.io&lt;/code> repository via github actions. No manual changes allowed here.&lt;/p>
 &lt;p>Create new site with hugo. Hugo will create a new directory with the site name. After directory is created initialize empty git project and connect it with github repository&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell">hugo new site hugodemo
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell">hugo new site hugodemo
 cd hugodemo
 git init
 git remote add origin git@github.com:mpostument/content-mpostument.git
@@ -51,7 +51,7 @@ git remote add origin git@github.com:mpostument/content-mpostument.git
 &lt;p>For GitHub actions to work, at the root of the repository, you need to create a folder &lt;code>.github/workflows&lt;/code> in which you create a yml configuration file for Github Actions.&lt;/p>
 &lt;p>In the &lt;code>on&lt;/code> section, I specify to run the build only on push to the master branch.&lt;/p>
 &lt;p>In &lt;code>steps&lt;/code> I call several actions in order. The pipeline begins with cloning the repository. After that, I call &lt;code>git submodule update --init --recursive&lt;/code> to update the theme using submodule. The next step is to install the required version of hugo and call &lt;code>hugo --minify&lt;/code> to generate a static site from .md files and theme. And the last step is to deploy content from the &lt;code>./Public&lt;/code> directory. Directory is created after executing the command &lt;code>hugo --minify&lt;/code>. As parameters, you also need to pass the git username, email, branch and repository to which do deployment.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">CI&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">CI&lt;/span>
 &lt;span style="color:#f92672">on&lt;/span>:
 &lt;span style="color:#f92672">push&lt;/span>:
 &lt;span style="color:#f92672">branches&lt;/span>:
@@ -90,7 +90,7 @@ I tried to implement DLP with Github Actions and want to share my results&lt;/p>
 &lt;h2 id="github-action">Github Action&lt;/h2>
 &lt;p>Nightfall gives GitHub Action which can be used to scan Pull Request and Push in the branch.
 First you need to create a &lt;code>.github\workflows&lt;/code> folder in the root of the repository and create a dlp.yml file in this folder. The file name can be any.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfalldlp&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfalldlp&lt;/span>
 &lt;span style="color:#f92672">on&lt;/span>:
 &lt;span style="color:#f92672">push&lt;/span>:
 &lt;span style="color:#f92672">branches&lt;/span>:
@@ -120,7 +120,7 @@ NIGHTFALL_API_KEY the last required variable, you can get it by registering at &
 &lt;p>Now when i finished with GitHub Action I need to create a configuration file for Nightfall.
 To do this, create a folder named &lt;code>.nightfalldlp&lt;/code> and the file &lt;code>config.json&lt;/code> in it.
 List of detectors that support nightfall.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
 &lt;span style="color:#f92672">&amp;#34;detectors&amp;#34;&lt;/span>: [
 &lt;span style="color:#e6db74">&amp;#34;CREDIT_CARD_NUMBER&amp;#34;&lt;/span>,
 &lt;span style="color:#e6db74">&amp;#34;PHONE_NUMBER&amp;#34;&lt;/span>,
@@ -141,7 +141,7 @@ List of detectors that support nightfall.&lt;/p>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>My configuration file looks shorter because the full one generates a lot of false-positive alarms. Example&lt;br>
 &lt;img src="https://i.imgur.com/0EGejo0.png" alt="FalseErrorSample">&lt;/p>
 &lt;p>Example of my file:&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
 &lt;span style="color:#f92672">&amp;#34;detectors&amp;#34;&lt;/span>: [
 &lt;span style="color:#e6db74">&amp;#34;API_KEY&amp;#34;&lt;/span>,
 &lt;span style="color:#e6db74">&amp;#34;CRYPTOGRAPHIC_KEY&amp;#34;&lt;/span>,
@@ -205,7 +205,7 @@ You also need to create a folder that will contain the application &lt;code>mkdi
 &lt;h2 id="deployment-script">Deployment Script&lt;/h2>
 &lt;p>At the root of the repository you need to create a file called &lt;code>appspec.yml&lt;/code>. Here you can find all options supported by this file - &lt;a href="https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html">AWS&lt;/a>.&lt;/p>
 &lt;p>Here is an example of my file:&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">version&lt;/span>: &lt;span style="color:#ae81ff">0.0&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">version&lt;/span>: &lt;span style="color:#ae81ff">0.0&lt;/span>
 &lt;span style="color:#f92672">os&lt;/span>: &lt;span style="color:#ae81ff">linux&lt;/span>
 &lt;span style="color:#f92672">files&lt;/span>:
 - &lt;span style="color:#f92672">source&lt;/span>: &lt;span style="color:#ae81ff">/&lt;/span>
@@ -225,7 +225,7 @@ The &lt;code>permissions&lt;/code> specifies which permissions should have the f
 In the &lt;code>hooks&lt;/code> section is the application configuration. I use the &lt;code>AfterInstall&lt;/code> hook. This means that the script will run after the &lt;code>Install&lt;/code> step. During the &lt;code>Install&lt;/code> step, the files are copied to the server. The &lt;code>location&lt;/code> specifies which script to run and from its user. &lt;code>runas&lt;/code> means that the script will be called on behalf of the user. By default, the code-deploy agent is started from the root and runas at this stage will switch to ec2-user. You can also change the code-deploy agent to run immediately from ec2-user.&lt;/p>
 &lt;p>Next we need a deployment script. In the repository, I created the ops folder because the path to my script is &lt;code>- location: ops/deploybuild.sh&lt;/code>. And in this folder I created a script &lt;code>deploybuild.sh&lt;/code>.
 I have a node.js application for which you need to do yarn install and npm start. I will add it to the script&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-bash" data-lang="bash">&lt;span style="color:#75715e">#!/usr/bin/env bash
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-bash" data-lang="bash">&lt;span style="color:#75715e">#!/usr/bin/env bash
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>cd /opt/application
 yarn --ignore-engines
 cd examples/demo-app/
@@ -242,7 +242,7 @@ To get started, you need to create a Travis account. This requires you to &lt;a 
 &lt;h2 id="travisyml-configuration">.travis.yml Configuration&lt;/h2>
 &lt;p>The next step is to create a .travis.yml file in the root of the repository.&lt;br>
 Example of my configuration file:&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="color:#f92672">language&lt;/span>: &lt;span style="color:#ae81ff">csharp&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="color:#f92672">language&lt;/span>: &lt;span style="color:#ae81ff">csharp&lt;/span>
 &lt;span style="color:#f92672">mono&lt;/span>: &lt;span style="color:#ae81ff">none&lt;/span>
 &lt;span style="color:#f92672">dotnet&lt;/span>: &lt;span style="color:#ae81ff">3.1.4&lt;/span>
 &lt;span style="color:#f92672">solution&lt;/span>: &lt;span style="color:#ae81ff">awstaghelper.sln&lt;/span>

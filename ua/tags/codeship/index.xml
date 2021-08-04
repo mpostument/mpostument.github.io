@@ -46,7 +46,7 @@ CodeShip Configuration Спочатку потрібо добавити репо
 &lt;h2 id="deployment-script">Deployment Script&lt;/h2>
 &lt;p>В корені репозиторія потрібно створити файл який має називатись &lt;code>appspec.yml&lt;/code>. Тут можна знайти всі опції які підтримує цей файл - &lt;a href="https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html">AWS&lt;/a>.&lt;/p>
 &lt;p>Ось приклад мого файла:&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">version&lt;/span>: &lt;span style="color:#ae81ff">0.0&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">version&lt;/span>: &lt;span style="color:#ae81ff">0.0&lt;/span>
 &lt;span style="color:#f92672">os&lt;/span>: &lt;span style="color:#ae81ff">linux&lt;/span>
 &lt;span style="color:#f92672">files&lt;/span>:
 - &lt;span style="color:#f92672">source&lt;/span>: &lt;span style="color:#ae81ff">/&lt;/span>
@@ -66,7 +66,7 @@ CodeShip Configuration Спочатку потрібо добавити репо
 В &lt;code>hooks&lt;/code> секції відбувається конфігурація аплікації. Я використовую &lt;code>AfterInstall&lt;/code> hook. Це означає що скрипт буде запущено після &lt;code>Install&lt;/code> кроку. Під час &lt;code>Install&lt;/code> кроку файли копіюються на сервер. В &lt;code>location&lt;/code> вказано який скрипт запускати та від його корисувача. &lt;code>runas&lt;/code> означає що скрипт буде викликатись від імені користувача. По дефолту code-deploy agent запускається від рута і runas на цьому етапі переключить на ec2-user. Також можна поміняти щоб code-deploy agent запускався одарзу від ec2-user.&lt;/p>
 &lt;p>Далі нам потрібен деплой скрипт. В репозиторії я створив папку ops оскільки шлях до мого скрипта &lt;code>- location: ops/deploybuild.sh&lt;/code>. І в цій папку створив скрипт &lt;code>deploybuild.sh&lt;/code>.
 В мене node.js аплікації для якою потрібно зробити yarn install та npm start. Я це добавлю в скрипт&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-bash" data-lang="bash">&lt;span style="color:#75715e">#!/usr/bin/env bash
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-bash" data-lang="bash">&lt;span style="color:#75715e">#!/usr/bin/env bash
 &lt;/span>&lt;span style="color:#75715e">&lt;/span>cd /opt/application
 yarn --ignore-engines
 cd examples/demo-app/

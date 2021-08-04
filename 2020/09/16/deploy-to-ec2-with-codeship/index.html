@@ -1,22 +1,144 @@
-<!doctype html><html lang=en><head><title>Deploy to ec2 with codedship :: mpostument.com</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Deploy you code to ec2 server with Codeship and AWS CodeDeploy"><meta name=keywords content="Codeship,CI/CD,Devops,AWS"><meta name=robots content="noodp"><link rel=canonical href=/2020/09/16/deploy-to-ec2-with-codeship/><script async src="https://www.googletagmanager.com/gtag/js?id=G-SBRJXS94DC"></script><script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-SBRJXS94DC',{anonymize_ip:!1})}</script><link rel=stylesheet href=/assets/style.css><link rel=stylesheet href=/assets/blue.css><link rel=apple-touch-icon href=/img/apple-touch-icon-192x192.png><link rel="shortcut icon" href=/img/favicon/blue.png><meta name=twitter:card content="summary"><meta name=twitter:site content="mpostument.com"><meta name=twitter:creator content="Maks_Postument"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="Deploy to ec2 with codedship"><meta property="og:description" content="Deploy you code to ec2 server with Codeship and AWS CodeDeploy"><meta property="og:url" content="/2020/09/16/deploy-to-ec2-with-codeship/"><meta property="og:site_name" content="mpostument.com"><meta property="og:image" content="https://i.imgur.com/lSqRdnq.jpg?1"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:section" content="Devops"><meta property="article:section" content="CI/CD"><meta property="article:published_time" content="2020-09-16 20:24:40 +0300 +0300"><p align=center style=background-color:#23b0ff>Sign up for my <a href=https://tinyletter.com/mpostument>email newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of new blog posts.</p></head><body class=blue><div class="container center headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/><div class=logo>mpostument.com</div></a></div><div class=menu-trigger>menu</div></div><nav class=menu><ul class="menu__inner menu__inner--desktop"><li><a href=/>Home</a></li><li><a href=/categories/>Categories</a></li><li><a href=/tags/>Tags</a></li><li><a href=/projects/>Projects</a></li><div class=spacer></div><ul class=language-selector><ul class=language-selector-current><li>English ▾</li></ul><ul class="language-selector__more hidden"><li><a href=/>English</a></li><li><a href=/ua/>Ukraine</a></li></ul></ul></ul><ul class="menu__inner menu__inner--mobile"><li><a href=/>Home</a></li><li><a href=/categories/>Categories</a></li><li><a href=/tags/>Tags</a></li><li><a href=/projects/>Projects</a></li><hr><li><a href=/>English</a></li><li><a href=/ua/>Ukraine</a></li></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=/2020/09/16/deploy-to-ec2-with-codeship/>Deploy to ec2 with codedship</a></h1><div class=post-meta><span class=post-date>2020-09-16</span>
-<span class=post-author>:: Maksym Postument</span></div><span class=post-tags>#<a href=/tags/codeship/>Codeship</a>&nbsp;
+<!doctype html><html lang=en>
+<head>
+<title>Deploy to ec2 with codedship :: mpostument.com</title>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Deploy you code to ec2 server with Codeship and AWS CodeDeploy">
+<meta name=keywords content="Codeship,CI/CD,Devops,AWS">
+<meta name=robots content="noodp">
+<link rel=canonical href=/2020/09/16/deploy-to-ec2-with-codeship/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBRJXS94DC"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-SBRJXS94DC',{anonymize_ip:!1})}</script>
+<link rel=stylesheet href=/assets/style.css>
+<link rel=stylesheet href=/assets/blue.css>
+<link rel=apple-touch-icon href=/img/apple-touch-icon-192x192.png>
+<link rel="shortcut icon" href=/img/favicon/blue.png>
+<meta name=twitter:card content="summary">
+<meta name=twitter:site content="mpostument.com">
+<meta name=twitter:creator content="Maks_Postument">
+<meta property="og:locale" content="en">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deploy to ec2 with codedship">
+<meta property="og:description" content="Deploy you code to ec2 server with Codeship and AWS CodeDeploy">
+<meta property="og:url" content="/2020/09/16/deploy-to-ec2-with-codeship/">
+<meta property="og:site_name" content="mpostument.com">
+<meta property="og:image" content="https://i.imgur.com/lSqRdnq.jpg?1">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+<meta property="article:section" content="Devops">
+<meta property="article:section" content="CI/CD">
+<meta property="article:published_time" content="2020-09-16 20:24:40 +0300 +0300">
+<p align=center style=background-color:#23b0ff> Sign up for my <a href=https://tinyletter.com/mpostument>email newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of new blog posts.</p>
+</head>
+<body class=blue>
+<div class="container center headings--one-size">
+<header class=header>
+<div class=header__inner>
+<div class=header__logo>
+<a href=/>
+<div class=logo>
+mpostument.com
+</div>
+</a>
+</div>
+<div class=menu-trigger>menu</div>
+</div>
+<nav class=menu>
+<ul class="menu__inner menu__inner--desktop">
+<li><a href=/>Home</a></li>
+<li><a href=/categories/>Categories</a></li>
+<li><a href=/tags/>Tags</a></li>
+<li><a href=/projects/>Projects</a></li>
+<div class=spacer></div>
+<ul class=language-selector>
+<ul class=language-selector-current>
+<li>English ▾</li>
+</ul>
+<ul class="language-selector__more hidden">
+<li><a href=/>English</a></li>
+<li><a href=/ua/>Ukraine</a></li>
+</ul>
+</ul>
+</ul>
+<ul class="menu__inner menu__inner--mobile">
+<li><a href=/>Home</a></li>
+<li><a href=/categories/>Categories</a></li>
+<li><a href=/tags/>Tags</a></li>
+<li><a href=/projects/>Projects</a></li>
+<hr>
+<li>
+<a href=/>English</a>
+</li>
+<li>
+<a href=/ua/>Ukraine</a>
+</li>
+</ul>
+</nav>
+</header>
+<div class=content>
+<div class=post>
+<h1 class=post-title>
+<a href=/2020/09/16/deploy-to-ec2-with-codeship/>Deploy to ec2 with codedship</a></h1>
+<div class=post-meta>
+<span class=post-date>
+2020-09-16
+</span>
+<span class=post-author>:: Maksym Postument</span>
+</div>
+<span class=post-tags>
+#<a href=/tags/codeship/>Codeship</a>&nbsp;
 #<a href=/tags/aws/>AWS</a>&nbsp;
-#<a href=/tags/devops/>Devops</a>&nbsp;</span>
-<img src=https://i.imgur.com/lSqRdnq.jpg?1 class=post-cover alt="Deploy to ec2 with codedship"><div class=post-content><div><p>Hi there!</p><p>Today I want to show how you can deploy code on AWS EC2 using CodeShip Basic.
-To do this, I will use the integration of Codeship with AWS CodeDeploy.</p><h2 id=codeship-configuration>CodeShip Configuration<a href=#codeship-configuration class=hanchor arialabel=Anchor>&#8983;</a></h2><p>First you need to add a repository to CodeShip and go to the Deploy page
-<img src=https://i.imgur.com/Zz2v8aZ.png alt=Coeship1></p><p>Add a branch from which code will be deployed to ec2. In my case, the branch is master.
+#<a href=/tags/devops/>Devops</a>&nbsp;
+</span>
+<img src=https://i.imgur.com/lSqRdnq.jpg?1 class=post-cover alt="Deploy to ec2 with codedship">
+<div class=post-content><div>
+<p>Hi there!</p>
+<p>Today I want to show how you can deploy code on AWS EC2 using CodeShip Basic.
+To do this, I will use the integration of Codeship with AWS CodeDeploy.</p>
+<h2 id=codeship-configuration>CodeShip Configuration<a href=#codeship-configuration class=hanchor arialabel=Anchor>&#8983;</a> </h2>
+<p>First you need to add a repository to CodeShip and go to the Deploy page
+<img src=https://i.imgur.com/Zz2v8aZ.png alt=Coeship1></p>
+<p>Add a branch from which code will be deployed to ec2. In my case, the branch is master.
 Once the branch is added you need to scroll down to the Deployment section. And select CodeDeploy
-<img src=https://i.imgur.com/KVCmUDn.png alt=Codeship2></p><p>The following form will appear immediately
+<img src=https://i.imgur.com/KVCmUDn.png alt=Codeship2></p>
+<p>The following form will appear immediately
 <img src=https://i.imgur.com/rfdRxKl.png alt=CodeshipForm3>
 Here you need to enter the Access and Secret Keys of the AWS user who will perform the deployment. The user must have access to s3 and CodeDeploy.
-In the region, specify your AWS Region where the application is located. For me it&rsquo;s us-east-1.<br><code>Application</code>, <code>GroupName</code> will need to be created in AWS. The value should be chosen so that it is clear which application will be deployed. <code>S3 Bucket</code> can be as a general bucket where all deployments will be carried out or choose an individual name for one application. In my case it&rsquo;s CodeShipEc2Deployment.<br>And last is <code>Config Name</code> you need to specify the configuration name in CodeDeploy. I will take the standard <code>CodeDeployDefault.AllAtOnce</code>. This means that the deployment will occur at once on all ec2 instances</p><p>Now with CodeShip configuration over and you can start setting up AWS.</p><h2 id=codedeploy-configuration>CodeDeploy Configuration<a href=#codedeploy-configuration class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Open CodeDeploy service in AWS.<br><img src=https://i.imgur.com/cTv6l3Y.png alt=CodeDeploy>
-In the Deployment section, find Applications<br><img src=https://i.imgur.com/BAZ6E6d.png alt=Applications><br>Click Create Application. Enter the same name as in Codeship in the <code>Application</code> section. Select EC2 as the Compute Platform
+In the region, specify your AWS Region where the application is located. For me it&rsquo;s us-east-1.<br>
+<code>Application</code>, <code>GroupName</code> will need to be created in AWS. The value should be chosen so that it is clear which application will be deployed. <code>S3 Bucket</code> can be as a general bucket where all deployments will be carried out or choose an individual name for one application. In my case it&rsquo;s CodeShipEc2Deployment.<br>
+And last is <code>Config Name</code> you need to specify the configuration name in CodeDeploy. I will take the standard <code>CodeDeployDefault.AllAtOnce</code>. This means that the deployment will occur at once on all ec2 instances</p>
+<p>Now with CodeShip configuration over and you can start setting up AWS.</p>
+<h2 id=codedeploy-configuration>CodeDeploy Configuration<a href=#codedeploy-configuration class=hanchor arialabel=Anchor>&#8983;</a> </h2>
+<p>Open CodeDeploy service in AWS.<br>
+<img src=https://i.imgur.com/cTv6l3Y.png alt=CodeDeploy>
+In the Deployment section, find Applications<br>
+<img src=https://i.imgur.com/BAZ6E6d.png alt=Applications><br>
+Click Create Application. Enter the same name as in Codeship in the <code>Application</code> section. Select EC2 as the Compute Platform
 <img src=https://i.imgur.com/zAXUxuF.png alt=CreateApplication>
-Open the newly created <code>Application</code> and in <code>Deployment Groups</code> select <code>Create Deployment Group</code><br><img src=https://i.imgur.com/5wfA0VU.png alt=DeploymentGroup>
+Open the newly created <code>Application</code> and in <code>Deployment Groups</code> select <code>Create Deployment Group</code><br>
+<img src=https://i.imgur.com/5wfA0VU.png alt=DeploymentGroup>
 In <code>Deployment group name</code> it is necessary to enter the same name which was specified in CodeShip.
-In <code>ServiceRole</code> choose a role that will allow to carry out deployment on ec2. A good example of the role can be found <a href=https://docs.aws.amazon.com/codedeploy/latest/userguide/getting-started-create-service-role.html>here</a>.</p><p>In <code>Environment configuration</code>, select ec2. Then you need to specify which tag to use for the ec2 filter. For example it can be Key = Name, Value = ProductionApplication. Here you can use any tags that are on your ec2.<br><img src=https://i.imgur.com/ffGKRQV.png alt=Ec2Filter></p><h2 id=ec2-configuration>Ec2 Configuration<a href=#ec2-configuration class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Another role will be required for ec2. What accesses it should have can be found <a href=https://docs.aws.amazon.com/codedeploy/latest/userguide/instances-ec2-configure.html#instances-ec2-configure-2-verify-instance-profile-permissions>here</a></p><p>Once the role is created, it must be added to the ec2 instance. To do this, select the desired ec2. Right-click and select Attach Role
-<img src=https://i.imgur.com/uaIUcyg.png alt=AttachRole><br>Find the role you created above in the list.<br>Now you need to put the CodeDeploy Agent on the ec2 instance. To do this, connect to the server via ssh
-<code>ssh -i private_key ec2-user@IP</code>. In my example i am using AmazonLinux. If you have another OS commands can be found <a href=https://docs.aws.amazon.com/codedeploy/latest/userguide/codedeploy-agent-operations-install-cli.html>here</a>.</p><ul><li>Download the installation <code>wget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install</code></li><li>Provide permissions <code>sudo chmod + x install</code></li><li>Install agent <code>sudo ./install auto</code></li></ul><p>You can check if the agent is running with the <code>sudo service codedeploy-agent status</code> command. The result should be similar to <code>The AWS CodeDeploy agent is running as PID 32466</code>.<br>You also need to create a folder that will contain the application <code>mkdir /opt/application</code> and give permission to the user. I use ec2-user <code>chown ec2-user:ec2-user /opt/application</code></p><h2 id=deployment-script>Deployment Script<a href=#deployment-script class=hanchor arialabel=Anchor>&#8983;</a></h2><p>At the root of the repository you need to create a file called <code>appspec.yml</code>. Here you can find all options supported by this file - <a href=https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html>AWS</a>.</p><p>Here is an example of my file:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yml data-lang=yml><span style=color:#f92672>version</span>: <span style=color:#ae81ff>0.0</span>
+In <code>ServiceRole</code> choose a role that will allow to carry out deployment on ec2. A good example of the role can be found <a href=https://docs.aws.amazon.com/codedeploy/latest/userguide/getting-started-create-service-role.html>here</a>.</p>
+<p>In <code>Environment configuration</code>, select ec2. Then you need to specify which tag to use for the ec2 filter. For example it can be Key = Name, Value = ProductionApplication. Here you can use any tags that are on your ec2.<br>
+<img src=https://i.imgur.com/ffGKRQV.png alt=Ec2Filter></p>
+<h2 id=ec2-configuration>Ec2 Configuration<a href=#ec2-configuration class=hanchor arialabel=Anchor>&#8983;</a> </h2>
+<p>Another role will be required for ec2. What accesses it should have can be found <a href=https://docs.aws.amazon.com/codedeploy/latest/userguide/instances-ec2-configure.html#instances-ec2-configure-2-verify-instance-profile-permissions>here</a></p>
+<p>Once the role is created, it must be added to the ec2 instance. To do this, select the desired ec2. Right-click and select Attach Role
+<img src=https://i.imgur.com/uaIUcyg.png alt=AttachRole><br>
+Find the role you created above in the list.<br>
+Now you need to put the CodeDeploy Agent on the ec2 instance. To do this, connect to the server via ssh
+<code>ssh -i private_key ec2-user@IP</code>. In my example i am using AmazonLinux. If you have another OS commands can be found <a href=https://docs.aws.amazon.com/codedeploy/latest/userguide/codedeploy-agent-operations-install-cli.html>here</a>.</p>
+<ul>
+<li>Download the installation <code>wget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install</code></li>
+<li>Provide permissions <code>sudo chmod + x install</code></li>
+<li>Install agent <code>sudo ./install auto</code></li>
+</ul>
+<p>You can check if the agent is running with the <code>sudo service codedeploy-agent status</code> command. The result should be similar to <code>The AWS CodeDeploy agent is running as PID 32466</code>.<br>
+You also need to create a folder that will contain the application <code>mkdir /opt/application</code> and give permission to the user. I use ec2-user <code>chown ec2-user:ec2-user /opt/application</code></p>
+<h2 id=deployment-script>Deployment Script<a href=#deployment-script class=hanchor arialabel=Anchor>&#8983;</a> </h2>
+<p>At the root of the repository you need to create a file called <code>appspec.yml</code>. Here you can find all options supported by this file - <a href=https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html>AWS</a>.</p>
+<p>Here is an example of my file:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yml data-lang=yml><span style=color:#f92672>version</span>: <span style=color:#ae81ff>0.0</span>
 <span style=color:#f92672>os</span>: <span style=color:#ae81ff>linux</span>
 <span style=color:#f92672>files</span>:
   - <span style=color:#f92672>source</span>: <span style=color:#ae81ff>/</span>
@@ -29,14 +151,58 @@ In <code>ServiceRole</code> choose a role that will allow to carry out deploymen
    <span style=color:#f92672>AfterInstall</span>:
    - <span style=color:#f92672>location</span>: <span style=color:#ae81ff>ops/deploybuild.sh</span>
      <span style=color:#f92672>runas</span>: <span style=color:#ae81ff>ec2-user</span>
-</code></pre></div><p><code>version</code> has a default value and does not need to be changed. 0.0 The only value is supported.<br><code>os</code> can have two values windows or linux, my os is EC2 AmazonLinux, so I choose linux.<br><code>files</code> indicates which files need to be copied to the server during deployment. <code>source: /</code> means copy all files. <code>destination</code> is where to copy.<br>The <code>permissions</code> specifies which permissions should have the files just copied.<br>In the <code>hooks</code> section is the application configuration. I use the <code>AfterInstall</code> hook. This means that the script will run after the <code>Install</code> step. During the <code>Install</code> step, the files are copied to the server. The <code>location</code> specifies which script to run and from its user. <code>runas</code> means that the script will be called on behalf of the user. By default, the code-deploy agent is started from the root and runas at this stage will switch to ec2-user. You can also change the code-deploy agent to run immediately from ec2-user.</p><p>Next we need a deployment script. In the repository, I created the ops folder because the path to my script is <code>- location: ops/deploybuild.sh</code>. And in this folder I created a script <code>deploybuild.sh</code>.
-I have a node.js application for which you need to do yarn install and npm start. I will add it to the script</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e>#!/usr/bin/env bash
+</code></pre></div><p><code>version</code> has a default value and does not need to be changed. 0.0 The only value is supported.<br>
+<code>os</code> can have two values windows or linux, my os is EC2 AmazonLinux, so I choose linux.<br>
+<code>files</code> indicates which files need to be copied to the server during deployment. <code>source: /</code> means copy all files. <code>destination</code> is where to copy.<br>
+The <code>permissions</code> specifies which permissions should have the files just copied.<br>
+In the <code>hooks</code> section is the application configuration. I use the <code>AfterInstall</code> hook. This means that the script will run after the <code>Install</code> step. During the <code>Install</code> step, the files are copied to the server. The <code>location</code> specifies which script to run and from its user. <code>runas</code> means that the script will be called on behalf of the user. By default, the code-deploy agent is started from the root and runas at this stage will switch to ec2-user. You can also change the code-deploy agent to run immediately from ec2-user.</p>
+<p>Next we need a deployment script. In the repository, I created the ops folder because the path to my script is <code>- location: ops/deploybuild.sh</code>. And in this folder I created a script <code>deploybuild.sh</code>.
+I have a node.js application for which you need to do yarn install and npm start. I will add it to the script</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e>#!/usr/bin/env bash
 </span><span style=color:#75715e></span>cd /opt/application
 yarn --ignore-engines
 cd examples/demo-app/
 <span style=color:#f92672>(</span>npm run start-prod<span style=color:#f92672>)</span>&amp;
-</code></pre></div><p>This is very basic script to start application. For production is better to use pm2 package to start js application.<br>Now after every push to master branch code will be deployed.</p></div></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button previous"><a href=/2020/09/30/nightfall-dlp-configuration/><span class=button__icon>←</span>
-<span class=button__text>Nightfall Dlp Configuration</span></a></span>
-<span class="button next"><a href=/2020/09/01/get-lambdas-in-vpc-with-go/><span class=button__text>Get Lambdas in Vpc With Go</span>
-<span class=button__icon>→</span></a></span></div></div><div id=disqus_thread></div><script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//mpostument-com.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2021 Powered by <a href=http://gohugo.io>Hugo</a></span>
-<span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span></div></div></footer><script src=/assets/main.js></script><script src=/assets/prism.js></script><script src=/assets/languageSelector.js></script></div></body></html>
+</code></pre></div><p>This is very basic script to start application. For production is better to use pm2 package to start js application.<br>
+Now after every push to master branch code will be deployed.</p>
+</div></div>
+<div class=pagination>
+<div class=pagination__title>
+<span class=pagination__title-h>Read other posts</span>
+<hr>
+</div>
+<div class=pagination__buttons>
+<span class="button previous">
+<a href=/2020/09/30/nightfall-dlp-configuration/>
+<span class=button__icon>←</span>
+<span class=button__text>Nightfall Dlp Configuration</span>
+</a>
+</span>
+<span class="button next">
+<a href=/2020/09/01/get-lambdas-in-vpc-with-go/>
+<span class=button__text>Get Lambdas in Vpc With Go</span>
+<span class=button__icon>→</span>
+</a>
+</span>
+</div>
+</div>
+<div id=disqus_thread></div>
+<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//mpostument-com.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
+<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
+<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
+</div>
+</div>
+<footer class=footer>
+<div class=footer__inner>
+<div class=copyright>
+<span>© 2021 Powered by <a href=http://gohugo.io>Hugo</a></span>
+<span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span>
+</div>
+</div>
+</footer>
+<script src=/assets/main.js></script>
+<script src=/assets/prism.js></script>
+<script src=/assets/languageSelector.js></script>
+</div>
+</body>
+</html>

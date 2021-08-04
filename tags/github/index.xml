@@ -5,7 +5,7 @@ I tried to implement DLP with Github Actions and want to share my results&lt;/p>
 &lt;h2 id="github-action">Github Action&lt;/h2>
 &lt;p>Nightfall gives GitHub Action which can be used to scan Pull Request and Push in the branch.
 First you need to create a &lt;code>.github\workflows&lt;/code> folder in the root of the repository and create a dlp.yml file in this folder. The file name can be any.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfalldlp&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfalldlp&lt;/span>
 &lt;span style="color:#f92672">on&lt;/span>:
 &lt;span style="color:#f92672">push&lt;/span>:
 &lt;span style="color:#f92672">branches&lt;/span>:
@@ -35,7 +35,7 @@ NIGHTFALL_API_KEY the last required variable, you can get it by registering at &
 &lt;p>Now when i finished with GitHub Action I need to create a configuration file for Nightfall.
 To do this, create a folder named &lt;code>.nightfalldlp&lt;/code> and the file &lt;code>config.json&lt;/code> in it.
 List of detectors that support nightfall.&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
 &lt;span style="color:#f92672">&amp;#34;detectors&amp;#34;&lt;/span>: [
 &lt;span style="color:#e6db74">&amp;#34;CREDIT_CARD_NUMBER&amp;#34;&lt;/span>,
 &lt;span style="color:#e6db74">&amp;#34;PHONE_NUMBER&amp;#34;&lt;/span>,
@@ -56,7 +56,7 @@ List of detectors that support nightfall.&lt;/p>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>My configuration file looks shorter because the full one generates a lot of false-positive alarms. Example&lt;br>
 &lt;img src="https://i.imgur.com/0EGejo0.png" alt="FalseErrorSample">&lt;/p>
 &lt;p>Example of my file:&lt;/p>
-&lt;div class="highlight">&lt;pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
 &lt;span style="color:#f92672">&amp;#34;detectors&amp;#34;&lt;/span>: [
 &lt;span style="color:#e6db74">&amp;#34;API_KEY&amp;#34;&lt;/span>,
 &lt;span style="color:#e6db74">&amp;#34;CRYPTOGRAPHIC_KEY&amp;#34;&lt;/span>,
