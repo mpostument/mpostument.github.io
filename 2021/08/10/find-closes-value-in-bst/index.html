@@ -94,19 +94,19 @@ mpostument.com
 <p>Hello!</p>
 <p>Today we will look at how to find the nearest value in BST.
 The input is given a binary tree and a number, and you need to find the closest number to the given one.
-For example, we have a tree:
-6
-/<br>
-4 10
-/ \ <br>
-2 5 23
-And the number 13. You need to find the number that is closest to 13 in the tree.
+For example, we have a tree:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>    <span style=color:#ae81ff>6</span>
+   / <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>  <span style=color:#ae81ff>4</span>  <span style=color:#ae81ff>10</span>
+ / <span style=color:#ae81ff>\ </span>  <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span><span style=color:#ae81ff>2</span>   <span style=color:#ae81ff>5</span>   <span style=color:#ae81ff>23</span>
+</code></pre></div><p>And the number 13. You need to find the number that is closest to 13 in the tree.
 To do this, we need another number (the closest value), which has a high value such as infinity.</p>
-<p>We start with the root, in this case, it has a value of 6. From the goal (number 13) module subtract 6 and get 7. Repeat the same with a current nearest value which is equal to infinity, |infinity - 13| = infinity. We compare two numbers 7 and infinity, 7 is less so the new nearest number will be 6. Next, we use the attributes of the binary tree. Since the number 13 is greater than the root 6 we can completely discard the left side of the tree. And it will remain only
-10
-<br>
-23
-And the nearest number is 6.
+<p>We start with the root, in this case, it has a value of 6. From the goal (number 13) module subtract 6 and get 7. Repeat the same with a current nearest value which is equal to infinity, |infinity - 13| = infinity. We compare two numbers 7 and infinity, 7 is less so the new nearest number will be 6. Next, we use the attributes of the binary tree. Since the number 13 is greater than the root 6 we can completely discard the left side of the tree. And it will remain only</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>    <span style=color:#ae81ff>10</span>
+      <span style=color:#ae81ff>\
+</span><span style=color:#ae81ff></span>       <span style=color:#ae81ff>23</span>
+</code></pre></div><p>And the nearest number is 6.
 Do the same with the next element of the tree which is equal to 10.
 By the module, I subtract from the 10 values ​​that we are looking for. | 10 - 13 | = 3. And compares it with the current nearest number (13-6 = 7). 3 is less than 7. Hence, the new nearest number is 10.</p>
 <p>The last element of a tree remained. Again, I subtract the value from the tree with goal number | 23 - 10 | = 13. And compare with the current nearest number (13-10 = 3). 13 is more than 3, so the nearest number remains 10. There are no more elements in the tree and therefore the closest number to 13 is 10.</p>
