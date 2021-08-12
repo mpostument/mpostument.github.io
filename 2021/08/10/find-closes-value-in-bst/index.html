@@ -1,0 +1,200 @@
+<!doctype html><html lang=en>
+<head>
+<title>Find Closes Value in BST :: mpostument.com</title>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="How to find the closest value in BST">
+<meta name=keywords content="Algorithms,Interview,Codding Assignment">
+<meta name=robots content="noodp">
+<link rel=canonical href=/2021/08/10/find-closes-value-in-bst/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBRJXS94DC"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-SBRJXS94DC',{anonymize_ip:!1})}</script>
+<link rel=stylesheet href=/assets/style.css>
+<link rel=stylesheet href=/assets/blue.css>
+<link rel=apple-touch-icon href=/img/apple-touch-icon-192x192.png>
+<link rel="shortcut icon" href=/img/favicon/blue.png>
+<meta name=twitter:card content="summary">
+<meta name=twitter:site content="mpostument.com">
+<meta name=twitter:creator content="Maks_Postument">
+<meta property="og:locale" content="en">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Find Closes Value in BST">
+<meta property="og:description" content="How to find the closest value in BST">
+<meta property="og:url" content="/2021/08/10/find-closes-value-in-bst/">
+<meta property="og:site_name" content="mpostument.com">
+<meta property="og:image" content="https://i.imgur.com/PQRmfZP.jpg">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+<meta property="article:section" content="Algorithms">
+<meta property="article:published_time" content="2021-08-10 20:02:00 +0300 +0300">
+<p align=center style=background-color:#23b0ff> Sign up for my <a href=https://tinyletter.com/mpostument>email newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of new blog posts.</p>
+</head>
+<body class=blue>
+<div class="container center headings--one-size">
+<header class=header>
+<div class=header__inner>
+<div class=header__logo>
+<a href=/>
+<div class=logo>
+mpostument.com
+</div>
+</a>
+</div>
+<div class=menu-trigger>menu</div>
+</div>
+<nav class=menu>
+<ul class="menu__inner menu__inner--desktop">
+<li><a href=/>Home</a></li>
+<li><a href=/categories/>Categories</a></li>
+<li><a href=/tags/>Tags</a></li>
+<li><a href=/projects/>Projects</a></li>
+<div class=spacer></div>
+<ul class=language-selector>
+<ul class=language-selector-current>
+<li>English ▾</li>
+</ul>
+<ul class="language-selector__more hidden">
+<li><a href=/>English</a></li>
+<li><a href=/ua/>Ukraine</a></li>
+</ul>
+</ul>
+</ul>
+<ul class="menu__inner menu__inner--mobile">
+<li><a href=/>Home</a></li>
+<li><a href=/categories/>Categories</a></li>
+<li><a href=/tags/>Tags</a></li>
+<li><a href=/projects/>Projects</a></li>
+<hr>
+<li>
+<a href=/>English</a>
+</li>
+<li>
+<a href=/ua/>Ukraine</a>
+</li>
+</ul>
+</nav>
+</header>
+<div class=content>
+<div class=post>
+<h1 class=post-title>
+<a href=/2021/08/10/find-closes-value-in-bst/>Find Closes Value in BST</a></h1>
+<div class=post-meta>
+<span class=post-date>
+2021-08-10
+</span>
+<span class=post-author>:: Maksym Postument</span>
+</div>
+<span class=post-tags>
+#<a href=/tags/algorithms/>Algorithms</a>&nbsp;
+#<a href=/tags/interview/>Interview</a>&nbsp;
+#<a href=/tags/codding-assignment/>Codding Assignment</a>&nbsp;
+</span>
+<img src=https://i.imgur.com/PQRmfZP.jpg class=post-cover alt="Find Closes Value in BST">
+<div class=post-content><div>
+<p>Hello!</p>
+<p>Today we will look at how to find the nearest value in BST.
+The input is given a binary tree and a number, and you need to find the closest number to the given one.
+For example, we have a tree:
+6
+/<br>
+4 10
+/ \ <br>
+2 5 23
+And the number 13. You need to find the number that is closest to 13 in the tree.
+To do this, we need another number (the closest value), which has a high value such as infinity.</p>
+<p>We start with the root, in this case, it has a value of 6. From the goal (number 13) module subtract 6 and get 7. Repeat the same with a current nearest value which is equal to infinity, |infinity - 13| = infinity. We compare two numbers 7 and infinity, 7 is less so the new nearest number will be 6. Next, we use the attributes of the binary tree. Since the number 13 is greater than the root 6 we can completely discard the left side of the tree. And it will remain only
+10
+<br>
+23
+And the nearest number is 6.
+Do the same with the next element of the tree which is equal to 10.
+By the module, I subtract from the 10 values ​​that we are looking for. | 10 - 13 | = 3. And compares it with the current nearest number (13-6 = 7). 3 is less than 7. Hence, the new nearest number is 10.</p>
+<p>The last element of a tree remained. Again, I subtract the value from the tree with goal number | 23 - 10 | = 13. And compare with the current nearest number (13-10 = 3). 13 is more than 3, so the nearest number remains 10. There are no more elements in the tree and therefore the closest number to 13 is 10.</p>
+<p>An example of a solution to golang</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-golang data-lang=golang><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+
+<span style=color:#f92672>import</span> (
+	<span style=color:#e6db74>&#34;fmt&#34;</span>
+	<span style=color:#e6db74>&#34;math&#34;</span>
+)
+
+<span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Tree</span> <span style=color:#66d9ef>struct</span> {
+	<span style=color:#a6e22e>root</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Node</span>
+}
+
+<span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Node</span> <span style=color:#66d9ef>struct</span> {
+	<span style=color:#a6e22e>key</span>   <span style=color:#66d9ef>int</span>
+	<span style=color:#a6e22e>left</span>  <span style=color:#f92672>*</span><span style=color:#a6e22e>Node</span>
+	<span style=color:#a6e22e>right</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Node</span>
+}
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+	<span style=color:#a6e22e>tree</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>Tree</span>{
+		<span style=color:#f92672>&amp;</span><span style=color:#a6e22e>Node</span>{
+			<span style=color:#a6e22e>key</span>: <span style=color:#ae81ff>5</span>,
+			<span style=color:#a6e22e>left</span>: <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>Node</span>{
+				<span style=color:#a6e22e>key</span>: <span style=color:#ae81ff>4</span>,
+			},
+			<span style=color:#a6e22e>right</span>: <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>Node</span>{
+				<span style=color:#a6e22e>key</span>: <span style=color:#ae81ff>10</span>,
+			},
+		},
+	}
+
+	<span style=color:#a6e22e>findClosestValue</span>(<span style=color:#a6e22e>tree</span>, <span style=color:#ae81ff>3</span>)
+}
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>findClosestValue</span>(<span style=color:#a6e22e>tree</span> <span style=color:#a6e22e>Tree</span>, <span style=color:#a6e22e>target</span> <span style=color:#66d9ef>int</span>) {
+	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>findClosestValueHelper</span>(<span style=color:#a6e22e>tree</span>.<span style=color:#a6e22e>root</span>, <span style=color:#a6e22e>target</span>, <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>MaxInt32</span>))
+}
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>findClosestValueHelper</span>(<span style=color:#a6e22e>node</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Node</span>, <span style=color:#a6e22e>target</span> <span style=color:#66d9ef>int</span>, <span style=color:#a6e22e>closest</span> <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>int</span> {
+	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>node</span> <span style=color:#f92672>==</span> <span style=color:#66d9ef>nil</span> {
+		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>closest</span>
+	} <span style=color:#66d9ef>else</span> {
+		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Abs</span>(float64(<span style=color:#a6e22e>target</span>)<span style=color:#f92672>-</span>float64(<span style=color:#a6e22e>closest</span>)) &gt; <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Abs</span>(float64(<span style=color:#a6e22e>target</span>)<span style=color:#f92672>-</span>float64(<span style=color:#a6e22e>node</span>.<span style=color:#a6e22e>key</span>)) {
+			<span style=color:#a6e22e>closest</span> = <span style=color:#a6e22e>node</span>.<span style=color:#a6e22e>key</span>
+		}
+		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>target</span> &lt; <span style=color:#a6e22e>node</span>.<span style=color:#a6e22e>key</span> {
+			<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>findClosestValueHelper</span>(<span style=color:#a6e22e>node</span>.<span style=color:#a6e22e>left</span>, <span style=color:#a6e22e>target</span>, <span style=color:#a6e22e>closest</span>)
+		} <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>target</span> &gt; <span style=color:#a6e22e>node</span>.<span style=color:#a6e22e>key</span> {
+			<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>findClosestValueHelper</span>(<span style=color:#a6e22e>node</span>.<span style=color:#a6e22e>right</span>, <span style=color:#a6e22e>target</span>, <span style=color:#a6e22e>closest</span>)
+		}
+	}
+	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>closest</span>
+}
+</code></pre></div>
+</div></div>
+<div class=pagination>
+<div class=pagination__title>
+<span class=pagination__title-h>Read other posts</span>
+<hr>
+</div>
+<div class=pagination__buttons>
+<span class="button next">
+<a href=/2021/08/05/validate-subsequence/>
+<span class=button__text>Validate Subsequence</span>
+<span class=button__icon>→</span>
+</a>
+</span>
+</div>
+</div>
+<div id=disqus_thread></div>
+<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//mpostument-com.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
+<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
+<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
+</div>
+</div>
+<footer class=footer>
+<div class=footer__inner>
+<div class=copyright>
+<span>© 2021 Powered by <a href=http://gohugo.io>Hugo</a></span>
+<span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span>
+</div>
+</div>
+</footer>
+<script src=/assets/main.js></script>
+<script src=/assets/prism.js></script>
+<script src=/assets/languageSelector.js></script>
+</div>
+</body>
+</html>

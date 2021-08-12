@@ -1,4 +1,72 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Algorithms on mpostument.com</title><link>/ua/categories/algorithms/</link><description>Recent content in Algorithms on mpostument.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 05 Aug 2021 21:00:32 +0300</lastBuildDate><atom:link href="/ua/categories/algorithms/index.xml" rel="self" type="application/rss+xml"/><item><title>Validate Subsequence</title><link>/ua/2021/08/05/validate-subsequence/</link><pubDate>Thu, 05 Aug 2021 21:00:32 +0300</pubDate><guid>/ua/2021/08/05/validate-subsequence/</guid><description>Привіт!
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Algorithms on mpostument.com</title><link>/ua/categories/algorithms/</link><description>Recent content in Algorithms on mpostument.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 10 Aug 2021 20:02:00 +0300</lastBuildDate><atom:link href="/ua/categories/algorithms/index.xml" rel="self" type="application/rss+xml"/><item><title>Find Closes Value in BST</title><link>/ua/2021/08/10/find-closes-value-in-bst/</link><pubDate>Tue, 10 Aug 2021 20:02:00 +0300</pubDate><guid>/ua/2021/08/10/find-closes-value-in-bst/</guid><description>Привіт!
+Сьогодні подивимось як знайти найближче значення в BST. На вхід дається бінарне дерево та число, і потрібно знайти найближче число до заданого. Наприклад маємо дерево: 6 /
+4 10 / \ 2 5 23 Та число 13. Потрібно знайти число яке є найближчим до 13 в дереві. Для цього нам потрібно ще одне число (найближче значення), яке має велике значення, наприклад безкінечність.
+Починаємо з кореня, в даному випадку він має значення 6.</description><content>&lt;p>Привіт!&lt;/p>
+&lt;p>Сьогодні подивимось як знайти найближче значення в BST.
+На вхід дається бінарне дерево та число, і потрібно знайти найближче число до заданого.
+Наприклад маємо дерево:
+6
+/&lt;br>
+4 10
+/ \ &lt;br>
+2 5 23
+Та число 13. Потрібно знайти число яке є найближчим до 13 в дереві.
+Для цього нам потрібно ще одне число (найближче значення), яке має велике значення, наприклад безкінечність.&lt;/p>
+&lt;p>Починаємо з кореня, в даному випадку він має значення 6. Від цілі (число 13) по модулі віднімаю 6 та отримую 7. Таку ж саму дію проводжу з теперішнім найближчим значення яке дорівнює безкінечності, безкінечність - 13 = безкінечність. Порівнюємо два числа 7 та безкінечність, 7 є меншим отже нове найближче число буде 6. Далі використаємо атрибути бінарного дерева. Оскільки число 13 яке ми шукаємо більше за корінь 6 можна повну відкинути ліву частину дерева. І залишиться тільки
+10
+&lt;br>
+23
+Та найближче число 6.
+Проводимо те ж саме з наступним елементом дерева яке дорівнює 10.
+По модулю віднімаю від 10 значення цілі. |10 - 13|= 3. Та порівнює це з теперішнім найближчим числом (13-6=7). 3 менше за 7. А отже нове найближче число 10.&lt;/p>
+&lt;p>Залишився останній елемент дерева. Знову від цілі віднімаю значення з дерева |23 - 10| = 13. І порівнюю з теперішнім найближчим числом (13-10=3). 13 є більше 3, тому найближчим числом залишається 10. Більше елементів в дереві немає а отже найближчим числом до 13 являється 10.&lt;/p>
+&lt;p>Приклад розв&amp;rsquo;язку на golang&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-golang" data-lang="golang">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;math&amp;#34;&lt;/span>
+)
+&lt;span style="color:#66d9ef">type&lt;/span> &lt;span style="color:#a6e22e">Tree&lt;/span> &lt;span style="color:#66d9ef">struct&lt;/span> {
+&lt;span style="color:#a6e22e">root&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">Node&lt;/span>
+}
+&lt;span style="color:#66d9ef">type&lt;/span> &lt;span style="color:#a6e22e">Node&lt;/span> &lt;span style="color:#66d9ef">struct&lt;/span> {
+&lt;span style="color:#a6e22e">key&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>
+&lt;span style="color:#a6e22e">left&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">Node&lt;/span>
+&lt;span style="color:#a6e22e">right&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">Node&lt;/span>
+}
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#a6e22e">tree&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">Tree&lt;/span>{
+&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">Node&lt;/span>{
+&lt;span style="color:#a6e22e">key&lt;/span>: &lt;span style="color:#ae81ff">5&lt;/span>,
+&lt;span style="color:#a6e22e">left&lt;/span>: &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">Node&lt;/span>{
+&lt;span style="color:#a6e22e">key&lt;/span>: &lt;span style="color:#ae81ff">4&lt;/span>,
+},
+&lt;span style="color:#a6e22e">right&lt;/span>: &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">Node&lt;/span>{
+&lt;span style="color:#a6e22e">key&lt;/span>: &lt;span style="color:#ae81ff">10&lt;/span>,
+},
+},
+}
+&lt;span style="color:#a6e22e">findClosestValue&lt;/span>(&lt;span style="color:#a6e22e">tree&lt;/span>, &lt;span style="color:#ae81ff">3&lt;/span>)
+}
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">findClosestValue&lt;/span>(&lt;span style="color:#a6e22e">tree&lt;/span> &lt;span style="color:#a6e22e">Tree&lt;/span>, &lt;span style="color:#a6e22e">target&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>) {
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">findClosestValueHelper&lt;/span>(&lt;span style="color:#a6e22e">tree&lt;/span>.&lt;span style="color:#a6e22e">root&lt;/span>, &lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">math&lt;/span>.&lt;span style="color:#a6e22e">MaxInt32&lt;/span>))
+}
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">findClosestValueHelper&lt;/span>(&lt;span style="color:#a6e22e">node&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">Node&lt;/span>, &lt;span style="color:#a6e22e">target&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>, &lt;span style="color:#a6e22e">closest&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>) &lt;span style="color:#66d9ef">int&lt;/span> {
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">node&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">closest&lt;/span>
+} &lt;span style="color:#66d9ef">else&lt;/span> {
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">math&lt;/span>.&lt;span style="color:#a6e22e">Abs&lt;/span>(float64(&lt;span style="color:#a6e22e">target&lt;/span>)&lt;span style="color:#f92672">-&lt;/span>float64(&lt;span style="color:#a6e22e">closest&lt;/span>)) &amp;gt; &lt;span style="color:#a6e22e">math&lt;/span>.&lt;span style="color:#a6e22e">Abs&lt;/span>(float64(&lt;span style="color:#a6e22e">target&lt;/span>)&lt;span style="color:#f92672">-&lt;/span>float64(&lt;span style="color:#a6e22e">node&lt;/span>.&lt;span style="color:#a6e22e">key&lt;/span>)) {
+&lt;span style="color:#a6e22e">closest&lt;/span> = &lt;span style="color:#a6e22e">node&lt;/span>.&lt;span style="color:#a6e22e">key&lt;/span>
+}
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">target&lt;/span> &amp;lt; &lt;span style="color:#a6e22e">node&lt;/span>.&lt;span style="color:#a6e22e">key&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">findClosestValueHelper&lt;/span>(&lt;span style="color:#a6e22e">node&lt;/span>.&lt;span style="color:#a6e22e">left&lt;/span>, &lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">closest&lt;/span>)
+} &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">target&lt;/span> &amp;gt; &lt;span style="color:#a6e22e">node&lt;/span>.&lt;span style="color:#a6e22e">key&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">findClosestValueHelper&lt;/span>(&lt;span style="color:#a6e22e">node&lt;/span>.&lt;span style="color:#a6e22e">right&lt;/span>, &lt;span style="color:#a6e22e">target&lt;/span>, &lt;span style="color:#a6e22e">closest&lt;/span>)
+}
+}
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">closest&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Validate Subsequence</title><link>/ua/2021/08/05/validate-subsequence/</link><pubDate>Thu, 05 Aug 2021 21:00:32 +0300</pubDate><guid>/ua/2021/08/05/validate-subsequence/</guid><description>Привіт!
 Першим вхідним параметром буде список з числами, другим буде також список з числами. Суть завдання полягає знайти чи є другий список підпослідовність першого.
 Для цього нам буде потрібен поінтер який буде вказувати на елементи з другого списку. Почнемо рухатись по кожному елементу з першого списку і перевіряти чи дорівнює він елементу з другого списку на який вказує поінтер.
 Для прикладу перший список 5, 3, 22, 25, 9, -5, 8, 7 і другий 3, 9, -5, 7.</description><content>&lt;p>Привіт!&lt;/p>
