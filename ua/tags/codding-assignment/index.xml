@@ -1,4 +1,72 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Codding Assignment on mpostument.com</title><link>/ua/tags/codding-assignment/</link><description>Recent content in Codding Assignment on mpostument.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 10 Aug 2021 20:02:00 +0300</lastBuildDate><atom:link href="/ua/tags/codding-assignment/index.xml" rel="self" type="application/rss+xml"/><item><title>Find Closest Value in BST</title><link>/ua/2021/08/10/find-closest-value-in-bst/</link><pubDate>Tue, 10 Aug 2021 20:02:00 +0300</pubDate><guid>/ua/2021/08/10/find-closest-value-in-bst/</guid><description>Привіт!
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Codding Assignment on mpostument.com</title><link>/ua/tags/codding-assignment/</link><description>Recent content in Codding Assignment on mpostument.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 23 Aug 2021 20:49:50 +0300</lastBuildDate><atom:link href="/ua/tags/codding-assignment/index.xml" rel="self" type="application/rss+xml"/><item><title>Branch Sum</title><link>/ua/2021/08/23/branch-sum/</link><pubDate>Mon, 23 Aug 2021 20:49:50 +0300</pubDate><guid>/ua/2021/08/23/branch-sum/</guid><description>Привіт!
+В цій задачі на вхід дається дерево і потрібно знайти суму усіх віток в дереві. Алгоритм вирішення цієї задачі є простим. Візьмемо дерево
+6 / \ 4 10 / \ \ 2 5 23 Починаємо з кореня, сума тут дорівнює 6. Спускаємось далі по дереву в лівій вітці це буде 6 + 4 = 10 та в правій 10 + 6 = 16.
+6 + 0 / \ 6 + 4 10 + 16 / \ \ 2 5 23 Рухаємось далі по дереву в лівій частині виходить 10 + 2 = 12 і 10 + 5 = 115 та в правій 16 + 23 = 39</description><content>&lt;p>Привіт!&lt;/p>
+&lt;p>В цій задачі на вхід дається дерево і потрібно знайти суму усіх віток в дереві.
+Алгоритм вирішення цієї задачі є простим. Візьмемо дерево&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell"> &lt;span style="color:#ae81ff">6&lt;/span>
+/ &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;span style="color:#ae81ff">&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span> &lt;span style="color:#ae81ff">10&lt;/span>
+/ &lt;span style="color:#ae81ff">\ &lt;/span> &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;span style="color:#ae81ff">&lt;/span>&lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#ae81ff">5&lt;/span> &lt;span style="color:#ae81ff">23&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Починаємо з кореня, сума тут дорівнює 6. Спускаємось далі по дереву в лівій вітці це буде 6 + 4 = 10 та в правій 10 + 6 = 16.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell"> &lt;span style="color:#ae81ff">6&lt;/span> + &lt;span style="color:#ae81ff">0&lt;/span>
+/ &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;span style="color:#ae81ff">&lt;/span> &lt;span style="color:#ae81ff">6&lt;/span> + &lt;span style="color:#ae81ff">4&lt;/span> &lt;span style="color:#ae81ff">10&lt;/span> + &lt;span style="color:#ae81ff">16&lt;/span>
+/ &lt;span style="color:#ae81ff">\ &lt;/span> &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;span style="color:#ae81ff">&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#ae81ff">5&lt;/span> &lt;span style="color:#ae81ff">23&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Рухаємось далі по дереву в лівій частині виходить 10 + 2 = 12 і 10 + 5 = 115 та в правій 16 + 23 = 39&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell"> &lt;span style="color:#ae81ff">6&lt;/span> + &lt;span style="color:#ae81ff">0&lt;/span>
+/ &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;span style="color:#ae81ff">&lt;/span> &lt;span style="color:#ae81ff">6&lt;/span> + &lt;span style="color:#ae81ff">4&lt;/span> &lt;span style="color:#ae81ff">10&lt;/span> + &lt;span style="color:#ae81ff">6&lt;/span>
+/ &lt;span style="color:#ae81ff">\ &lt;/span> &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;span style="color:#ae81ff">&lt;/span> &lt;span style="color:#ae81ff">10&lt;/span> + &lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#ae81ff">5&lt;/span> + &lt;span style="color:#ae81ff">10&lt;/span> &lt;span style="color:#ae81ff">23&lt;/span> + &lt;span style="color:#ae81ff">16&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Спускаємось далі по дереву але там більше немає даних і отже сумою в нас виходить 12, 15 та 39&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+)
+&lt;span style="color:#66d9ef">type&lt;/span> &lt;span style="color:#a6e22e">Tree&lt;/span> &lt;span style="color:#66d9ef">struct&lt;/span> {
+&lt;span style="color:#a6e22e">root&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">Node&lt;/span>
+}
+&lt;span style="color:#66d9ef">type&lt;/span> &lt;span style="color:#a6e22e">Node&lt;/span> &lt;span style="color:#66d9ef">struct&lt;/span> {
+&lt;span style="color:#a6e22e">key&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>
+&lt;span style="color:#a6e22e">left&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">Node&lt;/span>
+&lt;span style="color:#a6e22e">right&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">Node&lt;/span>
+}
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#a6e22e">tree&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">Tree&lt;/span>{
+&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">Node&lt;/span>{
+&lt;span style="color:#a6e22e">key&lt;/span>: &lt;span style="color:#ae81ff">5&lt;/span>,
+&lt;span style="color:#a6e22e">left&lt;/span>: &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">Node&lt;/span>{
+&lt;span style="color:#a6e22e">key&lt;/span>: &lt;span style="color:#ae81ff">4&lt;/span>,
+},
+&lt;span style="color:#a6e22e">right&lt;/span>: &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">Node&lt;/span>{
+&lt;span style="color:#a6e22e">key&lt;/span>: &lt;span style="color:#ae81ff">10&lt;/span>,
+},
+},
+}
+&lt;span style="color:#a6e22e">branchSum&lt;/span>(&lt;span style="color:#a6e22e">tree&lt;/span>)
+}
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">branchSum&lt;/span>(&lt;span style="color:#a6e22e">tree&lt;/span> &lt;span style="color:#a6e22e">Tree&lt;/span>) {
+&lt;span style="color:#a6e22e">sum&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> []&lt;span style="color:#66d9ef">int&lt;/span>{}
+&lt;span style="color:#a6e22e">branchSumHelper&lt;/span>(&lt;span style="color:#a6e22e">tree&lt;/span>.&lt;span style="color:#a6e22e">root&lt;/span>, &lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">sum&lt;/span>)
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">sum&lt;/span>)
+}
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">branchSumHelper&lt;/span>(&lt;span style="color:#a6e22e">node&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">Node&lt;/span>, &lt;span style="color:#a6e22e">runningSum&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>, &lt;span style="color:#a6e22e">sum&lt;/span> &lt;span style="color:#f92672">*&lt;/span>[]&lt;span style="color:#66d9ef">int&lt;/span>) &lt;span style="color:#f92672">*&lt;/span>[]&lt;span style="color:#66d9ef">int&lt;/span> {
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">node&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">sum&lt;/span>
+}
+&lt;span style="color:#a6e22e">newRunningSum&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">runningSum&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#a6e22e">node&lt;/span>.&lt;span style="color:#a6e22e">key&lt;/span>
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">node&lt;/span>.&lt;span style="color:#a6e22e">left&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> &lt;span style="color:#a6e22e">node&lt;/span>.&lt;span style="color:#a6e22e">right&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">sum&lt;/span> = append(&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">sum&lt;/span>, &lt;span style="color:#a6e22e">newRunningSum&lt;/span>)
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">sum&lt;/span>
+}
+&lt;span style="color:#a6e22e">branchSumHelper&lt;/span>(&lt;span style="color:#a6e22e">node&lt;/span>.&lt;span style="color:#a6e22e">left&lt;/span>, &lt;span style="color:#a6e22e">newRunningSum&lt;/span>, &lt;span style="color:#a6e22e">sum&lt;/span>)
+&lt;span style="color:#a6e22e">branchSumHelper&lt;/span>(&lt;span style="color:#a6e22e">node&lt;/span>.&lt;span style="color:#a6e22e">right&lt;/span>, &lt;span style="color:#a6e22e">newRunningSum&lt;/span>, &lt;span style="color:#a6e22e">sum&lt;/span>)
+&lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">sum&lt;/span>
+}
+&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Find Closest Value in BST</title><link>/ua/2021/08/10/find-closest-value-in-bst/</link><pubDate>Tue, 10 Aug 2021 20:02:00 +0300</pubDate><guid>/ua/2021/08/10/find-closest-value-in-bst/</guid><description>Привіт!
 Сьогодні подивимось як знайти найближче значення в BST. На вхід дається бінарне дерево та число, і потрібно знайти найближче число до заданого. Наприклад маємо дерево:
 6 / \ 4 10 / \ \ 2 5 23 Та число 13. Потрібно знайти число яке є найближчим до 13 в дереві. Для цього нам потрібно ще одне число (найближче значення), яке має велике значення, наприклад безкінечність.
 Починаємо з кореня, в даному випадку він має значення 6.</description><content>&lt;p>Привіт!&lt;/p>
