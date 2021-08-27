@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Codding Assignment on mpostument.com</title><link>/tags/codding-assignment/</link><description>Recent content in Codding Assignment on mpostument.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 26 Aug 2021 20:58:40 +0300</lastBuildDate><atom:link href="/tags/codding-assignment/index.xml" rel="self" type="application/rss+xml"/><item><title>Node Depths</title><link>/2021/08/26/node-depths/</link><pubDate>Thu, 26 Aug 2021 20:58:40 +0300</pubDate><guid>/2021/08/26/node-depths/</guid><description>Hello!
-Today we will look at simple algorithm that can find the depth of the tree. As input to the script given tree and the depth of the tree must be returned. Tree depth is the sum of the depths of all tree nodes.
+Today we will look at simple algorithm that can find node depth in tree. As input to the script given tree and the depth of the tree must be returned. Node depth is the sum of the depths of all nodes.
 For example, take a tree
 6 / \ 4 10 / \ \ 2 5 23 / 3 The depth of the root is always 0, and the next elements will always be the depth of the previous element +1.</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>Today we will look at simple algorithm that can find the depth of the tree. As input to the script given tree and the depth of the tree must be returned. Tree depth is the sum of the depths of all tree nodes.&lt;/p>
+&lt;p>Today we will look at simple algorithm that can find node depth in tree. As input to the script given tree and the depth of the tree must be returned. Node depth is the sum of the depths of all nodes.&lt;/p>
 &lt;p>For example, take a tree&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell"> &lt;span style="color:#ae81ff">6&lt;/span>
 / &lt;span style="color:#ae81ff">\
