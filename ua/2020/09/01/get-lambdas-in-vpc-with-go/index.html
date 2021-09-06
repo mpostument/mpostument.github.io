@@ -142,7 +142,7 @@ mpostument.com
 		}
     }
 </code></pre></div><p>Тут ми ітеруємось по результату виконання <code>getLambdaFunctions</code> і перевірємо чи <code>VpcConfig</code> функції не рівний <code>nil</code> і чи список subnet більше за нуль. Дві перевірки потрібні тому що для деяких лямбд <code>VpcConfig</code> буде nil, а для інших буде map в якому будуть пусті списки. Наприклад</p>
-<pre><code>&lt;nil&gt;
+<pre tabindex=0><code>&lt;nil&gt;
 &lt;nil&gt;
 {
   SecurityGroupIds: [],

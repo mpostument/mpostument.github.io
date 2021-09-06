@@ -723,7 +723,7 @@ go mod init snapshotFilter
 }
 }
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>Тут ми ітеруємось по результату виконання &lt;code>getLambdaFunctions&lt;/code> і перевірємо чи &lt;code>VpcConfig&lt;/code> функції не рівний &lt;code>nil&lt;/code> і чи список subnet більше за нуль. Дві перевірки потрібні тому що для деяких лямбд &lt;code>VpcConfig&lt;/code> буде nil, а для інших буде map в якому будуть пусті списки. Наприклад&lt;/p>
-&lt;pre>&lt;code>&amp;lt;nil&amp;gt;
+&lt;pre tabindex="0">&lt;code>&amp;lt;nil&amp;gt;
 &amp;lt;nil&amp;gt;
 {
 SecurityGroupIds: [],

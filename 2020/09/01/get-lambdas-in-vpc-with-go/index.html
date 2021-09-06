@@ -144,7 +144,7 @@ Create a <code>lambdaInVpc.go</code> file in the root of the <code>awsscripts</c
 		}
     }
 </code></pre></div><p>Here we iterate on result of execution of <code>getLambdaFunctions</code> and we will check up whether <code>VpcConfig</code> of function is not equal <code>nil</code> and whether the list of subnet is more than zero. Two checks are necessary because for some lambdas <code>VpcConfig</code> will be nil, and for others there will be a map in which there will be empty lists. Example</p>
-<pre><code>&lt;nil&gt;
+<pre tabindex=0><code>&lt;nil&gt;
 &lt;nil&gt;
 {
   SecurityGroupIds: [],
