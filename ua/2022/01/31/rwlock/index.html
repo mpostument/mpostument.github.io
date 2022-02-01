@@ -93,7 +93,7 @@ mpostument.com
 <p>Привіт!</p>
 <p>Сьогодні розглянемо що таке RWMutex і як його використовувати.
 RWMutex — це блокування взаємного виключення читання/запису. Lock може мати довільна кількість читачів або один процес запису.</p>
-<p><a href=https://pkg.go.dev/sync#RWMutex>RWMutes</a> має такі методи:</p>
+<p><a href=https://pkg.go.dev/sync#RWMutex>RWMutex</a> має такі методи:</p>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>rw</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>RWMutex</span>) <span style=color:#a6e22e>Lock</span>() <span style=color:#75715e>// Write Lock
 </span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>rw</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>RWMutex</span>) <span style=color:#a6e22e>RLock</span>() <span style=color:#75715e>// Read Lock
 </span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>rw</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>RWMutex</span>) <span style=color:#a6e22e>RUnlock</span>() <span style=color:#75715e>// Read Unlock
