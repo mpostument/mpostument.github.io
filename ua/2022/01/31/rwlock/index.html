@@ -1,0 +1,215 @@
+<!doctype html><html lang=ua>
+<head>
+<title>Read and Write lock in Go :: mpostument.com</title>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Learn how to use golang RWMutex">
+<meta name=keywords content="Go,Golang,Multithreading">
+<meta name=robots content="noodp">
+<link rel=canonical href=/ua/2022/01/31/rwlock/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBRJXS94DC"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-SBRJXS94DC',{anonymize_ip:!1})}</script>
+<link rel=stylesheet href=/assets/style.css>
+<link rel=stylesheet href=/assets/blue.css>
+<link rel=apple-touch-icon href=/img/apple-touch-icon-192x192.png>
+<link rel="shortcut icon" href=/img/favicon/blue.png>
+<meta name=twitter:card content="summary">
+<meta name=twitter:site content="mpostument.com">
+<meta name=twitter:creator content="Maks_Postument">
+<meta property="og:locale" content="ua">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Read and Write lock in Go">
+<meta property="og:description" content="Learn how to use golang RWMutex">
+<meta property="og:url" content="/ua/2022/01/31/rwlock/">
+<meta property="og:site_name" content="mpostument.com">
+<meta property="og:image" content="https://i.imgur.com/lhn88h3.jpg">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+<meta property="article:section" content="Devops">
+<meta property="article:section" content="Golang">
+<meta property="article:section" content="AWS">
+<meta property="article:published_time" content="2022-01-31 19:30:37 +0200 +0200">
+<p align=center style=background-color:#23b0ff> Sign up for my <a href=https://tinyletter.com/mpostument>email newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of new blog posts.</p>
+</head>
+<body class=blue>
+<div class="container center headings--one-size">
+<header class=header>
+<div class=header__inner>
+<div class=header__logo>
+<a href=/ua>
+<div class=logo>
+mpostument.com
+</div>
+</a>
+</div>
+<div class=menu-trigger>menu</div>
+</div>
+<nav class=menu>
+<ul class="menu__inner menu__inner--desktop">
+<li><a href=/ua>Home</a></li>
+<li><a href=/ua/categories/>Categories</a></li>
+<li><a href=/ua/tags/>Tags</a></li>
+<div class=spacer></div>
+<ul class=language-selector>
+<ul class=language-selector-current>
+<li>Ukraine ▾</li>
+</ul>
+<ul class="language-selector__more hidden">
+<li><a href=/>English</a></li>
+<li><a href=/ua/>Ukraine</a></li>
+</ul>
+</ul>
+</ul>
+<ul class="menu__inner menu__inner--mobile">
+<li><a href=/ua>Home</a></li>
+<li><a href=/ua/categories/>Categories</a></li>
+<li><a href=/ua/tags/>Tags</a></li>
+<hr>
+<li>
+<a href=/>English</a>
+</li>
+<li>
+<a href=/ua/>Ukraine</a>
+</li>
+</ul>
+</nav>
+</header>
+<div class=content>
+<div class=post>
+<h1 class=post-title>
+<a href=/ua/2022/01/31/rwlock/>Read and Write lock in Go</a></h1>
+<div class=post-meta>
+<span class=post-date>
+2022-01-31
+</span>
+<span class=post-author>:: Maksym Postument</span>
+</div>
+<span class=post-tags>
+#<a href=/ua/tags/go/>Go</a>&nbsp;
+#<a href=/ua/tags/multithreading/>Multithreading</a>&nbsp;
+</span>
+<img src=https://i.imgur.com/lhn88h3.jpg class=post-cover alt="Read and Write lock in Go" title="Cover Image">
+<div class=post-content><div>
+<p>Привіт!</p>
+<p>Сьогодні розглянемо що таке RWMutex і як його використовувати.
+RWMutex — це блокування взаємного виключення читання/запису. Lock може мати довільна кількість читачів або один процес запису.</p>
+<p><a href=https://pkg.go.dev/sync#RWMutex>RWMutes</a> має такі методи:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>rw</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>RWMutex</span>) <span style=color:#a6e22e>Lock</span>() <span style=color:#75715e>// Write Lock
+</span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>rw</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>RWMutex</span>) <span style=color:#a6e22e>RLock</span>() <span style=color:#75715e>// Read Lock
+</span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>rw</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>RWMutex</span>) <span style=color:#a6e22e>RUnlock</span>() <span style=color:#75715e>// Read Unlock
+</span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>rw</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>RWMutex</span>) <span style=color:#a6e22e>Unlock</span>() <span style=color:#75715e>// Write Unlock
+</span></code></pre></div><p>Тепер подивимось як його можна застосувати. В першому прикладі подивимось на використання read lock</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+
+<span style=color:#f92672>import</span> (
+    <span style=color:#e6db74>&#34;sync&#34;</span>
+    <span style=color:#e6db74>&#34;time&#34;</span>
+    <span style=color:#e6db74>&#34;fmt&#34;</span>
+)
+
+<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>m</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>sync</span>.<span style=color:#a6e22e>RWMutex</span>
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#a6e22e>m</span> = new(<span style=color:#a6e22e>sync</span>.<span style=color:#a6e22e>RWMutex</span>)
+    <span style=color:#66d9ef>go</span> <span style=color:#a6e22e>read</span>(<span style=color:#ae81ff>1</span>)
+    <span style=color:#66d9ef>go</span> <span style=color:#a6e22e>read</span>(<span style=color:#ae81ff>2</span>)
+    <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Sleep</span>(<span style=color:#ae81ff>2</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Second</span>)
+}
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>read</span>(<span style=color:#a6e22e>i</span> <span style=color:#66d9ef>int</span>) {
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Acquiring lock&#34;</span>, <span style=color:#a6e22e>i</span>)
+    <span style=color:#a6e22e>m</span>.<span style=color:#a6e22e>RLock</span>()
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Reading&#34;</span>, <span style=color:#a6e22e>i</span>)
+    <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Sleep</span>(<span style=color:#ae81ff>1</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Second</span>)
+    <span style=color:#a6e22e>m</span>.<span style=color:#a6e22e>RUnlock</span>()
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Released lock&#34;</span>, <span style=color:#a6e22e>i</span>)
+}
+</code></pre></div><p>При виклику скрипта виводиться результат, з якого видно що декілька go рутин змогли виконати операцію читання.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>Aquaring lock <span style=color:#ae81ff>1</span>
+Reading <span style=color:#ae81ff>1</span>
+Aquaring lock <span style=color:#ae81ff>2</span>
+Reading <span style=color:#ae81ff>2</span>
+Released lock <span style=color:#ae81ff>1</span>
+Released lock <span style=color:#ae81ff>2</span>
+</code></pre></div><p>Тепер подивимось як працює Write Lock</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+
+<span style=color:#f92672>import</span> (
+    <span style=color:#e6db74>&#34;fmt&#34;</span>
+    <span style=color:#e6db74>&#34;sync&#34;</span>
+    <span style=color:#e6db74>&#34;time&#34;</span>
+)
+
+<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>m</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>sync</span>.<span style=color:#a6e22e>RWMutex</span>
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+    <span style=color:#a6e22e>m</span> = new(<span style=color:#a6e22e>sync</span>.<span style=color:#a6e22e>RWMutex</span>)
+    <span style=color:#66d9ef>go</span> <span style=color:#a6e22e>write</span>(<span style=color:#ae81ff>1</span>)
+    <span style=color:#66d9ef>go</span> <span style=color:#a6e22e>read</span>(<span style=color:#ae81ff>2</span>)
+    <span style=color:#66d9ef>go</span> <span style=color:#a6e22e>write</span>(<span style=color:#ae81ff>3</span>)
+    <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Sleep</span>(<span style=color:#ae81ff>5</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Second</span>)
+}
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>read</span>(<span style=color:#a6e22e>i</span> <span style=color:#66d9ef>int</span>) {
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Aquaring read lock&#34;</span>, <span style=color:#a6e22e>i</span>)
+    <span style=color:#a6e22e>m</span>.<span style=color:#a6e22e>RLock</span>()
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Reading&#34;</span>, <span style=color:#a6e22e>i</span>)
+    <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Sleep</span>(<span style=color:#ae81ff>1</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Second</span>)
+    <span style=color:#a6e22e>m</span>.<span style=color:#a6e22e>RUnlock</span>()
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Released read lock&#34;</span>, <span style=color:#a6e22e>i</span>)
+}
+
+<span style=color:#66d9ef>func</span> <span style=color:#a6e22e>write</span>(<span style=color:#a6e22e>i</span> <span style=color:#66d9ef>int</span>) {
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Aquaring write lock&#34;</span>, <span style=color:#a6e22e>i</span>)
+    <span style=color:#a6e22e>m</span>.<span style=color:#a6e22e>Lock</span>()
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Writing&#34;</span>, <span style=color:#a6e22e>i</span>)
+    <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Sleep</span>(<span style=color:#ae81ff>1</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Second</span>)
+    <span style=color:#a6e22e>m</span>.<span style=color:#a6e22e>Unlock</span>()
+    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Released write lock&#34;</span>, <span style=color:#a6e22e>i</span>)
+}
+</code></pre></div><p>При виклику скрипта буде вивід з якого видно що спочатку отримався Wrtite Lock, відбувся запис. Тоді отримався Read Lock, відбулось читання і в самому кінці відбулась остання операція запису</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>Aquaring write lock <span style=color:#ae81ff>3</span>
+Writing <span style=color:#ae81ff>3</span>
+Aquaring write lock <span style=color:#ae81ff>1</span>
+Aquaring read lock <span style=color:#ae81ff>2</span>
+Reading <span style=color:#ae81ff>2</span>
+Released write lock <span style=color:#ae81ff>3</span>
+Released read lock <span style=color:#ae81ff>2</span>
+Writing <span style=color:#ae81ff>1</span>
+Released write lock <span style=color:#ae81ff>1</span>
+</code></pre></div>
+</div></div>
+<div class=pagination>
+<div class=pagination__title>
+<span class=pagination__title-h>Read other posts</span>
+<hr>
+</div>
+<div class=pagination__buttons>
+<span class="button next">
+<a href=/ua/2021/09/06/depth-first-search/>
+<span class=button__text>Depth First Search</span>
+<span class=button__icon>→</span>
+</a>
+</span>
+</div>
+</div>
+<div id=disqus_thread></div>
+<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//mpostument-com.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
+<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
+<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
+</div>
+</div>
+<footer class=footer>
+<div class=footer__inner>
+<div class=copyright>
+<span>© 2022 Powered by <a href=http://gohugo.io>Hugo</a></span>
+<span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span>
+</div>
+</div>
+</footer>
+<script src=/assets/main.js></script>
+<script src=/assets/prism.js></script>
+<script src=/assets/languageSelector.js></script>
+</div>
+</body>
+</html>

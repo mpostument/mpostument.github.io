@@ -1,4 +1,85 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>mpostument.com</title><link>/</link><description>Recent content on mpostument.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 06 Sep 2021 20:19:11 +0300</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>Depth First Search</title><link>/2021/09/06/depth-first-search/</link><pubDate>Mon, 06 Sep 2021 20:19:11 +0300</pubDate><guid>/2021/09/06/depth-first-search/</guid><description>Hello!
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>mpostument.com</title><link>/</link><description>Recent content on mpostument.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 31 Jan 2022 19:30:37 +0200</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>Read and Write lock in Go</title><link>/2022/01/31/rwlock/</link><pubDate>Mon, 31 Jan 2022 19:30:37 +0200</pubDate><guid>/2022/01/31/rwlock/</guid><description>Hello!
+Today we will learn what is RWMutex and how to use it. RWMutex is a read/write exclusion lock. A lock can have any number of readers or one writer.
+RWMutes has the following methods:
+func (rw *RWMutex) Lock() // Write Lock func (rw *RWMutex) RLock() // Read Lock func (rw *RWMutex) RUnlock() // Read Unlock func (rw *RWMutex) Unlock() // Write Unlock Now let&amp;rsquo;s see how it can be used.</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>Today we will learn what is RWMutex and how to use it.
+RWMutex is a read/write exclusion lock. A lock can have any number of readers or one writer.&lt;/p>
+&lt;p>&lt;a href="https://pkg.go.dev/sync#RWMutex">RWMutes&lt;/a> has the following methods:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#66d9ef">func&lt;/span> (&lt;span style="color:#a6e22e">rw&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">RWMutex&lt;/span>) &lt;span style="color:#a6e22e">Lock&lt;/span>() &lt;span style="color:#75715e">// Write Lock
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">func&lt;/span> (&lt;span style="color:#a6e22e">rw&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">RWMutex&lt;/span>) &lt;span style="color:#a6e22e">RLock&lt;/span>() &lt;span style="color:#75715e">// Read Lock
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">func&lt;/span> (&lt;span style="color:#a6e22e">rw&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">RWMutex&lt;/span>) &lt;span style="color:#a6e22e">RUnlock&lt;/span>() &lt;span style="color:#75715e">// Read Unlock
+&lt;/span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">func&lt;/span> (&lt;span style="color:#a6e22e">rw&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">RWMutex&lt;/span>) &lt;span style="color:#a6e22e">Unlock&lt;/span>() &lt;span style="color:#75715e">// Write Unlock
+&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now let&amp;rsquo;s see how it can be used. In the first example, let&amp;rsquo;s try reader lock&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;sync&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;time&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+)
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">m&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">sync&lt;/span>.&lt;span style="color:#a6e22e">RWMutex&lt;/span>
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#a6e22e">m&lt;/span> = new(&lt;span style="color:#a6e22e">sync&lt;/span>.&lt;span style="color:#a6e22e">RWMutex&lt;/span>)
+&lt;span style="color:#66d9ef">go&lt;/span> &lt;span style="color:#a6e22e">read&lt;/span>(&lt;span style="color:#ae81ff">1&lt;/span>)
+&lt;span style="color:#66d9ef">go&lt;/span> &lt;span style="color:#a6e22e">read&lt;/span>(&lt;span style="color:#ae81ff">2&lt;/span>)
+&lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Sleep&lt;/span>(&lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Second&lt;/span>)
+}
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">read&lt;/span>(&lt;span style="color:#a6e22e">i&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>) {
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Acquiring lock&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">i&lt;/span>)
+&lt;span style="color:#a6e22e">m&lt;/span>.&lt;span style="color:#a6e22e">RLock&lt;/span>()
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Reading&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">i&lt;/span>)
+&lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Sleep&lt;/span>(&lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Second&lt;/span>)
+&lt;span style="color:#a6e22e">m&lt;/span>.&lt;span style="color:#a6e22e">RUnlock&lt;/span>()
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Released lock&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">i&lt;/span>)
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>When the script is executed, in the results output, we can see that several goroutines were able to perform a read operation at the same time.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell">Acquiring lock &lt;span style="color:#ae81ff">1&lt;/span>
+Reading &lt;span style="color:#ae81ff">1&lt;/span>
+Acquiring lock &lt;span style="color:#ae81ff">2&lt;/span>
+Reading &lt;span style="color:#ae81ff">2&lt;/span>
+Released lock &lt;span style="color:#ae81ff">1&lt;/span>
+Released lock &lt;span style="color:#ae81ff">2&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now let&amp;rsquo;s see how Write Lock works&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;sync&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;time&amp;#34;&lt;/span>
+)
+&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">m&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">sync&lt;/span>.&lt;span style="color:#a6e22e">RWMutex&lt;/span>
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#a6e22e">m&lt;/span> = new(&lt;span style="color:#a6e22e">sync&lt;/span>.&lt;span style="color:#a6e22e">RWMutex&lt;/span>)
+&lt;span style="color:#66d9ef">go&lt;/span> &lt;span style="color:#a6e22e">write&lt;/span>(&lt;span style="color:#ae81ff">1&lt;/span>)
+&lt;span style="color:#66d9ef">go&lt;/span> &lt;span style="color:#a6e22e">read&lt;/span>(&lt;span style="color:#ae81ff">2&lt;/span>)
+&lt;span style="color:#66d9ef">go&lt;/span> &lt;span style="color:#a6e22e">write&lt;/span>(&lt;span style="color:#ae81ff">3&lt;/span>)
+&lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Sleep&lt;/span>(&lt;span style="color:#ae81ff">5&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Second&lt;/span>)
+}
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">read&lt;/span>(&lt;span style="color:#a6e22e">i&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>) {
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Acquiring read lock&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">i&lt;/span>)
+&lt;span style="color:#a6e22e">m&lt;/span>.&lt;span style="color:#a6e22e">RLock&lt;/span>()
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Reading&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">i&lt;/span>)
+&lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Sleep&lt;/span>(&lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Second&lt;/span>)
+&lt;span style="color:#a6e22e">m&lt;/span>.&lt;span style="color:#a6e22e">RUnlock&lt;/span>()
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Released read lock&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">i&lt;/span>)
+}
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">write&lt;/span>(&lt;span style="color:#a6e22e">i&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>) {
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Acquiring write lock&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">i&lt;/span>)
+&lt;span style="color:#a6e22e">m&lt;/span>.&lt;span style="color:#a6e22e">Lock&lt;/span>()
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Writing&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">i&lt;/span>)
+&lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Sleep&lt;/span>(&lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Second&lt;/span>)
+&lt;span style="color:#a6e22e">m&lt;/span>.&lt;span style="color:#a6e22e">Unlock&lt;/span>()
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Released write lock&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">i&lt;/span>)
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>From script output, we can see that at first Write Lock was acquired, write operation completed, and lock released. Then Read Lock acquired, reading operation completed, lock released. And finally last write operation completed.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell">Acquiring write lock &lt;span style="color:#ae81ff">3&lt;/span>
+Writing &lt;span style="color:#ae81ff">3&lt;/span>
+Acquiring write lock &lt;span style="color:#ae81ff">1&lt;/span>
+Acquiring read lock &lt;span style="color:#ae81ff">2&lt;/span>
+Reading &lt;span style="color:#ae81ff">2&lt;/span>
+Released write lock &lt;span style="color:#ae81ff">3&lt;/span>
+Released read lock &lt;span style="color:#ae81ff">2&lt;/span>
+Writing &lt;span style="color:#ae81ff">1&lt;/span>
+Released write lock &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Depth First Search</title><link>/2021/09/06/depth-first-search/</link><pubDate>Mon, 06 Sep 2021 20:19:11 +0300</pubDate><guid>/2021/09/06/depth-first-search/</guid><description>Hello!
 Today we will consider the Depth-first Search algorithm. We have a tree and you need to go through all its elements from left to right. Take a tree for example
 1 - 6 / \ 2 - 4 10 - 6 / \ \ 3 - 2 5 - 4 23 - 7 So there are 6 elements in this tree. We start from the root and go to the left branch to 4, this branch has two daughter branches, go to the left to 2, go back to 4 and go to the right to 5.</description><content>&lt;p>Hello!&lt;/p>
 &lt;p>Today we will consider the Depth-first Search algorithm. We have a tree and you need to go through all its elements from left to right. Take a tree for example&lt;/p>
