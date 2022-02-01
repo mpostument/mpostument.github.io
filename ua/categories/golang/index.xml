@@ -16,9 +16,10 @@ RWMutex — це блокування взаємного виключення ч
 &lt;span style="color:#e6db74">&amp;#34;time&amp;#34;&lt;/span>
 &lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
 )
-&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">m&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">sync&lt;/span>.&lt;span style="color:#a6e22e">RWMutex&lt;/span>
+&lt;span style="color:#66d9ef">var&lt;/span> (
+&lt;span style="color:#a6e22e">m&lt;/span> = &lt;span style="color:#a6e22e">sync&lt;/span>.&lt;span style="color:#a6e22e">RWMutex&lt;/span>{}
+)
 &lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
-&lt;span style="color:#a6e22e">m&lt;/span> = new(&lt;span style="color:#a6e22e">sync&lt;/span>.&lt;span style="color:#a6e22e">RWMutex&lt;/span>)
 &lt;span style="color:#66d9ef">go&lt;/span> &lt;span style="color:#a6e22e">read&lt;/span>(&lt;span style="color:#ae81ff">1&lt;/span>)
 &lt;span style="color:#66d9ef">go&lt;/span> &lt;span style="color:#a6e22e">read&lt;/span>(&lt;span style="color:#ae81ff">2&lt;/span>)
 &lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Sleep&lt;/span>(&lt;span style="color:#ae81ff">2&lt;/span> &lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#a6e22e">time&lt;/span>.&lt;span style="color:#a6e22e">Second&lt;/span>)
@@ -45,9 +46,10 @@ Released lock &lt;span style="color:#ae81ff">2&lt;/span>
 &lt;span style="color:#e6db74">&amp;#34;sync&amp;#34;&lt;/span>
 &lt;span style="color:#e6db74">&amp;#34;time&amp;#34;&lt;/span>
 )
-&lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">m&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">sync&lt;/span>.&lt;span style="color:#a6e22e">RWMutex&lt;/span>
+&lt;span style="color:#66d9ef">var&lt;/span> (
+&lt;span style="color:#a6e22e">m&lt;/span> = &lt;span style="color:#a6e22e">sync&lt;/span>.&lt;span style="color:#a6e22e">RWMutex&lt;/span>{}
+)
 &lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
-&lt;span style="color:#a6e22e">m&lt;/span> = new(&lt;span style="color:#a6e22e">sync&lt;/span>.&lt;span style="color:#a6e22e">RWMutex&lt;/span>)
 &lt;span style="color:#66d9ef">go&lt;/span> &lt;span style="color:#a6e22e">write&lt;/span>(&lt;span style="color:#ae81ff">1&lt;/span>)
 &lt;span style="color:#66d9ef">go&lt;/span> &lt;span style="color:#a6e22e">read&lt;/span>(&lt;span style="color:#ae81ff">2&lt;/span>)
 &lt;span style="color:#66d9ef">go&lt;/span> &lt;span style="color:#a6e22e">write&lt;/span>(&lt;span style="color:#ae81ff">3&lt;/span>)
