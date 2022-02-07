@@ -1,4 +1,77 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Go on mpostument.com</title><link>/tags/go/</link><description>Recent content in Go on mpostument.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 31 Jan 2022 19:30:37 +0200</lastBuildDate><atom:link href="/tags/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Read and Write lock in Go</title><link>/2022/01/31/rwlock/</link><pubDate>Mon, 31 Jan 2022 19:30:37 +0200</pubDate><guid>/2022/01/31/rwlock/</guid><description>Hello!
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Go on mpostument.com</title><link>/tags/go/</link><description>Recent content in Go on mpostument.com</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 02 Feb 2022 20:58:30 +0200</lastBuildDate><atom:link href="/tags/go/index.xml" rel="self" type="application/rss+xml"/><item><title>WaitGroup</title><link>/2022/02/02/wait-groups/</link><pubDate>Wed, 02 Feb 2022 20:58:30 +0200</pubDate><guid>/2022/02/02/wait-groups/</guid><description>Hello!
+Today we will learn what is WaitGroup in golang and we will look how to apply them on an example of the program for files search.
+WaitGroup is waiting for the completion of go routines. The main go routine calls the Add method, and then each go routine calls the Done method when the routine ends.
+Let&amp;rsquo;s start with the findFile method. In this method we read all files and directories in the root folder.</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>Today we will learn what is &lt;code>WaitGroup&lt;/code> in golang and we will look how to apply them on an example of the program for files search.&lt;/p>
+&lt;p>&lt;code>WaitGroup&lt;/code> is waiting for the completion of go routines. The main go routine calls the &lt;code>Add&lt;/code> method, and then each go routine calls the &lt;code>Done&lt;/code> method when the routine ends.&lt;/p>
+&lt;p>Let&amp;rsquo;s start with the &lt;code>findFile&lt;/code> method. In this method we read all files and directories in the root folder. We loop through them and if the name of the file what we are looking for matches the name of the file from the loop then we add it to the list of matches. If it is a directory, then recursively call a search in it&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;io/ioutil&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;path/filepath&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;strings&amp;#34;&lt;/span>
+)
+&lt;span style="color:#66d9ef">var&lt;/span> (
+&lt;span style="color:#a6e22e">matches&lt;/span> []&lt;span style="color:#66d9ef">string&lt;/span>
+)
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">findFile&lt;/span>(&lt;span style="color:#a6e22e">root&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">filename&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) {
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Searching in&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">root&lt;/span>)
+&lt;span style="color:#a6e22e">files&lt;/span>, &lt;span style="color:#a6e22e">_&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ioutil&lt;/span>.&lt;span style="color:#a6e22e">ReadDir&lt;/span>(&lt;span style="color:#a6e22e">root&lt;/span>)
+&lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">file&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">files&lt;/span> {
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">strings&lt;/span>.&lt;span style="color:#a6e22e">Contains&lt;/span>(&lt;span style="color:#a6e22e">file&lt;/span>.&lt;span style="color:#a6e22e">Name&lt;/span>(), &lt;span style="color:#a6e22e">filename&lt;/span>) {
+&lt;span style="color:#a6e22e">matches&lt;/span> = append(&lt;span style="color:#a6e22e">matches&lt;/span>, &lt;span style="color:#a6e22e">filepath&lt;/span>.&lt;span style="color:#a6e22e">Join&lt;/span>(&lt;span style="color:#a6e22e">root&lt;/span>, &lt;span style="color:#a6e22e">file&lt;/span>.&lt;span style="color:#a6e22e">Name&lt;/span>()))
+}
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">file&lt;/span>.&lt;span style="color:#a6e22e">IsDir&lt;/span>() {
+&lt;span style="color:#a6e22e">findFile&lt;/span>(&lt;span style="color:#a6e22e">filepath&lt;/span>.&lt;span style="color:#a6e22e">Join&lt;/span>(&lt;span style="color:#a6e22e">root&lt;/span>, &lt;span style="color:#a6e22e">file&lt;/span>.&lt;span style="color:#a6e22e">Name&lt;/span>()), &lt;span style="color:#a6e22e">filename&lt;/span>)
+}
+}
+}
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#a6e22e">findFile&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;/var/&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;secret.txt&amp;#34;&lt;/span>)
+&lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">file&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">matches&lt;/span> {
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Matched&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">file&lt;/span>)
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>The search works, but it takes a long time. You can speed it up with go routines. To do this, add the word &lt;code>go&lt;/code> before calling the &lt;code>findFile&lt;/code> method and before the recursive call. But in this case, the search will not work because the script will exit immediately, because there is nothing to wait for the go routines. To fix this WaitGroup can be used. The script will only complete when all go routines call the Done method.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;span style="color:#f92672">import&lt;/span> (
+&lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;io/ioutil&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;path/filepath&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;strings&amp;#34;&lt;/span>
+&lt;span style="color:#e6db74">&amp;#34;sync&amp;#34;&lt;/span>
+)
+&lt;span style="color:#66d9ef">var&lt;/span> (
+&lt;span style="color:#a6e22e">matches&lt;/span> []&lt;span style="color:#66d9ef">string&lt;/span>
+&lt;span style="color:#a6e22e">waitGroup&lt;/span> = &lt;span style="color:#a6e22e">sync&lt;/span>.&lt;span style="color:#a6e22e">WaitGroup&lt;/span>{}
+&lt;span style="color:#a6e22e">lock&lt;/span> = &lt;span style="color:#a6e22e">sync&lt;/span>.&lt;span style="color:#a6e22e">Mutex&lt;/span>{}
+)
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">findFile&lt;/span>(&lt;span style="color:#a6e22e">root&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">filename&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) {
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Searching in&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">root&lt;/span>)
+&lt;span style="color:#a6e22e">files&lt;/span>, &lt;span style="color:#a6e22e">_&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ioutil&lt;/span>.&lt;span style="color:#a6e22e">ReadDir&lt;/span>(&lt;span style="color:#a6e22e">root&lt;/span>)
+&lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">file&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">files&lt;/span> {
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">strings&lt;/span>.&lt;span style="color:#a6e22e">Contains&lt;/span>(&lt;span style="color:#a6e22e">file&lt;/span>.&lt;span style="color:#a6e22e">Name&lt;/span>(), &lt;span style="color:#a6e22e">filename&lt;/span>) {
+&lt;span style="color:#a6e22e">lock&lt;/span>.&lt;span style="color:#a6e22e">Lock&lt;/span>()
+&lt;span style="color:#a6e22e">matches&lt;/span> = append(&lt;span style="color:#a6e22e">matches&lt;/span>, &lt;span style="color:#a6e22e">filepath&lt;/span>.&lt;span style="color:#a6e22e">Join&lt;/span>(&lt;span style="color:#a6e22e">root&lt;/span>, &lt;span style="color:#a6e22e">file&lt;/span>.&lt;span style="color:#a6e22e">Name&lt;/span>()))
+&lt;span style="color:#a6e22e">lock&lt;/span>.&lt;span style="color:#a6e22e">Unlock&lt;/span>()
+}
+&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">file&lt;/span>.&lt;span style="color:#a6e22e">IsDir&lt;/span>() {
+&lt;span style="color:#a6e22e">waitGroup&lt;/span>.&lt;span style="color:#a6e22e">Add&lt;/span>(&lt;span style="color:#ae81ff">1&lt;/span>)
+&lt;span style="color:#66d9ef">go&lt;/span> &lt;span style="color:#a6e22e">findFile&lt;/span>(&lt;span style="color:#a6e22e">filepath&lt;/span>.&lt;span style="color:#a6e22e">Join&lt;/span>(&lt;span style="color:#a6e22e">root&lt;/span>, &lt;span style="color:#a6e22e">file&lt;/span>.&lt;span style="color:#a6e22e">Name&lt;/span>()), &lt;span style="color:#a6e22e">filename&lt;/span>)
+}
+}
+&lt;span style="color:#a6e22e">waitGroup&lt;/span>.&lt;span style="color:#a6e22e">Done&lt;/span>()
+}
+&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;span style="color:#a6e22e">waitGroup&lt;/span>.&lt;span style="color:#a6e22e">Add&lt;/span>(&lt;span style="color:#ae81ff">1&lt;/span>)
+&lt;span style="color:#66d9ef">go&lt;/span> &lt;span style="color:#a6e22e">findFile&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;/var/&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;secret.txt&amp;#34;&lt;/span>)
+&lt;span style="color:#a6e22e">waitGroup&lt;/span>.&lt;span style="color:#a6e22e">Wait&lt;/span>()
+&lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">file&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">matches&lt;/span> {
+&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Matched&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">file&lt;/span>)
+}
+}
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>A few things have been added here. In the &lt;code>findFile&lt;/code> method, lock was added before adding file names to list. To ensure that routines do not overwrite data. Another thing that has been added is &lt;code>waitGroup&lt;/code>. Before the each &lt;code>go&lt;/code> routine call, the &lt;code>waitGroup.Add(1)&lt;/code> call is added, and after the &lt;code>go&lt;/code> routine, &lt;code>waitGroup.Done()&lt;/code> is called. And to the main method added &lt;code>waitGroup.Wait()&lt;/code> which will wait while all &lt;code>go&lt;/code> routines finish work. And then a list of all files will be displayed.&lt;/p></content></item><item><title>Read and Write lock in Go</title><link>/2022/01/31/rwlock/</link><pubDate>Mon, 31 Jan 2022 19:30:37 +0200</pubDate><guid>/2022/01/31/rwlock/</guid><description>Hello!
 Today we will learn what is RWMutex and how to use it. RWMutex is a read/write exclusion lock. A lock can have any number of readers or one writer.
 RWMutex has the following methods:
 func (rw *RWMutex) Lock() // Write Lock func (rw *RWMutex) RLock() // Read Lock func (rw *RWMutex) RUnlock() // Read Unlock func (rw *RWMutex) Unlock() // Write Unlock Now let&amp;rsquo;s see how it can be used.</description><content>&lt;p>Hello!&lt;/p>
