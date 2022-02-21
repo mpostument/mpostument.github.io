@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Postgres on Maksym Postument</title><link>/ua/tags/postgres/</link><description>Recent content in Postgres on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 20 Feb 2022 20:37:23 +0200</lastBuildDate><atom:link href="/ua/tags/postgres/index.xml" rel="self" type="application/rss+xml"/><item><title>Using Postgres With Golang</title><link>/ua/2022/02/20/connecting-to-postgres-with-golang/</link><pubDate>Sun, 20 Feb 2022 20:37:23 +0200</pubDate><guid>/ua/2022/02/20/connecting-to-postgres-with-golang/</guid><description>Hello!
-Today we will look how we can use golang to connect to the postgres database and execute queries. To work with the database we will use github.com/jackc/pgx.
+Today we will look at how we can use golang to connect to the Postgres database and execute queries. To work with the database we will use github.com/jackc/pgx.
 Let&amp;rsquo;s start with initializing the module and installing the driver for the database.
 go mod init go get github.com/jackc/pgx/v4 After that pgx will be available for use in code.
-For the database I am using docker, but it can be others type of installation.</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>Today we will look how we can use golang to connect to the postgres database and execute queries.
+For the database, I am using docker, but it can be another type of installation.</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>Today we will look at how we can use golang to connect to the Postgres database and execute queries.
 To work with the database we will use &lt;code>github.com/jackc/pgx&lt;/code>.&lt;/p>
 &lt;p>Let&amp;rsquo;s start with initializing the module and installing the driver for the database.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell">go mod init
 go get github.com/jackc/pgx/v4
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>After that &lt;code>pgx&lt;/code> will be available for use in code.&lt;/p>
-&lt;p>For the database I am using docker, but it can be others type of installation.
+&lt;p>For the database, I am using docker, but it can be another type of installation.
 To do this, create a file &lt;code>docker-compose.yml&lt;/code> with content:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">version&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;3&amp;#39;&lt;/span>
 &lt;span style="color:#f92672">services&lt;/span>:
-&lt;span style="color:#f92672">postgres&lt;/span>:
-&lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">postgres&lt;/span>
+&lt;span style="color:#f92672">Postgres&lt;/span>:
+&lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">Postgres&lt;/span>
 &lt;span style="color:#f92672">tty&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
 &lt;span style="color:#f92672">restart&lt;/span>: &lt;span style="color:#ae81ff">always&lt;/span>
 &lt;span style="color:#f92672">ports&lt;/span>:
@@ -23,7 +23,7 @@ To do this, create a file &lt;code>docker-compose.yml&lt;/code> with content:&lt
 - &lt;span style="color:#ae81ff">POSTGRES_PASSWORD=postgres&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>And execute the command &lt;code>docker-compose up -d&lt;/code>. Docker-compose and docker must be installed.
 The database is ready to work, and now we can start writing code.&lt;/p>
-&lt;p>Let&amp;rsquo;s start with the connection to the database. First we create a configuration &lt;code>cfg&lt;/code> which will has the address, port, user, password and database to which we connect. Since my database works locally, I specify &lt;code>localhost&lt;/code> as the host. When the configuration is ready, call &lt;code>pgx.Connect (cfg)&lt;/code> to create a connection. After finishing work with database connection it is necessary to close therefore we will add &lt;code>defer conn.Close()&lt;/code> and we check for an errors. Also to check that the database is responding we will run &lt;code>conn.Ping(context.Background())&lt;/code>&lt;/p>
+&lt;p>Let&amp;rsquo;s start with the connection to the database. First, we create a configuration &lt;code>cfg&lt;/code> which will have the address, port, user, password, and database to which we connect. Since my database works locally, I specify &lt;code>localhost&lt;/code> as the host. When the configuration is ready, call &lt;code>pgx.Connect (cfg)&lt;/code> to create a connection. After finishing work with the database connection it is necessary to close therefore we will add &lt;code>defer conn.Close()&lt;/code> and we check for errors. Also to check that the database is responding we will run &lt;code>conn.Ping(context.Background())&lt;/code>&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
 &lt;span style="color:#f92672">import&lt;/span> (
 &lt;span style="color:#e6db74">&amp;#34;context&amp;#34;&lt;/span>
@@ -51,7 +51,7 @@ The database is ready to work, and now we can start writing code.&lt;/p>
 &lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Ping Failed: %v\n&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>)
 }
 }
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>We can start making inquiries. To begin, create a new table and write data to it. The &lt;code>Exec&lt;/code> method is used to call requests that does not return anything.&lt;/p>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>We can start making inquiries. To begin, create a new table and write data to it. The &lt;code>Exec&lt;/code> method is used to call requests that do not return anything.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">conn&lt;/span>.&lt;span style="color:#a6e22e">Exec&lt;/span>(&lt;span style="color:#e6db74">`
 &lt;/span>&lt;span style="color:#e6db74"> CREATE TABLE IF NOT EXISTS users(
 &lt;/span>&lt;span style="color:#e6db74"> id SERIAL PRIMARY KEY,
