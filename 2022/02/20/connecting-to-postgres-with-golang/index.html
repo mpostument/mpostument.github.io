@@ -83,7 +83,7 @@ mpostument.com
 2022-02-20
 </span>
 <span class=post-author>:: Maksym Postument</span>
-<span class=post-reading-time>:: 3 min read (435 words)</span>
+<span class=post-reading-time>:: 3 min read (478 words)</span>
 </div>
 <span class=post-tags>
 #<a href=/tags/go/>Go</a>&nbsp;
@@ -92,89 +92,89 @@ mpostument.com
 </span>
 <img src=https://i.imgur.com/jWAaJS8.jpg class=post-cover alt="Using Postgres With Golang" title="Cover Image">
 <div class=post-content><div>
-<p>Привіт!</p>
-<p>Сьогодні подивимось як за допомогою golang можна під&rsquo;єднатися до postgres бази даних та виконувати запити.
-Для роботи з базою даних будемо використовувати <code>github.com/jackc/pgx</code>.</p>
-<p>Розпочнемо з ініціалізації модуля та встановлення драйвера для бази.</p>
+<p>Hello!</p>
+<p>Today we will look at how we can use golang to connect to the Postgres database and execute queries.
+To work with the database we will use <code>github.com/jackc/pgx</code>.</p>
+<p>Let&rsquo;s start with initializing the module and installing the driver for the database.</p>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>go mod init
 go get github.com/jackc/pgx/v4
-</code></pre></div><p>Після цього <code>pgx</code> стане доступний для використання в коді.</p>
-<p>Для тестової бази даних я використаю docker, але це може бути який тип інсталяції.
-Для цього потрібно створити файл <code>docker-compose.yml</code> з контентом:</p>
+</code></pre></div><p>After that <code>pgx</code> will be available for use in code.</p>
+<p>For the database, I am using docker, but it can be another type of installation.
+To do this, create a file <code>docker-compose.yml</code> with content:</p>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yml data-lang=yml><span style=color:#f92672>version</span>: <span style=color:#e6db74>&#39;3&#39;</span>
 
 <span style=color:#f92672>services</span>:
-  <span style=color:#f92672>postgres</span>:
-    <span style=color:#f92672>image</span>: <span style=color:#ae81ff>postgres</span>
+  <span style=color:#f92672>Postgres</span>:
+    <span style=color:#f92672>image</span>: <span style=color:#ae81ff>Postgres</span>
     <span style=color:#f92672>tty</span>: <span style=color:#66d9ef>true</span>
     <span style=color:#f92672>restart</span>: <span style=color:#ae81ff>always</span>
     <span style=color:#f92672>ports</span>:
       - <span style=color:#e6db74>&#34;5432:5432&#34;</span>
     <span style=color:#f92672>environment</span>:
       - <span style=color:#ae81ff>POSTGRES_PASSWORD=postgres</span>
-</code></pre></div><p>І виконати команду <code>docker-compose up -d</code>. Docker-compose i docker мають бути встановленні.
-База даних готова для роботи, і тепер можна приступити до написання коду.</p>
-<p>Розпочнемо з підключення до бази даних. Спочатку створюємо конфігурацію <code>cfg</code> в якій буде вказано адрес, порт, користувач, пароль та база даних до якої підключаємось. Оскільки в мене база даних працює локально то як хост я вказую <code>localhost</code>.Коли конфігурація готова викликаємо <code>pgx.Connect(cfg)</code> для створення підключення. Після закінчення роботи з базою підключення потрібно закрити тому додамо <code>defer conn.Close()</code> і перевіряємо помилки. Також щоб перевірити що база даних відповідає викличемо <code>conn.Ping(context.Background())</code></p>
+</code></pre></div><p>And execute the command <code>docker-compose up -d</code>. Docker-compose and docker must be installed.
+The database is ready to work, and now we can start writing code.</p>
+<p>Let&rsquo;s start with the connection to the database. First, we create a configuration <code>cfg</code> which will have the address, port, user, password, and database to which we connect. Since my database works locally, I specify <code>localhost</code> as the host. When the configuration is ready, call <code>pgx.Connect (cfg)</code> to create a connection. After finishing work with the database connection it is necessary to close therefore we will add <code>defer conn.Close()</code> and we check for errors. Also to check that the database is responding we will run <code>conn.Ping(context.Background())</code></p>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
 
 <span style=color:#f92672>import</span> (
-	<span style=color:#e6db74>&#34;context&#34;</span>
-	<span style=color:#e6db74>&#34;fmt&#34;</span>
-	<span style=color:#e6db74>&#34;log&#34;</span>
-	<span style=color:#e6db74>&#34;os&#34;</span>
+    <span style=color:#e6db74>&#34;context&#34;</span>
+    <span style=color:#e6db74>&#34;fmt&#34;</span>
+    <span style=color:#e6db74>&#34;log&#34;</span>
+    <span style=color:#e6db74>&#34;os&#34;</span>
 
-	<span style=color:#e6db74>&#34;github.com/jackc/pgx&#34;</span>
+    <span style=color:#e6db74>&#34;github.com/jackc/pgx&#34;</span>
 )
 
 <span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
-	<span style=color:#a6e22e>cfg</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>pgx</span>.<span style=color:#a6e22e>ConnConfig</span>{
-		<span style=color:#a6e22e>Host</span>:     <span style=color:#e6db74>&#34;localhost&#34;</span>,
-		<span style=color:#a6e22e>Port</span>:     <span style=color:#ae81ff>5432</span>,
-		<span style=color:#a6e22e>User</span>:     <span style=color:#e6db74>&#34;postgres&#34;</span>,
-		<span style=color:#a6e22e>Password</span>: <span style=color:#e6db74>&#34;postgres&#34;</span>,
-		<span style=color:#a6e22e>Database</span>: <span style=color:#e6db74>&#34;postgres&#34;</span>,
-	}
-	<span style=color:#a6e22e>conn</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>pgx</span>.<span style=color:#a6e22e>Connect</span>(<span style=color:#a6e22e>cfg</span>)
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-		<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Fprintf</span>(<span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Stderr</span>, <span style=color:#e6db74>&#34;Unable to connect to database: %v\n&#34;</span>, <span style=color:#a6e22e>err</span>)
-		<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatalf</span>(<span style=color:#e6db74>&#34;Connect to database failed: %v\n&#34;</span>, <span style=color:#a6e22e>err</span>)
-	}
-	<span style=color:#66d9ef>defer</span> <span style=color:#a6e22e>conn</span>.<span style=color:#a6e22e>Close</span>()
+    <span style=color:#a6e22e>cfg</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>pgx</span>.<span style=color:#a6e22e>ConnConfig</span>{
+        <span style=color:#a6e22e>Host</span>:     <span style=color:#e6db74>&#34;localhost&#34;</span>,
+        <span style=color:#a6e22e>Port</span>:     <span style=color:#ae81ff>5432</span>,
+        <span style=color:#a6e22e>User</span>:     <span style=color:#e6db74>&#34;postgres&#34;</span>,
+        <span style=color:#a6e22e>Password</span>: <span style=color:#e6db74>&#34;postgres&#34;</span>,
+        <span style=color:#a6e22e>Database</span>: <span style=color:#e6db74>&#34;postgres&#34;</span>,
+    }
+    <span style=color:#a6e22e>conn</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>pgx</span>.<span style=color:#a6e22e>Connect</span>(<span style=color:#a6e22e>cfg</span>)
+    <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Fprintf</span>(<span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Stderr</span>, <span style=color:#e6db74>&#34;Unable to connect to database: %v\n&#34;</span>, <span style=color:#a6e22e>err</span>)
+        <span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatalf</span>(<span style=color:#e6db74>&#34;Connect to database failed: %v\n&#34;</span>, <span style=color:#a6e22e>err</span>)
+    }
+    <span style=color:#66d9ef>defer</span> <span style=color:#a6e22e>conn</span>.<span style=color:#a6e22e>Close</span>()
 
-	<span style=color:#a6e22e>err</span> = <span style=color:#a6e22e>conn</span>.<span style=color:#a6e22e>Ping</span>(<span style=color:#a6e22e>context</span>.<span style=color:#a6e22e>Background</span>())
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-		<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatalf</span>(<span style=color:#e6db74>&#34;Ping Failed: %v\n&#34;</span>, <span style=color:#a6e22e>err</span>)
-	}
+    <span style=color:#a6e22e>err</span> = <span style=color:#a6e22e>conn</span>.<span style=color:#a6e22e>Ping</span>(<span style=color:#a6e22e>context</span>.<span style=color:#a6e22e>Background</span>())
+    <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+        <span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatalf</span>(<span style=color:#e6db74>&#34;Ping Failed: %v\n&#34;</span>, <span style=color:#a6e22e>err</span>)
+    }
 }
-</code></pre></div><p>Можна тепер почати робити запити. Для початку створимо нову таблицю і запишемо в неї дані. Для виклику запитів які нічого не повертають використовується метод <code>Exec</code>.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go>	<span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>err</span> = <span style=color:#a6e22e>conn</span>.<span style=color:#a6e22e>Exec</span>(<span style=color:#e6db74>`
-</span><span style=color:#e6db74>		CREATE TABLE IF NOT EXISTS users(
-</span><span style=color:#e6db74>			id SERIAL PRIMARY KEY,
-</span><span style=color:#e6db74>			name TEXT,
-</span><span style=color:#e6db74>			email TEXT UNIQUE NOT NULL
-</span><span style=color:#e6db74>		);
-</span><span style=color:#e6db74>	`</span>)
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-		<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatalln</span>(<span style=color:#a6e22e>err</span>)
-	}
+</code></pre></div><p>We can start making inquiries. To begin, create a new table and write data to it. The <code>Exec</code> method is used to call requests that do not return anything.</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go>    <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>err</span> = <span style=color:#a6e22e>conn</span>.<span style=color:#a6e22e>Exec</span>(<span style=color:#e6db74>`
+</span><span style=color:#e6db74>        CREATE TABLE IF NOT EXISTS users(
+</span><span style=color:#e6db74>            id SERIAL PRIMARY KEY,
+</span><span style=color:#e6db74>            name TEXT,
+</span><span style=color:#e6db74>            email TEXT UNIQUE NOT NULL
+</span><span style=color:#e6db74>        );
+</span><span style=color:#e6db74>    `</span>)
+    <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+        <span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatalln</span>(<span style=color:#a6e22e>err</span>)
+    }
 
-	<span style=color:#a6e22e>name</span> <span style=color:#f92672>:=</span> <span style=color:#e6db74>&#34;TestUser1&#34;</span>
-	<span style=color:#a6e22e>email</span> <span style=color:#f92672>:=</span> <span style=color:#e6db74>&#34;testuser@gmail.com&#34;</span>
-	<span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>err</span> = <span style=color:#a6e22e>conn</span>.<span style=color:#a6e22e>Exec</span>(<span style=color:#e6db74>`
-</span><span style=color:#e6db74>		INSERT INTO users(name, email)
-</span><span style=color:#e6db74>		VALUES ($1, $2);
-</span><span style=color:#e6db74>	`</span>, <span style=color:#a6e22e>name</span>, <span style=color:#a6e22e>email</span>)
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-		<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatalln</span>(<span style=color:#a6e22e>err</span>)
-	}
+    <span style=color:#a6e22e>name</span> <span style=color:#f92672>:=</span> <span style=color:#e6db74>&#34;TestUser1&#34;</span>
+    <span style=color:#a6e22e>email</span> <span style=color:#f92672>:=</span> <span style=color:#e6db74>&#34;testuser@gmail.com&#34;</span>
+    <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>err</span> = <span style=color:#a6e22e>conn</span>.<span style=color:#a6e22e>Exec</span>(<span style=color:#e6db74>`
+</span><span style=color:#e6db74>        INSERT INTO users(name, email)
+</span><span style=color:#e6db74>        VALUES ($1, $2);
+</span><span style=color:#e6db74>    `</span>, <span style=color:#a6e22e>name</span>, <span style=color:#a6e22e>email</span>)
+    <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+        <span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatalln</span>(<span style=color:#a6e22e>err</span>)
+    }
 
-</code></pre></div><p>Дані створено, і можна спробувати їх прочитати. Якщо вертається з бази один запис, то можна використати метод <code>QueryRow</code>, якщо багато, то <code>Query</code>. Також для того, щоб прочитати дані потрібна структура, в нас це буде структура <code>User</code> яка буде мати такі самі параметри як і поля в таблиці.</p>
+</code></pre></div><p>The data has been created and we can try to read it. If one record is returned from the database, you can use the <code>QueryRow</code> method, if many, then <code>Query</code>. Also, in order to read the data you need the structure, we will have the structure name <code>User</code> which will have the same parameters as the fields in the table.</p>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>User</span> <span style=color:#66d9ef>struct</span> {
 	<span style=color:#a6e22e>Id</span>    <span style=color:#66d9ef>int</span>
 	<span style=color:#a6e22e>Name</span>  <span style=color:#66d9ef>string</span>
 	<span style=color:#a6e22e>Email</span> <span style=color:#66d9ef>string</span>
 }
-</code></pre></div><p>І сам запит щоб отримати дані</p>
+</code></pre></div><p>And the request itself to get the data</p>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go>	<span style=color:#a6e22e>user</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>User</span>{}
 	<span style=color:#a6e22e>err</span> = <span style=color:#a6e22e>conn</span>.<span style=color:#a6e22e>QueryRow</span>(<span style=color:#e6db74>&#34;SELECT * FROM users WHERE name=$1;&#34;</span>, <span style=color:#a6e22e>name</span>).<span style=color:#a6e22e>Scan</span>(<span style=color:#f92672>&amp;</span><span style=color:#a6e22e>user</span>.<span style=color:#a6e22e>Id</span>, <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>user</span>.<span style=color:#a6e22e>Name</span>, <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>user</span>.<span style=color:#a6e22e>Email</span>)
 	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
@@ -182,7 +182,7 @@ go get github.com/jackc/pgx/v4
 		<span style=color:#66d9ef>return</span>
 	}
 	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>user</span>)
-</code></pre></div><p>Ось так за допомогою <code>pgx</code> легко можна читати та записувати дані. <code>Pgx</code> також може використовувати як драйвер до вбудованого <code>sql</code> пакета</p>
+</code></pre></div><p><code>Pgx</code> can also be used as a driver for the built-in <code>sql</code> package</p>
 </div></div>
 <div class=pagination>
 <div class=pagination__title>

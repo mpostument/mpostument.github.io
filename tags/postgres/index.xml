@@ -1,29 +1,29 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Postgres on Maksym Postument</title><link>/tags/postgres/</link><description>Recent content in Postgres on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 20 Feb 2022 20:37:23 +0200</lastBuildDate><atom:link href="/tags/postgres/index.xml" rel="self" type="application/rss+xml"/><item><title>Using Postgres With Golang</title><link>/2022/02/20/connecting-to-postgres-with-golang/</link><pubDate>Sun, 20 Feb 2022 20:37:23 +0200</pubDate><guid>/2022/02/20/connecting-to-postgres-with-golang/</guid><description>Привіт!
-Сьогодні подивимось як за допомогою golang можна під&amp;rsquo;єднатися до postgres бази даних та виконувати запити. Для роботи з базою даних будемо використовувати github.com/jackc/pgx.
-Розпочнемо з ініціалізації модуля та встановлення драйвера для бази.
-go mod init go get github.com/jackc/pgx/v4 Після цього pgx стане доступний для використання в коді.
-Для тестової бази даних я використаю docker, але це може бути який тип інсталяції. Для цього потрібно створити файл docker-compose.yml з контентом:</description><content>&lt;p>Привіт!&lt;/p>
-&lt;p>Сьогодні подивимось як за допомогою golang можна під&amp;rsquo;єднатися до postgres бази даних та виконувати запити.
-Для роботи з базою даних будемо використовувати &lt;code>github.com/jackc/pgx&lt;/code>.&lt;/p>
-&lt;p>Розпочнемо з ініціалізації модуля та встановлення драйвера для бази.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Postgres on Maksym Postument</title><link>/tags/postgres/</link><description>Recent content in Postgres on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 20 Feb 2022 20:37:23 +0200</lastBuildDate><atom:link href="/tags/postgres/index.xml" rel="self" type="application/rss+xml"/><item><title>Using Postgres With Golang</title><link>/2022/02/20/connecting-to-postgres-with-golang/</link><pubDate>Sun, 20 Feb 2022 20:37:23 +0200</pubDate><guid>/2022/02/20/connecting-to-postgres-with-golang/</guid><description>Hello!
+Today we will look at how we can use golang to connect to the Postgres database and execute queries. To work with the database we will use github.com/jackc/pgx.
+Let&amp;rsquo;s start with initializing the module and installing the driver for the database.
+go mod init go get github.com/jackc/pgx/v4 After that pgx will be available for use in code.
+For the database, I am using docker, but it can be another type of installation.</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>Today we will look at how we can use golang to connect to the Postgres database and execute queries.
+To work with the database we will use &lt;code>github.com/jackc/pgx&lt;/code>.&lt;/p>
+&lt;p>Let&amp;rsquo;s start with initializing the module and installing the driver for the database.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell">go mod init
 go get github.com/jackc/pgx/v4
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>Після цього &lt;code>pgx&lt;/code> стане доступний для використання в коді.&lt;/p>
-&lt;p>Для тестової бази даних я використаю docker, але це може бути який тип інсталяції.
-Для цього потрібно створити файл &lt;code>docker-compose.yml&lt;/code> з контентом:&lt;/p>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>After that &lt;code>pgx&lt;/code> will be available for use in code.&lt;/p>
+&lt;p>For the database, I am using docker, but it can be another type of installation.
+To do this, create a file &lt;code>docker-compose.yml&lt;/code> with content:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">version&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;3&amp;#39;&lt;/span>
 &lt;span style="color:#f92672">services&lt;/span>:
-&lt;span style="color:#f92672">postgres&lt;/span>:
-&lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">postgres&lt;/span>
+&lt;span style="color:#f92672">Postgres&lt;/span>:
+&lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">Postgres&lt;/span>
 &lt;span style="color:#f92672">tty&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
 &lt;span style="color:#f92672">restart&lt;/span>: &lt;span style="color:#ae81ff">always&lt;/span>
 &lt;span style="color:#f92672">ports&lt;/span>:
 - &lt;span style="color:#e6db74">&amp;#34;5432:5432&amp;#34;&lt;/span>
 &lt;span style="color:#f92672">environment&lt;/span>:
 - &lt;span style="color:#ae81ff">POSTGRES_PASSWORD=postgres&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>І виконати команду &lt;code>docker-compose up -d&lt;/code>. Docker-compose i docker мають бути встановленні.
-База даних готова для роботи, і тепер можна приступити до написання коду.&lt;/p>
-&lt;p>Розпочнемо з підключення до бази даних. Спочатку створюємо конфігурацію &lt;code>cfg&lt;/code> в якій буде вказано адрес, порт, користувач, пароль та база даних до якої підключаємось. Оскільки в мене база даних працює локально то як хост я вказую &lt;code>localhost&lt;/code>.Коли конфігурація готова викликаємо &lt;code>pgx.Connect(cfg)&lt;/code> для створення підключення. Після закінчення роботи з базою підключення потрібно закрити тому додамо &lt;code>defer conn.Close()&lt;/code> і перевіряємо помилки. Також щоб перевірити що база даних відповідає викличемо &lt;code>conn.Ping(context.Background())&lt;/code>&lt;/p>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>And execute the command &lt;code>docker-compose up -d&lt;/code>. Docker-compose and docker must be installed.
+The database is ready to work, and now we can start writing code.&lt;/p>
+&lt;p>Let&amp;rsquo;s start with the connection to the database. First, we create a configuration &lt;code>cfg&lt;/code> which will have the address, port, user, password, and database to which we connect. Since my database works locally, I specify &lt;code>localhost&lt;/code> as the host. When the configuration is ready, call &lt;code>pgx.Connect (cfg)&lt;/code> to create a connection. After finishing work with the database connection it is necessary to close therefore we will add &lt;code>defer conn.Close()&lt;/code> and we check for errors. Also to check that the database is responding we will run &lt;code>conn.Ping(context.Background())&lt;/code>&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
 &lt;span style="color:#f92672">import&lt;/span> (
 &lt;span style="color:#e6db74">&amp;#34;context&amp;#34;&lt;/span>
@@ -51,7 +51,7 @@ go get github.com/jackc/pgx/v4
 &lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Ping Failed: %v\n&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>)
 }
 }
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>Можна тепер почати робити запити. Для початку створимо нову таблицю і запишемо в неї дані. Для виклику запитів які нічого не повертають використовується метод &lt;code>Exec&lt;/code>.&lt;/p>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>We can start making inquiries. To begin, create a new table and write data to it. The &lt;code>Exec&lt;/code> method is used to call requests that do not return anything.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">conn&lt;/span>.&lt;span style="color:#a6e22e">Exec&lt;/span>(&lt;span style="color:#e6db74">`
 &lt;/span>&lt;span style="color:#e6db74"> CREATE TABLE IF NOT EXISTS users(
 &lt;/span>&lt;span style="color:#e6db74"> id SERIAL PRIMARY KEY,
@@ -71,13 +71,13 @@ go get github.com/jackc/pgx/v4
 &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
 &lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
 }
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>Дані створено, і можна спробувати їх прочитати. Якщо вертається з бази один запис, то можна використати метод &lt;code>QueryRow&lt;/code>, якщо багато, то &lt;code>Query&lt;/code>. Також для того, щоб прочитати дані потрібна структура, в нас це буде структура &lt;code>User&lt;/code> яка буде мати такі самі параметри як і поля в таблиці.&lt;/p>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>The data has been created and we can try to read it. If one record is returned from the database, you can use the &lt;code>QueryRow&lt;/code> method, if many, then &lt;code>Query&lt;/code>. Also, in order to read the data you need the structure, we will have the structure name &lt;code>User&lt;/code> which will have the same parameters as the fields in the table.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#66d9ef">type&lt;/span> &lt;span style="color:#a6e22e">User&lt;/span> &lt;span style="color:#66d9ef">struct&lt;/span> {
 &lt;span style="color:#a6e22e">Id&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>
 &lt;span style="color:#a6e22e">Name&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
 &lt;span style="color:#a6e22e">Email&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
 }
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>І сам запит щоб отримати дані&lt;/p>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>And the request itself to get the data&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#a6e22e">user&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">User&lt;/span>{}
 &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">conn&lt;/span>.&lt;span style="color:#a6e22e">QueryRow&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;SELECT * FROM users WHERE name=$1;&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">name&lt;/span>).&lt;span style="color:#a6e22e">Scan&lt;/span>(&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">user&lt;/span>.&lt;span style="color:#a6e22e">Id&lt;/span>, &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">user&lt;/span>.&lt;span style="color:#a6e22e">Name&lt;/span>, &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">user&lt;/span>.&lt;span style="color:#a6e22e">Email&lt;/span>)
 &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
@@ -85,4 +85,4 @@ go get github.com/jackc/pgx/v4
 &lt;span style="color:#66d9ef">return&lt;/span>
 }
 &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">user&lt;/span>)
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>Ось так за допомогою &lt;code>pgx&lt;/code> легко можна читати та записувати дані. &lt;code>Pgx&lt;/code> також може використовувати як драйвер до вбудованого &lt;code>sql&lt;/code> пакета&lt;/p></content></item></channel></rss>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>Pgx&lt;/code> can also be used as a driver for the built-in &lt;code>sql&lt;/code> package&lt;/p></content></item></channel></rss>
