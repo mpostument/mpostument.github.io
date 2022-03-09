@@ -39,11 +39,11 @@ GitHub setup В github потрібно створити два репозито
 &lt;p>&lt;img src="https://i.imgur.com/GnsuIEm.png" alt="Repository">&lt;/p>
 &lt;p>В &lt;code>mpostument.github.io&lt;/code> код буде деплоїтись через github actions. Руками зміни сюди вноситись не будуть.&lt;/p>
 &lt;p>За допомогою hugo створю новий сайт. Буде створена нова директорія &lt;code>hugodemo&lt;/code> в ній ініціалізую git репозиторій та добавлю remote на &lt;code>content-mpostument&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell">hugo new site hugodemo
-cd hugodemo
-git init
-git remote add origin git@github.com:mpostument/content-mpostument.git
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер потрібно вибрати тему для сайту. Теми можна подивитись на &lt;a href="https://themes.gohugo.io/">themes.gohugo&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>hugo new site hugodemo
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cd hugodemo
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git init
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git remote add origin git@github.com:mpostument/content-mpostument.git
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер потрібно вибрати тему для сайту. Теми можна подивитись на &lt;a href="https://themes.gohugo.io/">themes.gohugo&lt;/a>&lt;/p>
 &lt;p>Для свого сайту я обрав тему &lt;a href="https://github.com/panr/hugo-theme-terminal/">Terminal&lt;/a>. Тему можна скачати архівом і розпакувати в папку &lt;code>themes&lt;/code> або добавити як submodule. Я добавлю як submodule для того щоб завжди мати останню версію теми.&lt;/p>
 &lt;p>&lt;code>git submodule add https://github.com/panr/hugo-theme-terminal.git themes/terminal&lt;/code>.&lt;/p>
 &lt;p>Зазвичай до кожної теми йде приклад конфігураційного файлу. Я скопіюю його з github сторінки і збережу в файлі &lt;code>config.toml&lt;/code>. Далі можна його підлаштовувати під свої потреби.&lt;/p>
@@ -52,35 +52,40 @@ git remote add origin git@github.com:mpostument/content-mpostument.git
 &lt;h2 id="github-actions">Github Actions&lt;/h2>
 &lt;p>Для того щоб GitHub actions працював, в корені репозиторія потрібно створити папку &lt;code>.github/workflows&lt;/code> в якій створити yml файл з конфігурацією для Actions. В &lt;code>on&lt;/code> секції я вказую запускати білд тільки на push в master бренчу.&lt;/p>
 &lt;p>В &lt;code>steps&lt;/code> я викликаю по черзі декілька actions. Починається pipeline з клонування репозиторія. Після цього я викликаю &lt;code>git submodule update --init --recursive&lt;/code> для того щоб оновити тему за допомогою submodule. Наступним кроком встановлюю потрібну версії hugo та викликаю &lt;code>hugo --minify&lt;/code> для того щоб згененрувати статичний сайт з .md файлів та теми. І останім кроком я деплою контент з &lt;code>./public&lt;/code> директорії. Вона з&amp;rsquo;являється після виконання команди &lt;code>hugo --minify&lt;/code>. Як параметри також потрібно передати ім&amp;rsquo;я git користувача, емейл, бренчу та репозиторій в яку здійснювати деплой.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">CI&lt;/span>
-&lt;span style="color:#f92672">on&lt;/span>:
-&lt;span style="color:#f92672">push&lt;/span>:
-&lt;span style="color:#f92672">branches&lt;/span>:
-- &lt;span style="color:#ae81ff">master&lt;/span>
-&lt;span style="color:#f92672">jobs&lt;/span>:
-&lt;span style="color:#f92672">deploy&lt;/span>:
-&lt;span style="color:#f92672">runs-on&lt;/span>: &lt;span style="color:#ae81ff">ubuntu-18.04&lt;/span>
-&lt;span style="color:#f92672">steps&lt;/span>:
-- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Git checkout&lt;/span>
-&lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">actions/checkout@v2.3.3&lt;/span>
-- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Update theme&lt;/span>
-&lt;span style="color:#f92672">run&lt;/span>: &lt;span style="color:#ae81ff">git submodule update --init --recursive&lt;/span>
-- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Setup hugo&lt;/span>
-&lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">peaceiris/actions-hugo@v2.4.13&lt;/span>
-&lt;span style="color:#f92672">with&lt;/span>:
-&lt;span style="color:#f92672">hugo-version&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;0.76.5&amp;#39;&lt;/span>
-- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Build&lt;/span>
-&lt;span style="color:#f92672">run&lt;/span>: &lt;span style="color:#ae81ff">hugo --minify&lt;/span>
-- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Deploy&lt;/span>
-&lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">peaceiris/actions-gh-pages@v3.7.3&lt;/span>
-&lt;span style="color:#f92672">with&lt;/span>:
-&lt;span style="color:#f92672">personal_token&lt;/span>: &lt;span style="color:#ae81ff">${{ secrets.GH_TOKEN }}&lt;/span>
-&lt;span style="color:#f92672">external_repository&lt;/span>: &lt;span style="color:#ae81ff">mpostument/mpostument.github.io&lt;/span>
-&lt;span style="color:#f92672">publish_dir&lt;/span>: &lt;span style="color:#ae81ff">./public&lt;/span>
-&lt;span style="color:#f92672">user_name&lt;/span>: &lt;span style="color:#ae81ff">mpostument&lt;/span>
-&lt;span style="color:#f92672">user_email&lt;/span>: &lt;span style="color:#ae81ff">777rip777@gmail.com&lt;/span>
-&lt;span style="color:#f92672">publish_branch&lt;/span>: &lt;span style="color:#ae81ff">master&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер це можна закомітити в github репозиторій і при мерджі в мастер білд має запуститись.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">CI&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">on&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">push&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">branches&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">master&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">jobs&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">deploy&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">runs-on&lt;/span>: &lt;span style="color:#ae81ff">ubuntu-18.04&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">steps&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Git checkout&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">actions/checkout@v2.3.3&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Update theme&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">run&lt;/span>: &lt;span style="color:#ae81ff">git submodule update --init --recursive&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Setup hugo&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">peaceiris/actions-hugo@v2.4.13&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">with&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">hugo-version&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;0.76.5&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Build&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">run&lt;/span>: &lt;span style="color:#ae81ff">hugo --minify&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Deploy&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">peaceiris/actions-gh-pages@v3.7.3&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">with&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">personal_token&lt;/span>: &lt;span style="color:#ae81ff">${{ secrets.GH_TOKEN }}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">external_repository&lt;/span>: &lt;span style="color:#ae81ff">mpostument/mpostument.github.io&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">publish_dir&lt;/span>: &lt;span style="color:#ae81ff">./public&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">user_name&lt;/span>: &lt;span style="color:#ae81ff">mpostument&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">user_email&lt;/span>: &lt;span style="color:#ae81ff">777rip777@gmail.com&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">publish_branch&lt;/span>: &lt;span style="color:#ae81ff">master&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер це можна закомітити в github репозиторій і при мерджі в мастер білд має запуститись.&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/1Vfl3A8.png" alt="ActionBuild">&lt;/p>
 &lt;p>Як тільки білд пройшов нові файли мають одразу зявитись в Github Pages репозиторії &lt;code>mpostument.github.io&lt;/code>&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/emHfquj.png" alt="DeployStatus">&lt;/p>
@@ -92,26 +97,27 @@ name: nightfalldlp on: push: branches: - master pull_request: jobs: run-nightfal
 &lt;h2 id="github-action">Github Action&lt;/h2>
 &lt;p>Для Github Nightfall дає Action який можна використовувати для сканування Pull Request та Merge в бренчу.
 Для початку потрібно створити в корені репозиторія папку .github\workflows і в цій папці створити файл dlp.yml. Назва файлу можу бути будь якою.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfalldlp&lt;/span>
-&lt;span style="color:#f92672">on&lt;/span>:
-&lt;span style="color:#f92672">push&lt;/span>:
-&lt;span style="color:#f92672">branches&lt;/span>:
-- &lt;span style="color:#ae81ff">master&lt;/span>
-&lt;span style="color:#f92672">pull_request&lt;/span>:
-&lt;span style="color:#f92672">jobs&lt;/span>:
-&lt;span style="color:#f92672">run-nightfalldlp&lt;/span>:
-&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfalldlp&lt;/span>
-&lt;span style="color:#f92672">runs-on&lt;/span>: &lt;span style="color:#ae81ff">ubuntu-latest&lt;/span>
-&lt;span style="color:#f92672">steps&lt;/span>:
-- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Checkout Repo Action&lt;/span>
-&lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">actions/checkout@v2&lt;/span>
-- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfallDLP action step&lt;/span>
-&lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">nightfallai/nightfall_dlp_action@v0.0.7&lt;/span>
-&lt;span style="color:#f92672">env&lt;/span>:
-&lt;span style="color:#f92672">NIGHTFALL_API_KEY&lt;/span>: &lt;span style="color:#ae81ff">${{ secrets.NIGHTFALL_API_KEY }}&lt;/span>
-&lt;span style="color:#f92672">GITHUB_TOKEN&lt;/span>: &lt;span style="color:#ae81ff">${{ secrets.GITHUB_TOKEN }}&lt;/span>
-&lt;span style="color:#f92672">EVENT_BEFORE&lt;/span>: &lt;span style="color:#ae81ff">${{ github.event.before }}&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>В секції on вказано що сканування запускати на push в master бренчу та на Pull Request.&lt;br>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfalldlp&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">on&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">push&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">branches&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">master&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">pull_request&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">jobs&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">run-nightfalldlp&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfalldlp&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">runs-on&lt;/span>: &lt;span style="color:#ae81ff">ubuntu-latest&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">steps&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Checkout Repo Action&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">actions/checkout@v2&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfallDLP action step&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">nightfallai/nightfall_dlp_action@v0.0.7&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">env&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">NIGHTFALL_API_KEY&lt;/span>: &lt;span style="color:#ae81ff">${{ secrets.NIGHTFALL_API_KEY }}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">GITHUB_TOKEN&lt;/span>: &lt;span style="color:#ae81ff">${{ secrets.GITHUB_TOKEN }}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">EVENT_BEFORE&lt;/span>: &lt;span style="color:#ae81ff">${{ github.event.before }}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>В секції on вказано що сканування запускати на push в master бренчу та на Pull Request.&lt;br>
 Action має два кроки, перший це клонувати репозиторій другий це запустити сканер.&lt;br>
 Для роботи сканера необхідно декілька env зміних. GITHUB_TOKEN використовується для того щоб сканер міг добавляти коментарі в PR значення його має бути &lt;code>secrets.GITHUB_TOKEN&lt;/code>&lt;br>
 &lt;img src="https://i.imgur.com/13N6AjR.png" alt="Comment">&lt;/p>
@@ -122,37 +128,37 @@ NIGHTFALL_API_KEY остання потрібна зміна, отримати �
 &lt;p>Після того я з GitHub Action закінчено потрібно створити конфігураційни файл для Nightfall.&lt;br>
 Для цього створіть папку з назвою &lt;code>.nightfalldlp&lt;/code> і в ньому файл &lt;code>config.json&lt;/code>.&lt;br>
 Список детекторів які підтримує nightfall.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
-&lt;span style="color:#f92672">&amp;#34;detectors&amp;#34;&lt;/span>: [
-&lt;span style="color:#e6db74">&amp;#34;CREDIT_CARD_NUMBER&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;PHONE_NUMBER&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;API_KEY&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;CRYPTOGRAPHIC_KEY&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;RANDOMLY_GENERATED_TOKEN&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;US_SOCIAL_SECURITY_NUMBER&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;AMERICAN_BANKERS_CUSIP_ID&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;US_BANK_ROUTING_MICR&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;ICD9_CODE&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;ICD10_CODE&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;US_DRIVERS_LICENSE_NUMBER&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;US_PASSPORT&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;EMAIL_ADDRESS&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;IP_ADDRESS&amp;#34;&lt;/span>
-]
-}
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>Мій конфігураційни файл виглядає коротшим тому що з повним генерує велику кількість false positive алармів. Наприклад&lt;br>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;detectors&amp;#34;&lt;/span>: [
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;CREDIT_CARD_NUMBER&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;PHONE_NUMBER&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;API_KEY&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;CRYPTOGRAPHIC_KEY&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;RANDOMLY_GENERATED_TOKEN&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;US_SOCIAL_SECURITY_NUMBER&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;AMERICAN_BANKERS_CUSIP_ID&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;US_BANK_ROUTING_MICR&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;ICD9_CODE&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;ICD10_CODE&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;US_DRIVERS_LICENSE_NUMBER&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;US_PASSPORT&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;EMAIL_ADDRESS&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;IP_ADDRESS&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Мій конфігураційни файл виглядає коротшим тому що з повним генерує велику кількість false positive алармів. Наприклад&lt;br>
 &lt;img src="https://i.imgur.com/0EGejo0.png" alt="FalseErrorSample">&lt;/p>
 &lt;p>Приклад мого файлу:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
-&lt;span style="color:#f92672">&amp;#34;detectors&amp;#34;&lt;/span>: [
-&lt;span style="color:#e6db74">&amp;#34;API_KEY&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;CRYPTOGRAPHIC_KEY&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;RANDOMLY_GENERATED_TOKEN&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;EMAIL_ADDRESS&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;IP_ADDRESS&amp;#34;&lt;/span>
-]
-}
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер це все потрібно закомітити сканер запуститься.&lt;br>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;detectors&amp;#34;&lt;/span>: [
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;API_KEY&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;CRYPTOGRAPHIC_KEY&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;RANDOMLY_GENERATED_TOKEN&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;EMAIL_ADDRESS&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;IP_ADDRESS&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер це все потрібно закомітити сканер запуститься.&lt;br>
 Навіть при такій конфігурації сканер видає багато false positive аларміві результат я отримую щоразу&lt;br>
 &lt;img src="https://i.imgur.com/bJ1WWR2.png" alt="Error">
 Наприклад отримую такий еррор
@@ -207,32 +213,32 @@ CodeShip Configuration Спочатку потрібо добавити репо
 &lt;h2 id="deployment-script">Deployment Script&lt;/h2>
 &lt;p>В корені репозиторія потрібно створити файл який має називатись &lt;code>appspec.yml&lt;/code>. Тут можна знайти всі опції які підтримує цей файл - &lt;a href="https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html">AWS&lt;/a>.&lt;/p>
 &lt;p>Ось приклад мого файла:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">version&lt;/span>: &lt;span style="color:#ae81ff">0.0&lt;/span>
-&lt;span style="color:#f92672">os&lt;/span>: &lt;span style="color:#ae81ff">linux&lt;/span>
-&lt;span style="color:#f92672">files&lt;/span>:
-- &lt;span style="color:#f92672">source&lt;/span>: &lt;span style="color:#ae81ff">/&lt;/span>
-&lt;span style="color:#f92672">destination&lt;/span>: &lt;span style="color:#ae81ff">/opt/application&lt;/span>
-&lt;span style="color:#f92672">permissions&lt;/span>:
-- &lt;span style="color:#f92672">object&lt;/span>: &lt;span style="color:#ae81ff">/opt/application&lt;/span>
-&lt;span style="color:#f92672">owner&lt;/span>: &lt;span style="color:#ae81ff">ec2-user&lt;/span>
-&lt;span style="color:#f92672">group&lt;/span>: &lt;span style="color:#ae81ff">ec2-user&lt;/span>
-&lt;span style="color:#f92672">hooks&lt;/span>:
-&lt;span style="color:#f92672">AfterInstall&lt;/span>:
-- &lt;span style="color:#f92672">location&lt;/span>: &lt;span style="color:#ae81ff">ops/deploybuild.sh&lt;/span>
-&lt;span style="color:#f92672">runas&lt;/span>: &lt;span style="color:#ae81ff">ec2-user&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>version&lt;/code> має стандартне значення і міняти його не потрібно. 0.0 Єдине значення як підтримується
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">version&lt;/span>: &lt;span style="color:#ae81ff">0.0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">os&lt;/span>: &lt;span style="color:#ae81ff">linux&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">files&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">source&lt;/span>: &lt;span style="color:#ae81ff">/&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">destination&lt;/span>: &lt;span style="color:#ae81ff">/opt/application&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">permissions&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">object&lt;/span>: &lt;span style="color:#ae81ff">/opt/application&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">owner&lt;/span>: &lt;span style="color:#ae81ff">ec2-user&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">group&lt;/span>: &lt;span style="color:#ae81ff">ec2-user&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">hooks&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">AfterInstall&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">location&lt;/span>: &lt;span style="color:#ae81ff">ops/deploybuild.sh&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">runas&lt;/span>: &lt;span style="color:#ae81ff">ec2-user&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>version&lt;/code> має стандартне значення і міняти його не потрібно. 0.0 Єдине значення як підтримується
 &lt;code>os&lt;/code> може бути двох значення windows або linux, оскільки в мене OS на EC2 AmazonLinux я обираю linux
 &lt;code>files&lt;/code> вказує які файли потрібно копіювати на сервер під час деплойменту. &lt;code>source: /&lt;/code> означає копіювати всі файли. &lt;code>destination&lt;/code> куди копіювати.&lt;br>
 В &lt;code>permissions&lt;/code> зазначено які пермішини мають мати щойно скопійовані файли.&lt;br>
 В &lt;code>hooks&lt;/code> секції відбувається конфігурація аплікації. Я використовую &lt;code>AfterInstall&lt;/code> hook. Це означає що скрипт буде запущено після &lt;code>Install&lt;/code> кроку. Під час &lt;code>Install&lt;/code> кроку файли копіюються на сервер. В &lt;code>location&lt;/code> вказано який скрипт запускати та від його корисувача. &lt;code>runas&lt;/code> означає що скрипт буде викликатись від імені користувача. По дефолту code-deploy agent запускається від рута і runas на цьому етапі переключить на ec2-user. Також можна поміняти щоб code-deploy agent запускався одарзу від ec2-user.&lt;/p>
 &lt;p>Далі нам потрібен деплой скрипт. В репозиторії я створив папку ops оскільки шлях до мого скрипта &lt;code>- location: ops/deploybuild.sh&lt;/code>. І в цій папку створив скрипт &lt;code>deploybuild.sh&lt;/code>.
 В мене node.js аплікації для якою потрібно зробити yarn install та npm start. Я це добавлю в скрипт&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-bash" data-lang="bash">&lt;span style="color:#75715e">#!/usr/bin/env bash
-&lt;/span>&lt;span style="color:#75715e">&lt;/span>cd /opt/application
-yarn --ignore-engines
-cd examples/demo-app/
-&lt;span style="color:#f92672">(&lt;/span>npm run start-prod&lt;span style="color:#f92672">)&lt;/span>&amp;amp;
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>Це базовий скрипт як можна запустити node аплікацію. Для продакшина варто використовувати pm2 для старту js аплікацій.
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>cd /opt/application
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>yarn --ignore-engines
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cd examples/demo-app/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">(&lt;/span>npm run start-prod&lt;span style="color:#f92672">)&lt;/span>&amp;amp;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Це базовий скрипт як можна запустити node аплікацію. Для продакшина варто використовувати pm2 для старту js аплікацій.
 Тепер залишилось зробити коміт в master branch і codedeploy запуститься автоматично&lt;/p></content></item><item><title>Build Dotnet Core With Travis</title><link>/ua/2020/08/31/build-dotnet-core-with-travis/</link><pubDate>Mon, 31 Aug 2020 13:24:40 +0300</pubDate><guid>/ua/2020/08/31/build-dotnet-core-with-travis/</guid><description>Привіт!
 Сьгодні я хочу показати як можна збілдити та задеплоїти .net core за допомогою Travis.
 Для початку потрібно створити Travis акаунт. Для цього потрібно залогуватись вашим GitHub акаунтом. .travis.yml Конфігурація Наступним кроком потрібно створити .travis.yml файл в корені репозиторія. Приклад мого конфігураційного файлу:
@@ -243,34 +249,39 @@ language: csharp mono: none dotnet: 3.1.4 solution: awstaghelper.sln install: - 
 &lt;h2 id="travisyml-конфігурація">.travis.yml Конфігурація&lt;/h2>
 &lt;p>Наступним кроком потрібно створити .travis.yml файл в корені репозиторія.
 Приклад мого конфігураційного файлу:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="color:#f92672">language&lt;/span>: &lt;span style="color:#ae81ff">csharp&lt;/span>
-&lt;span style="color:#f92672">mono&lt;/span>: &lt;span style="color:#ae81ff">none&lt;/span>
-&lt;span style="color:#f92672">dotnet&lt;/span>: &lt;span style="color:#ae81ff">3.1.4&lt;/span>
-&lt;span style="color:#f92672">solution&lt;/span>: &lt;span style="color:#ae81ff">awstaghelper.sln&lt;/span>
-&lt;span style="color:#f92672">install&lt;/span>:
-- &lt;span style="color:#ae81ff">dotnet restore&lt;/span>
-&lt;span style="color:#f92672">script&lt;/span>:
-- &lt;span style="color:#ae81ff">dotnet build --configuration Release --runtime win-x64 --output win-x64&lt;/span>
-- &lt;span style="color:#ae81ff">dotnet build --configuration Release --runtime win-x86 --output win-x86&lt;/span>
-- &lt;span style="color:#ae81ff">dotnet build --configuration Release --runtime linux-x64 --output linux-x64&lt;/span>
-- &lt;span style="color:#ae81ff">dotnet build --configuration Release --runtime osx-x64 --output osx-x64&lt;/span>
-&lt;span style="color:#f92672">before_deploy&lt;/span>:
-- &lt;span style="color:#ae81ff">zip -r9 win-x64.zip win-x64&lt;/span>
-- &lt;span style="color:#ae81ff">zip -r9 win-x86.zip win-x86&lt;/span>
-- &lt;span style="color:#ae81ff">zip -r9 linux-x64.zip linux-x64&lt;/span>
-- &lt;span style="color:#ae81ff">zip -r9 osx-x64.zip osx-x64&lt;/span>
-&lt;span style="color:#f92672">deploy&lt;/span>:
-&lt;span style="color:#f92672">provider&lt;/span>: &lt;span style="color:#ae81ff">releases&lt;/span>
-&lt;span style="color:#f92672">api_key&lt;/span>: &lt;span style="color:#ae81ff">$api_key&lt;/span>
-&lt;span style="color:#f92672">file&lt;/span>:
-- &lt;span style="color:#ae81ff">win-x64.zip&lt;/span>
-- &lt;span style="color:#ae81ff">win-x86.zip&lt;/span>
-- &lt;span style="color:#ae81ff">linux-x64.zip&lt;/span>
-- &lt;span style="color:#ae81ff">osx-x64.zip&lt;/span>
-&lt;span style="color:#f92672">skip_cleanup&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
-&lt;span style="color:#f92672">on&lt;/span>:
-&lt;span style="color:#f92672">tags&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="net-конфігурація">.Net конфігурація&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">language&lt;/span>: &lt;span style="color:#ae81ff">csharp&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">mono&lt;/span>: &lt;span style="color:#ae81ff">none&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">dotnet&lt;/span>: &lt;span style="color:#ae81ff">3.1.4&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">solution&lt;/span>: &lt;span style="color:#ae81ff">awstaghelper.sln&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">install&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">dotnet restore&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">script&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">dotnet build --configuration Release --runtime win-x64 --output win-x64&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">dotnet build --configuration Release --runtime win-x86 --output win-x86&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">dotnet build --configuration Release --runtime linux-x64 --output linux-x64&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">dotnet build --configuration Release --runtime osx-x64 --output osx-x64&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">before_deploy&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">zip -r9 win-x64.zip win-x64&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">zip -r9 win-x86.zip win-x86&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">zip -r9 linux-x64.zip linux-x64&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">zip -r9 osx-x64.zip osx-x64&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">deploy&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">provider&lt;/span>: &lt;span style="color:#ae81ff">releases&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">api_key&lt;/span>: &lt;span style="color:#ae81ff">$api_key&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">file&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">win-x64.zip&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">win-x86.zip&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">linux-x64.zip&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">osx-x64.zip&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">skip_cleanup&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">on&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">tags&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="net-конфігурація">.Net конфігурація&lt;/h2>
 &lt;p>Тепер розберемо конфіг.&lt;br>
 Починається yml з оголошення мови програмування &lt;code>language: csharp&lt;/code>. &lt;code>mono&lt;/code> стоїть none тому що використовується .net core. І останнє це версія .net core. В моєму випадку це &lt;code>dotnet: 3.1.4&lt;/code>. Також потрібно вказати назву солюшину &lt;code>solution: awstaghelper.sln&lt;/code>.&lt;/p>
 &lt;h2 id="build-конфігурація">Build Конфігурація&lt;/h2>

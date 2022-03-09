@@ -6,83 +6,89 @@ For the database, I am using docker, but it can be another type of installation.
 &lt;p>Today we will look at how we can use golang to connect to the Postgres database and execute queries.
 To work with the database we will use &lt;code>github.com/jackc/pgx&lt;/code>.&lt;/p>
 &lt;p>Let&amp;rsquo;s start with initializing the module and installing the driver for the database.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell">go mod init
-go get github.com/jackc/pgx/v4
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>After that &lt;code>pgx&lt;/code> will be available for use in code.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>go mod init
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>go get github.com/jackc/pgx/v4
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After that &lt;code>pgx&lt;/code> will be available for use in code.&lt;/p>
 &lt;p>For the database, I am using docker, but it can be another type of installation.
 To do this, create a file &lt;code>docker-compose.yml&lt;/code> with content:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">version&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;3&amp;#39;&lt;/span>
-&lt;span style="color:#f92672">services&lt;/span>:
-&lt;span style="color:#f92672">Postgres&lt;/span>:
-&lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">Postgres&lt;/span>
-&lt;span style="color:#f92672">tty&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
-&lt;span style="color:#f92672">restart&lt;/span>: &lt;span style="color:#ae81ff">always&lt;/span>
-&lt;span style="color:#f92672">ports&lt;/span>:
-- &lt;span style="color:#e6db74">&amp;#34;5432:5432&amp;#34;&lt;/span>
-&lt;span style="color:#f92672">environment&lt;/span>:
-- &lt;span style="color:#ae81ff">POSTGRES_PASSWORD=postgres&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>And execute the command &lt;code>docker-compose up -d&lt;/code>. Docker-compose and docker must be installed.
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">version&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;3&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">services&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">Postgres&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">image&lt;/span>: &lt;span style="color:#ae81ff">Postgres&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">tty&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">restart&lt;/span>: &lt;span style="color:#ae81ff">always&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">ports&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#e6db74">&amp;#34;5432:5432&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">environment&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">POSTGRES_PASSWORD=postgres&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And execute the command &lt;code>docker-compose up -d&lt;/code>. Docker-compose and docker must be installed.
 The database is ready to work, and now we can start writing code.&lt;/p>
 &lt;p>Let&amp;rsquo;s start with the connection to the database. First, we create a configuration &lt;code>cfg&lt;/code> which will have the address, port, user, password, and database to which we connect. Since my database works locally, I specify &lt;code>localhost&lt;/code> as the host. When the configuration is ready, call &lt;code>pgx.Connect (cfg)&lt;/code> to create a connection. After finishing work with the database connection it is necessary to close therefore we will add &lt;code>defer conn.Close()&lt;/code> and we check for errors. Also to check that the database is responding we will run &lt;code>conn.Ping(context.Background())&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
-&lt;span style="color:#f92672">import&lt;/span> (
-&lt;span style="color:#e6db74">&amp;#34;context&amp;#34;&lt;/span>
-&lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
-&lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
-&lt;span style="color:#e6db74">&amp;#34;os&amp;#34;&lt;/span>
-&lt;span style="color:#e6db74">&amp;#34;github.com/jackc/pgx&amp;#34;&lt;/span>
-)
-&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
-&lt;span style="color:#a6e22e">cfg&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">pgx&lt;/span>.&lt;span style="color:#a6e22e">ConnConfig&lt;/span>{
-&lt;span style="color:#a6e22e">Host&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;localhost&amp;#34;&lt;/span>,
-&lt;span style="color:#a6e22e">Port&lt;/span>: &lt;span style="color:#ae81ff">5432&lt;/span>,
-&lt;span style="color:#a6e22e">User&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;postgres&amp;#34;&lt;/span>,
-&lt;span style="color:#a6e22e">Password&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;postgres&amp;#34;&lt;/span>,
-&lt;span style="color:#a6e22e">Database&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;postgres&amp;#34;&lt;/span>,
-}
-&lt;span style="color:#a6e22e">conn&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">pgx&lt;/span>.&lt;span style="color:#a6e22e">Connect&lt;/span>(&lt;span style="color:#a6e22e">cfg&lt;/span>)
-&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
-&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Fprintf&lt;/span>(&lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">Stderr&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Unable to connect to database: %v\n&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>)
-&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Connect to database failed: %v\n&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>)
-}
-&lt;span style="color:#66d9ef">defer&lt;/span> &lt;span style="color:#a6e22e">conn&lt;/span>.&lt;span style="color:#a6e22e">Close&lt;/span>()
-&lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">conn&lt;/span>.&lt;span style="color:#a6e22e">Ping&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Background&lt;/span>())
-&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
-&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Ping Failed: %v\n&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>)
-}
-}
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>We can start making inquiries. To begin, create a new table and write data to it. The &lt;code>Exec&lt;/code> method is used to call requests that do not return anything.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">conn&lt;/span>.&lt;span style="color:#a6e22e">Exec&lt;/span>(&lt;span style="color:#e6db74">`
-&lt;/span>&lt;span style="color:#e6db74"> CREATE TABLE IF NOT EXISTS users(
-&lt;/span>&lt;span style="color:#e6db74"> id SERIAL PRIMARY KEY,
-&lt;/span>&lt;span style="color:#e6db74"> name TEXT,
-&lt;/span>&lt;span style="color:#e6db74"> email TEXT UNIQUE NOT NULL
-&lt;/span>&lt;span style="color:#e6db74"> );
-&lt;/span>&lt;span style="color:#e6db74"> `&lt;/span>)
-&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
-&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
-}
-&lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;TestUser1&amp;#34;&lt;/span>
-&lt;span style="color:#a6e22e">email&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;testuser@gmail.com&amp;#34;&lt;/span>
-&lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">conn&lt;/span>.&lt;span style="color:#a6e22e">Exec&lt;/span>(&lt;span style="color:#e6db74">`
-&lt;/span>&lt;span style="color:#e6db74"> INSERT INTO users(name, email)
-&lt;/span>&lt;span style="color:#e6db74"> VALUES ($1, $2);
-&lt;/span>&lt;span style="color:#e6db74"> `&lt;/span>, &lt;span style="color:#a6e22e">name&lt;/span>, &lt;span style="color:#a6e22e">email&lt;/span>)
-&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
-&lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
-}
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>The data has been created and we can try to read it. If one record is returned from the database, you can use the &lt;code>QueryRow&lt;/code> method, if many, then &lt;code>Query&lt;/code>. Also, in order to read the data you need the structure, we will have the structure name &lt;code>User&lt;/code> which will have the same parameters as the fields in the table.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go">&lt;span style="color:#66d9ef">type&lt;/span> &lt;span style="color:#a6e22e">User&lt;/span> &lt;span style="color:#66d9ef">struct&lt;/span> {
-&lt;span style="color:#a6e22e">Id&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>
-&lt;span style="color:#a6e22e">Name&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
-&lt;span style="color:#a6e22e">Email&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
-}
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>And the request itself to get the data&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-go" data-lang="go"> &lt;span style="color:#a6e22e">user&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">User&lt;/span>{}
-&lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">conn&lt;/span>.&lt;span style="color:#a6e22e">QueryRow&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;SELECT * FROM users WHERE name=$1;&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">name&lt;/span>).&lt;span style="color:#a6e22e">Scan&lt;/span>(&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">user&lt;/span>.&lt;span style="color:#a6e22e">Id&lt;/span>, &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">user&lt;/span>.&lt;span style="color:#a6e22e">Name&lt;/span>, &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">user&lt;/span>.&lt;span style="color:#a6e22e">Email&lt;/span>)
-&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
-&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
-&lt;span style="color:#66d9ef">return&lt;/span>
-}
-&lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">user&lt;/span>)
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>Pgx&lt;/code> can also be used as a driver for the built-in &lt;code>sql&lt;/code> package&lt;/p></content></item></channel></rss>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> (
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;context&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;os&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;github.com/jackc/pgx&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">cfg&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">pgx&lt;/span>.&lt;span style="color:#a6e22e">ConnConfig&lt;/span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Host&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;localhost&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Port&lt;/span>: &lt;span style="color:#ae81ff">5432&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">User&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;postgres&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Password&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;postgres&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Database&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;postgres&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">conn&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">pgx&lt;/span>.&lt;span style="color:#a6e22e">Connect&lt;/span>(&lt;span style="color:#a6e22e">cfg&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Fprintf&lt;/span>(&lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">Stderr&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Unable to connect to database: %v\n&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Connect to database failed: %v\n&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">defer&lt;/span> &lt;span style="color:#a6e22e">conn&lt;/span>.&lt;span style="color:#a6e22e">Close&lt;/span>()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">conn&lt;/span>.&lt;span style="color:#a6e22e">Ping&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Background&lt;/span>())
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Ping Failed: %v\n&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>We can start making inquiries. To begin, create a new table and write data to it. The &lt;code>Exec&lt;/code> method is used to call requests that do not return anything.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">conn&lt;/span>.&lt;span style="color:#a6e22e">Exec&lt;/span>(&lt;span style="color:#e6db74">`
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> CREATE TABLE IF NOT EXISTS users(
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> id SERIAL PRIMARY KEY,
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> name TEXT,
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> email TEXT UNIQUE NOT NULL
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> );
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> `&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">name&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;TestUser1&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">email&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;testuser@gmail.com&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">conn&lt;/span>.&lt;span style="color:#a6e22e">Exec&lt;/span>(&lt;span style="color:#e6db74">`
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> INSERT INTO users(name, email)
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> VALUES ($1, $2);
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> `&lt;/span>, &lt;span style="color:#a6e22e">name&lt;/span>, &lt;span style="color:#a6e22e">email&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The data has been created and we can try to read it. If one record is returned from the database, you can use the &lt;code>QueryRow&lt;/code> method, if many, then &lt;code>Query&lt;/code>. Also, in order to read the data you need the structure, we will have the structure name &lt;code>User&lt;/code> which will have the same parameters as the fields in the table.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">type&lt;/span> &lt;span style="color:#a6e22e">User&lt;/span> &lt;span style="color:#66d9ef">struct&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Id&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Name&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Email&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And the request itself to get the data&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">user&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">User&lt;/span>{}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">conn&lt;/span>.&lt;span style="color:#a6e22e">QueryRow&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;SELECT * FROM users WHERE name=$1;&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">name&lt;/span>).&lt;span style="color:#a6e22e">Scan&lt;/span>(&lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">user&lt;/span>.&lt;span style="color:#a6e22e">Id&lt;/span>, &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">user&lt;/span>.&lt;span style="color:#a6e22e">Name&lt;/span>, &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">user&lt;/span>.&lt;span style="color:#a6e22e">Email&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">user&lt;/span>)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>Pgx&lt;/code> can also be used as a driver for the built-in &lt;code>sql&lt;/code> package&lt;/p></content></item></channel></rss>

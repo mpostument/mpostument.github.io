@@ -1,14 +1,13 @@
 <!doctype html><html lang=en>
 <head>
-<title>Events in Blazor :: Maksym Postument</title>
-<meta charset=utf-8>
+<title>Events in Blazor :: Maksym Postument</title><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=description content="How to pass data from one component to another">
 <meta name=keywords content="BlazorServer,Blazor,.Net Core,.Net">
 <meta name=robots content="noodp">
 <link rel=canonical href=/2020/10/15/events-in-blazor/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SBRJXS94DC"></script>
-<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-SBRJXS94DC',{anonymize_ip:!1})}</script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-SBRJXS94DC",{anonymize_ip:!1})}</script>
 <link rel=stylesheet href=/assets/style.css>
 <link rel=stylesheet href=/assets/blue.css>
 <link rel=apple-touch-icon href=/img/apple-touch-icon-192x192.png>
@@ -28,9 +27,7 @@
 <meta property="article:section" content="C#">
 <meta property="article:section" content="Blazor">
 <meta property="article:published_time" content="2020-10-15 11:37:56 +0300 +0300">
-<p align=center style=background-color:#23b0ff> Sign up for my <a href=https://tinyletter.com/mpostument>email newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of new blog posts.</p>
-</head>
-<body class=blue>
+<p align=center style=background-color:#23b0ff> Sign up for my <a href=https://tinyletter.com/mpostument>email newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of new blog posts.</p></head><body class=blue>
 <div class="container center headings--one-size">
 <header class=header>
 <div class=header__inner>
@@ -38,148 +35,109 @@
 <a href=/>
 <div class=logo>
 mpostument.com
-</div>
-</a>
-</div>
-<div class=menu-trigger>menu</div>
-</div>
-<nav class=menu>
+</div></a>
+</div><div class=menu-trigger>menu</div></div><nav class=menu>
 <ul class="menu__inner menu__inner--desktop">
-<li><a href=/>Home</a></li>
-<li><a href=/categories/>Categories</a></li>
-<li><a href=/tags/>Tags</a></li>
-<li><a href=/projects/>Projects</a></li>
-<div class=spacer></div>
-<ul class=language-selector>
+<li><a href=/>Home</a></li><li><a href=/categories/>Categories</a></li><li><a href=/tags/>Tags</a></li><li><a href=/projects/>Projects</a></li><div class=spacer></div><ul class=language-selector>
 <ul class=language-selector-current>
-<li>English ▾</li>
-</ul>
-<ul class="language-selector__more hidden">
-<li><a href=/>English</a></li>
-<li><a href=/ua/>Ukraine</a></li>
-</ul>
-</ul>
-</ul>
-<ul class="menu__inner menu__inner--mobile">
-<li><a href=/>Home</a></li>
-<li><a href=/categories/>Categories</a></li>
-<li><a href=/tags/>Tags</a></li>
-<li><a href=/projects/>Projects</a></li>
-<hr>
+<li>English ▾</li></ul><ul class="language-selector__more hidden">
+<li><a href=/>English</a></li><li><a href=/ua/>Ukraine</a></li></ul></ul></ul><ul class="menu__inner menu__inner--mobile">
+<li><a href=/>Home</a></li><li><a href=/categories/>Categories</a></li><li><a href=/tags/>Tags</a></li><li><a href=/projects/>Projects</a></li><hr>
 <li>
 <a href=/>English</a>
-</li>
-<li>
+</li><li>
 <a href=/ua/>Ukraine</a>
-</li>
-</ul>
-</nav>
-</header>
-<div class=content>
+</li></ul></nav></header><div class=content>
 <div class=post>
 <h1 class=post-title>
-<a href=/2020/10/15/events-in-blazor/>Events in Blazor</a></h1>
-<div class=post-meta>
+<a href=/2020/10/15/events-in-blazor/>Events in Blazor</a></h1><div class=post-meta>
 <span class=post-date>
 2020-10-15
 </span>
 <span class=post-author>:: Maksym Postument</span>
 <span class=post-reading-time>:: 2 min read (395 words)</span>
-</div>
-<span class=post-tags>
+</div><span class=post-tags>
 #<a href=/tags/blazorserver/>BlazorServer</a>&nbsp;
 #<a href=/tags/.net-core/>.Net Core</a>&nbsp;
 </span>
 <img src=https://i.imgur.com/SrIBk69.png class=post-cover alt="Events in Blazor" title="Cover Image">
 <div class=post-content><div>
-<p>Hello!</p>
-<p>Let&rsquo;s see how you can transfer data from one component to another.</p>
-<h2 id=button>Button<a href=#button class=hanchor arialabel=Anchor>&#8983;</a> </h2>
-<p>I will create a component called <code>ThumbButton</code> which will contain two buttons. Depending on which button is pressed, the corresponding method will be called and the data will be transferred to the parrent component. <code>@Onclick</code> specifies which method will be executed when the button is pressed.</p>
-<p>To pass data to the parrent component, a property of type <code>EventCallback&lt;Thumb></code> is used, where <code>Thumb</code> is enum. Instead of enum there can be any other type of data. In the method <code>ThumbUp</code> and <code>ThumbDown</code> I call <code>OnVote.InvokeAsync</code> in which the corresponding enum is passed. This call passes data to the parrent component.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp>&lt;button class=<span style=color:#e6db74>&#34;btn btn-primary mx-2&#34;</span> @onclick=<span style=color:#e6db74>&#34;ThumbUp&#34;</span>&gt;
-    &lt;span class=<span style=color:#e6db74>&#34;oi oi-thumb-up&#34;</span>&gt;&lt;/span&gt;
-&lt;/button&gt;
-
-&lt;button class=<span style=color:#e6db74>&#34;btn btn-danger mx-2&#34;</span> @onclick=<span style=color:#e6db74>&#34;ThumbDown&#34;</span>&gt;
-    &lt;span class=<span style=color:#e6db74>&#34;oi oi-thumb-down&#34;</span>&gt;&lt;/span&gt;
-&lt;/button&gt;
-
-@code {
-
-    <span style=color:#66d9ef>public</span> EventCallback&lt;Thumb&gt; OnVote { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
-
-    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> ThumbUp()
-    {
-        OnVote.InvokeAsync(Thumb.Up);
-    }
-
-    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> ThumbDown()
-    {
-        OnVote.InvokeAsync(Thumb.Down);
-    }
-
-    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>enum</span> Thumb
-    {
-        Up,
-        Down
-    }
-}
-</code></pre></div><p>You can now reuse this component on any page.</p>
-<h2 id=button-component-on-page>Button Component on page<a href=#button-component-on-page class=hanchor arialabel=Anchor>&#8983;</a> </h2>
-<p>Now take the page <code>Counter</code>. And add the newly created component with a button. Let&rsquo;s start with the code. I will create two properties <code>isThumbUp</code> and <code>isThumbDown</code> of type <code>bool</code>. Depending on which property is set to true, the corresponding data will be displayed. Also, if one of these properties becomes <code>true</code>, the button will disappear.</p>
-<p>To get data from a button component, you need a handler that will change the values ​​of <code>isThumbUp</code> and <code>isThumbDown</code> in response to the button press. It added in the same way as any other component. But method handler need to be added to retreive data <code>&lt;ThumbButton OnVote ="OnVotedHandler">&lt;/ThumbButton></code>. The handler method must accept a parameter of the type received from the button. <code>private void OnVotedHandler(ThumbButton.Thumb result)</code>. Depending on what value came to the input, the values ​​of the parameters <code>isThumbUp</code> and <code>isThumbDown</code> are set.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp>@page <span style=color:#e6db74>&#34;/counter&#34;</span>
-
-&lt;h1&gt;Counter&lt;/h1&gt;
-
-&lt;p&gt;Current count: @currentCount&lt;/p&gt;
-
-&lt;button class=<span style=color:#e6db74>&#34;btn btn-primary&#34;</span> @onclick=<span style=color:#e6db74>&#34;IncrementCount&#34;</span>&gt;Click me&lt;/button&gt;
-
-@if (isThumbUp)
-{
-    &lt;p class=<span style=color:#e6db74>&#34;text-success&#34;</span>&gt;Your thumb <span style=color:#66d9ef>is</span> up&lt;/p&gt;
-}
-
-@if (isThumbDown)
-{
-    &lt;p class=<span style=color:#e6db74>&#34;text-danger&#34;</span>&gt;Your thumb <span style=color:#66d9ef>is</span> down&lt;/p&gt;
-}
-
-@if (!isThumbDown &amp;&amp; !isThumbUp)
-{
-    &lt;div class=<span style=color:#e6db74>&#34;row&#34;</span>&gt;
-        &lt;div class=<span style=color:#e6db74>&#34;col-12&#34;</span>&gt;
-            &lt;ThumbButton OnVote=<span style=color:#e6db74>&#34;OnVotedHandler&#34;</span>&gt;&lt;/ThumbButton&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-}
-
-@code
-{
-    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>bool</span> isThumbUp = <span style=color:#66d9ef>false</span>;
-    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>bool</span> isThumbDown = <span style=color:#66d9ef>false</span>;
-    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> OnVotedHandler(ThumbButton.Thumb result)
-    {
-        <span style=color:#66d9ef>if</span> (result == ThumbButton.Thumb.Up)
-        {
-            isThumbUp = <span style=color:#66d9ef>true</span>;
-        }
-        <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span> (result == ThumbButton.Thumb.Down)
-        {
-            isThumbDown = <span style=color:#66d9ef>true</span>;
-        }
-    }
-}
-</code></pre></div><p><img src=https://i.imgur.com/6Gu761a.gif alt=EventDemo></p>
-</div></div>
-<div class=pagination>
+<p>Hello!</p><p>Let&rsquo;s see how you can transfer data from one component to another.</p><h2 id=button>Button<a href=#button class=hanchor arialabel=Anchor>&#8983;</a> </h2><p>I will create a component called <code>ThumbButton</code> which will contain two buttons. Depending on which button is pressed, the corresponding method will be called and the data will be transferred to the parrent component. <code>@Onclick</code> specifies which method will be executed when the button is pressed.</p><p>To pass data to the parrent component, a property of type <code>EventCallback&lt;Thumb></code> is used, where <code>Thumb</code> is enum. Instead of enum there can be any other type of data. In the method <code>ThumbUp</code> and <code>ThumbDown</code> I call <code>OnVote.InvokeAsync</code> in which the corresponding enum is passed. This call passes data to the parrent component.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>&lt;button class=<span style=color:#e6db74>&#34;btn btn-primary mx-2&#34;</span> @onclick=<span style=color:#e6db74>&#34;ThumbUp&#34;</span>&gt;
+</span></span><span style=display:flex><span>    &lt;span class=<span style=color:#e6db74>&#34;oi oi-thumb-up&#34;</span>&gt;&lt;/span&gt;
+</span></span><span style=display:flex><span>&lt;/button&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;button class=<span style=color:#e6db74>&#34;btn btn-danger mx-2&#34;</span> @onclick=<span style=color:#e6db74>&#34;ThumbDown&#34;</span>&gt;
+</span></span><span style=display:flex><span>    &lt;span class=<span style=color:#e6db74>&#34;oi oi-thumb-down&#34;</span>&gt;&lt;/span&gt;
+</span></span><span style=display:flex><span>&lt;/button&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>@code {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> EventCallback&lt;Thumb&gt; OnVote { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> ThumbUp()
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        OnVote.InvokeAsync(Thumb.Up);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> ThumbDown()
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        OnVote.InvokeAsync(Thumb.Down);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>enum</span> Thumb
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        Up,
+</span></span><span style=display:flex><span>        Down
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>You can now reuse this component on any page.</p><h2 id=button-component-on-page>Button Component on page<a href=#button-component-on-page class=hanchor arialabel=Anchor>&#8983;</a> </h2><p>Now take the page <code>Counter</code>. And add the newly created component with a button. Let&rsquo;s start with the code. I will create two properties <code>isThumbUp</code> and <code>isThumbDown</code> of type <code>bool</code>. Depending on which property is set to true, the corresponding data will be displayed. Also, if one of these properties becomes <code>true</code>, the button will disappear.</p><p>To get data from a button component, you need a handler that will change the values ​​of <code>isThumbUp</code> and <code>isThumbDown</code> in response to the button press. It added in the same way as any other component. But method handler need to be added to retreive data <code>&lt;ThumbButton OnVote ="OnVotedHandler">&lt;/ThumbButton></code>. The handler method must accept a parameter of the type received from the button. <code>private void OnVotedHandler(ThumbButton.Thumb result)</code>. Depending on what value came to the input, the values ​​of the parameters <code>isThumbUp</code> and <code>isThumbDown</code> are set.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>@page <span style=color:#e6db74>&#34;/counter&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;h1&gt;Counter&lt;/h1&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;p&gt;Current count: @currentCount&lt;/p&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;button class=<span style=color:#e6db74>&#34;btn btn-primary&#34;</span> @onclick=<span style=color:#e6db74>&#34;IncrementCount&#34;</span>&gt;Click me&lt;/button&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>@if (isThumbUp)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    &lt;p class=<span style=color:#e6db74>&#34;text-success&#34;</span>&gt;Your thumb <span style=color:#66d9ef>is</span> up&lt;/p&gt;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>@if (isThumbDown)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    &lt;p class=<span style=color:#e6db74>&#34;text-danger&#34;</span>&gt;Your thumb <span style=color:#66d9ef>is</span> down&lt;/p&gt;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>@if (!isThumbDown &amp;&amp; !isThumbUp)
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    &lt;div class=<span style=color:#e6db74>&#34;row&#34;</span>&gt;
+</span></span><span style=display:flex><span>        &lt;div class=<span style=color:#e6db74>&#34;col-12&#34;</span>&gt;
+</span></span><span style=display:flex><span>            &lt;ThumbButton OnVote=<span style=color:#e6db74>&#34;OnVotedHandler&#34;</span>&gt;&lt;/ThumbButton&gt;
+</span></span><span style=display:flex><span>        &lt;/div&gt;
+</span></span><span style=display:flex><span>    &lt;/div&gt;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>@code
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>bool</span> isThumbUp = <span style=color:#66d9ef>false</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>bool</span> isThumbDown = <span style=color:#66d9ef>false</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> OnVotedHandler(ThumbButton.Thumb result)
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (result == ThumbButton.Thumb.Up)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            isThumbUp = <span style=color:#66d9ef>true</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>else</span> <span style=color:#66d9ef>if</span> (result == ThumbButton.Thumb.Down)
+</span></span><span style=display:flex><span>        {
+</span></span><span style=display:flex><span>            isThumbDown = <span style=color:#66d9ef>true</span>;
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p><img src=https://i.imgur.com/6Gu761a.gif alt=EventDemo></p></div></div><div class=pagination>
 <div class=pagination__title>
 <span class=pagination__title-h>Read other posts</span>
 <hr>
-</div>
-<div class=pagination__buttons>
+</div><div class=pagination__buttons>
 <span class="button previous">
 <a href=/2020/10/16/blazor-server-forms/>
 <span class=button__icon>←</span>
@@ -192,25 +150,14 @@ mpostument.com
 <span class=button__icon>→</span>
 </a>
 </span>
-</div>
-</div>
-<div id=disqus_thread></div>
-<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//mpostument-com.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
-<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
-<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
-</div>
-</div>
-<footer class=footer>
+</div></div><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//mpostument-com.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script>
+<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
+</div></div><footer class=footer>
 <div class=footer__inner>
 <div class=copyright>
 <span>© 2022 Powered by <a href=http://gohugo.io>Hugo</a></span>
 <span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span>
-</div>
-</div>
-</footer>
-<script src=/assets/main.js></script>
+</div></div></footer><script src=/assets/main.js></script>
 <script src=/assets/prism.js></script>
 <script src=/assets/languageSelector.js></script>
-</div>
-</body>
-</html>
+</div></body></html>

@@ -46,30 +46,30 @@ CodeShip Configuration Спочатку потрібо добавити репо
 &lt;h2 id="deployment-script">Deployment Script&lt;/h2>
 &lt;p>В корені репозиторія потрібно створити файл який має називатись &lt;code>appspec.yml&lt;/code>. Тут можна знайти всі опції які підтримує цей файл - &lt;a href="https://docs.aws.amazon.com/codedeploy/latest/userguide/reference-appspec-file.html">AWS&lt;/a>.&lt;/p>
 &lt;p>Ось приклад мого файла:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">version&lt;/span>: &lt;span style="color:#ae81ff">0.0&lt;/span>
-&lt;span style="color:#f92672">os&lt;/span>: &lt;span style="color:#ae81ff">linux&lt;/span>
-&lt;span style="color:#f92672">files&lt;/span>:
-- &lt;span style="color:#f92672">source&lt;/span>: &lt;span style="color:#ae81ff">/&lt;/span>
-&lt;span style="color:#f92672">destination&lt;/span>: &lt;span style="color:#ae81ff">/opt/application&lt;/span>
-&lt;span style="color:#f92672">permissions&lt;/span>:
-- &lt;span style="color:#f92672">object&lt;/span>: &lt;span style="color:#ae81ff">/opt/application&lt;/span>
-&lt;span style="color:#f92672">owner&lt;/span>: &lt;span style="color:#ae81ff">ec2-user&lt;/span>
-&lt;span style="color:#f92672">group&lt;/span>: &lt;span style="color:#ae81ff">ec2-user&lt;/span>
-&lt;span style="color:#f92672">hooks&lt;/span>:
-&lt;span style="color:#f92672">AfterInstall&lt;/span>:
-- &lt;span style="color:#f92672">location&lt;/span>: &lt;span style="color:#ae81ff">ops/deploybuild.sh&lt;/span>
-&lt;span style="color:#f92672">runas&lt;/span>: &lt;span style="color:#ae81ff">ec2-user&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>version&lt;/code> має стандартне значення і міняти його не потрібно. 0.0 Єдине значення як підтримується
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">version&lt;/span>: &lt;span style="color:#ae81ff">0.0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">os&lt;/span>: &lt;span style="color:#ae81ff">linux&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">files&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">source&lt;/span>: &lt;span style="color:#ae81ff">/&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">destination&lt;/span>: &lt;span style="color:#ae81ff">/opt/application&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">permissions&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">object&lt;/span>: &lt;span style="color:#ae81ff">/opt/application&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">owner&lt;/span>: &lt;span style="color:#ae81ff">ec2-user&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">group&lt;/span>: &lt;span style="color:#ae81ff">ec2-user&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">hooks&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">AfterInstall&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">location&lt;/span>: &lt;span style="color:#ae81ff">ops/deploybuild.sh&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">runas&lt;/span>: &lt;span style="color:#ae81ff">ec2-user&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>version&lt;/code> має стандартне значення і міняти його не потрібно. 0.0 Єдине значення як підтримується
 &lt;code>os&lt;/code> може бути двох значення windows або linux, оскільки в мене OS на EC2 AmazonLinux я обираю linux
 &lt;code>files&lt;/code> вказує які файли потрібно копіювати на сервер під час деплойменту. &lt;code>source: /&lt;/code> означає копіювати всі файли. &lt;code>destination&lt;/code> куди копіювати.&lt;br>
 В &lt;code>permissions&lt;/code> зазначено які пермішини мають мати щойно скопійовані файли.&lt;br>
 В &lt;code>hooks&lt;/code> секції відбувається конфігурація аплікації. Я використовую &lt;code>AfterInstall&lt;/code> hook. Це означає що скрипт буде запущено після &lt;code>Install&lt;/code> кроку. Під час &lt;code>Install&lt;/code> кроку файли копіюються на сервер. В &lt;code>location&lt;/code> вказано який скрипт запускати та від його корисувача. &lt;code>runas&lt;/code> означає що скрипт буде викликатись від імені користувача. По дефолту code-deploy agent запускається від рута і runas на цьому етапі переключить на ec2-user. Також можна поміняти щоб code-deploy agent запускався одарзу від ec2-user.&lt;/p>
 &lt;p>Далі нам потрібен деплой скрипт. В репозиторії я створив папку ops оскільки шлях до мого скрипта &lt;code>- location: ops/deploybuild.sh&lt;/code>. І в цій папку створив скрипт &lt;code>deploybuild.sh&lt;/code>.
 В мене node.js аплікації для якою потрібно зробити yarn install та npm start. Я це добавлю в скрипт&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-bash" data-lang="bash">&lt;span style="color:#75715e">#!/usr/bin/env bash
-&lt;/span>&lt;span style="color:#75715e">&lt;/span>cd /opt/application
-yarn --ignore-engines
-cd examples/demo-app/
-&lt;span style="color:#f92672">(&lt;/span>npm run start-prod&lt;span style="color:#f92672">)&lt;/span>&amp;amp;
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>Це базовий скрипт як можна запустити node аплікацію. Для продакшина варто використовувати pm2 для старту js аплікацій.
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>cd /opt/application
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>yarn --ignore-engines
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cd examples/demo-app/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">(&lt;/span>npm run start-prod&lt;span style="color:#f92672">)&lt;/span>&amp;amp;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Це базовий скрипт як можна запустити node аплікацію. Для продакшина варто використовувати pm2 для старту js аплікацій.
 Тепер залишилось зробити коміт в master branch і codedeploy запуститься автоматично&lt;/p></content></item></channel></rss>

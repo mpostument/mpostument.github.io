@@ -1,14 +1,13 @@
 <!doctype html><html lang=en>
 <head>
-<title>Latest post in GitHub readme :: Maksym Postument</title>
-<meta charset=utf-8>
+<title>Latest post in GitHub readme :: Maksym Postument</title><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=description content="Automatic Readme generation for GitHub profile">
 <meta name=keywords content="Go,Devops,GitHub,Readme,Golang">
 <meta name=robots content="noodp">
 <link rel=canonical href=/2021/03/06/latest-post-in-github-readme/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SBRJXS94DC"></script>
-<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-SBRJXS94DC',{anonymize_ip:!1})}</script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-SBRJXS94DC",{anonymize_ip:!1})}</script>
 <link rel=stylesheet href=/assets/style.css>
 <link rel=stylesheet href=/assets/blue.css>
 <link rel=apple-touch-icon href=/img/apple-touch-icon-192x192.png>
@@ -28,9 +27,7 @@
 <meta property="article:section" content="Devops">
 <meta property="article:section" content="Golang">
 <meta property="article:published_time" content="2021-03-06 18:56:24 +0200 +0200">
-<p align=center style=background-color:#23b0ff> Sign up for my <a href=https://tinyletter.com/mpostument>email newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of new blog posts.</p>
-</head>
-<body class=blue>
+<p align=center style=background-color:#23b0ff> Sign up for my <a href=https://tinyletter.com/mpostument>email newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of new blog posts.</p></head><body class=blue>
 <div class="container center headings--one-size">
 <header class=header>
 <div class=header__inner>
@@ -38,166 +35,128 @@
 <a href=/>
 <div class=logo>
 mpostument.com
-</div>
-</a>
-</div>
-<div class=menu-trigger>menu</div>
-</div>
-<nav class=menu>
+</div></a>
+</div><div class=menu-trigger>menu</div></div><nav class=menu>
 <ul class="menu__inner menu__inner--desktop">
-<li><a href=/>Home</a></li>
-<li><a href=/categories/>Categories</a></li>
-<li><a href=/tags/>Tags</a></li>
-<li><a href=/projects/>Projects</a></li>
-<div class=spacer></div>
-<ul class=language-selector>
+<li><a href=/>Home</a></li><li><a href=/categories/>Categories</a></li><li><a href=/tags/>Tags</a></li><li><a href=/projects/>Projects</a></li><div class=spacer></div><ul class=language-selector>
 <ul class=language-selector-current>
-<li>English ▾</li>
-</ul>
-<ul class="language-selector__more hidden">
-<li><a href=/>English</a></li>
-<li><a href=/ua/>Ukraine</a></li>
-</ul>
-</ul>
-</ul>
-<ul class="menu__inner menu__inner--mobile">
-<li><a href=/>Home</a></li>
-<li><a href=/categories/>Categories</a></li>
-<li><a href=/tags/>Tags</a></li>
-<li><a href=/projects/>Projects</a></li>
-<hr>
+<li>English ▾</li></ul><ul class="language-selector__more hidden">
+<li><a href=/>English</a></li><li><a href=/ua/>Ukraine</a></li></ul></ul></ul><ul class="menu__inner menu__inner--mobile">
+<li><a href=/>Home</a></li><li><a href=/categories/>Categories</a></li><li><a href=/tags/>Tags</a></li><li><a href=/projects/>Projects</a></li><hr>
 <li>
 <a href=/>English</a>
-</li>
-<li>
+</li><li>
 <a href=/ua/>Ukraine</a>
-</li>
-</ul>
-</nav>
-</header>
-<div class=content>
+</li></ul></nav></header><div class=content>
 <div class=post>
 <h1 class=post-title>
-<a href=/2021/03/06/latest-post-in-github-readme/>Latest post in GitHub readme</a></h1>
-<div class=post-meta>
+<a href=/2021/03/06/latest-post-in-github-readme/>Latest post in GitHub readme</a></h1><div class=post-meta>
 <span class=post-date>
 2021-03-06
 </span>
 <span class=post-author>:: Maksym Postument</span>
 <span class=post-reading-time>:: 3 min read (507 words)</span>
-</div>
-<span class=post-tags>
+</div><span class=post-tags>
 #<a href=/tags/go/>Go</a>&nbsp;
 #<a href=/tags/devops/>Devops</a>&nbsp;
 </span>
 <img src=https://i.imgur.com/No4Potv.png class=post-cover alt="Latest post in GitHub readme" title="Cover Image">
 <div class=post-content><div>
-<p>Hello!</p>
-<p>Today I will show how to automatically generate GitHub Readme with the latest blog posts using go.
-In GitHub you need to create a repository named as your GitHub profile. My GitHub profile is called mpostument, so I&rsquo;ll create a repository with the same name.</p>
-<p>I clone the repository and call <code>go mod init</code> in it, in order to initialize the go module which will generate readme.
-At the root of the repository you need to create <code>main.go</code> which will be executed.</p>
-<p>In the beginning there will be imports and the structure in which posts will be stored.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-golang data-lang=golang><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
-
-<span style=color:#f92672>import</span> (
-	<span style=color:#e6db74>&#34;log&#34;</span>
-	<span style=color:#e6db74>&#34;os&#34;</span>
-	<span style=color:#e6db74>&#34;strings&#34;</span>
-	<span style=color:#e6db74>&#34;text/template&#34;</span>
-
-	<span style=color:#e6db74>&#34;github.com/mmcdole/gofeed&#34;</span>
-)
-
-<span style=color:#66d9ef>type</span> <span style=color:#a6e22e>ReadmeData</span> <span style=color:#66d9ef>struct</span> {
-	<span style=color:#a6e22e>Title</span> <span style=color:#66d9ef>string</span>
-	<span style=color:#a6e22e>Link</span>  <span style=color:#66d9ef>string</span>
-}
-</code></pre></div><p>The <code>gofeed</code> module is needed to read the rss feed and generate a list of posts based on it.
-The code itself is quite simple, read the template using <code>template.ParseFiles</code>. After that create <code>gofeed.NewParser()</code> which will be used to get rss feed from my site. I loop through all posts from rss feed and add data about posts in a slice which I will transfer to a template and I will save in a file by means of <code>template.Execute</code>.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-golang data-lang=golang><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
-	<span style=color:#a6e22e>template</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>template</span>.<span style=color:#a6e22e>ParseFiles</span>(<span style=color:#e6db74>&#34;README.tmpl&#34;</span>)
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-		<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatalln</span>(<span style=color:#a6e22e>err</span>)
-	}
-
-	<span style=color:#a6e22e>fp</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>gofeed</span>.<span style=color:#a6e22e>NewParser</span>()
-
-	<span style=color:#a6e22e>feed</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>fp</span>.<span style=color:#a6e22e>ParseURL</span>(<span style=color:#e6db74>&#34;https://mpostument.com/index.xml&#34;</span>)
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-		<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatalln</span>(<span style=color:#a6e22e>err</span>)
-	}
-
-	<span style=color:#a6e22e>postList</span> <span style=color:#f92672>:=</span> []<span style=color:#a6e22e>ReadmeData</span>{}
-	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>index</span>, <span style=color:#a6e22e>post</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>feed</span>.<span style=color:#a6e22e>Items</span> {
-		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>index</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>7</span> {
-			<span style=color:#66d9ef>break</span>
-		}
-
-		<span style=color:#a6e22e>readmeData</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>ReadmeData</span>{
-			<span style=color:#a6e22e>Title</span>: <span style=color:#a6e22e>post</span>.<span style=color:#a6e22e>Title</span>,
-			<span style=color:#a6e22e>Link</span>:  <span style=color:#a6e22e>post</span>.<span style=color:#a6e22e>Link</span>,
-		}
-		<span style=color:#a6e22e>postList</span> = append(<span style=color:#a6e22e>postList</span>, <span style=color:#a6e22e>readmeData</span>)
-	}
-
-	<span style=color:#a6e22e>f</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Create</span>(<span style=color:#e6db74>&#34;README.MD&#34;</span>)
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-		<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatalln</span>(<span style=color:#a6e22e>err</span>)
-	}
-
-	<span style=color:#a6e22e>err</span> = <span style=color:#a6e22e>template</span>.<span style=color:#a6e22e>Execute</span>(<span style=color:#a6e22e>f</span>, <span style=color:#a6e22e>postList</span>)
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-		<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatalln</span>(<span style=color:#a6e22e>err</span>)
-	}
-}
-</code></pre></div><p>The next step is to create a template <code>README.tmpl</code> with content:</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-golang data-lang=golang><span style=color:#960050;background-color:#1e0010>##</span> <span style=color:#960050;background-color:#1e0010>📝</span> <span style=color:#a6e22e>My</span> <span style=color:#a6e22e>Latest</span> <span style=color:#a6e22e>Blog</span> <span style=color:#a6e22e>Posts</span>
-{{<span style=color:#66d9ef>range</span> .}}
-<span style=color:#f92672>-</span> [{{.<span style=color:#a6e22e>Title</span>}}](<span style=color:#a6e22e>https</span>:<span style=color:#75715e>//mpostument.com{{.Link}}/)
-</span><span style=color:#75715e></span>{{<span style=color:#a6e22e>end</span>}}
-</code></pre></div><p>If you run the code, it will create a file <code>README.MD</code> with a list of recent posts.</p>
-<p>You can use GithubActions to generate a GitHub readme automatically.
+<p>Hello!</p><p>Today I will show how to automatically generate GitHub Readme with the latest blog posts using go.
+In GitHub you need to create a repository named as your GitHub profile. My GitHub profile is called mpostument, so I&rsquo;ll create a repository with the same name.</p><p>I clone the repository and call <code>go mod init</code> in it, in order to initialize the go module which will generate readme.
+At the root of the repository you need to create <code>main.go</code> which will be executed.</p><p>In the beginning there will be imports and the structure in which posts will be stored.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-golang data-lang=golang><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;log&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;os&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;strings&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;text/template&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;github.com/mmcdole/gofeed&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>ReadmeData</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Title</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Link</span>  <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>The <code>gofeed</code> module is needed to read the rss feed and generate a list of posts based on it.
+The code itself is quite simple, read the template using <code>template.ParseFiles</code>. After that create <code>gofeed.NewParser()</code> which will be used to get rss feed from my site. I loop through all posts from rss feed and add data about posts in a slice which I will transfer to a template and I will save in a file by means of <code>template.Execute</code>.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-golang data-lang=golang><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>template</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>template</span>.<span style=color:#a6e22e>ParseFiles</span>(<span style=color:#e6db74>&#34;README.tmpl&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatalln</span>(<span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fp</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>gofeed</span>.<span style=color:#a6e22e>NewParser</span>()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>feed</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>fp</span>.<span style=color:#a6e22e>ParseURL</span>(<span style=color:#e6db74>&#34;https://mpostument.com/index.xml&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatalln</span>(<span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>postList</span> <span style=color:#f92672>:=</span> []<span style=color:#a6e22e>ReadmeData</span>{}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>index</span>, <span style=color:#a6e22e>post</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>feed</span>.<span style=color:#a6e22e>Items</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>index</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>7</span> {
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>readmeData</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>ReadmeData</span>{
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>Title</span>: <span style=color:#a6e22e>post</span>.<span style=color:#a6e22e>Title</span>,
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>Link</span>:  <span style=color:#a6e22e>post</span>.<span style=color:#a6e22e>Link</span>,
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>postList</span> = append(<span style=color:#a6e22e>postList</span>, <span style=color:#a6e22e>readmeData</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>f</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>os</span>.<span style=color:#a6e22e>Create</span>(<span style=color:#e6db74>&#34;README.MD&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatalln</span>(<span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>err</span> = <span style=color:#a6e22e>template</span>.<span style=color:#a6e22e>Execute</span>(<span style=color:#a6e22e>f</span>, <span style=color:#a6e22e>postList</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatalln</span>(<span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>The next step is to create a template <code>README.tmpl</code> with content:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-golang data-lang=golang><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>##</span> <span style=color:#960050;background-color:#1e0010>📝</span> <span style=color:#a6e22e>My</span> <span style=color:#a6e22e>Latest</span> <span style=color:#a6e22e>Blog</span> <span style=color:#a6e22e>Posts</span>
+</span></span><span style=display:flex><span>{{<span style=color:#66d9ef>range</span> .}}
+</span></span><span style=display:flex><span><span style=color:#f92672>-</span> [{{.<span style=color:#a6e22e>Title</span>}}](<span style=color:#a6e22e>https</span>:<span style=color:#75715e>//mpostument.com{{.Link}}/)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>{{<span style=color:#a6e22e>end</span>}}
+</span></span></code></pre></div><p>If you run the code, it will create a file <code>README.MD</code> with a list of recent posts.</p><p>You can use GithubActions to generate a GitHub readme automatically.
 You need to create the <code>.github/workflows</code> folders at the root of the repository. And inside create a file <code>generate_readme.yml</code>.
-This file is a configuration of the steps that GitHubActions will call. The action will run every day at midnight. First, the repository is cloned, go is installed and all dependencies are loaded, the code is compiled, script started and Readme.md is generated. And if there are changes in the file, they will be pushed in the repository and will be available in the profile.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yml data-lang=yml><span style=color:#f92672>name</span>: <span style=color:#ae81ff>Generate readme</span>
-<span style=color:#f92672>on</span>:
-  <span style=color:#f92672>schedule</span>:
-    - <span style=color:#f92672>cron</span>: <span style=color:#e6db74>&#34;0 0 * * *&#34;</span>
-  <span style=color:#f92672>workflow_dispatch</span>:
-<span style=color:#f92672>jobs</span>:
-  <span style=color:#f92672>update-readme-with-blog</span>:
-    <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Update this repo&#39;s README with latest blog posts</span>
-    <span style=color:#f92672>runs-on</span>: <span style=color:#ae81ff>ubuntu-latest</span>
-    <span style=color:#f92672>steps</span>:
-      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Checkout</span>
-        <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>actions/checkout@v2</span>
-      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Setup go</span>
-        <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>actions/setup-go@v2</span>
-        <span style=color:#f92672>with</span>:
-          <span style=color:#f92672>go-version</span>: <span style=color:#e6db74>&#34;1.16&#34;</span>
-      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Go tidy</span>
-        <span style=color:#f92672>run</span>: <span style=color:#ae81ff>go mod tidy</span>
-      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Build project</span>
-        <span style=color:#f92672>run</span>: <span style=color:#ae81ff>go build</span>
-      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Generate readme</span>
-        <span style=color:#f92672>run</span>: <span style=color:#ae81ff>./mpostument</span>
-      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Commit and push if changed</span>
-        <span style=color:#f92672>run</span>: |-<span style=color:#e6db74>
-</span><span style=color:#e6db74>          git diff
-</span><span style=color:#e6db74>          git config --global user.email &#34;actions@users.noreply.github.com&#34;
-</span><span style=color:#e6db74>          git config --global user.name &#34;README-bot&#34;
-</span><span style=color:#e6db74>          git add -A
-</span><span style=color:#e6db74>          git commit -m &#34;Updated readme content&#34; || exit 0
-</span><span style=color:#e6db74>          git push</span>          
-</code></pre></div>
-</div></div>
-<div class=pagination>
+This file is a configuration of the steps that GitHubActions will call. The action will run every day at midnight. First, the repository is cloned, go is installed and all dependencies are loaded, the code is compiled, script started and Readme.md is generated. And if there are changes in the file, they will be pushed in the repository and will be available in the profile.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yml data-lang=yml><span style=display:flex><span><span style=color:#f92672>name</span>: <span style=color:#ae81ff>Generate readme</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>on</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>schedule</span>:
+</span></span><span style=display:flex><span>    - <span style=color:#f92672>cron</span>: <span style=color:#e6db74>&#34;0 0 * * *&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>workflow_dispatch</span>:
+</span></span><span style=display:flex><span><span style=color:#f92672>jobs</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>update-readme-with-blog</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Update this repo&#39;s README with latest blog posts</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>runs-on</span>: <span style=color:#ae81ff>ubuntu-latest</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>steps</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Checkout</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>actions/checkout@v2</span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Setup go</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>actions/setup-go@v2</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>with</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>go-version</span>: <span style=color:#e6db74>&#34;1.16&#34;</span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Go tidy</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>run</span>: <span style=color:#ae81ff>go mod tidy</span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Build project</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>run</span>: <span style=color:#ae81ff>go build</span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Generate readme</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>run</span>: <span style=color:#ae81ff>./mpostument</span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Commit and push if changed</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>run</span>: |-<span style=color:#e6db74>
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          git diff
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          git config --global user.email &#34;actions@users.noreply.github.com&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          git config --global user.name &#34;README-bot&#34;
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          git add -A
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          git commit -m &#34;Updated readme content&#34; || exit 0
+</span></span></span><span style=display:flex><span><span style=color:#e6db74>          git push</span>          
+</span></span></code></pre></div></div></div><div class=pagination>
 <div class=pagination__title>
 <span class=pagination__title-h>Read other posts</span>
 <hr>
-</div>
-<div class=pagination__buttons>
+</div><div class=pagination__buttons>
 <span class="button previous">
 <a href=/2021/08/04/two-number-sum/>
 <span class=button__icon>←</span>
@@ -210,25 +169,14 @@ This file is a configuration of the steps that GitHubActions will call. The acti
 <span class=button__icon>→</span>
 </a>
 </span>
-</div>
-</div>
-<div id=disqus_thread></div>
-<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//mpostument-com.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
-<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
-<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
-</div>
-</div>
-<footer class=footer>
+</div></div><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//mpostument-com.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script>
+<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
+</div></div><footer class=footer>
 <div class=footer__inner>
 <div class=copyright>
 <span>© 2022 Powered by <a href=http://gohugo.io>Hugo</a></span>
 <span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span>
-</div>
-</div>
-</footer>
-<script src=/assets/main.js></script>
+</div></div></footer><script src=/assets/main.js></script>
 <script src=/assets/prism.js></script>
 <script src=/assets/languageSelector.js></script>
-</div>
-</body>
-</html>
+</div></body></html>

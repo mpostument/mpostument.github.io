@@ -6,163 +6,181 @@ There are several additional files in the authentication project that are respon
 To begin with we will create the new project in which authentication will be enabled.&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/AlAyKDU.png" alt="Auth">&lt;/p>
 &lt;p>There are several additional files in the authentication project that are responsible for authentication. A connection string will also be added to the database in the configuration file.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json"> &lt;span style="color:#e6db74">&amp;#34;ConnectionStrings&amp;#34;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">:&lt;/span> {
-&lt;span style="color:#f92672">&amp;#34;DefaultConnection&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Server=(localdb)\\mssqllocaldb;Database=aspnet-BlazorAuth-BD4B8646-B1A3-438C-8FFC-8C3A29438C24;Trusted_Connection=True;MultipleActiveResultSets=true&amp;#34;&lt;/span>
-}&lt;span style="color:#960050;background-color:#1e0010">,&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>In the package management console, you need to run the &lt;code>Update-Database&lt;/code> command to create the database and the required tables.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;ConnectionStrings&amp;#34;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">:&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;DefaultConnection&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;Server=(localdb)\\mssqllocaldb;Database=aspnet-BlazorAuth-BD4B8646-B1A3-438C-8FFC-8C3A29438C24;Trusted_Connection=True;MultipleActiveResultSets=true&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }&lt;span style="color:#960050;background-color:#1e0010">,&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In the package management console, you need to run the &lt;code>Update-Database&lt;/code> command to create the database and the required tables.&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/KxYmGW2.png" alt="Update-Database">&lt;/p>
 &lt;p>Now you can run applications and try to log in.&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/81FVZaw.gif" alt="Login">&lt;/p>
 &lt;p>You can add roles to restrict access to certain pages depending on the role.&lt;/p>
 &lt;h2 id="autorization">Autorization&lt;/h2>
 &lt;p>Role support must be added to &lt;code>Startup.cs&lt;/code> in the &lt;code>ConfigureService&lt;/code> method.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> services.AddDefaultIdentity&amp;lt;IdentityUser&amp;gt;(options =&amp;gt; options.SignIn.RequireConfirmedAccount = &lt;span style="color:#66d9ef">true&lt;/span>)
-.AddRoles&amp;lt;IdentityRole&amp;gt;()
-.AddEntityFrameworkStores&amp;lt;ApplicationDbContext&amp;gt;();
-&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="generate-roles">Generate Roles&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="display:flex;">&lt;span> services.AddDefaultIdentity&amp;lt;IdentityUser&amp;gt;(options =&amp;gt; options.SignIn.RequireConfirmedAccount = &lt;span style="color:#66d9ef">true&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .AddRoles&amp;lt;IdentityRole&amp;gt;()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> .AddEntityFrameworkStores&amp;lt;ApplicationDbContext&amp;gt;();
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="generate-roles">Generate Roles&lt;/h2>
 &lt;p>I will add a new razor component to the &lt;code>Pages&lt;/code> folder. When you go to this page, basic roles will be created, it will be available via &lt;code>/addroles&lt;/code>. You also need to use DI to inject several objects.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/addroles&amp;#34;&lt;/span>
-@using Microsoft.AspNetCore.Identity
-@inject RoleManager&amp;lt;IdentityRole&amp;gt; RoleManager
-@inject UserManager&amp;lt;IdentityUser&amp;gt; UserManager
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>I will create roles using &lt;code>RoleManager&lt;/code>. To begin, create a list that will have all the necessary roles. Then I go through the cycle on all roles, if the role exists then nothing will happen. If not, a new role will be created.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task GenerateRoles()
-{
-&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> adminRole = &lt;span style="color:#e6db74">&amp;#34;Administrator&amp;#34;&lt;/span>;
-&lt;span style="color:#66d9ef">string&lt;/span>[] roles = { AdminRole };
-&lt;span style="color:#66d9ef">foreach&lt;/span> (&lt;span style="color:#66d9ef">var&lt;/span> role &lt;span style="color:#66d9ef">in&lt;/span> roles)
-{
-&lt;span style="color:#66d9ef">var&lt;/span> roleExist = &lt;span style="color:#66d9ef">await&lt;/span> RoleManager.RoleExistsAsync(role);
-&lt;span style="color:#66d9ef">if&lt;/span> (roleExist == &lt;span style="color:#66d9ef">false&lt;/span>)
-{
-&lt;span style="color:#66d9ef">await&lt;/span> RoleManager.CreateAsync(&lt;span style="color:#66d9ef">new&lt;/span> IdentityRole(role));
-}
-}
-}
-&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="create-admin">Create admin&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="display:flex;">&lt;span>@page &lt;span style="color:#e6db74">&amp;#34;/addroles&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>@using Microsoft.AspNetCore.Identity
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>@inject RoleManager&amp;lt;IdentityRole&amp;gt; RoleManager
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>@inject UserManager&amp;lt;IdentityUser&amp;gt; UserManager
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>I will create roles using &lt;code>RoleManager&lt;/code>. To begin, create a list that will have all the necessary roles. Then I go through the cycle on all roles, if the role exists then nothing will happen. If not, a new role will be created.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task GenerateRoles()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> adminRole = &lt;span style="color:#e6db74">&amp;#34;Administrator&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">string&lt;/span>[] roles = { AdminRole };
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">foreach&lt;/span> (&lt;span style="color:#66d9ef">var&lt;/span> role &lt;span style="color:#66d9ef">in&lt;/span> roles)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> roleExist = &lt;span style="color:#66d9ef">await&lt;/span> RoleManager.RoleExistsAsync(role);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (roleExist == &lt;span style="color:#66d9ef">false&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">await&lt;/span> RoleManager.CreateAsync(&lt;span style="color:#66d9ef">new&lt;/span> IdentityRole(role));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="create-admin">Create admin&lt;/h2>
 &lt;p>The next step is to add users to the roles. In &lt;code>appsettings.json&lt;/code> I will add a parameter that will contain the default admin email.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">&lt;span style="color:#e6db74">&amp;#34;AdminUser&amp;#34;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">:&lt;/span> &lt;span style="color:#e6db74">&amp;#34;777rip777@gmail.com&amp;#34;&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>I&amp;rsquo;ll go back to the &lt;code>addroles&lt;/code> page and create a new method. I check if the user with the email from the configuration file exists, if, so I add it to the group &lt;code>Administrator&lt;/code>. In order to be able to read the data from the configuration file, you need to get an object of type &lt;code>IConfiguration&lt;/code>. Add &lt;code>@using Microsoft.Extensions.Configuration&lt;/code> and &lt;code>@inject IConfiguration config&lt;/code> at the top of the page.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp"> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task AddAdmin()
-{
-&lt;span style="color:#66d9ef">var&lt;/span> user = &lt;span style="color:#66d9ef">await&lt;/span> UserManager.FindByEmailAsync(config.GetValue&amp;lt;&lt;span style="color:#66d9ef">string&lt;/span>&amp;gt;(&lt;span style="color:#e6db74">&amp;#34;AdminUser&amp;#34;&lt;/span>));
-&lt;span style="color:#66d9ef">if&lt;/span> (user != &lt;span style="color:#66d9ef">null&lt;/span>)
-{
-&lt;span style="color:#66d9ef">await&lt;/span> UserManager.AddToRoleAsync(user, &lt;span style="color:#e6db74">&amp;#34;Administrator&amp;#34;&lt;/span>);
-}
-}
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>In order for these methods to be called when the pages are open, you need to call them in the method &lt;code>OnParametersSetAsync&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">&amp;#34;AdminUser&amp;#34;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">:&lt;/span> &lt;span style="color:#e6db74">&amp;#34;777rip777@gmail.com&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>I&amp;rsquo;ll go back to the &lt;code>addroles&lt;/code> page and create a new method. I check if the user with the email from the configuration file exists, if, so I add it to the group &lt;code>Administrator&lt;/code>. In order to be able to read the data from the configuration file, you need to get an object of type &lt;code>IConfiguration&lt;/code>. Add &lt;code>@using Microsoft.Extensions.Configuration&lt;/code> and &lt;code>@inject IConfiguration config&lt;/code> at the top of the page.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task AddAdmin()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> user = &lt;span style="color:#66d9ef">await&lt;/span> UserManager.FindByEmailAsync(config.GetValue&amp;lt;&lt;span style="color:#66d9ef">string&lt;/span>&amp;gt;(&lt;span style="color:#e6db74">&amp;#34;AdminUser&amp;#34;&lt;/span>));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (user != &lt;span style="color:#66d9ef">null&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">await&lt;/span> UserManager.AddToRoleAsync(user, &lt;span style="color:#e6db74">&amp;#34;Administrator&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In order for these methods to be called when the pages are open, you need to call them in the method &lt;code>OnParametersSetAsync&lt;/code>.&lt;/p>
 &lt;p>Full code &lt;code>addroles&lt;/code> page.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/addroles&amp;#34;&lt;/span>
-@using Microsoft.AspNetCore.Identity
-@using Microsoft.Extensions.Configuration
-@inject RoleManager&amp;lt;IdentityRole&amp;gt; RoleManager
-@inject UserManager&amp;lt;IdentityUser&amp;gt; UserManager
-@inject IConfiguration config
-@code {
-&lt;span style="color:#66d9ef">protected&lt;/span> &lt;span style="color:#66d9ef">override&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task OnParametersSetAsync()
-{
-&lt;span style="color:#66d9ef">await&lt;/span> GenerateRoles();
-&lt;span style="color:#66d9ef">await&lt;/span> AddAdmin();
-}
-&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task GenerateRoles()
-{
-&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> adminRole = &lt;span style="color:#e6db74">&amp;#34;Administrator&amp;#34;&lt;/span>;
-&lt;span style="color:#66d9ef">string&lt;/span>[] roles = { adminRole };
-&lt;span style="color:#66d9ef">foreach&lt;/span> (&lt;span style="color:#66d9ef">var&lt;/span> role &lt;span style="color:#66d9ef">in&lt;/span> roles)
-{
-&lt;span style="color:#66d9ef">var&lt;/span> roleExist = &lt;span style="color:#66d9ef">await&lt;/span> RoleManager.RoleExistsAsync(role);
-&lt;span style="color:#66d9ef">if&lt;/span> (roleExist == &lt;span style="color:#66d9ef">false&lt;/span>)
-{
-&lt;span style="color:#66d9ef">await&lt;/span> RoleManager.CreateAsync(&lt;span style="color:#66d9ef">new&lt;/span> IdentityRole(role));
-}
-}
-}
-&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task AddAdmin()
-{
-&lt;span style="color:#66d9ef">var&lt;/span> user = &lt;span style="color:#66d9ef">await&lt;/span> UserManager.FindByEmailAsync(config.GetValue&amp;lt;&lt;span style="color:#66d9ef">string&lt;/span>&amp;gt;(&lt;span style="color:#e6db74">&amp;#34;AdminUser&amp;#34;&lt;/span>));
-&lt;span style="color:#66d9ef">if&lt;/span> (user != &lt;span style="color:#66d9ef">null&lt;/span>)
-{
-&lt;span style="color:#66d9ef">await&lt;/span> UserManager.AddToRoleAsync(user, &lt;span style="color:#e6db74">&amp;#34;Administrator&amp;#34;&lt;/span>);
-}
-}
-}
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now opening the page &lt;code>/addroles&lt;/code> in the browser will create roles and the user (if user exist) to the role.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="display:flex;">&lt;span>@page &lt;span style="color:#e6db74">&amp;#34;/addroles&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>@using Microsoft.AspNetCore.Identity
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>@using Microsoft.Extensions.Configuration
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>@inject RoleManager&amp;lt;IdentityRole&amp;gt; RoleManager
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>@inject UserManager&amp;lt;IdentityUser&amp;gt; UserManager
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>@inject IConfiguration config
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>@code {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">protected&lt;/span> &lt;span style="color:#66d9ef">override&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task OnParametersSetAsync()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">await&lt;/span> GenerateRoles();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">await&lt;/span> AddAdmin();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task GenerateRoles()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> adminRole = &lt;span style="color:#e6db74">&amp;#34;Administrator&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">string&lt;/span>[] roles = { adminRole };
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">foreach&lt;/span> (&lt;span style="color:#66d9ef">var&lt;/span> role &lt;span style="color:#66d9ef">in&lt;/span> roles)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> roleExist = &lt;span style="color:#66d9ef">await&lt;/span> RoleManager.RoleExistsAsync(role);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (roleExist == &lt;span style="color:#66d9ef">false&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">await&lt;/span> RoleManager.CreateAsync(&lt;span style="color:#66d9ef">new&lt;/span> IdentityRole(role));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">async&lt;/span> Task AddAdmin()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> user = &lt;span style="color:#66d9ef">await&lt;/span> UserManager.FindByEmailAsync(config.GetValue&amp;lt;&lt;span style="color:#66d9ef">string&lt;/span>&amp;gt;(&lt;span style="color:#e6db74">&amp;#34;AdminUser&amp;#34;&lt;/span>));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (user != &lt;span style="color:#66d9ef">null&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">await&lt;/span> UserManager.AddToRoleAsync(user, &lt;span style="color:#e6db74">&amp;#34;Administrator&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now opening the page &lt;code>/addroles&lt;/code> in the browser will create roles and the user (if user exist) to the role.&lt;/p>
 &lt;h2 id="restrict-access-to-pages">Restrict access to pages&lt;/h2>
 &lt;p>Now that we have roles, we can restrict access to the pages. For the &lt;code>FetchData&lt;/code> page, I will add &lt;code>@attribute [Authorize]&lt;/code>. This will give access to the page only for authorized users. And for the &lt;code>Counter&lt;/code> page I will specify &lt;code>@attribute [Authorize (Roles = &amp;quot;Administrator&amp;quot;)]&lt;/code> this will give access to the page only for users with the role of administrator.&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/KkE10dm.gif" alt="RolesDemo">&lt;/p>
 &lt;p>You can replace the Not Authorized error in &lt;code>App.razor&lt;/code> in the &lt;code>NotAutorized&lt;/code> section.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;CascadingAuthenticationState&amp;gt;
-&amp;lt;Router AppAssembly=&lt;span style="color:#e6db74">&amp;#34;@typeof(Program).Assembly&amp;#34;&lt;/span>&amp;gt;
-&amp;lt;Found Context=&lt;span style="color:#e6db74">&amp;#34;routeData&amp;#34;&lt;/span>&amp;gt;
-&amp;lt;AuthorizeRouteView RouteData=&lt;span style="color:#e6db74">&amp;#34;@routeData&amp;#34;&lt;/span> DefaultLayout=&lt;span style="color:#e6db74">&amp;#34;@typeof(MainLayout)&amp;#34;&lt;/span>&amp;gt;
-&amp;lt;NotAuthorized&amp;gt;
-&amp;lt;h1&amp;gt;You don&lt;span style="color:#960050;background-color:#1e0010">&amp;#39;&lt;/span>t have access&amp;lt;/h1&amp;gt;
-&amp;lt;p&amp;gt;Ask your administrator to give you permission&amp;lt;/p&amp;gt;
-&amp;lt;/NotAuthorized&amp;gt;
-&amp;lt;/AuthorizeRouteView&amp;gt; /&amp;gt;
-&amp;lt;/Found&amp;gt;
-&amp;lt;NotFound&amp;gt;
-&amp;lt;LayoutView Layout=&lt;span style="color:#e6db74">&amp;#34;@typeof(MainLayout)&amp;#34;&lt;/span>&amp;gt;
-&amp;lt;p&amp;gt;Sorry, there&lt;span style="color:#960050;background-color:#1e0010">&amp;#39;&lt;/span>s nothing at &lt;span style="color:#66d9ef">this&lt;/span> address.&amp;lt;/p&amp;gt;
-&amp;lt;/LayoutView&amp;gt;
-&amp;lt;/NotFound&amp;gt;
-&amp;lt;/Router&amp;gt;
-&amp;lt;/CascadingAuthenticationState&amp;gt;
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/wULUE6F.png" alt="AuthError">&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="display:flex;">&lt;span>&amp;lt;CascadingAuthenticationState&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;Router AppAssembly=&lt;span style="color:#e6db74">&amp;#34;@typeof(Program).Assembly&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;Found Context=&lt;span style="color:#e6db74">&amp;#34;routeData&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;AuthorizeRouteView RouteData=&lt;span style="color:#e6db74">&amp;#34;@routeData&amp;#34;&lt;/span> DefaultLayout=&lt;span style="color:#e6db74">&amp;#34;@typeof(MainLayout)&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;NotAuthorized&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;h1&amp;gt;You don&lt;span style="color:#960050;background-color:#1e0010">&amp;#39;&lt;/span>t have access&amp;lt;/h1&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;p&amp;gt;Ask your administrator to give you permission&amp;lt;/p&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/NotAuthorized&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/AuthorizeRouteView&amp;gt; /&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/Found&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;NotFound&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;LayoutView Layout=&lt;span style="color:#e6db74">&amp;#34;@typeof(MainLayout)&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;p&amp;gt;Sorry, there&lt;span style="color:#960050;background-color:#1e0010">&amp;#39;&lt;/span>s nothing at &lt;span style="color:#66d9ef">this&lt;/span> address.&amp;lt;/p&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/LayoutView&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/NotFound&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/Router&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/CascadingAuthenticationState&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/wULUE6F.png" alt="AuthError">&lt;/p>
 &lt;p>You can also completely hide a site element for unregistered users. In &lt;code>NavMenu.razor&lt;/code> I will add menu items to &lt;code>&amp;lt;AuthorizeView&amp;gt;&amp;lt;/AuthorizeView&amp;gt;&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">&amp;lt;div class=&lt;span style="color:#e6db74">&amp;#34;top-row pl-4 navbar navbar-dark&amp;#34;&lt;/span>&amp;gt;
-&amp;lt;a class=&lt;span style="color:#e6db74">&amp;#34;navbar-brand&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>&amp;gt;BlazorAuth&amp;lt;/a&amp;gt;
-&amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;navbar-toggler&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;ToggleNavMenu&amp;#34;&lt;/span>&amp;gt;
-&amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;navbar-toggler-icon&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt;
-&amp;lt;/button&amp;gt;
-&amp;lt;/div&amp;gt;
-&amp;lt;div class=&lt;span style="color:#e6db74">&amp;#34;@NavMenuCssClass&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;ToggleNavMenu&amp;#34;&lt;/span>&amp;gt;
-&amp;lt;ul class=&lt;span style="color:#e6db74">&amp;#34;nav flex-column&amp;#34;&lt;/span>&amp;gt;
-&amp;lt;li class=&lt;span style="color:#e6db74">&amp;#34;nav-item px-3&amp;#34;&lt;/span>&amp;gt;
-&amp;lt;NavLink class=&lt;span style="color:#e6db74">&amp;#34;nav-link&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span> Match=&lt;span style="color:#e6db74">&amp;#34;NavLinkMatch.All&amp;#34;&lt;/span>&amp;gt;
-&amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;oi oi-home&amp;#34;&lt;/span> aria-hidden=&lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt; Home
-&amp;lt;/NavLink&amp;gt;
-&amp;lt;/li&amp;gt;
-&amp;lt;AuthorizeView Roles=&lt;span style="color:#e6db74">&amp;#34;Administrator&amp;#34;&lt;/span>&amp;gt;
-&amp;lt;li class=&lt;span style="color:#e6db74">&amp;#34;nav-item px-3&amp;#34;&lt;/span>&amp;gt;
-&amp;lt;NavLink class=&lt;span style="color:#e6db74">&amp;#34;nav-link&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;counter&amp;#34;&lt;/span>&amp;gt;
-&amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;oi oi-plus&amp;#34;&lt;/span> aria-hidden=&lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt; Counter
-&amp;lt;/NavLink&amp;gt;
-&amp;lt;/li&amp;gt;
-&amp;lt;/AuthorizeView&amp;gt;
-&amp;lt;AuthorizeView&amp;gt;
-&amp;lt;li class=&lt;span style="color:#e6db74">&amp;#34;nav-item px-3&amp;#34;&lt;/span>&amp;gt;
-&amp;lt;NavLink class=&lt;span style="color:#e6db74">&amp;#34;nav-link&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;fetchdata&amp;#34;&lt;/span>&amp;gt;
-&amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;oi oi-list-rich&amp;#34;&lt;/span> aria-hidden=&lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt; Fetch data
-&amp;lt;/NavLink&amp;gt;
-&amp;lt;/li&amp;gt;
-&amp;lt;/AuthorizeView&amp;gt;
-&amp;lt;/ul&amp;gt;
-&amp;lt;/div&amp;gt;
-@code {
-&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">bool&lt;/span> collapseNavMenu = &lt;span style="color:#66d9ef">true&lt;/span>;
-&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> NavMenuCssClass =&amp;gt; collapseNavMenu ? &lt;span style="color:#e6db74">&amp;#34;collapse&amp;#34;&lt;/span> : &lt;span style="color:#66d9ef">null&lt;/span>;
-&lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> ToggleNavMenu()
-{
-collapseNavMenu = !collapseNavMenu;
-}
-}
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now &lt;code>counter&lt;/code> in the menu will be seen only by users with the role &lt;code>Administrator&lt;/code> and &lt;code>fetchdata&lt;/code> will be available to registered users.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="display:flex;">&lt;span>&amp;lt;div class=&lt;span style="color:#e6db74">&amp;#34;top-row pl-4 navbar navbar-dark&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;a class=&lt;span style="color:#e6db74">&amp;#34;navbar-brand&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>&amp;gt;BlazorAuth&amp;lt;/a&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;button class=&lt;span style="color:#e6db74">&amp;#34;navbar-toggler&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;ToggleNavMenu&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;navbar-toggler-icon&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/button&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/div&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;div class=&lt;span style="color:#e6db74">&amp;#34;@NavMenuCssClass&amp;#34;&lt;/span> @onclick=&lt;span style="color:#e6db74">&amp;#34;ToggleNavMenu&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;ul class=&lt;span style="color:#e6db74">&amp;#34;nav flex-column&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;li class=&lt;span style="color:#e6db74">&amp;#34;nav-item px-3&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;NavLink class=&lt;span style="color:#e6db74">&amp;#34;nav-link&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span> Match=&lt;span style="color:#e6db74">&amp;#34;NavLinkMatch.All&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;oi oi-home&amp;#34;&lt;/span> aria-hidden=&lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt; Home
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/NavLink&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/li&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;AuthorizeView Roles=&lt;span style="color:#e6db74">&amp;#34;Administrator&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;li class=&lt;span style="color:#e6db74">&amp;#34;nav-item px-3&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;NavLink class=&lt;span style="color:#e6db74">&amp;#34;nav-link&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;counter&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;oi oi-plus&amp;#34;&lt;/span> aria-hidden=&lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt; Counter
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/NavLink&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/li&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/AuthorizeView&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;AuthorizeView&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;li class=&lt;span style="color:#e6db74">&amp;#34;nav-item px-3&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;NavLink class=&lt;span style="color:#e6db74">&amp;#34;nav-link&amp;#34;&lt;/span> href=&lt;span style="color:#e6db74">&amp;#34;fetchdata&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;span class=&lt;span style="color:#e6db74">&amp;#34;oi oi-list-rich&amp;#34;&lt;/span> aria-hidden=&lt;span style="color:#e6db74">&amp;#34;true&amp;#34;&lt;/span>&amp;gt;&amp;lt;/span&amp;gt; Fetch data
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/NavLink&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/li&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/AuthorizeView&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/ul&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/div&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>@code {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">bool&lt;/span> collapseNavMenu = &lt;span style="color:#66d9ef">true&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> NavMenuCssClass =&amp;gt; collapseNavMenu ? &lt;span style="color:#e6db74">&amp;#34;collapse&amp;#34;&lt;/span> : &lt;span style="color:#66d9ef">null&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> ToggleNavMenu()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> collapseNavMenu = !collapseNavMenu;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now &lt;code>counter&lt;/code> in the menu will be seen only by users with the role &lt;code>Administrator&lt;/code> and &lt;code>fetchdata&lt;/code> will be available to registered users.&lt;/p>
 &lt;p>In the &lt;code>index&lt;/code> page I will add messages to users to log in.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-csharp" data-lang="csharp">@page &lt;span style="color:#e6db74">&amp;#34;/&amp;#34;&lt;/span>
-&amp;lt;AuthorizeView&amp;gt;
-&amp;lt;Authorized&amp;gt;
-&amp;lt;h1&amp;gt;Thank you &lt;span style="color:#66d9ef">for&lt;/span> logging &lt;span style="color:#66d9ef">in&lt;/span>&amp;lt;/h1&amp;gt;
-&amp;lt;/Authorized&amp;gt;
-&amp;lt;NotAuthorized&amp;gt;
-&amp;lt;h3 class=&lt;span style="color:#e6db74">&amp;#34;text-danger&amp;#34;&lt;/span>&amp;gt;Log &lt;span style="color:#66d9ef">in&lt;/span> please&amp;lt;/h3&amp;gt;
-&amp;lt;/NotAuthorized&amp;gt;
-&amp;lt;/AuthorizeView&amp;gt;
-&amp;lt;AuthorizeView Roles=&lt;span style="color:#e6db74">&amp;#34;Administrator&amp;#34;&lt;/span>&amp;gt;
-&amp;lt;Authorized&amp;gt;
-Welcome back Admin
-&amp;lt;/Authorized&amp;gt;
-&amp;lt;/AuthorizeView&amp;gt;
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>If the user is not logged in, there will be a message &lt;code>Log in please&lt;/code>. Otherwise, &lt;code>Thank you for logging in&lt;/code>. And if the user is an admin, there will be an additional message &lt;code>Welcome back Admin&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="display:flex;">&lt;span>@page &lt;span style="color:#e6db74">&amp;#34;/&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;AuthorizeView&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;Authorized&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;h1&amp;gt;Thank you &lt;span style="color:#66d9ef">for&lt;/span> logging &lt;span style="color:#66d9ef">in&lt;/span>&amp;lt;/h1&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/Authorized&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;NotAuthorized&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;h3 class=&lt;span style="color:#e6db74">&amp;#34;text-danger&amp;#34;&lt;/span>&amp;gt;Log &lt;span style="color:#66d9ef">in&lt;/span> please&amp;lt;/h3&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/NotAuthorized&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/AuthorizeView&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;AuthorizeView Roles=&lt;span style="color:#e6db74">&amp;#34;Administrator&amp;#34;&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;Authorized&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Welcome back Admin
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/Authorized&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/AuthorizeView&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If the user is not logged in, there will be a message &lt;code>Log in please&lt;/code>. Otherwise, &lt;code>Thank you for logging in&lt;/code>. And if the user is an admin, there will be an additional message &lt;code>Welcome back Admin&lt;/code>.&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/ukU6vYG.gif" alt="RolesDemo2">&lt;/p></content></item></channel></rss>

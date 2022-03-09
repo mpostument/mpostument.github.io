@@ -8,34 +8,39 @@ language: csharp mono: none dotnet: 3.1.4 solution: awstaghelper.sln install: - 
 &lt;h2 id="travisyml-конфігурація">.travis.yml Конфігурація&lt;/h2>
 &lt;p>Наступним кроком потрібно створити .travis.yml файл в корені репозиторія.
 Приклад мого конфігураційного файлу:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="color:#f92672">language&lt;/span>: &lt;span style="color:#ae81ff">csharp&lt;/span>
-&lt;span style="color:#f92672">mono&lt;/span>: &lt;span style="color:#ae81ff">none&lt;/span>
-&lt;span style="color:#f92672">dotnet&lt;/span>: &lt;span style="color:#ae81ff">3.1.4&lt;/span>
-&lt;span style="color:#f92672">solution&lt;/span>: &lt;span style="color:#ae81ff">awstaghelper.sln&lt;/span>
-&lt;span style="color:#f92672">install&lt;/span>:
-- &lt;span style="color:#ae81ff">dotnet restore&lt;/span>
-&lt;span style="color:#f92672">script&lt;/span>:
-- &lt;span style="color:#ae81ff">dotnet build --configuration Release --runtime win-x64 --output win-x64&lt;/span>
-- &lt;span style="color:#ae81ff">dotnet build --configuration Release --runtime win-x86 --output win-x86&lt;/span>
-- &lt;span style="color:#ae81ff">dotnet build --configuration Release --runtime linux-x64 --output linux-x64&lt;/span>
-- &lt;span style="color:#ae81ff">dotnet build --configuration Release --runtime osx-x64 --output osx-x64&lt;/span>
-&lt;span style="color:#f92672">before_deploy&lt;/span>:
-- &lt;span style="color:#ae81ff">zip -r9 win-x64.zip win-x64&lt;/span>
-- &lt;span style="color:#ae81ff">zip -r9 win-x86.zip win-x86&lt;/span>
-- &lt;span style="color:#ae81ff">zip -r9 linux-x64.zip linux-x64&lt;/span>
-- &lt;span style="color:#ae81ff">zip -r9 osx-x64.zip osx-x64&lt;/span>
-&lt;span style="color:#f92672">deploy&lt;/span>:
-&lt;span style="color:#f92672">provider&lt;/span>: &lt;span style="color:#ae81ff">releases&lt;/span>
-&lt;span style="color:#f92672">api_key&lt;/span>: &lt;span style="color:#ae81ff">$api_key&lt;/span>
-&lt;span style="color:#f92672">file&lt;/span>:
-- &lt;span style="color:#ae81ff">win-x64.zip&lt;/span>
-- &lt;span style="color:#ae81ff">win-x86.zip&lt;/span>
-- &lt;span style="color:#ae81ff">linux-x64.zip&lt;/span>
-- &lt;span style="color:#ae81ff">osx-x64.zip&lt;/span>
-&lt;span style="color:#f92672">skip_cleanup&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
-&lt;span style="color:#f92672">on&lt;/span>:
-&lt;span style="color:#f92672">tags&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="net-конфігурація">.Net конфігурація&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">language&lt;/span>: &lt;span style="color:#ae81ff">csharp&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">mono&lt;/span>: &lt;span style="color:#ae81ff">none&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">dotnet&lt;/span>: &lt;span style="color:#ae81ff">3.1.4&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">solution&lt;/span>: &lt;span style="color:#ae81ff">awstaghelper.sln&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">install&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">dotnet restore&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">script&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">dotnet build --configuration Release --runtime win-x64 --output win-x64&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">dotnet build --configuration Release --runtime win-x86 --output win-x86&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">dotnet build --configuration Release --runtime linux-x64 --output linux-x64&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">dotnet build --configuration Release --runtime osx-x64 --output osx-x64&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">before_deploy&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">zip -r9 win-x64.zip win-x64&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">zip -r9 win-x86.zip win-x86&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">zip -r9 linux-x64.zip linux-x64&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">zip -r9 osx-x64.zip osx-x64&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">deploy&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">provider&lt;/span>: &lt;span style="color:#ae81ff">releases&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">api_key&lt;/span>: &lt;span style="color:#ae81ff">$api_key&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">file&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">win-x64.zip&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">win-x86.zip&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">linux-x64.zip&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">osx-x64.zip&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">skip_cleanup&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">on&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">tags&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="net-конфігурація">.Net конфігурація&lt;/h2>
 &lt;p>Тепер розберемо конфіг.&lt;br>
 Починається yml з оголошення мови програмування &lt;code>language: csharp&lt;/code>. &lt;code>mono&lt;/code> стоїть none тому що використовується .net core. І останнє це версія .net core. В моєму випадку це &lt;code>dotnet: 3.1.4&lt;/code>. Також потрібно вказати назву солюшину &lt;code>solution: awstaghelper.sln&lt;/code>.&lt;/p>
 &lt;h2 id="build-конфігурація">Build Конфігурація&lt;/h2>

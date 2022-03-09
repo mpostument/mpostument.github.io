@@ -39,11 +39,11 @@ GitHub setup В github потрібно створити два репозито
 &lt;p>&lt;img src="https://i.imgur.com/GnsuIEm.png" alt="Repository">&lt;/p>
 &lt;p>В &lt;code>mpostument.github.io&lt;/code> код буде деплоїтись через github actions. Руками зміни сюди вноситись не будуть.&lt;/p>
 &lt;p>За допомогою hugo створю новий сайт. Буде створена нова директорія &lt;code>hugodemo&lt;/code> в ній ініціалізую git репозиторій та добавлю remote на &lt;code>content-mpostument&lt;/code>.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-shell" data-lang="shell">hugo new site hugodemo
-cd hugodemo
-git init
-git remote add origin git@github.com:mpostument/content-mpostument.git
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер потрібно вибрати тему для сайту. Теми можна подивитись на &lt;a href="https://themes.gohugo.io/">themes.gohugo&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>hugo new site hugodemo
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cd hugodemo
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git init
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>git remote add origin git@github.com:mpostument/content-mpostument.git
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер потрібно вибрати тему для сайту. Теми можна подивитись на &lt;a href="https://themes.gohugo.io/">themes.gohugo&lt;/a>&lt;/p>
 &lt;p>Для свого сайту я обрав тему &lt;a href="https://github.com/panr/hugo-theme-terminal/">Terminal&lt;/a>. Тему можна скачати архівом і розпакувати в папку &lt;code>themes&lt;/code> або добавити як submodule. Я добавлю як submodule для того щоб завжди мати останню версію теми.&lt;/p>
 &lt;p>&lt;code>git submodule add https://github.com/panr/hugo-theme-terminal.git themes/terminal&lt;/code>.&lt;/p>
 &lt;p>Зазвичай до кожної теми йде приклад конфігураційного файлу. Я скопіюю його з github сторінки і збережу в файлі &lt;code>config.toml&lt;/code>. Далі можна його підлаштовувати під свої потреби.&lt;/p>
@@ -52,35 +52,40 @@ git remote add origin git@github.com:mpostument/content-mpostument.git
 &lt;h2 id="github-actions">Github Actions&lt;/h2>
 &lt;p>Для того щоб GitHub actions працював, в корені репозиторія потрібно створити папку &lt;code>.github/workflows&lt;/code> в якій створити yml файл з конфігурацією для Actions. В &lt;code>on&lt;/code> секції я вказую запускати білд тільки на push в master бренчу.&lt;/p>
 &lt;p>В &lt;code>steps&lt;/code> я викликаю по черзі декілька actions. Починається pipeline з клонування репозиторія. Після цього я викликаю &lt;code>git submodule update --init --recursive&lt;/code> для того щоб оновити тему за допомогою submodule. Наступним кроком встановлюю потрібну версії hugo та викликаю &lt;code>hugo --minify&lt;/code> для того щоб згененрувати статичний сайт з .md файлів та теми. І останім кроком я деплою контент з &lt;code>./public&lt;/code> директорії. Вона з&amp;rsquo;являється після виконання команди &lt;code>hugo --minify&lt;/code>. Як параметри також потрібно передати ім&amp;rsquo;я git користувача, емейл, бренчу та репозиторій в яку здійснювати деплой.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">CI&lt;/span>
-&lt;span style="color:#f92672">on&lt;/span>:
-&lt;span style="color:#f92672">push&lt;/span>:
-&lt;span style="color:#f92672">branches&lt;/span>:
-- &lt;span style="color:#ae81ff">master&lt;/span>
-&lt;span style="color:#f92672">jobs&lt;/span>:
-&lt;span style="color:#f92672">deploy&lt;/span>:
-&lt;span style="color:#f92672">runs-on&lt;/span>: &lt;span style="color:#ae81ff">ubuntu-18.04&lt;/span>
-&lt;span style="color:#f92672">steps&lt;/span>:
-- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Git checkout&lt;/span>
-&lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">actions/checkout@v2.3.3&lt;/span>
-- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Update theme&lt;/span>
-&lt;span style="color:#f92672">run&lt;/span>: &lt;span style="color:#ae81ff">git submodule update --init --recursive&lt;/span>
-- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Setup hugo&lt;/span>
-&lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">peaceiris/actions-hugo@v2.4.13&lt;/span>
-&lt;span style="color:#f92672">with&lt;/span>:
-&lt;span style="color:#f92672">hugo-version&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;0.76.5&amp;#39;&lt;/span>
-- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Build&lt;/span>
-&lt;span style="color:#f92672">run&lt;/span>: &lt;span style="color:#ae81ff">hugo --minify&lt;/span>
-- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Deploy&lt;/span>
-&lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">peaceiris/actions-gh-pages@v3.7.3&lt;/span>
-&lt;span style="color:#f92672">with&lt;/span>:
-&lt;span style="color:#f92672">personal_token&lt;/span>: &lt;span style="color:#ae81ff">${{ secrets.GH_TOKEN }}&lt;/span>
-&lt;span style="color:#f92672">external_repository&lt;/span>: &lt;span style="color:#ae81ff">mpostument/mpostument.github.io&lt;/span>
-&lt;span style="color:#f92672">publish_dir&lt;/span>: &lt;span style="color:#ae81ff">./public&lt;/span>
-&lt;span style="color:#f92672">user_name&lt;/span>: &lt;span style="color:#ae81ff">mpostument&lt;/span>
-&lt;span style="color:#f92672">user_email&lt;/span>: &lt;span style="color:#ae81ff">777rip777@gmail.com&lt;/span>
-&lt;span style="color:#f92672">publish_branch&lt;/span>: &lt;span style="color:#ae81ff">master&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер це можна закомітити в github репозиторій і при мерджі в мастер білд має запуститись.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">CI&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">on&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">push&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">branches&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">master&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">jobs&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">deploy&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">runs-on&lt;/span>: &lt;span style="color:#ae81ff">ubuntu-18.04&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">steps&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Git checkout&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">actions/checkout@v2.3.3&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Update theme&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">run&lt;/span>: &lt;span style="color:#ae81ff">git submodule update --init --recursive&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Setup hugo&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">peaceiris/actions-hugo@v2.4.13&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">with&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">hugo-version&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;0.76.5&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Build&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">run&lt;/span>: &lt;span style="color:#ae81ff">hugo --minify&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Deploy&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">peaceiris/actions-gh-pages@v3.7.3&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">with&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">personal_token&lt;/span>: &lt;span style="color:#ae81ff">${{ secrets.GH_TOKEN }}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">external_repository&lt;/span>: &lt;span style="color:#ae81ff">mpostument/mpostument.github.io&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">publish_dir&lt;/span>: &lt;span style="color:#ae81ff">./public&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">user_name&lt;/span>: &lt;span style="color:#ae81ff">mpostument&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">user_email&lt;/span>: &lt;span style="color:#ae81ff">777rip777@gmail.com&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">publish_branch&lt;/span>: &lt;span style="color:#ae81ff">master&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер це можна закомітити в github репозиторій і при мерджі в мастер білд має запуститись.&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/1Vfl3A8.png" alt="ActionBuild">&lt;/p>
 &lt;p>Як тільки білд пройшов нові файли мають одразу зявитись в Github Pages репозиторії &lt;code>mpostument.github.io&lt;/code>&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/emHfquj.png" alt="DeployStatus">&lt;/p>

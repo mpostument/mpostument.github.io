@@ -1,14 +1,13 @@
 <!doctype html><html lang=en>
 <head>
-<title>Blazor Forms :: Maksym Postument</title>
-<meta charset=utf-8>
+<title>Blazor Forms :: Maksym Postument</title><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=description content="How to create form in Blazor Server">
 <meta name=keywords content="BlazorServer,Blazor,.Net Core,.Net,Forms">
 <meta name=robots content="noodp">
 <link rel=canonical href=/2020/10/16/blazor-server-forms/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SBRJXS94DC"></script>
-<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-SBRJXS94DC',{anonymize_ip:!1})}</script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-SBRJXS94DC",{anonymize_ip:!1})}</script>
 <link rel=stylesheet href=/assets/style.css>
 <link rel=stylesheet href=/assets/blue.css>
 <link rel=apple-touch-icon href=/img/apple-touch-icon-192x192.png>
@@ -28,9 +27,7 @@
 <meta property="article:section" content="C#">
 <meta property="article:section" content="Blazor">
 <meta property="article:published_time" content="2020-10-16 16:09:30 +0300 +0300">
-<p align=center style=background-color:#23b0ff> Sign up for my <a href=https://tinyletter.com/mpostument>email newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of new blog posts.</p>
-</head>
-<body class=blue>
+<p align=center style=background-color:#23b0ff> Sign up for my <a href=https://tinyletter.com/mpostument>email newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of new blog posts.</p></head><body class=blue>
 <div class="container center headings--one-size">
 <header class=header>
 <div class=header__inner>
@@ -38,185 +35,140 @@
 <a href=/>
 <div class=logo>
 mpostument.com
-</div>
-</a>
-</div>
-<div class=menu-trigger>menu</div>
-</div>
-<nav class=menu>
+</div></a>
+</div><div class=menu-trigger>menu</div></div><nav class=menu>
 <ul class="menu__inner menu__inner--desktop">
-<li><a href=/>Home</a></li>
-<li><a href=/categories/>Categories</a></li>
-<li><a href=/tags/>Tags</a></li>
-<li><a href=/projects/>Projects</a></li>
-<div class=spacer></div>
-<ul class=language-selector>
+<li><a href=/>Home</a></li><li><a href=/categories/>Categories</a></li><li><a href=/tags/>Tags</a></li><li><a href=/projects/>Projects</a></li><div class=spacer></div><ul class=language-selector>
 <ul class=language-selector-current>
-<li>English ▾</li>
-</ul>
-<ul class="language-selector__more hidden">
-<li><a href=/>English</a></li>
-<li><a href=/ua/>Ukraine</a></li>
-</ul>
-</ul>
-</ul>
-<ul class="menu__inner menu__inner--mobile">
-<li><a href=/>Home</a></li>
-<li><a href=/categories/>Categories</a></li>
-<li><a href=/tags/>Tags</a></li>
-<li><a href=/projects/>Projects</a></li>
-<hr>
+<li>English ▾</li></ul><ul class="language-selector__more hidden">
+<li><a href=/>English</a></li><li><a href=/ua/>Ukraine</a></li></ul></ul></ul><ul class="menu__inner menu__inner--mobile">
+<li><a href=/>Home</a></li><li><a href=/categories/>Categories</a></li><li><a href=/tags/>Tags</a></li><li><a href=/projects/>Projects</a></li><hr>
 <li>
 <a href=/>English</a>
-</li>
-<li>
+</li><li>
 <a href=/ua/>Ukraine</a>
-</li>
-</ul>
-</nav>
-</header>
-<div class=content>
+</li></ul></nav></header><div class=content>
 <div class=post>
 <h1 class=post-title>
-<a href=/2020/10/16/blazor-server-forms/>Blazor Forms</a></h1>
-<div class=post-meta>
+<a href=/2020/10/16/blazor-server-forms/>Blazor Forms</a></h1><div class=post-meta>
 <span class=post-date>
 2020-10-16
 </span>
 <span class=post-author>:: Maksym Postument</span>
 <span class=post-reading-time>:: 4 min read (653 words)</span>
-</div>
-<span class=post-tags>
+</div><span class=post-tags>
 #<a href=/tags/blazorserver/>BlazorServer</a>&nbsp;
 #<a href=/tags/.net-core/>.Net Core</a>&nbsp;
 </span>
 <img src=https://i.imgur.com/5ynOWM5.png class=post-cover alt="Blazor Forms" title="Cover Image">
 <div class=post-content><div>
-<p>Hello!</p>
-<p>Let&rsquo;s see how you can create a form in BlazorServer.<br>
-Start with the model. I will create a file <code>Models/User.cs</code>, which will contain fields for the form.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=color:#66d9ef>namespace</span> BlazorLearn.Models
-{
-    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>User</span>
-    {
-        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> UserName { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
-        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> LastName { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
-        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> Email { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
-        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> Age { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
-        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> Gender { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
-    }
-}
-</code></pre></div><p>For the model to be available in razor components, it must be added to <code>_Imports.razor</code> as <code>@using BlazorLearn.Models</code>.</p>
-<h2 id=basic-form>Basic Form<a href=#basic-form class=hanchor arialabel=Anchor>&#8983;</a> </h2>
-<p>Now I will create the razor component <code>Register.razor</code> which will contain the form. To be able to open the form in the browser, I will add <code>@page "/register"</code> at the top of the component. In the code section you need to create a new object of class <code>User</code>, as well as an empty string in which the data will be written after the submission of the form. And I will add <code>&lt;p>@_formResult&lt;/p></code> to display the data entered after the submission.</p>
-<p>Now let&rsquo;s move on to the form itself.</p>
-<p>In blazor, the form is created using the <code>EditForm</code> tag to which you want to pass the model. We have an object of type <code>User</code> which is created in the section <code>code</code> - <code>&lt;EditForm Model = "_user">&lt;/EditForm></code>. Now you need to add input fields to the form. For text tag will be <code>&lt;InputText>&lt;/InputText></code> for other data types have their own tags, for example <code>InputNumber</code> for numeric types. I will add an input field for each element of the model. You can also call a method on events like <code>OnValidSubmit</code> or <code>OnInvalidSubmit</code>. For this purpose I will make a method <code>HandleValidSubmit</code> which will write UserName and LastName from the form to empty string which was created in code section.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp>@page <span style=color:#e6db74>&#34;/register&#34;</span>
-
-&lt;p&gt;@_formResult&lt;/p&gt;
-
-&lt;EditForm Model=<span style=color:#e6db74>&#34;_user&#34;</span> OnValidSubmit=<span style=color:#e6db74>&#34;HandleValidSubmit&#34;</span> On&gt;
-    &lt;InputText id=<span style=color:#e6db74>&#34;UserName&#34;</span> @bind-Value=<span style=color:#e6db74>&#34;_user.UserName&#34;</span>&gt;&lt;/InputText&gt;
-    &lt;InputText id=<span style=color:#e6db74>&#34;LastName&#34;</span> @bind-Value=<span style=color:#e6db74>&#34;_user.LastName&#34;</span>&gt;&lt;/InputText&gt;
-    &lt;InputText id=<span style=color:#e6db74>&#34;Email&#34;</span> @bind-Value=<span style=color:#e6db74>&#34;_user.Email&#34;</span>&gt;&lt;/InputText&gt;
-    &lt;InputSelect id=<span style=color:#e6db74>&#34;Gender&#34;</span> @bind-Value=<span style=color:#e6db74>&#34;_user.Gender&#34;</span>&gt;
-        &lt;option <span style=color:#66d9ef>value</span>=<span style=color:#e6db74>&#34;&#34;</span>&gt;Select Gender&lt;/option&gt;
-        &lt;option <span style=color:#66d9ef>value</span>=<span style=color:#e6db74>&#34;1&#34;</span>&gt;Male&lt;/option&gt;
-        &lt;option <span style=color:#66d9ef>value</span>=<span style=color:#e6db74>&#34;2&#34;</span>&gt;Female&lt;/option&gt;
-    &lt;/InputSelect&gt;
-    &lt;InputNumber id=<span style=color:#e6db74>&#34;Age&#34;</span> @bind-Value=<span style=color:#e6db74>&#34;_user.Age&#34;</span>&gt;&lt;/InputNumber&gt;
-    &lt;button class=<span style=color:#e6db74>&#34;btn btn-primary&#34;</span> type=<span style=color:#e6db74>&#34;submit&#34;</span>&gt;Submit&lt;/button&gt;
-&lt;/EditForm&gt;
-
-@code {
-    <span style=color:#66d9ef>private</span> User <span style=color:#ae81ff>_</span>user = <span style=color:#66d9ef>new</span> User();
-    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>string</span> <span style=color:#ae81ff>_f</span>ormResult = <span style=color:#e6db74>&#34;&#34;</span>;
-
-    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> HandleValidSubmit()
-    {
-        <span style=color:#ae81ff>_f</span>ormResult = <span style=color:#e6db74>$&#34;{_user.UserName}, {_user.LastName} was created&#34;</span>;
-    }
-}
-</code></pre></div><p><img src=https://i.imgur.com/Iv4lXzE.gif alt=FormNoValidation></p>
-<p>The form works, but in the Age field I entered -30 and no validation took place. Let&rsquo;s now add validation</p>
-<h2 id=form-validation>Form Validation<a href=#form-validation class=hanchor arialabel=Anchor>&#8983;</a> </h2>
-<p>Validation is added using attributes. Let&rsquo;s go back to the model and make some changes.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=color:#66d9ef>using</span> System.ComponentModel.DataAnnotations;
-
-<span style=color:#66d9ef>namespace</span> BlazorLearn.Models
-{
-    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>User</span>
-    {
-<span style=color:#a6e22e>        [Required]</span>
-<span style=color:#a6e22e>        [StringLength(maximumLength: 20, MinimumLength = 5, ErrorMessage = &#34;Invalid UserName length&#34;)]</span>
-        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> UserName { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
-<span style=color:#a6e22e>        [Required]</span>
-<span style=color:#a6e22e>        [StringLength(maximumLength: 10, MinimumLength = 5, ErrorMessage = &#34;Invalid LastName length&#34;)]</span>
-        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> LastName { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
-<span style=color:#a6e22e>        [Required]</span>
-<span style=color:#a6e22e>        [EmailAddress(ErrorMessage = &#34;Provide a valid email address&#34;)]</span>
-        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> Email { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
-<span style=color:#a6e22e>        [Required]</span>
-<span style=color:#a6e22e>        [Range(1, 100, ErrorMessage = &#34;You need to enter valid range&#34;)]</span>
-        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> Age { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
-        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> Gender { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
-    }
-}
-</code></pre></div><p>Length validation is now enabled for <code>UserName</code> and <code>LestName</code> and these fields are also required. Email validation has been added for <code>Email</code>. And for <code>Age</code> added validation for number between 1 and 100. These fields are also required. No validation has been added for the <code>Gender</code> field.</p>
-<p>In order for validation to work place, you need to add a <code>&lt;DataAnnotationsValidator>&lt;/DataAnnotationsValidator></code> tag to the form.</p>
-<p><img src=https://i.imgur.com/fRcczCo.gif alt=FormNoMessage></p>
-<p>Now the validation works but no messages are displayed when validation failed. I will add another tag <code>&lt;ValidationSummary>&lt;/ValidationSummary></code> to form. As a result, the form will look like this</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp>@page <span style=color:#e6db74>&#34;/register&#34;</span>
-
-&lt;p&gt;@_formResult&lt;/p&gt;
-
-&lt;EditForm Model=<span style=color:#e6db74>&#34;_user&#34;</span> OnValidSubmit=<span style=color:#e6db74>&#34;HandleValidSubmit&#34;</span>&gt;
-    &lt;DataAnnotationsValidator&gt;&lt;/DataAnnotationsValidator&gt;
-    &lt;ValidationSummary&gt;&lt;/ValidationSummary&gt;
-    &lt;label&gt;
-        First Name:
-        &lt;InputText id=<span style=color:#e6db74>&#34;UserName&#34;</span> @bind-Value=<span style=color:#e6db74>&#34;_user.UserName&#34;</span>&gt;&lt;/InputText&gt;
-    &lt;/label&gt;
-    &lt;label&gt;
-        Last Name:
-        &lt;InputText id=<span style=color:#e6db74>&#34;LastName&#34;</span> @bind-Value=<span style=color:#e6db74>&#34;_user.LastName&#34;</span>&gt;&lt;/InputText&gt;
-    &lt;/label&gt;
-    &lt;label&gt;
-        Email:
-        &lt;InputText id=<span style=color:#e6db74>&#34;Email&#34;</span> @bind-Value=<span style=color:#e6db74>&#34;_user.Email&#34;</span>&gt;&lt;/InputText&gt;
-    &lt;/label&gt;
-    &lt;label&gt;
-        Gender:
-        &lt;InputSelect id=<span style=color:#e6db74>&#34;Gender&#34;</span> @bind-Value=<span style=color:#e6db74>&#34;_user.Gender&#34;</span>&gt;
-            &lt;option <span style=color:#66d9ef>value</span>=<span style=color:#e6db74>&#34;&#34;</span>&gt;Select Gender&lt;/option&gt;
-            &lt;option <span style=color:#66d9ef>value</span>=<span style=color:#e6db74>&#34;1&#34;</span>&gt;Male&lt;/option&gt;
-            &lt;option <span style=color:#66d9ef>value</span>=<span style=color:#e6db74>&#34;2&#34;</span>&gt;Female&lt;/option&gt;
-        &lt;/InputSelect&gt;
-    &lt;/label&gt;
-    &lt;label&gt;
-        Age:
-        &lt;InputNumber id=<span style=color:#e6db74>&#34;Age&#34;</span> @bind-Value=<span style=color:#e6db74>&#34;_user.Age&#34;</span>&gt;&lt;/InputNumber&gt;
-    &lt;/label&gt;
-    &lt;button class=<span style=color:#e6db74>&#34;btn btn-primary&#34;</span> type=<span style=color:#e6db74>&#34;submit&#34;</span>&gt;Submit&lt;/button&gt;
-&lt;/EditForm&gt;
-
-@code {
-    <span style=color:#66d9ef>private</span> User <span style=color:#ae81ff>_</span>user = <span style=color:#66d9ef>new</span> User();
-    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>string</span> <span style=color:#ae81ff>_f</span>ormResult = <span style=color:#e6db74>&#34;&#34;</span>;
-
-    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> HandleValidSubmit()
-    {
-        <span style=color:#ae81ff>_f</span>ormResult = <span style=color:#e6db74>$&#34;{_user.UserName}, {_user.LastName} was created&#34;</span>;
-    }
-}
-</code></pre></div><p><img src=https://i.imgur.com/qgtdGQP.gif alt=FinalResult></p>
-</div></div>
-<div class=pagination>
+<p>Hello!</p><p>Let&rsquo;s see how you can create a form in BlazorServer.<br>
+Start with the model. I will create a file <code>Models/User.cs</code>, which will contain fields for the form.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#66d9ef>namespace</span> BlazorLearn.Models
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>User</span>
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> UserName { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> LastName { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> Email { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> Age { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> Gender { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>For the model to be available in razor components, it must be added to <code>_Imports.razor</code> as <code>@using BlazorLearn.Models</code>.</p><h2 id=basic-form>Basic Form<a href=#basic-form class=hanchor arialabel=Anchor>&#8983;</a> </h2><p>Now I will create the razor component <code>Register.razor</code> which will contain the form. To be able to open the form in the browser, I will add <code>@page "/register"</code> at the top of the component. In the code section you need to create a new object of class <code>User</code>, as well as an empty string in which the data will be written after the submission of the form. And I will add <code>&lt;p>@_formResult&lt;/p></code> to display the data entered after the submission.</p><p>Now let&rsquo;s move on to the form itself.</p><p>In blazor, the form is created using the <code>EditForm</code> tag to which you want to pass the model. We have an object of type <code>User</code> which is created in the section <code>code</code> - <code>&lt;EditForm Model = "_user">&lt;/EditForm></code>. Now you need to add input fields to the form. For text tag will be <code>&lt;InputText>&lt;/InputText></code> for other data types have their own tags, for example <code>InputNumber</code> for numeric types. I will add an input field for each element of the model. You can also call a method on events like <code>OnValidSubmit</code> or <code>OnInvalidSubmit</code>. For this purpose I will make a method <code>HandleValidSubmit</code> which will write UserName and LastName from the form to empty string which was created in code section.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>@page <span style=color:#e6db74>&#34;/register&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;p&gt;@_formResult&lt;/p&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;EditForm Model=<span style=color:#e6db74>&#34;_user&#34;</span> OnValidSubmit=<span style=color:#e6db74>&#34;HandleValidSubmit&#34;</span> On&gt;
+</span></span><span style=display:flex><span>    &lt;InputText id=<span style=color:#e6db74>&#34;UserName&#34;</span> @bind-Value=<span style=color:#e6db74>&#34;_user.UserName&#34;</span>&gt;&lt;/InputText&gt;
+</span></span><span style=display:flex><span>    &lt;InputText id=<span style=color:#e6db74>&#34;LastName&#34;</span> @bind-Value=<span style=color:#e6db74>&#34;_user.LastName&#34;</span>&gt;&lt;/InputText&gt;
+</span></span><span style=display:flex><span>    &lt;InputText id=<span style=color:#e6db74>&#34;Email&#34;</span> @bind-Value=<span style=color:#e6db74>&#34;_user.Email&#34;</span>&gt;&lt;/InputText&gt;
+</span></span><span style=display:flex><span>    &lt;InputSelect id=<span style=color:#e6db74>&#34;Gender&#34;</span> @bind-Value=<span style=color:#e6db74>&#34;_user.Gender&#34;</span>&gt;
+</span></span><span style=display:flex><span>        &lt;option <span style=color:#66d9ef>value</span>=<span style=color:#e6db74>&#34;&#34;</span>&gt;Select Gender&lt;/option&gt;
+</span></span><span style=display:flex><span>        &lt;option <span style=color:#66d9ef>value</span>=<span style=color:#e6db74>&#34;1&#34;</span>&gt;Male&lt;/option&gt;
+</span></span><span style=display:flex><span>        &lt;option <span style=color:#66d9ef>value</span>=<span style=color:#e6db74>&#34;2&#34;</span>&gt;Female&lt;/option&gt;
+</span></span><span style=display:flex><span>    &lt;/InputSelect&gt;
+</span></span><span style=display:flex><span>    &lt;InputNumber id=<span style=color:#e6db74>&#34;Age&#34;</span> @bind-Value=<span style=color:#e6db74>&#34;_user.Age&#34;</span>&gt;&lt;/InputNumber&gt;
+</span></span><span style=display:flex><span>    &lt;button class=<span style=color:#e6db74>&#34;btn btn-primary&#34;</span> type=<span style=color:#e6db74>&#34;submit&#34;</span>&gt;Submit&lt;/button&gt;
+</span></span><span style=display:flex><span>&lt;/EditForm&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>@code {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> User <span style=color:#ae81ff>_</span>user = <span style=color:#66d9ef>new</span> User();
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>string</span> <span style=color:#ae81ff>_f</span>ormResult = <span style=color:#e6db74>&#34;&#34;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> HandleValidSubmit()
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#ae81ff>_f</span>ormResult = <span style=color:#e6db74>$&#34;{_user.UserName}, {_user.LastName} was created&#34;</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p><img src=https://i.imgur.com/Iv4lXzE.gif alt=FormNoValidation></p><p>The form works, but in the Age field I entered -30 and no validation took place. Let&rsquo;s now add validation</p><h2 id=form-validation>Form Validation<a href=#form-validation class=hanchor arialabel=Anchor>&#8983;</a> </h2><p>Validation is added using attributes. Let&rsquo;s go back to the model and make some changes.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#66d9ef>using</span> System.ComponentModel.DataAnnotations;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>namespace</span> BlazorLearn.Models
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>User</span>
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span><span style=color:#a6e22e>        [Required]</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>        [StringLength(maximumLength: 20, MinimumLength = 5, ErrorMessage = &#34;Invalid UserName length&#34;)]</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> UserName { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span><span style=color:#a6e22e>        [Required]</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>        [StringLength(maximumLength: 10, MinimumLength = 5, ErrorMessage = &#34;Invalid LastName length&#34;)]</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> LastName { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span><span style=color:#a6e22e>        [Required]</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>        [EmailAddress(ErrorMessage = &#34;Provide a valid email address&#34;)]</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> Email { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span><span style=color:#a6e22e>        [Required]</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>        [Range(1, 100, ErrorMessage = &#34;You need to enter valid range&#34;)]</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>int</span> Age { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>string</span> Gender { <span style=color:#66d9ef>get</span>; <span style=color:#66d9ef>set</span>; }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Length validation is now enabled for <code>UserName</code> and <code>LestName</code> and these fields are also required. Email validation has been added for <code>Email</code>. And for <code>Age</code> added validation for number between 1 and 100. These fields are also required. No validation has been added for the <code>Gender</code> field.</p><p>In order for validation to work place, you need to add a <code>&lt;DataAnnotationsValidator>&lt;/DataAnnotationsValidator></code> tag to the form.</p><p><img src=https://i.imgur.com/fRcczCo.gif alt=FormNoMessage></p><p>Now the validation works but no messages are displayed when validation failed. I will add another tag <code>&lt;ValidationSummary>&lt;/ValidationSummary></code> to form. As a result, the form will look like this</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>@page <span style=color:#e6db74>&#34;/register&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;p&gt;@_formResult&lt;/p&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;EditForm Model=<span style=color:#e6db74>&#34;_user&#34;</span> OnValidSubmit=<span style=color:#e6db74>&#34;HandleValidSubmit&#34;</span>&gt;
+</span></span><span style=display:flex><span>    &lt;DataAnnotationsValidator&gt;&lt;/DataAnnotationsValidator&gt;
+</span></span><span style=display:flex><span>    &lt;ValidationSummary&gt;&lt;/ValidationSummary&gt;
+</span></span><span style=display:flex><span>    &lt;label&gt;
+</span></span><span style=display:flex><span>        First Name:
+</span></span><span style=display:flex><span>        &lt;InputText id=<span style=color:#e6db74>&#34;UserName&#34;</span> @bind-Value=<span style=color:#e6db74>&#34;_user.UserName&#34;</span>&gt;&lt;/InputText&gt;
+</span></span><span style=display:flex><span>    &lt;/label&gt;
+</span></span><span style=display:flex><span>    &lt;label&gt;
+</span></span><span style=display:flex><span>        Last Name:
+</span></span><span style=display:flex><span>        &lt;InputText id=<span style=color:#e6db74>&#34;LastName&#34;</span> @bind-Value=<span style=color:#e6db74>&#34;_user.LastName&#34;</span>&gt;&lt;/InputText&gt;
+</span></span><span style=display:flex><span>    &lt;/label&gt;
+</span></span><span style=display:flex><span>    &lt;label&gt;
+</span></span><span style=display:flex><span>        Email:
+</span></span><span style=display:flex><span>        &lt;InputText id=<span style=color:#e6db74>&#34;Email&#34;</span> @bind-Value=<span style=color:#e6db74>&#34;_user.Email&#34;</span>&gt;&lt;/InputText&gt;
+</span></span><span style=display:flex><span>    &lt;/label&gt;
+</span></span><span style=display:flex><span>    &lt;label&gt;
+</span></span><span style=display:flex><span>        Gender:
+</span></span><span style=display:flex><span>        &lt;InputSelect id=<span style=color:#e6db74>&#34;Gender&#34;</span> @bind-Value=<span style=color:#e6db74>&#34;_user.Gender&#34;</span>&gt;
+</span></span><span style=display:flex><span>            &lt;option <span style=color:#66d9ef>value</span>=<span style=color:#e6db74>&#34;&#34;</span>&gt;Select Gender&lt;/option&gt;
+</span></span><span style=display:flex><span>            &lt;option <span style=color:#66d9ef>value</span>=<span style=color:#e6db74>&#34;1&#34;</span>&gt;Male&lt;/option&gt;
+</span></span><span style=display:flex><span>            &lt;option <span style=color:#66d9ef>value</span>=<span style=color:#e6db74>&#34;2&#34;</span>&gt;Female&lt;/option&gt;
+</span></span><span style=display:flex><span>        &lt;/InputSelect&gt;
+</span></span><span style=display:flex><span>    &lt;/label&gt;
+</span></span><span style=display:flex><span>    &lt;label&gt;
+</span></span><span style=display:flex><span>        Age:
+</span></span><span style=display:flex><span>        &lt;InputNumber id=<span style=color:#e6db74>&#34;Age&#34;</span> @bind-Value=<span style=color:#e6db74>&#34;_user.Age&#34;</span>&gt;&lt;/InputNumber&gt;
+</span></span><span style=display:flex><span>    &lt;/label&gt;
+</span></span><span style=display:flex><span>    &lt;button class=<span style=color:#e6db74>&#34;btn btn-primary&#34;</span> type=<span style=color:#e6db74>&#34;submit&#34;</span>&gt;Submit&lt;/button&gt;
+</span></span><span style=display:flex><span>&lt;/EditForm&gt;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>@code {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> User <span style=color:#ae81ff>_</span>user = <span style=color:#66d9ef>new</span> User();
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>string</span> <span style=color:#ae81ff>_f</span>ormResult = <span style=color:#e6db74>&#34;&#34;</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> HandleValidSubmit()
+</span></span><span style=display:flex><span>    {
+</span></span><span style=display:flex><span>        <span style=color:#ae81ff>_f</span>ormResult = <span style=color:#e6db74>$&#34;{_user.UserName}, {_user.LastName} was created&#34;</span>;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p><img src=https://i.imgur.com/qgtdGQP.gif alt=FinalResult></p></div></div><div class=pagination>
 <div class=pagination__title>
 <span class=pagination__title-h>Read other posts</span>
 <hr>
-</div>
-<div class=pagination__buttons>
+</div><div class=pagination__buttons>
 <span class="button previous">
 <a href=/2020/10/17/blazor-server-authorization/>
 <span class=button__icon>←</span>
@@ -229,25 +181,14 @@ Start with the model. I will create a file <code>Models/User.cs</code>, which wi
 <span class=button__icon>→</span>
 </a>
 </span>
-</div>
-</div>
-<div id=disqus_thread></div>
-<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//mpostument-com.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
-<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
-<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
-</div>
-</div>
-<footer class=footer>
+</div></div><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//mpostument-com.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script>
+<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
+</div></div><footer class=footer>
 <div class=footer__inner>
 <div class=copyright>
 <span>© 2022 Powered by <a href=http://gohugo.io>Hugo</a></span>
 <span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span>
-</div>
-</div>
-</footer>
-<script src=/assets/main.js></script>
+</div></div></footer><script src=/assets/main.js></script>
 <script src=/assets/prism.js></script>
 <script src=/assets/languageSelector.js></script>
-</div>
-</body>
-</html>
+</div></body></html>

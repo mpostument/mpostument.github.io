@@ -1,14 +1,13 @@
 <!doctype html><html lang=ua>
 <head>
-<title>Get Lambdas in Vpc With Go :: Maksym Postument</title>
-<meta charset=utf-8>
+<title>Get Lambdas in Vpc With Go :: Maksym Postument</title><meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=description content="Отримай всі AWS Lambda в VPC за допомогою Golang">
 <meta name=keywords content="Golang,AWS,Devops">
 <meta name=robots content="noodp">
 <link rel=canonical href=/ua/2020/09/01/get-lambdas-in-vpc-with-go/>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SBRJXS94DC"></script>
-<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-SBRJXS94DC',{anonymize_ip:!1})}</script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-SBRJXS94DC",{anonymize_ip:!1})}</script>
 <link rel=stylesheet href=/assets/style.css>
 <link rel=stylesheet href=/assets/blue.css>
 <link rel=apple-touch-icon href=/img/apple-touch-icon-192x192.png>
@@ -28,9 +27,7 @@
 <meta property="article:section" content="Devops">
 <meta property="article:section" content="Golang">
 <meta property="article:published_time" content="2020-09-01 17:40:16 +0300 +0300">
-<p align=center style=background-color:#23b0ff> Sign up for my <a href=https://tinyletter.com/mpostument>email newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of new blog posts.</p>
-</head>
-<body class=blue>
+<p align=center style=background-color:#23b0ff> Sign up for my <a href=https://tinyletter.com/mpostument>email newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of new blog posts.</p></head><body class=blue>
 <div class="container center headings--one-size">
 <header class=header>
 <div class=header__inner>
@@ -38,128 +35,84 @@
 <a href=/ua>
 <div class=logo>
 mpostument.com
-</div>
-</a>
-</div>
-<div class=menu-trigger>menu</div>
-</div>
-<nav class=menu>
+</div></a>
+</div><div class=menu-trigger>menu</div></div><nav class=menu>
 <ul class="menu__inner menu__inner--desktop">
-<li><a href=/ua>Home</a></li>
-<li><a href=/ua/categories/>Categories</a></li>
-<li><a href=/ua/tags/>Tags</a></li>
-<div class=spacer></div>
-<ul class=language-selector>
+<li><a href=/ua>Home</a></li><li><a href=/ua/categories/>Categories</a></li><li><a href=/ua/tags/>Tags</a></li><div class=spacer></div><ul class=language-selector>
 <ul class=language-selector-current>
-<li>Ukraine ▾</li>
-</ul>
-<ul class="language-selector__more hidden">
-<li><a href=/>English</a></li>
-<li><a href=/ua/>Ukraine</a></li>
-</ul>
-</ul>
-</ul>
-<ul class="menu__inner menu__inner--mobile">
-<li><a href=/ua>Home</a></li>
-<li><a href=/ua/categories/>Categories</a></li>
-<li><a href=/ua/tags/>Tags</a></li>
-<hr>
+<li>Ukraine ▾</li></ul><ul class="language-selector__more hidden">
+<li><a href=/>English</a></li><li><a href=/ua/>Ukraine</a></li></ul></ul></ul><ul class="menu__inner menu__inner--mobile">
+<li><a href=/ua>Home</a></li><li><a href=/ua/categories/>Categories</a></li><li><a href=/ua/tags/>Tags</a></li><hr>
 <li>
 <a href=/>English</a>
-</li>
-<li>
+</li><li>
 <a href=/ua/>Ukraine</a>
-</li>
-</ul>
-</nav>
-</header>
-<div class=content>
+</li></ul></nav></header><div class=content>
 <div class=post>
 <h1 class=post-title>
-<a href=/ua/2020/09/01/get-lambdas-in-vpc-with-go/>Get Lambdas in Vpc With Go</a></h1>
-<div class=post-meta>
+<a href=/ua/2020/09/01/get-lambdas-in-vpc-with-go/>Get Lambdas in Vpc With Go</a></h1><div class=post-meta>
 <span class=post-date>
 2020-09-01
 </span>
 <span class=post-author>:: Maksym Postument</span>
 <span class=post-reading-time>:: 3 min read (619 words)</span>
-</div>
-<span class=post-tags>
+</div><span class=post-tags>
 #<a href=/ua/tags/aws/>AWS</a>&nbsp;
 #<a href=/ua/tags/go/>Go</a>&nbsp;
 #<a href=/ua/tags/devops/>Devops</a>&nbsp;
 </span>
 <img src=https://i.imgur.com/buHP8rF.png class=post-cover alt="Get Lambdas in Vpc With Go" title="Cover Image">
 <div class=post-content><div>
-<p>Привіт!</p>
-<p>Сьогодні я хочу розказати як за допомогою go можна отримати список всіх AWS Lambda які знаходяться в VPC.
-Для початку потрібно встановити golang. Останю версію можна завантажити з офіційного <a href=https://golang.org/dl/>сайту</a>.</p>
-<p>Після того як golang встановлено створіть папку для скриптів
-<code>mkdir awsscripts</code></p>
-<p>Далі потрібно ініціалізувати go.mod файл. Цей файл в якому зберігаються всі залежності на стороні пакети, і одночасно зробить go код модулем. І в майбутньому його можна буде встановлювати за допомогою <code>go get</code>. Для створення модуля потрібно викликати команду <code>go mod init github.com/mpostument/awsscripts</code>. Де github&mldr; це імя модуля. Якщо ви використовую іншу систему контролю версій це може бути вона, далі ім&rsquo;я користувача та назва модуля.</p>
-<p>Після того як модуль створено нам буде потрібен aws-sdk для роботи з aws. Встановити його можна командою <code>go get github.com/aws/aws-sdk-go@latest</code> знаходячь в директорії з go.mod. Після цього в go mod добавится версія aws-sdk <code>require github.com/aws/aws-sdk-go v1.34.14</code>. Надалі щоб оновити версію aws-sdk можна вручну поміняти версію в цьому файлі та запустити <code>go mod tidy</code>.</p>
-<p>З налаштуванням завершено і можна перейти до коду.<br>
-Створіть в корені папки <code>awsscripts</code> або ж в будь якій інші папці в середині <code>awsscripts</code> файл <code>lambdaInVpc.go</code> і відкрийте його.</p>
-<p>Кожен go файл починається з <code>package</code>. Оскільки нам потрібно запускати go файл на пряму а не імпортувати то <code>package</code> має бути <code>main</code>.</p>
-<p>Також потрібно добавити список стороніх модулів які ми будемо використовувати</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#f92672>import</span> (
-	<span style=color:#e6db74>&#34;fmt&#34;</span>
-	<span style=color:#e6db74>&#34;log&#34;</span>
-
-	<span style=color:#e6db74>&#34;github.com/aws/aws-sdk-go/aws/session&#34;</span>
-	<span style=color:#e6db74>&#34;github.com/aws/aws-sdk-go/service/lambda&#34;</span>
-)
-</code></pre></div><p>Після списку імпортів іде метод <code>main</code>, який є вхідною точкою в код. В <code>main</code> ми створимо aws client.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
-    <span style=color:#a6e22e>mySession</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>session</span>.<span style=color:#a6e22e>Must</span>(<span style=color:#a6e22e>session</span>.<span style=color:#a6e22e>NewSession</span>())
-    <span style=color:#a6e22e>client</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>lambda</span>.<span style=color:#a6e22e>New</span>(<span style=color:#a6e22e>mySession</span>)
-    <span style=color:#a6e22e>lambdas</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>getLambdaFunctions</span>(<span style=color:#a6e22e>client</span>)
-}
-</code></pre></div><p>Тут створюється aws сесія і lambda client, і викликається функці я <code>getLambdaFunctions</code> в яку передається щойно створений client. Тепер приступимо до написання <code>getLambdaFunctions</code>.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>getLambdaFunctions</span>(<span style=color:#a6e22e>client</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>lambda</span>.<span style=color:#a6e22e>Lambda</span>) []<span style=color:#f92672>*</span><span style=color:#a6e22e>lambda</span>.<span style=color:#a6e22e>FunctionConfiguration</span> {
-	<span style=color:#a6e22e>input</span> <span style=color:#f92672>:=</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>lambda</span>.<span style=color:#a6e22e>ListFunctionsInput</span>{}
-
-	<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>result</span> []<span style=color:#f92672>*</span><span style=color:#a6e22e>lambda</span>.<span style=color:#a6e22e>FunctionConfiguration</span>
-
-	<span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>client</span>.<span style=color:#a6e22e>ListFunctionsPages</span>(<span style=color:#a6e22e>input</span>,
-		<span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>page</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>lambda</span>.<span style=color:#a6e22e>ListFunctionsOutput</span>, <span style=color:#a6e22e>lastPage</span> <span style=color:#66d9ef>bool</span>) <span style=color:#66d9ef>bool</span> {
-			<span style=color:#a6e22e>result</span> = append(<span style=color:#a6e22e>result</span>, <span style=color:#a6e22e>page</span>.<span style=color:#a6e22e>Functions</span><span style=color:#f92672>...</span>)
-			<span style=color:#66d9ef>return</span> !<span style=color:#a6e22e>lastPage</span>
-		})
-	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
-		<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatal</span>(<span style=color:#e6db74>&#34;Not able to get lambdas&#34;</span>, <span style=color:#a6e22e>err</span>)
-		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>
-	}
-	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>result</span>
-}
-</code></pre></div><p>Тепер розберемо що тут відбувається. Для того щоб отримати список лямбд потрібно викликати функцію <code>ListFunctions</code>. Але оскільки ця метод повертає тільки 50 перших лямбд вона нам на підходить. Тому що якщо ї 51 і більше лямбд на aws акунті од всерівно поверне тільки перші 50. Але в aws є метод з пагінацією <code>ListFunctionsPages</code>, і її можна тут використати. Метод приймає два параметра перший параметри пошуку <code>ListFunctionsInput</code> в якій можна задати регіон, версію та ще декілька параметрів. І друга це метод пагінації.</p>
-<p>На початку ми створюємо дві зміні це <code>input</code> типу <code>ListFunctionsInput</code> і <code>result</code> типу <code>[]*lambda.FunctionConfiguration</code>. <code>Input</code> буде передаватись в функцію <code>ListFunctionsPages</code> а <code>result</code> буде використуватись для зберігання результату виконання.</p>
-<p>Далі йде сам виклик <code>ListFunctionsPages</code>. Ця метод вертає тільки помилку результат цієї метод присвоюється змінній err і далі йде первірка чи ця зміна не рівна <code>nil</code>. Якщо ж метод вернула <code>nil</code> то відбувається завершення програми і відображення помилки.</p>
-<p>В самій функції <code>ListFunctionsPages</code> відбувається виклик ще однієї функції яка добавляє результат виконання в зріз <code>result</code>. Виклик внутрішньою функції здіюснюється декілька раз доки ми не дійдемо останьої сторінки. І в кінці вертаємо зріз <code>result</code>.</p>
-<p>Тепер коли отримали список всіх лямбд потрібно з них відфільтрувати ті які в VPC. Для цього повернемось знову в метод main і добавити там ітерації по всіх лямбдах з умовою.</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>l</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>lambdas</span> {
-		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>l</span>.<span style=color:#a6e22e>VpcConfig</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> <span style=color:#f92672>&amp;&amp;</span> len(<span style=color:#a6e22e>l</span>.<span style=color:#a6e22e>VpcConfig</span>.<span style=color:#a6e22e>SubnetIds</span>) &gt; <span style=color:#ae81ff>0</span> {
-			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#f92672>*</span><span style=color:#a6e22e>l</span>.<span style=color:#a6e22e>FunctionName</span>)
-		}
-    }
-</code></pre></div><p>Тут ми ітеруємось по результату виконання <code>getLambdaFunctions</code> і перевірємо чи <code>VpcConfig</code> функції не рівний <code>nil</code> і чи список subnet більше за нуль. Дві перевірки потрібні тому що для деяких лямбд <code>VpcConfig</code> буде nil, а для інших буде map в якому будуть пусті списки. Наприклад</p>
-<pre tabindex=0><code>&lt;nil&gt;
+<p>Привіт!</p><p>Сьогодні я хочу розказати як за допомогою go можна отримати список всіх AWS Lambda які знаходяться в VPC.
+Для початку потрібно встановити golang. Останю версію можна завантажити з офіційного <a href=https://golang.org/dl/>сайту</a>.</p><p>Після того як golang встановлено створіть папку для скриптів
+<code>mkdir awsscripts</code></p><p>Далі потрібно ініціалізувати go.mod файл. Цей файл в якому зберігаються всі залежності на стороні пакети, і одночасно зробить go код модулем. І в майбутньому його можна буде встановлювати за допомогою <code>go get</code>. Для створення модуля потрібно викликати команду <code>go mod init github.com/mpostument/awsscripts</code>. Де github&mldr; це імя модуля. Якщо ви використовую іншу систему контролю версій це може бути вона, далі ім&rsquo;я користувача та назва модуля.</p><p>Після того як модуль створено нам буде потрібен aws-sdk для роботи з aws. Встановити його можна командою <code>go get github.com/aws/aws-sdk-go@latest</code> знаходячь в директорії з go.mod. Після цього в go mod добавится версія aws-sdk <code>require github.com/aws/aws-sdk-go v1.34.14</code>. Надалі щоб оновити версію aws-sdk можна вручну поміняти версію в цьому файлі та запустити <code>go mod tidy</code>.</p><p>З налаштуванням завершено і можна перейти до коду.<br>
+Створіть в корені папки <code>awsscripts</code> або ж в будь якій інші папці в середині <code>awsscripts</code> файл <code>lambdaInVpc.go</code> і відкрийте його.</p><p>Кожен go файл починається з <code>package</code>. Оскільки нам потрібно запускати go файл на пряму а не імпортувати то <code>package</code> має бути <code>main</code>.</p><p>Також потрібно добавити список стороніх модулів які ми будемо використовувати</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;log&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;github.com/aws/aws-sdk-go/aws/session&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;github.com/aws/aws-sdk-go/service/lambda&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span></code></pre></div><p>Після списку імпортів іде метод <code>main</code>, який є вхідною точкою в код. В <code>main</code> ми створимо aws client.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>mySession</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>session</span>.<span style=color:#a6e22e>Must</span>(<span style=color:#a6e22e>session</span>.<span style=color:#a6e22e>NewSession</span>())
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>client</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>lambda</span>.<span style=color:#a6e22e>New</span>(<span style=color:#a6e22e>mySession</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>lambdas</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>getLambdaFunctions</span>(<span style=color:#a6e22e>client</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Тут створюється aws сесія і lambda client, і викликається функці я <code>getLambdaFunctions</code> в яку передається щойно створений client. Тепер приступимо до написання <code>getLambdaFunctions</code>.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>getLambdaFunctions</span>(<span style=color:#a6e22e>client</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>lambda</span>.<span style=color:#a6e22e>Lambda</span>) []<span style=color:#f92672>*</span><span style=color:#a6e22e>lambda</span>.<span style=color:#a6e22e>FunctionConfiguration</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>input</span> <span style=color:#f92672>:=</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>lambda</span>.<span style=color:#a6e22e>ListFunctionsInput</span>{}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>result</span> []<span style=color:#f92672>*</span><span style=color:#a6e22e>lambda</span>.<span style=color:#a6e22e>FunctionConfiguration</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>client</span>.<span style=color:#a6e22e>ListFunctionsPages</span>(<span style=color:#a6e22e>input</span>,
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>page</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>lambda</span>.<span style=color:#a6e22e>ListFunctionsOutput</span>, <span style=color:#a6e22e>lastPage</span> <span style=color:#66d9ef>bool</span>) <span style=color:#66d9ef>bool</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>result</span> = append(<span style=color:#a6e22e>result</span>, <span style=color:#a6e22e>page</span>.<span style=color:#a6e22e>Functions</span><span style=color:#f92672>...</span>)
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>return</span> !<span style=color:#a6e22e>lastPage</span>
+</span></span><span style=display:flex><span>		})
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>log</span>.<span style=color:#a6e22e>Fatal</span>(<span style=color:#e6db74>&#34;Not able to get lambdas&#34;</span>, <span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>result</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Тепер розберемо що тут відбувається. Для того щоб отримати список лямбд потрібно викликати функцію <code>ListFunctions</code>. Але оскільки ця метод повертає тільки 50 перших лямбд вона нам на підходить. Тому що якщо ї 51 і більше лямбд на aws акунті од всерівно поверне тільки перші 50. Але в aws є метод з пагінацією <code>ListFunctionsPages</code>, і її можна тут використати. Метод приймає два параметра перший параметри пошуку <code>ListFunctionsInput</code> в якій можна задати регіон, версію та ще декілька параметрів. І друга це метод пагінації.</p><p>На початку ми створюємо дві зміні це <code>input</code> типу <code>ListFunctionsInput</code> і <code>result</code> типу <code>[]*lambda.FunctionConfiguration</code>. <code>Input</code> буде передаватись в функцію <code>ListFunctionsPages</code> а <code>result</code> буде використуватись для зберігання результату виконання.</p><p>Далі йде сам виклик <code>ListFunctionsPages</code>. Ця метод вертає тільки помилку результат цієї метод присвоюється змінній err і далі йде первірка чи ця зміна не рівна <code>nil</code>. Якщо ж метод вернула <code>nil</code> то відбувається завершення програми і відображення помилки.</p><p>В самій функції <code>ListFunctionsPages</code> відбувається виклик ще однієї функції яка добавляє результат виконання в зріз <code>result</code>. Виклик внутрішньою функції здіюснюється декілька раз доки ми не дійдемо останьої сторінки. І в кінці вертаємо зріз <code>result</code>.</p><p>Тепер коли отримали список всіх лямбд потрібно з них відфільтрувати ті які в VPC. Для цього повернемось знову в метод main і добавити там ітерації по всіх лямбдах з умовою.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>l</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>lambdas</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>l</span>.<span style=color:#a6e22e>VpcConfig</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> <span style=color:#f92672>&amp;&amp;</span> len(<span style=color:#a6e22e>l</span>.<span style=color:#a6e22e>VpcConfig</span>.<span style=color:#a6e22e>SubnetIds</span>) &gt; <span style=color:#ae81ff>0</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#f92672>*</span><span style=color:#a6e22e>l</span>.<span style=color:#a6e22e>FunctionName</span>)
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>    }
+</span></span></code></pre></div><p>Тут ми ітеруємось по результату виконання <code>getLambdaFunctions</code> і перевірємо чи <code>VpcConfig</code> функції не рівний <code>nil</code> і чи список subnet більше за нуль. Дві перевірки потрібні тому що для деяких лямбд <code>VpcConfig</code> буде nil, а для інших буде map в якому будуть пусті списки. Наприклад</p><pre tabindex=0><code>&lt;nil&gt;
 &lt;nil&gt;
 {
   SecurityGroupIds: [],
   SubnetIds: [],
-  VpcId: &quot;&quot;
+  VpcId: &#34;&#34;
 }
 &lt;nil&gt;
 </code></pre><p>Тепер можна запустити код і отримати результат.<br>
-<code>go run lambdaInVpc.go</code></p>
-</div></div>
-<div class=pagination>
+<code>go run lambdaInVpc.go</code></p></div></div><div class=pagination>
 <div class=pagination__title>
 <span class=pagination__title-h>Read other posts</span>
 <hr>
-</div>
-<div class=pagination__buttons>
+</div><div class=pagination__buttons>
 <span class="button previous">
 <a href=/ua/2020/09/16/deploy-to-ec2-with-codeship/>
 <span class=button__icon>←</span>
@@ -172,25 +125,14 @@ mpostument.com
 <span class=button__icon>→</span>
 </a>
 </span>
-</div>
-</div>
-<div id=disqus_thread></div>
-<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//mpostument-com.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
-<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
-<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
-</div>
-</div>
-<footer class=footer>
+</div></div><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//mpostument-com.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script>
+<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
+</div></div><footer class=footer>
 <div class=footer__inner>
 <div class=copyright>
 <span>© 2022 Powered by <a href=http://gohugo.io>Hugo</a></span>
 <span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span>
-</div>
-</div>
-</footer>
-<script src=/assets/main.js></script>
+</div></div></footer><script src=/assets/main.js></script>
 <script src=/assets/prism.js></script>
 <script src=/assets/languageSelector.js></script>
-</div>
-</body>
-</html>
+</div></body></html>

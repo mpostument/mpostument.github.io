@@ -6,26 +6,27 @@ name: nightfalldlp on: push: branches: - master pull_request: jobs: run-nightfal
 &lt;h2 id="github-action">Github Action&lt;/h2>
 &lt;p>Для Github Nightfall дає Action який можна використовувати для сканування Pull Request та Merge в бренчу.
 Для початку потрібно створити в корені репозиторія папку .github\workflows і в цій папці створити файл dlp.yml. Назва файлу можу бути будь якою.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-yml" data-lang="yml">&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfalldlp&lt;/span>
-&lt;span style="color:#f92672">on&lt;/span>:
-&lt;span style="color:#f92672">push&lt;/span>:
-&lt;span style="color:#f92672">branches&lt;/span>:
-- &lt;span style="color:#ae81ff">master&lt;/span>
-&lt;span style="color:#f92672">pull_request&lt;/span>:
-&lt;span style="color:#f92672">jobs&lt;/span>:
-&lt;span style="color:#f92672">run-nightfalldlp&lt;/span>:
-&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfalldlp&lt;/span>
-&lt;span style="color:#f92672">runs-on&lt;/span>: &lt;span style="color:#ae81ff">ubuntu-latest&lt;/span>
-&lt;span style="color:#f92672">steps&lt;/span>:
-- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Checkout Repo Action&lt;/span>
-&lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">actions/checkout@v2&lt;/span>
-- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfallDLP action step&lt;/span>
-&lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">nightfallai/nightfall_dlp_action@v0.0.7&lt;/span>
-&lt;span style="color:#f92672">env&lt;/span>:
-&lt;span style="color:#f92672">NIGHTFALL_API_KEY&lt;/span>: &lt;span style="color:#ae81ff">${{ secrets.NIGHTFALL_API_KEY }}&lt;/span>
-&lt;span style="color:#f92672">GITHUB_TOKEN&lt;/span>: &lt;span style="color:#ae81ff">${{ secrets.GITHUB_TOKEN }}&lt;/span>
-&lt;span style="color:#f92672">EVENT_BEFORE&lt;/span>: &lt;span style="color:#ae81ff">${{ github.event.before }}&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>В секції on вказано що сканування запускати на push в master бренчу та на Pull Request.&lt;br>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfalldlp&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">on&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">push&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">branches&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">master&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">pull_request&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">jobs&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">run-nightfalldlp&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfalldlp&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">runs-on&lt;/span>: &lt;span style="color:#ae81ff">ubuntu-latest&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">steps&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Checkout Repo Action&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">actions/checkout@v2&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">nightfallDLP action step&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">uses&lt;/span>: &lt;span style="color:#ae81ff">nightfallai/nightfall_dlp_action@v0.0.7&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">env&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">NIGHTFALL_API_KEY&lt;/span>: &lt;span style="color:#ae81ff">${{ secrets.NIGHTFALL_API_KEY }}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">GITHUB_TOKEN&lt;/span>: &lt;span style="color:#ae81ff">${{ secrets.GITHUB_TOKEN }}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">EVENT_BEFORE&lt;/span>: &lt;span style="color:#ae81ff">${{ github.event.before }}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>В секції on вказано що сканування запускати на push в master бренчу та на Pull Request.&lt;br>
 Action має два кроки, перший це клонувати репозиторій другий це запустити сканер.&lt;br>
 Для роботи сканера необхідно декілька env зміних. GITHUB_TOKEN використовується для того щоб сканер міг добавляти коментарі в PR значення його має бути &lt;code>secrets.GITHUB_TOKEN&lt;/code>&lt;br>
 &lt;img src="https://i.imgur.com/13N6AjR.png" alt="Comment">&lt;/p>
@@ -36,37 +37,37 @@ NIGHTFALL_API_KEY остання потрібна зміна, отримати �
 &lt;p>Після того я з GitHub Action закінчено потрібно створити конфігураційни файл для Nightfall.&lt;br>
 Для цього створіть папку з назвою &lt;code>.nightfalldlp&lt;/code> і в ньому файл &lt;code>config.json&lt;/code>.&lt;br>
 Список детекторів які підтримує nightfall.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
-&lt;span style="color:#f92672">&amp;#34;detectors&amp;#34;&lt;/span>: [
-&lt;span style="color:#e6db74">&amp;#34;CREDIT_CARD_NUMBER&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;PHONE_NUMBER&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;API_KEY&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;CRYPTOGRAPHIC_KEY&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;RANDOMLY_GENERATED_TOKEN&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;US_SOCIAL_SECURITY_NUMBER&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;AMERICAN_BANKERS_CUSIP_ID&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;US_BANK_ROUTING_MICR&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;ICD9_CODE&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;ICD10_CODE&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;US_DRIVERS_LICENSE_NUMBER&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;US_PASSPORT&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;EMAIL_ADDRESS&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;IP_ADDRESS&amp;#34;&lt;/span>
-]
-}
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>Мій конфігураційни файл виглядає коротшим тому що з повним генерує велику кількість false positive алармів. Наприклад&lt;br>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;detectors&amp;#34;&lt;/span>: [
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;CREDIT_CARD_NUMBER&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;PHONE_NUMBER&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;API_KEY&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;CRYPTOGRAPHIC_KEY&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;RANDOMLY_GENERATED_TOKEN&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;US_SOCIAL_SECURITY_NUMBER&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;AMERICAN_BANKERS_CUSIP_ID&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;US_BANK_ROUTING_MICR&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;ICD9_CODE&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;ICD10_CODE&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;US_DRIVERS_LICENSE_NUMBER&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;US_PASSPORT&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;EMAIL_ADDRESS&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;IP_ADDRESS&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Мій конфігураційни файл виглядає коротшим тому що з повним генерує велику кількість false positive алармів. Наприклад&lt;br>
 &lt;img src="https://i.imgur.com/0EGejo0.png" alt="FalseErrorSample">&lt;/p>
 &lt;p>Приклад мого файлу:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-json" data-lang="json">{
-&lt;span style="color:#f92672">&amp;#34;detectors&amp;#34;&lt;/span>: [
-&lt;span style="color:#e6db74">&amp;#34;API_KEY&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;CRYPTOGRAPHIC_KEY&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;RANDOMLY_GENERATED_TOKEN&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;EMAIL_ADDRESS&amp;#34;&lt;/span>,
-&lt;span style="color:#e6db74">&amp;#34;IP_ADDRESS&amp;#34;&lt;/span>
-]
-}
-&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер це все потрібно закомітити сканер запуститься.&lt;br>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;#34;detectors&amp;#34;&lt;/span>: [
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;API_KEY&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;CRYPTOGRAPHIC_KEY&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;RANDOMLY_GENERATED_TOKEN&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;EMAIL_ADDRESS&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;IP_ADDRESS&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер це все потрібно закомітити сканер запуститься.&lt;br>
 Навіть при такій конфігурації сканер видає багато false positive аларміві результат я отримую щоразу&lt;br>
 &lt;img src="https://i.imgur.com/bJ1WWR2.png" alt="Error">
 Наприклад отримую такий еррор
