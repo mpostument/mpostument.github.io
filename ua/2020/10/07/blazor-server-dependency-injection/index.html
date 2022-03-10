@@ -1,69 +1,10 @@
-<!doctype html><html lang=ua>
-<head>
-<title>Blazor Dependency Injection :: Maksym Postument</title><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=description content="Dependency injection в Blazor Server">
-<meta name=keywords content="Dependency Injection,BlazorServer,Blazor,.Net Core,.Net">
-<meta name=robots content="noodp">
-<link rel=canonical href=/ua/2020/10/07/blazor-server-dependency-injection/>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SBRJXS94DC"></script>
-<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-SBRJXS94DC",{anonymize_ip:!1})}</script>
-<link rel=stylesheet href=/assets/style.css>
-<link rel=stylesheet href=/assets/blue.css>
-<link rel=apple-touch-icon href=/img/apple-touch-icon-192x192.png>
-<link rel="shortcut icon" href=/img/favicon/blue.png>
-<meta name=twitter:card content="summary">
-<meta name=twitter:site content="mpostument.com">
-<meta name=twitter:creator content="Maks_Postument">
-<meta property="og:locale" content="ua">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Blazor Dependency Injection">
-<meta property="og:description" content="Dependency injection в Blazor Server">
-<meta property="og:url" content="/ua/2020/10/07/blazor-server-dependency-injection/">
-<meta property="og:site_name" content="Maksym Postument">
-<meta property="og:image" content="https://i.imgur.com/J6X6HNL.png">
-<meta property="og:image:width" content="2048">
-<meta property="og:image:height" content="1024">
-<meta property="article:section" content="C#">
-<meta property="article:section" content="Blazor">
-<meta property="article:published_time" content="2020-10-07 21:15:25 +0300 +0300">
-<p align=center style=background-color:#23b0ff> Sign up for my <a href=https://tinyletter.com/mpostument>email newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of new blog posts.</p></head><body class=blue>
-<div class="container center headings--one-size">
-<header class=header>
-<div class=header__inner>
-<div class=header__logo>
-<a href=/ua>
-<div class=logo>
-mpostument.com
-</div></a>
-</div><div class=menu-trigger>menu</div></div><nav class=menu>
-<ul class="menu__inner menu__inner--desktop">
-<li><a href=/ua>Home</a></li><li><a href=/ua/categories/>Categories</a></li><li><a href=/ua/tags/>Tags</a></li><div class=spacer></div><ul class=language-selector>
-<ul class=language-selector-current>
-<li>Ukraine ▾</li></ul><ul class="language-selector__more hidden">
-<li><a href=/>English</a></li><li><a href=/ua/>Ukraine</a></li></ul></ul></ul><ul class="menu__inner menu__inner--mobile">
-<li><a href=/ua>Home</a></li><li><a href=/ua/categories/>Categories</a></li><li><a href=/ua/tags/>Tags</a></li><hr>
-<li>
-<a href=/>English</a>
-</li><li>
-<a href=/ua/>Ukraine</a>
-</li></ul></nav></header><div class=content>
-<div class=post>
-<h1 class=post-title>
-<a href=/ua/2020/10/07/blazor-server-dependency-injection/>Blazor Dependency Injection</a></h1><div class=post-meta>
-<span class=post-date>
-2020-10-07
-</span>
+<!doctype html><html lang=ua><head><title>Blazor Dependency Injection :: Maksym Postument</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Dependency injection в Blazor Server"><meta name=keywords content="Dependency Injection,BlazorServer,Blazor,.Net Core,.Net"><meta name=robots content="noodp"><link rel=canonical href=/ua/2020/10/07/blazor-server-dependency-injection/><script async src="https://www.googletagmanager.com/gtag/js?id=G-SBRJXS94DC"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-SBRJXS94DC",{anonymize_ip:!1})}</script><link rel=stylesheet href=/assets/style.css><link rel=stylesheet href=/assets/blue.css><link rel=apple-touch-icon href=/img/apple-touch-icon-192x192.png><link rel="shortcut icon" href=/img/favicon/blue.png><meta name=twitter:card content="summary"><meta name=twitter:site content="mpostument.com"><meta name=twitter:creator content="Maks_Postument"><meta property="og:locale" content="ua"><meta property="og:type" content="article"><meta property="og:title" content="Blazor Dependency Injection"><meta property="og:description" content="Dependency injection в Blazor Server"><meta property="og:url" content="/ua/2020/10/07/blazor-server-dependency-injection/"><meta property="og:site_name" content="Maksym Postument"><meta property="og:image" content="https://i.imgur.com/J6X6HNL.png"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:section" content="C#"><meta property="article:section" content="Blazor"><meta property="article:published_time" content="2020-10-07 21:15:25 +0300 +0300"><p align=center style=background-color:#23b0ff>Sign up for my <a href=https://tinyletter.com/mpostument>email newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of new blog posts.</p></head><body class=blue><div class="container center headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/ua><div class=logo>mpostument.com</div></a></div><div class=menu-trigger>menu</div></div><nav class=menu><ul class="menu__inner menu__inner--desktop"><li><a href=/ua>Home</a></li><li><a href=/ua/categories/>Categories</a></li><li><a href=/ua/tags/>Tags</a></li><div class=spacer></div><ul class=language-selector><ul class=language-selector-current><li>Ukraine ▾</li></ul><ul class="language-selector__more hidden"><li><a href=/>English</a></li><li><a href=/ua/>Ukraine</a></li></ul></ul></ul><ul class="menu__inner menu__inner--mobile"><li><a href=/ua>Home</a></li><li><a href=/ua/categories/>Categories</a></li><li><a href=/ua/tags/>Tags</a></li><hr><li><a href=/>English</a></li><li><a href=/ua/>Ukraine</a></li></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=/ua/2020/10/07/blazor-server-dependency-injection/>Blazor Dependency Injection</a></h1><div class=post-meta><span class=post-date>2020-10-07</span>
 <span class=post-author>:: Maksym Postument</span>
-<span class=post-reading-time>:: 3 min read (540 words)</span>
-</div><span class=post-tags>
-#<a href=/ua/tags/blazorserver/>BlazorServer</a>&nbsp;
+<span class=post-reading-time>:: 3 min read (540 words)</span></div><span class=post-tags>#<a href=/ua/tags/blazorserver/>BlazorServer</a>&nbsp;
 #<a href=/ua/tags/.net-core/>.Net Core</a>&nbsp;
-#<a href=/ua/tags/dependency-injection/>Dependency Injection</a>&nbsp;
-</span>
-<img src=https://i.imgur.com/J6X6HNL.png class=post-cover alt="Blazor Dependency Injection" title="Cover Image">
-<div class=post-content><div>
-<p>Привіт!</p><p>Сьогодні поговоримо як працює dependency injection в blazor server.
+#<a href=/ua/tags/dependency-injection/>Dependency Injection</a>&nbsp;</span>
+<img src=https://i.imgur.com/J6X6HNL.png class=post-cover alt="Blazor Dependency Injection" title="Cover Image"><div class=post-content><div><p>Привіт!</p><p>Сьогодні поговоримо як працює dependency injection в blazor server.
 Якщо ви знайому з dependency injection в asp.net core то відміностей тут немає.
 Dependency injection налаштовуєтся в <code>Startup.cs</code> в корені проекта. Одразу після створення проекту це матиме ось такий вигляд</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>        <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>void</span> ConfigureServices(IServiceCollection services)
 </span></span><span style=display:flex><span>        {
@@ -71,10 +12,7 @@ Dependency injection налаштовуєтся в <code>Startup.cs</code> в к
 </span></span><span style=display:flex><span>            services.AddServerSideBlazor();
 </span></span><span style=display:flex><span>            services.AddSingleton&lt;WeatherForecastService&gt;();
 </span></span><span style=display:flex><span>        }
-</span></span></code></pre></div><p>Розберемо що тут відбуваться.<br>
-<code>services.AddRazorPages()</code> - добавляє підтримку razor pages в проект<br>
-<code>services.AddServerSideBlazor()</code> - добавляє підтримку blazor server в проект<br>
-<code>services.AddSingleton&lt;WeatherForecastService>()</code> - реєструє клас <code>WeatherForecastService</code> в DI.</p><p><code>WeatherForecastService</code> в прикладі добавлється як <code>Singleton</code>. Може бути ще <code>Scoped</code> i <code>Transient</code>. Детальніше на них подивимось далі.</p><p>Спробуєм добавити новий клас в DI і перевірити як він працює з різними типами (Singleton, Scoped, Transient).</p><p>Для цього в папці <code>Data</code> я створю файл який буде генерувати випадкове число.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#66d9ef>using</span> System;
+</span></span></code></pre></div><p>Розберемо що тут відбуваться.<br><code>services.AddRazorPages()</code> - добавляє підтримку razor pages в проект<br><code>services.AddServerSideBlazor()</code> - добавляє підтримку blazor server в проект<br><code>services.AddSingleton&lt;WeatherForecastService>()</code> - реєструє клас <code>WeatherForecastService</code> в DI.</p><p><code>WeatherForecastService</code> в прикладі добавлється як <code>Singleton</code>. Може бути ще <code>Scoped</code> i <code>Transient</code>. Детальніше на них подивимось далі.</p><p>Спробуєм добавити новий клас в DI і перевірити як він працює з різними типами (Singleton, Scoped, Transient).</p><p>Для цього в папці <code>Data</code> я створю файл який буде генерувати випадкове число.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#66d9ef>using</span> System;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#66d9ef>namespace</span> BlazorLearn.Data
 </span></span><span style=display:flex><span>{
@@ -101,7 +39,7 @@ Dependency injection налаштовуєтся в <code>Startup.cs</code> в к
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>int</span> GetRandomData();
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><h2 id=singleton>Singleton<a href=#singleton class=hanchor arialabel=Anchor>&#8983;</a> </h2><p>Тепер клас можна зареєструвати в DI. Поченемо з Singleton. Для цього в <code>Startup.cs</code> файлі в методі <code>ConfigureServices</code> потрібно добавити:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>services.AddSingleton&lt;IRandomData, RandomData&gt;();
+</span></span></code></pre></div><h2 id=singleton>Singleton<a href=#singleton class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Тепер клас можна зареєструвати в DI. Поченемо з Singleton. Для цього в <code>Startup.cs</code> файлі в методі <code>ConfigureServices</code> потрібно добавити:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>services.AddSingleton&lt;IRandomData, RandomData&gt;();
 </span></span></code></pre></div><p>Тепер кожен раз як хтось буде використовувати інтерфейс <code>IRandomData</code> буде підставлено <code>RandomData</code>.
 Тепер в <code>index.razor</code> я викличу <code>GetRandomNumber</code> метод.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>@page <span style=color:#e6db74>&#34;/&#34;</span>
 </span></span><span style=display:flex><span>@using BlazorLearn.Data
@@ -112,12 +50,9 @@ Dependency injection налаштовуєтся в <code>Startup.cs</code> в к
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>Your random number <span style=color:#66d9ef>is</span> @RandomData.GetRandomData()
 </span></span><span style=display:flex><span>&lt;SurveyPrompt Title=<span style=color:#e6db74>&#34;How is Blazor working for you?&#34;</span> /&gt;
-</span></span></code></pre></div><p><code>@inject IRandomData RandomData</code> виликає конструктор нашого класу. І запустимо аплікацію.<br>
-<img src=https://i.imgur.com/rentHkC.gif alt=Singletone></p><p>Якщо я відкрию аплікацію в іншому браузері випадкове число залишиться таким самим. Саме так працює singleton. Об&rsquo;єкт створюється один раз при старті аплікації.</p><h2 id=scoped>Scoped<a href=#scoped class=hanchor arialabel=Anchor>&#8983;</a> </h2><p>Прдивимось тепер як працює scoped. Замінимо <code>AddSingleton</code> на <code>AddScoped</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>services.AddScoped&lt;IRandomData, RandomData&gt;();
-</span></span></code></pre></div><p>І запустимо аплцікацїю. Тепер якщо я перейду на іншу сторінку сайту а потім повернусь назад число залишиться таким самим. А от якщо я оновлю сторінку то число поміняться. Scoped обєкти створюються один раз на кожен запит.</p><p><img src=https://i.imgur.com/kYOcBXY.gif alt=Scoped></p><h2 id=transient>Transient<a href=#transient class=hanchor arialabel=Anchor>&#8983;</a> </h2><p>І останій тип це <code>Transient</code>. Тепер замінимо <code>AddScoped</code> на <code>AddTransient</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>services.AddTransient&lt;IRandomData, RandomData&gt;();
-</span></span></code></pre></div><p>Запустимо аплікацію. І тепер навіть якщо перейти з однієї вкладки на іншу число змінюється кожен раз.<br>
-<img src=https://i.imgur.com/ipleQaj.gif alt=Transient></p><h2 id=di-in-class>DI in Class<a href=#di-in-class class=hanchor arialabel=Anchor>&#8983;</a> </h2><p>І на кінець подивимось як можна використати <code>RandomData</code> клас в іншому класі за допомогою DI.<br>
-Для прикладу візьмемо <code>Data/WeatherForecastService.cs</code>. В цьому класі потрібно зробити зміну типу <code>IRandomData</code> і ініціалізувати її в конструкторі. І тепер її можна використовувати в будь якому місці цього класу.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#66d9ef>using</span> System;
+</span></span></code></pre></div><p><code>@inject IRandomData RandomData</code> виликає конструктор нашого класу. І запустимо аплікацію.<br><img src=https://i.imgur.com/rentHkC.gif alt=Singletone></p><p>Якщо я відкрию аплікацію в іншому браузері випадкове число залишиться таким самим. Саме так працює singleton. Об&rsquo;єкт створюється один раз при старті аплікації.</p><h2 id=scoped>Scoped<a href=#scoped class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Прдивимось тепер як працює scoped. Замінимо <code>AddSingleton</code> на <code>AddScoped</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>services.AddScoped&lt;IRandomData, RandomData&gt;();
+</span></span></code></pre></div><p>І запустимо аплцікацїю. Тепер якщо я перейду на іншу сторінку сайту а потім повернусь назад число залишиться таким самим. А от якщо я оновлю сторінку то число поміняться. Scoped обєкти створюються один раз на кожен запит.</p><p><img src=https://i.imgur.com/kYOcBXY.gif alt=Scoped></p><h2 id=transient>Transient<a href=#transient class=hanchor arialabel=Anchor>&#8983;</a></h2><p>І останій тип це <code>Transient</code>. Тепер замінимо <code>AddScoped</code> на <code>AddTransient</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>services.AddTransient&lt;IRandomData, RandomData&gt;();
+</span></span></code></pre></div><p>Запустимо аплікацію. І тепер навіть якщо перейти з однієї вкладки на іншу число змінюється кожен раз.<br><img src=https://i.imgur.com/ipleQaj.gif alt=Transient></p><h2 id=di-in-class>DI in Class<a href=#di-in-class class=hanchor arialabel=Anchor>&#8983;</a></h2><p>І на кінець подивимось як можна використати <code>RandomData</code> клас в іншому класі за допомогою DI.<br>Для прикладу візьмемо <code>Data/WeatherForecastService.cs</code>. В цьому класі потрібно зробити зміну типу <code>IRandomData</code> і ініціалізувати її в конструкторі. І тепер її можна використовувати в будь якому місці цього класу.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#66d9ef>using</span> System;
 </span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> System.Linq;
 </span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> System.Threading.Tasks;
 </span></span><span style=display:flex><span>
@@ -149,34 +84,12 @@ Dependency injection налаштовуєтся в <code>Startup.cs</code> в к
 </span></span><span style=display:flex><span>        }
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p><code>_randomData.GetRandomData()</code> я запишу в зміну <code>TemperatureC</code> і запущу аплікацію. На сторінці <code>FetchData</code> буде тепература зегенерована за допомогою <code>GetRandomData</code>.<br>
-<img src=https://i.imgur.com/1Z4KBZm.png alt=RandomData></p><p>Важливо щоб в DI <code>WeatherForecastService</code> та <code>RandomData</code> були одинаково добавлені.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>            services.AddScoped&lt;WeatherForecastService&gt;();
+</span></span></code></pre></div><p><code>_randomData.GetRandomData()</code> я запишу в зміну <code>TemperatureC</code> і запущу аплікацію. На сторінці <code>FetchData</code> буде тепература зегенерована за допомогою <code>GetRandomData</code>.<br><img src=https://i.imgur.com/1Z4KBZm.png alt=RandomData></p><p>Важливо щоб в DI <code>WeatherForecastService</code> та <code>RandomData</code> були одинаково добавлені.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>            services.AddScoped&lt;WeatherForecastService&gt;();
 </span></span><span style=display:flex><span>            services.AddScoped&lt;IRandomData, RandomData&gt;();
-</span></span></code></pre></div></div></div><div class=pagination>
-<div class=pagination__title>
-<span class=pagination__title-h>Read other posts</span>
-<hr>
-</div><div class=pagination__buttons>
-<span class="button previous">
-<a href=/ua/2020/10/10/blazor-server-logging/>
-<span class=button__icon>←</span>
-<span class=button__text>Blazor Server Logging</span>
-</a>
-</span>
-<span class="button next">
-<a href=/ua/2020/10/06/blazor-server-error-handling/>
-<span class=button__text>Blazor Server Error Handling</span>
-<span class=button__icon>→</span>
-</a>
-</span>
-</div></div><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//mpostument-com.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script>
-<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
-</div></div><footer class=footer>
-<div class=footer__inner>
-<div class=copyright>
-<span>© 2022 Powered by <a href=http://gohugo.io>Hugo</a></span>
-<span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span>
-</div></div></footer><script src=/assets/main.js></script>
+</span></span></code></pre></div></div></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button previous"><a href=/ua/2020/10/10/blazor-server-logging/><span class=button__icon>←</span>
+<span class=button__text>Blazor Server Logging</span></a></span>
+<span class="button next"><a href=/ua/2020/10/06/blazor-server-error-handling/><span class=button__text>Blazor Server Error Handling</span>
+<span class=button__icon>→</span></a></span></div></div><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//mpostument-com.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 Powered by <a href=http://gohugo.io>Hugo</a></span>
+<span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span></div></div></footer><script src=/assets/main.js></script>
 <script src=/assets/prism.js></script>
-<script src=/assets/languageSelector.js></script>
-</div></body></html>
+<script src=/assets/languageSelector.js></script></div></body></html>
