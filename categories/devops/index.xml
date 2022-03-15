@@ -69,7 +69,37 @@ locals { common_tags = { cost-center = &amp;#34;observability&amp;#34; label = &
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">depends_on&lt;/span> = [&lt;span style="color:#a6e22e">aws_synthetics_canary&lt;/span>.&lt;span style="color:#a6e22e">create&lt;/span>]
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>There are two more problems that I have not solved yet, the first is that when you change the test code and run &lt;code>terraform apply&lt;/code> the code in aws synthetic is not updated. And another problem is that when you call &lt;code>terraform destroy&lt;/code> AWS does not remove the lambda that is automatically created &lt;code>aws_synthetics_canary&lt;/code>.&lt;/p></content></item><item><title>WaitGroup</title><link>/2022/02/02/wait-groups/</link><pubDate>Wed, 02 Feb 2022 20:58:30 +0200</pubDate><guid>/2022/02/02/wait-groups/</guid><description>Hello!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>There are two more problems that I have not solved yet, the first is that when you change the test code and run &lt;code>terraform apply&lt;/code> the code in aws synthetic is not updated. And another problem is that when you call &lt;code>terraform destroy&lt;/code> AWS does not remove the lambda that is automatically created &lt;code>aws_synthetics_canary&lt;/code>.&lt;/p>
+&lt;p>Support for &lt;code>environment_variables&lt;/code> has been added in the AWS provider version &lt;a href="https://github.com/hashicorp/terraform-provider-aws/blob/main/CHANGELOG.md#450-march-11-2022">4.5.0&lt;/a>. In order to add them, you need to specify a map in run_config with the required environment variables.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">locals&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">canary_variables&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;app_url&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;https://mpostument.com&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_synthetics_canary&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;login&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">name&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;login_test&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">artifact_s3_location&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;s3://my_canary_bucket/&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">execution_role_arn&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;role_arn&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">handler&lt;/span> = &amp;#34;index.&lt;span style="color:#a6e22e">handler&lt;/span>&lt;span style="color:#e6db74">&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> zip_file = &amp;#34;&lt;/span>&lt;span style="color:#960050;background-color:#1e0010">$&lt;/span>{&lt;span style="color:#a6e22e">path&lt;/span>.module}&lt;span style="color:#f92672">/&lt;/span>&lt;span style="color:#a6e22e">functions&lt;/span>&lt;span style="color:#f92672">/&lt;/span>&lt;span style="color:#a6e22e">login&lt;/span>.&lt;span style="color:#a6e22e">zip&lt;/span>&lt;span style="color:#e6db74">&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> runtime_version = &amp;#34;&lt;/span>&lt;span style="color:#a6e22e">syn&lt;/span>&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#a6e22e">nodejs&lt;/span>&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#a6e22e">puppeteer&lt;/span>&lt;span style="color:#ae81ff">-3&lt;/span>.&lt;span style="color:#ae81ff">4&lt;/span>&lt;span style="color:#e6db74">&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> start_canary = true
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> schedule {
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> expression = &amp;#34;&lt;/span>&lt;span style="color:#a6e22e">rate&lt;/span>(&lt;span style="color:#ae81ff">5&lt;/span> &lt;span style="color:#a6e22e">minutes&lt;/span>)&lt;span style="color:#e6db74">&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> }
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> run_config {
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> timeout_in_seconds = 300
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> environment_variables = local.canary_variables
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> }
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> tags = merge(
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> local.common_tags
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> )
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">}
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>WaitGroup</title><link>/2022/02/02/wait-groups/</link><pubDate>Wed, 02 Feb 2022 20:58:30 +0200</pubDate><guid>/2022/02/02/wait-groups/</guid><description>Hello!
 Today we will learn what is WaitGroup in golang and we will look how to apply them on an example of the program for files search.
 WaitGroup is waiting for the completion of go routines. The main go routine calls the Add method, and then each go routine calls the Done method when the routine ends.
 Let&amp;rsquo;s start with the findFile method. In this method we read all files and directories in the root folder.</description><content>&lt;p>Hello!&lt;/p>
