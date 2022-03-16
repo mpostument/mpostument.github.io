@@ -109,7 +109,7 @@ version: &amp;#39;3.1&amp;#39; services: mongo: image: mongo restart: always env
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">user&lt;/span>)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Також можна замість FindOne виконати метод Find який буде вертати багато об&amp;rsquo;єктів.&lt;/p></content></item><item><title>Using Postgres With Golang</title><link>/ua/2022/02/20/connecting-to-postgres-with-golang/</link><pubDate>Sun, 20 Feb 2022 20:37:23 +0200</pubDate><guid>/ua/2022/02/20/connecting-to-postgres-with-golang/</guid><description>Привіт!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Також можна замість FindOne виконати метод Find який буде вертати багато об&amp;rsquo;єктів.&lt;/p></content></item><item><title>Using Postgres With Golang</title><link>/ua/2022/02/20/using-postgres-with-go/</link><pubDate>Sun, 20 Feb 2022 20:37:23 +0200</pubDate><guid>/ua/2022/02/20/using-postgres-with-go/</guid><description>Привіт!
 Сьогодні подивимось як за допомогою golang можна під&amp;rsquo;єднатися до postgres бази даних та виконувати запити. Для роботи з базою даних будемо використовувати github.com/jackc/pgx.
 Розпочнемо з ініціалізації модуля та встановлення драйвера для бази.
 go mod init go get github.com/jackc/pgx/v4 Після цього pgx стане доступний для використання в коді.
