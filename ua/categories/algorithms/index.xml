@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Algorithms on Maksym Postument</title><link>/ua/categories/algorithms/</link><description>Recent content in Algorithms on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 14 Feb 2022 20:30:37 +0200</lastBuildDate><atom:link href="/ua/categories/algorithms/index.xml" rel="self" type="application/rss+xml"/><item><title>Sorted Squared Array</title><link>/ua/2022/02/14/sorted-squared-array/</link><pubDate>Mon, 14 Feb 2022 20:30:37 +0200</pubDate><guid>/ua/2022/02/14/sorted-squared-array/</guid><description>Привіт!
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Algorithms on Maksym Postument</title><link>https://mpostument.com/ua/categories/algorithms/</link><description>Recent content in Algorithms on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 14 Feb 2022 20:30:37 +0200</lastBuildDate><atom:link href="https://mpostument.com/ua/categories/algorithms/index.xml" rel="self" type="application/rss+xml"/><item><title>Sorted Squared Array</title><link>https://mpostument.com/ua/2022/02/14/sorted-squared-array/</link><pubDate>Mon, 14 Feb 2022 20:30:37 +0200</pubDate><guid>https://mpostument.com/ua/2022/02/14/sorted-squared-array/</guid><description>Привіт!
 В цьому завданні на вхід дається відсортований список, і його ціль полягає в тому щоб створити новий список який буде містити відсортовані числа у квадраті з першого списку. Найпростішим вирішення буде пройтись циклом по першому списку підняти всі числа у квадрат, додати в наш новий список і відсортувати. Але це рішення не буде оптимальним.
 Давайте розглянемо оптимальніше рішення яке буде виконуватись лінійно.
 Для прикладу візьмемо такий вхідний список - [-9, -1, 2, 3, 5, 6]</description><content>&lt;p>Привіт!&lt;/p>
@@ -39,7 +39,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">result&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Якщо викликати цей методі, то отримаємо результат &lt;code>[1, 4, 9, 25, 36, 81]&lt;/code>&lt;/p></content></item><item><title>Depth First Search</title><link>/ua/2021/09/06/depth-first-search/</link><pubDate>Mon, 06 Sep 2021 20:19:11 +0300</pubDate><guid>/ua/2021/09/06/depth-first-search/</guid><description>Привіт!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Якщо викликати цей методі, то отримаємо результат &lt;code>[1, 4, 9, 25, 36, 81]&lt;/code>&lt;/p></content></item><item><title>Depth First Search</title><link>https://mpostument.com/ua/2021/09/06/depth-first-search/</link><pubDate>Mon, 06 Sep 2021 20:19:11 +0300</pubDate><guid>https://mpostument.com/ua/2021/09/06/depth-first-search/</guid><description>Привіт!
 Сьогодні розглянемо Depth-first Search алгоритм. В нас є дерево і потрібно пройти по всіх його елементах з ліва на право. Візьмемо для прикладу дерево
 1 - 6 / \ 2 - 4 10 - 6 / \ \ 3 - 2 5 - 4 23 - 7 Отже в цьому дереві є 6 елементів. Починаємо з кореня і переходимо в ліву вітку до 4, в цієї вітки є два дочірні вітки, йдемо в ліву до 2, повертаємось назад до 4 і йдемо в праву до 5.</description><content>&lt;p>Привіт!&lt;/p>
 &lt;p>Сьогодні розглянемо Depth-first Search алгоритм. В нас є дерево і потрібно пройти по всіх його елементах з ліва на право. Візьмемо для прикладу дерево&lt;/p>
@@ -72,7 +72,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">array&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Node Depths</title><link>/ua/2021/08/26/node-depths/</link><pubDate>Thu, 26 Aug 2021 20:58:40 +0300</pubDate><guid>/ua/2021/08/26/node-depths/</guid><description>Привіт!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Node Depths</title><link>https://mpostument.com/ua/2021/08/26/node-depths/</link><pubDate>Thu, 26 Aug 2021 20:58:40 +0300</pubDate><guid>https://mpostument.com/ua/2021/08/26/node-depths/</guid><description>Привіт!
 Сьогодні розглянемо простий алгоритм яким можна знайти глибину дерева. На вхід дається дерево і потрібно вивести глибину дерева. Глибина дерева це сума глибин усіх вузлів дерева.
 Для прикладу візьмемо дерево
 6 / \ 4 10 / \ \ 2 5 23 / 3 Глибини кореня завжди становить 0, а наступні елементи завжди будуть глибина попереднього елемента +1. Тоді в нас получиться</description><content>&lt;p>Привіт!&lt;/p>
@@ -150,7 +150,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">depth&lt;/span> &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#a6e22e">nodeDepth&lt;/span>(&lt;span style="color:#a6e22e">node&lt;/span>.&lt;span style="color:#a6e22e">left&lt;/span>, &lt;span style="color:#a6e22e">depth&lt;/span>&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>) &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#a6e22e">nodeDepth&lt;/span>(&lt;span style="color:#a6e22e">node&lt;/span>.&lt;span style="color:#a6e22e">right&lt;/span>, &lt;span style="color:#a6e22e">depth&lt;/span>&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Branch Sum</title><link>/ua/2021/08/23/branch-sum/</link><pubDate>Mon, 23 Aug 2021 20:49:50 +0300</pubDate><guid>/ua/2021/08/23/branch-sum/</guid><description>Привіт!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Branch Sum</title><link>https://mpostument.com/ua/2021/08/23/branch-sum/</link><pubDate>Mon, 23 Aug 2021 20:49:50 +0300</pubDate><guid>https://mpostument.com/ua/2021/08/23/branch-sum/</guid><description>Привіт!
 В цій задачі на вхід дається дерево і потрібно знайти суму усіх віток в дереві. Алгоритм вирішення цієї задачі є простим. Візьмемо дерево
 6 / \ 4 10 / \ \ 2 5 23 Починаємо з кореня, сума тут дорівнює 6. Спускаємось далі по дереву в лівій вітці це буде 6 + 4 = 10 та в правій 10 + 6 = 16.
 6 + 0 / \ 6 + 4 10 + 16 / \ \ 2 5 23 Рухаємось далі по дереву в лівій частині виходить 10 + 2 = 12 і 10 + 5 = 115 та в правій 16 + 23 = 39</description><content>&lt;p>Привіт!&lt;/p>
@@ -225,7 +225,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">sum&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Find Closest Value in BST</title><link>/ua/2021/08/10/find-closest-value-in-bst/</link><pubDate>Tue, 10 Aug 2021 20:02:00 +0300</pubDate><guid>/ua/2021/08/10/find-closest-value-in-bst/</guid><description>Привіт!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Find Closest Value in BST</title><link>https://mpostument.com/ua/2021/08/10/find-closest-value-in-bst/</link><pubDate>Tue, 10 Aug 2021 20:02:00 +0300</pubDate><guid>https://mpostument.com/ua/2021/08/10/find-closest-value-in-bst/</guid><description>Привіт!
 Сьогодні подивимось як знайти найближче значення в BST. На вхід дається бінарне дерево та число, і потрібно знайти найближче число до заданого. Наприклад маємо дерево:
 6 / \ 4 10 / \ \ 2 5 23 Та число 13. Потрібно знайти число яке є найближчим до 13 в дереві. Для цього нам потрібно ще одне число (найближче значення), яке має велике значення, наприклад безкінечність.</description><content>&lt;p>Привіт!&lt;/p>
 &lt;p>Сьогодні подивимось як знайти найближче значення в BST.
@@ -298,7 +298,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">closest&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Validate Subsequence</title><link>/ua/2021/08/05/validate-subsequence/</link><pubDate>Thu, 05 Aug 2021 21:00:32 +0300</pubDate><guid>/ua/2021/08/05/validate-subsequence/</guid><description>Привіт!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Validate Subsequence</title><link>https://mpostument.com/ua/2021/08/05/validate-subsequence/</link><pubDate>Thu, 05 Aug 2021 21:00:32 +0300</pubDate><guid>https://mpostument.com/ua/2021/08/05/validate-subsequence/</guid><description>Привіт!
 Першим вхідним параметром буде список з числами, другим буде також список з числами. Суть завдання полягає знайти чи є другий список підпослідовність першого.
 Для цього нам буде потрібен поінтер який буде вказувати на елементи з другого списку. Почнемо рухатись по кожному елементу з першого списку і перевіряти чи дорівнює він елементу з другого списку на який вказує поінтер.
 Для прикладу перший список 5, 3, 22, 25, 9, -5, 8, 7 і другий 3, 9, -5, 7.</description><content>&lt;p>Привіт!&lt;/p>
@@ -342,7 +342,7 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">subsequencePtr&lt;/span> &lt;span style="color:#f92672">==&lt;/span> len(&lt;span style="color:#a6e22e">subsequence&lt;/span>)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Two Number Sum</title><link>/ua/2021/08/04/two-number-sum/</link><pubDate>Wed, 04 Aug 2021 20:18:17 +0300</pubDate><guid>/ua/2021/08/04/two-number-sum/</guid><description>Привіт!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Two Number Sum</title><link>https://mpostument.com/ua/2021/08/04/two-number-sum/</link><pubDate>Wed, 04 Aug 2021 20:18:17 +0300</pubDate><guid>https://mpostument.com/ua/2021/08/04/two-number-sum/</guid><description>Привіт!
 Першим вхідним параметром буде список з числами, другим буде число - сума яку потрібно знайти. Суть завдання полягає знайти яка пара чисел в сумі рівна другому аргументу.
 Є декілька варіантів розв&amp;rsquo;язку цієї задачі, ми розглянемо варіант з двома поінтерами. Для цього нам буде потрібен відсортований список і два поінтера, один буде вказувати на перший елемент списку а інший на останній.
 Для прикладу візьмемо ось такий список цифр 8, -2, 11, 13, -1, 6, 4 та сума яку потрібно знайти 15.</description><content>&lt;p>Привіт!&lt;/p>
