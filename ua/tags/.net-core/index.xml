@@ -224,12 +224,12 @@ namespace BlazorLearn.Models { public class User { public string UserName { get;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/EditForm&amp;gt;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>@code {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> User &lt;span style="color:#ae81ff">_&lt;/span>user = &lt;span style="color:#66d9ef">new&lt;/span> User();
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> &lt;span style="color:#ae81ff">_f&lt;/span>ormResult = &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> User _user = &lt;span style="color:#66d9ef">new&lt;/span> User();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> _formResult = &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> HandleValidSubmit()
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">_f&lt;/span>ormResult = &lt;span style="color:#e6db74">$&amp;#34;{_user.UserName}, {_user.LastName} was created&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> _formResult = &lt;span style="color:#e6db74">$&amp;#34;{_user.UserName}, {_user.LastName} was created&amp;#34;&lt;/span>;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/Iv4lXzE.gif" alt="FormNoValidation">&lt;/p>
@@ -296,12 +296,12 @@ namespace BlazorLearn.Models { public class User { public string UserName { get;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/EditForm&amp;gt;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>@code {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> User &lt;span style="color:#ae81ff">_&lt;/span>user = &lt;span style="color:#66d9ef">new&lt;/span> User();
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> &lt;span style="color:#ae81ff">_f&lt;/span>ormResult = &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> User _user = &lt;span style="color:#66d9ef">new&lt;/span> User();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> _formResult = &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> HandleValidSubmit()
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">_f&lt;/span>ormResult = &lt;span style="color:#e6db74">$&amp;#34;{_user.UserName}, {_user.LastName} was created&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> _formResult = &lt;span style="color:#e6db74">$&amp;#34;{_user.UserName}, {_user.LastName} was created&amp;#34;&lt;/span>;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/qgtdGQP.gif" alt="FinalResult">&lt;/p></content></item><item><title>Events in Blazor</title><link>https://mpostument.com/ua/2020/10/15/events-in-blazor/</link><pubDate>Thu, 15 Oct 2020 11:37:56 +0300</pubDate><guid>https://mpostument.com/ua/2020/10/15/events-in-blazor/</guid><description>Привіт!
@@ -673,7 +673,7 @@ Add new page Для цього натисність правою кнопкою 
 &lt;p>&lt;img src="https://i.imgur.com/NtlshHK.png" alt="DemoPage">&lt;/p></content></item><item><title>Blazor Server Logging</title><link>https://mpostument.com/ua/2020/10/10/blazor-server-logging/</link><pubDate>Sat, 10 Oct 2020 19:01:49 +0300</pubDate><guid>https://mpostument.com/ua/2020/10/10/blazor-server-logging/</guid><description>Привіт!
 Сьогодні подивимось як налаштовувати логування в BlazorServer.
 Одразу після створення проекту в корені проекту буде файл appsettings.json.
-{ &amp;#34;Logging&amp;#34;: { &amp;#34;LogLevel&amp;#34;: { &amp;#34;Default&amp;#34;: &amp;#34;Information&amp;#34;, &amp;#34;Microsoft&amp;#34;: &amp;#34;Warning&amp;#34;, &amp;#34;Microsoft.Hosting.Lifetime&amp;#34;: &amp;#34;Information&amp;#34; } }, &amp;#34;AllowedHosts&amp;#34;: &amp;#34;*&amp;#34; } Саме тут вкзаано налаштування логування. LogLevel починається з Default який має значення Information. Це означає що по замовчуванні лог левел буде Information. Далі йде Microsoft з рівнем Warning, відповідно для namespace Microsoft рівень логування буде Warning.</description><content>&lt;p>Привіт!&lt;/p>
+{ &amp;#34;Logging&amp;#34;: { &amp;#34;LogLevel&amp;#34;: { &amp;#34;Default&amp;#34;: &amp;#34;Information&amp;#34;, &amp;#34;Microsoft&amp;#34;: &amp;#34;Warning&amp;#34;, &amp;#34;Microsoft.Hosting.Lifetime&amp;#34;: &amp;#34;Information&amp;#34; } }, &amp;#34;AllowedHosts&amp;#34;: &amp;#34;*&amp;#34; } Саме тут вкзаано налаштування логування. LogLevel починається з Default який має значення Information. Це означає що по замовчуванні лог левел буде Information. Далі йде Microsoft з рівнем Warning, відповідно для namespace Microsoft рівень логування буде Warning. І в самому кінці Microsoft.</description><content>&lt;p>Привіт!&lt;/p>
 &lt;p>Сьогодні подивимось як налаштовувати логування в BlazorServer.&lt;br>
 Одразу після створення проекту в корені проекту буде файл &lt;code>appsettings.json&lt;/code>.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
@@ -752,7 +752,7 @@ Add new page Для цього натисність правою кнопкою 
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">WeatherForecastService&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">readonly&lt;/span> ILogger&amp;lt;WeatherForecastService&amp;gt; &lt;span style="color:#ae81ff">_l&lt;/span>ogger;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">readonly&lt;/span> ILogger&amp;lt;WeatherForecastService&amp;gt; _logger;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">readonly&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>[] Summaries = &lt;span style="color:#66d9ef">new&lt;/span>[]
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;Freezing&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Bracing&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Chilly&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Cool&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Mild&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Warm&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Balmy&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Hot&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Sweltering&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Scorching&amp;#34;&lt;/span>
@@ -760,12 +760,12 @@ Add new page Для цього натисність правою кнопкою 
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> WeatherForecastService(ILogger&amp;lt;WeatherForecastService&amp;gt; logger)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">_l&lt;/span>ogger = logger;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> _logger = logger;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> Task&amp;lt;WeatherForecast[]&amp;gt; GetForecastAsync(DateTime startDate)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">_l&lt;/span>ogger.LogInformation(&lt;span style="color:#e6db74">&amp;#34;WeatherForecastService called&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> _logger.LogInformation(&lt;span style="color:#e6db74">&amp;#34;WeatherForecastService called&amp;#34;&lt;/span>);
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> rng = &lt;span style="color:#66d9ef">new&lt;/span> Random();
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> Task.FromResult(Enumerable.Range(&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">5&lt;/span>).Select(index =&amp;gt; &lt;span style="color:#66d9ef">new&lt;/span> WeatherForecast
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
@@ -804,7 +804,8 @@ Add new page Для цього натисність правою кнопкою 
 Сьогодні поговоримо як працює dependency injection в blazor server. Якщо ви знайому з dependency injection в asp.net core то відміностей тут немає. Dependency injection налаштовуєтся в Startup.cs в корені проекта. Одразу після створення проекту це матиме ось такий вигляд
 public void ConfigureServices(IServiceCollection services) { services.AddRazorPages(); services.AddServerSideBlazor(); services.AddSingleton&amp;lt;WeatherForecastService&amp;gt;(); } Розберемо що тут відбуваться.
 services.AddRazorPages() - добавляє підтримку razor pages в проект
-services.AddServerSideBlazor() - добавляє підтримку blazor server в проект</description><content>&lt;p>Привіт!&lt;/p>
+services.AddServerSideBlazor() - добавляє підтримку blazor server в проект
+services.AddSingleton&amp;lt;WeatherForecastService&amp;gt;() - реєструє клас WeatherForecastService в DI.</description><content>&lt;p>Привіт!&lt;/p>
 &lt;p>Сьогодні поговоримо як працює dependency injection в blazor server.
 Якщо ви знайому з dependency injection в asp.net core то відміностей тут немає.
 Dependency injection налаштовуєтся в &lt;code>Startup.cs&lt;/code> в корені проекта. Одразу після створення проекту це матиме ось такий вигляд&lt;/p>
@@ -887,7 +888,7 @@ Dependency injection налаштовуєтся в &lt;code>Startup.cs&lt;/code>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">WeatherForecastService&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> IRandomData &lt;span style="color:#ae81ff">_&lt;/span>randomData;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> IRandomData _randomData;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">readonly&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>[] Summaries = &lt;span style="color:#66d9ef">new&lt;/span>[]
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
@@ -896,7 +897,7 @@ Dependency injection налаштовуєтся в &lt;code>Startup.cs&lt;/code>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> WeatherForecastService(IRandomData randomData)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">_&lt;/span>randomData = randomData;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> _randomData = randomData;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> Task&amp;lt;WeatherForecast[]&amp;gt; GetForecastAsync(DateTime startDate)
@@ -905,7 +906,7 @@ Dependency injection налаштовуєтся в &lt;code>Startup.cs&lt;/code>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> Task.FromResult(Enumerable.Range(&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">5&lt;/span>).Select(index =&amp;gt; &lt;span style="color:#66d9ef">new&lt;/span> WeatherForecast
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Date = startDate.AddDays(index),
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> TemperatureC = &lt;span style="color:#ae81ff">_&lt;/span>randomData.GetRandomData(),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> TemperatureC = _randomData.GetRandomData(),
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Summary = Summaries[rng.Next(Summaries.Length)]
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }).ToArray());
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
@@ -958,7 +959,7 @@ Exception Error В файлі Pages/_Host.cshtml даний участок ві�
 &lt;img src="https://i.imgur.com/XyheYSU.png" alt="NotExist">&lt;/p></content></item><item><title>Blazor Server Routing</title><link>https://mpostument.com/ua/2020/10/01/blazor-server-routing/</link><pubDate>Thu, 01 Oct 2020 21:09:00 +0300</pubDate><guid>https://mpostument.com/ua/2020/10/01/blazor-server-routing/</guid><description>Привіт! Сьогодні я хочу розказати як працює роутінг в Blazor Server.
 Роутінг починається в файлі Startup.cs. За це відбовідає наступний код
 app.UseRouting(); app.UseEndpoints(endpoints =&amp;gt; { endpoints.MapBlazorHub(); endpoints.MapFallbackToPage(&amp;#34;/_Host&amp;#34;); }); app.UseRouting(); прийшов з asp.net і означає додати route matching в middleware pipeline. Цей middleware дивиться в набір ендпоінтів зазначених в аплікації і вибирає той який найбілше підходить базуючись на реквесті.
-app.UseEndpoints() додає ендпоніт в middleware pipeline.</description><content>&lt;p>Привіт!
+app.UseEndpoints() додає ендпоніт в middleware pipeline. Він запускає делегат якому відповідає ендпоінт.</description><content>&lt;p>Привіт!
 Сьогодні я хочу розказати як працює роутінг в Blazor Server.&lt;br>
 Роутінг починається в файлі &lt;code>Startup.cs&lt;/code>. За це відбовідає наступний код&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="display:flex;">&lt;span> app.UseRouting();

@@ -64,7 +64,7 @@ For example, take <code>Data/WeatherForecastService.cs</code>. In this class you
 </span></span><span style=display:flex><span>{
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>WeatherForecastService</span>
 </span></span><span style=display:flex><span>    {
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>private</span> IRandomData <span style=color:#ae81ff>_</span>randomData;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>private</span> IRandomData _randomData;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>readonly</span> <span style=color:#66d9ef>string</span>[] Summaries = <span style=color:#66d9ef>new</span>[]
 </span></span><span style=display:flex><span>        {
@@ -73,7 +73,7 @@ For example, take <code>Data/WeatherForecastService.cs</code>. In this class you
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> WeatherForecastService(IRandomData randomData)
 </span></span><span style=display:flex><span>        {
-</span></span><span style=display:flex><span>            <span style=color:#ae81ff>_</span>randomData = randomData;
+</span></span><span style=display:flex><span>            _randomData = randomData;
 </span></span><span style=display:flex><span>        }
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>        <span style=color:#66d9ef>public</span> Task&lt;WeatherForecast[]&gt; GetForecastAsync(DateTime startDate)
@@ -82,7 +82,7 @@ For example, take <code>Data/WeatherForecastService.cs</code>. In this class you
 </span></span><span style=display:flex><span>            <span style=color:#66d9ef>return</span> Task.FromResult(Enumerable.Range(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>5</span>).Select(index =&gt; <span style=color:#66d9ef>new</span> WeatherForecast
 </span></span><span style=display:flex><span>            {
 </span></span><span style=display:flex><span>                Date = startDate.AddDays(index),
-</span></span><span style=display:flex><span>                TemperatureC = <span style=color:#ae81ff>_</span>randomData.GetRandomData(),
+</span></span><span style=display:flex><span>                TemperatureC = _randomData.GetRandomData(),
 </span></span><span style=display:flex><span>                Summary = Summaries[rng.Next(Summaries.Length)]
 </span></span><span style=display:flex><span>            }).ToArray());
 </span></span><span style=display:flex><span>        }

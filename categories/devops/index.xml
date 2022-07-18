@@ -797,7 +797,8 @@ At the root of the repository, I create a file &lt;code>serverless.yml&lt;/code>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After that, if there is an event of the type &lt;code>EC2 Instance Launch Unsuccessful&lt;/code> from &lt;code>aws.autoscaling&lt;/code> the corresponding message will be sent to the slack.&lt;/p></content></item><item><title>Import Grafana Dashboards With Go</title><link>https://mpostument.com/2020/12/23/import-grafana-dashboards-with-go/</link><pubDate>Wed, 23 Dec 2020 23:18:28 +0200</pubDate><guid>https://mpostument.com/2020/12/23/import-grafana-dashboards-with-go/</guid><description>Hello!
 In the previous post I showed how you can export dashboards from Grafana. Now let&amp;rsquo;s see how they can be imported into Grafana.
 As always at the beginning there will be imports and main function
-package grafana import ( &amp;#34;context&amp;#34; &amp;#34;encoding/json&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;io/ioutil&amp;#34; &amp;#34;log&amp;#34; &amp;#34;os&amp;#34; &amp;#34;strings&amp;#34; &amp;#34;github.com/grafana-tools/sdk&amp;#34; ) func main() { } I will add some parameters:</description><content>&lt;p>Hello!&lt;/p>
+package grafana import ( &amp;#34;context&amp;#34; &amp;#34;encoding/json&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;io/ioutil&amp;#34; &amp;#34;log&amp;#34; &amp;#34;os&amp;#34; &amp;#34;strings&amp;#34; &amp;#34;github.com/grafana-tools/sdk&amp;#34; ) func main() { } I will add some parameters:
+var ( filesInDir []os.FileInfo rawBoard []byte err error grafanaURL string apiKey string directory string ) filesInDir will store all dashboards from the file system.</description><content>&lt;p>Hello!&lt;/p>
 &lt;p>In the previous &lt;a href="https://mpostument.com/2020/12/19/export-grafana-dashboards-with-go/" title="post">post&lt;/a> I showed how you can export dashboards from Grafana. Now let&amp;rsquo;s see how they can be imported into Grafana.&lt;/p>
 &lt;p>As always at the beginning there will be imports and main function&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">grafana&lt;/span>
@@ -862,7 +863,8 @@ package grafana import ( &amp;#34;context&amp;#34; &amp;#34;encoding/json&amp;#3
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Export Grafana Dashboards With Go</title><link>https://mpostument.com/2020/12/19/export-grafana-dashboards-with-go/</link><pubDate>Sat, 19 Dec 2020 18:27:35 +0200</pubDate><guid>https://mpostument.com/2020/12/19/export-grafana-dashboards-with-go/</guid><description>Hello!
 Let&amp;rsquo;s check how you can use go to export dashboards from Grafana. For interaction with Grafana I use sdk. Sdk can be installed using go get github.com/grafana-tools/sdk.
 Let&amp;rsquo;s start writing code. At the beginning of the file will be the package, import and main function
-package main import ( &amp;#34;context&amp;#34; &amp;#34;encoding/json&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;log&amp;#34; &amp;#34;os&amp;#34; &amp;#34;github.com/grafana-tools/sdk&amp;#34; ) func main() { } ) I will add some parameters:</description><content>&lt;p>Hello!&lt;/p>
+package main import ( &amp;#34;context&amp;#34; &amp;#34;encoding/json&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;log&amp;#34; &amp;#34;os&amp;#34; &amp;#34;github.com/grafana-tools/sdk&amp;#34; ) func main() { } ) I will add some parameters:
+var ( boardLinks []sdk.</description><content>&lt;p>Hello!&lt;/p>
 &lt;p>Let&amp;rsquo;s check how you can use go to export dashboards from Grafana.
 For interaction with Grafana I use &lt;a href="https://github.com/grafana-tools/sdk">sdk&lt;/a>. Sdk can be installed using &lt;code>go get github.com/grafana-tools/sdk&lt;/code>.&lt;/p>
 &lt;p>Let&amp;rsquo;s start writing code. At the beginning of the file will be the package, import and main function&lt;/p>
@@ -943,7 +945,7 @@ For interaction with Grafana I use &lt;a href="https://github.com/grafana-tools/
 Today I will show how you can filter ebs snapshots by date with golang.
 To begin with I will create a folder and in it, I will initialize the go module
 mkdir snapshotFilter cd snapshotFilter go mod init snapshotFilter You need to create main.go which will contain the code. Let&amp;rsquo;s start with the main function and imports
-package main import ( &amp;#34;flag&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;log&amp;#34; &amp;#34;sort&amp;#34; &amp;#34;time&amp;#34; &amp;#34;github.</description><content>&lt;p>Hello!&lt;/p>
+package main import ( &amp;#34;flag&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;log&amp;#34; &amp;#34;sort&amp;#34; &amp;#34;time&amp;#34; &amp;#34;github.com/aws/aws-sdk-go/aws&amp;#34; &amp;#34;github.com/aws/aws-sdk-go/aws/session&amp;#34; &amp;#34;github.com/aws/aws-sdk-go/service/ec2&amp;#34; ) func main() { sess := session.</description><content>&lt;p>Hello!&lt;/p>
 &lt;p>Today I will show how you can filter ebs snapshots by date with golang.&lt;/p>
 &lt;p>To begin with I will create a folder and in it, I will initialize the go module&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>mkdir snapshotFilter

@@ -223,12 +223,12 @@ Start with the model. I will create a file &lt;code>Models/User.cs&lt;/code>, wh
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/EditForm&amp;gt;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>@code {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> User &lt;span style="color:#ae81ff">_&lt;/span>user = &lt;span style="color:#66d9ef">new&lt;/span> User();
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> &lt;span style="color:#ae81ff">_f&lt;/span>ormResult = &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> User _user = &lt;span style="color:#66d9ef">new&lt;/span> User();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> _formResult = &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> HandleValidSubmit()
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">_f&lt;/span>ormResult = &lt;span style="color:#e6db74">$&amp;#34;{_user.UserName}, {_user.LastName} was created&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> _formResult = &lt;span style="color:#e6db74">$&amp;#34;{_user.UserName}, {_user.LastName} was created&amp;#34;&lt;/span>;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/Iv4lXzE.gif" alt="FormNoValidation">&lt;/p>
@@ -295,12 +295,12 @@ Start with the model. I will create a file &lt;code>Models/User.cs&lt;/code>, wh
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/EditForm&amp;gt;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>@code {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> User &lt;span style="color:#ae81ff">_&lt;/span>user = &lt;span style="color:#66d9ef">new&lt;/span> User();
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> &lt;span style="color:#ae81ff">_f&lt;/span>ormResult = &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> User _user = &lt;span style="color:#66d9ef">new&lt;/span> User();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span> _formResult = &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">void&lt;/span> HandleValidSubmit()
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">_f&lt;/span>ormResult = &lt;span style="color:#e6db74">$&amp;#34;{_user.UserName}, {_user.LastName} was created&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> _formResult = &lt;span style="color:#e6db74">$&amp;#34;{_user.UserName}, {_user.LastName} was created&amp;#34;&lt;/span>;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/qgtdGQP.gif" alt="FinalResult">&lt;/p></content></item><item><title>Events in Blazor</title><link>https://mpostument.com/2020/10/15/events-in-blazor/</link><pubDate>Thu, 15 Oct 2020 11:37:56 +0300</pubDate><guid>https://mpostument.com/2020/10/15/events-in-blazor/</guid><description>Hello!
@@ -388,7 +388,7 @@ To pass data to the parrent component, a property of type EventCallback&amp;lt;T
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://i.imgur.com/6Gu761a.gif" alt="EventDemo">&lt;/p></content></item><item><title>Component With Parameters</title><link>https://mpostument.com/2020/10/14/components-with-parameters/</link><pubDate>Wed, 14 Oct 2020 11:47:34 +0300</pubDate><guid>https://mpostument.com/2020/10/14/components-with-parameters/</guid><description>Hello!
 Let&amp;rsquo;s see how you can use components in BlazorServer and pass parameters to them. To do this, make two classes Student and School which will be displayed on the page. These classes will be in the Models folder.
-Model using System.Collections.Generic; namespace BlazorLearn.Models { public class School { public string Name { get; set; } public List&amp;lt;Student&amp;gt; Students { get; set; } } } namespace BlazorLearn.</description><content>&lt;p>Hello!&lt;/p>
+Model using System.Collections.Generic; namespace BlazorLearn.Models { public class School { public string Name { get; set; } public List&amp;lt;Student&amp;gt; Students { get; set; } } } namespace BlazorLearn.Models { public class Student { public string FirstName { get; set; } public string LastName { get; set; } } } Razor Component Now I will create razor components that will be responsible for displaying the data.</description><content>&lt;p>Hello!&lt;/p>
 &lt;p>Let&amp;rsquo;s see how you can use components in BlazorServer and pass parameters to them.
 To do this, make two classes Student and School which will be displayed on the page. These classes will be in the Models folder.&lt;/p>
 &lt;h2 id="model">Model&lt;/h2>
@@ -671,7 +671,7 @@ The page will be created with the following content:
 &lt;p>After launching the application, the page will still work, even if we change it location. But with such a folder structure, it would be more logical to reflect this in the endopint. To do this in &lt;code>Test1.razor&lt;/code> i will change the endpoint from&lt;code>@page &amp;quot;/test1&amp;quot;&lt;/code>to&lt;code>@page &amp;quot;/demo/test1&amp;quot;&lt;/code>. Also, I need to make change in the &lt;code>NavMenu.razor&lt;/code> file from &lt;code>href = &amp;quot;test1&amp;quot;&lt;/code> to &lt;code>href = &amp;quot;demo/test1&amp;quot;&lt;/code>.&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/NtlshHK.png" alt="DemoPage">&lt;/p></content></item><item><title>Blazor Server Logging</title><link>https://mpostument.com/2020/10/10/blazor-server-logging/</link><pubDate>Sat, 10 Oct 2020 19:01:49 +0300</pubDate><guid>https://mpostument.com/2020/10/10/blazor-server-logging/</guid><description>Hi!
 Today we will see how to configure logging in BlazorServer. Immediately after creating a project, the appsettings.json file will be in the root of the project.
-{ &amp;#34;Logging&amp;#34;: { &amp;#34;LogLevel&amp;#34;: { &amp;#34;Default&amp;#34;: &amp;#34;Information&amp;#34;, &amp;#34;Microsoft&amp;#34;: &amp;#34;Warning&amp;#34;, &amp;#34;Microsoft.Hosting.Lifetime&amp;#34;: &amp;#34;Information&amp;#34; } }, &amp;#34;AllowedHosts&amp;#34;: &amp;#34;*&amp;#34; } This is where logging settings are set. LogLevel starts with Default which have value Information. This means that the default log level will be Information.</description><content>&lt;p>Hi!&lt;/p>
+{ &amp;#34;Logging&amp;#34;: { &amp;#34;LogLevel&amp;#34;: { &amp;#34;Default&amp;#34;: &amp;#34;Information&amp;#34;, &amp;#34;Microsoft&amp;#34;: &amp;#34;Warning&amp;#34;, &amp;#34;Microsoft.Hosting.Lifetime&amp;#34;: &amp;#34;Information&amp;#34; } }, &amp;#34;AllowedHosts&amp;#34;: &amp;#34;*&amp;#34; } This is where logging settings are set. LogLevel starts with Default which have value Information. This means that the default log level will be Information. Next is Microsoft with the Warning level, respectively for namespace Microsoft the login level will be Warning.</description><content>&lt;p>Hi!&lt;/p>
 &lt;p>Today we will see how to configure logging in BlazorServer.
 Immediately after creating a project, the &lt;code>appsettings.json&lt;/code> file will be in the root of the project.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
@@ -750,7 +750,7 @@ To use the logger, you must first import the desired namespace &lt;code>@using M
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">WeatherForecastService&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">readonly&lt;/span> ILogger&amp;lt;WeatherForecastService&amp;gt; &lt;span style="color:#ae81ff">_l&lt;/span>ogger;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">readonly&lt;/span> ILogger&amp;lt;WeatherForecastService&amp;gt; _logger;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">readonly&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>[] Summaries = &lt;span style="color:#66d9ef">new&lt;/span>[]
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;Freezing&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Bracing&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Chilly&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Cool&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Mild&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Warm&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Balmy&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Hot&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Sweltering&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Scorching&amp;#34;&lt;/span>
@@ -758,12 +758,12 @@ To use the logger, you must first import the desired namespace &lt;code>@using M
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> WeatherForecastService(ILogger&amp;lt;WeatherForecastService&amp;gt; logger)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">_l&lt;/span>ogger = logger;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> _logger = logger;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> Task&amp;lt;WeatherForecast[]&amp;gt; GetForecastAsync(DateTime startDate)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">_l&lt;/span>ogger.LogInformation(&lt;span style="color:#e6db74">&amp;#34;WeatherForecastService called&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> _logger.LogInformation(&lt;span style="color:#e6db74">&amp;#34;WeatherForecastService called&amp;#34;&lt;/span>);
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> rng = &lt;span style="color:#66d9ef">new&lt;/span> Random();
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> Task.FromResult(Enumerable.Range(&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">5&lt;/span>).Select(index =&amp;gt; &lt;span style="color:#66d9ef">new&lt;/span> WeatherForecast
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
@@ -885,7 +885,7 @@ For example, take &lt;code>Data/WeatherForecastService.cs&lt;/code>. In this cla
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> &lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">WeatherForecastService&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> IRandomData &lt;span style="color:#ae81ff">_&lt;/span>randomData;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> IRandomData _randomData;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">private&lt;/span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">readonly&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>[] Summaries = &lt;span style="color:#66d9ef">new&lt;/span>[]
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
@@ -894,7 +894,7 @@ For example, take &lt;code>Data/WeatherForecastService.cs&lt;/code>. In this cla
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> WeatherForecastService(IRandomData randomData)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">_&lt;/span>randomData = randomData;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> _randomData = randomData;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">public&lt;/span> Task&amp;lt;WeatherForecast[]&amp;gt; GetForecastAsync(DateTime startDate)
@@ -903,7 +903,7 @@ For example, take &lt;code>Data/WeatherForecastService.cs&lt;/code>. In this cla
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> Task.FromResult(Enumerable.Range(&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">5&lt;/span>).Select(index =&amp;gt; &lt;span style="color:#66d9ef">new&lt;/span> WeatherForecast
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Date = startDate.AddDays(index),
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> TemperatureC = &lt;span style="color:#ae81ff">_&lt;/span>randomData.GetRandomData(),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> TemperatureC = _randomData.GetRandomData(),
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Summary = Summaries[rng.Next(Summaries.Length)]
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }).ToArray());
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
@@ -954,7 +954,8 @@ The first thing to consider is how to change the message displayed to the user i
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>There can be both a message and an entire html page. Replacing the text of the message I get:&lt;br>
 &lt;img src="https://i.imgur.com/XyheYSU.png" alt="NotExist">&lt;/p></content></item><item><title>Blazor Server Routing</title><link>https://mpostument.com/2020/10/01/blazor-server-routing/</link><pubDate>Thu, 01 Oct 2020 21:09:00 +0300</pubDate><guid>https://mpostument.com/2020/10/01/blazor-server-routing/</guid><description>Hello! Today I want to tell you how routing works in Blazor Server.
 Routing starts in the Startup.cs file. The following code will responsible for it
-app.UseRouting(); app.UseEndpoints(endpoints =&amp;gt; { endpoints.MapBlazorHub(); endpoints.MapFallbackToPage(&amp;#34;/_Host&amp;#34;); }); app.UseRouting(); came from asp.net and adds route matching to the middleware pipeline. This middleware looks at the set of endpoints defined in the app, and selects the best match based on the request.</description><content>&lt;p>Hello!
+app.UseRouting(); app.UseEndpoints(endpoints =&amp;gt; { endpoints.MapBlazorHub(); endpoints.MapFallbackToPage(&amp;#34;/_Host&amp;#34;); }); app.UseRouting(); came from asp.net and adds route matching to the middleware pipeline. This middleware looks at the set of endpoints defined in the app, and selects the best match based on the request.
+app.UseEndpoints() adds endpoint execution to the middleware pipeline.</description><content>&lt;p>Hello!
 Today I want to tell you how routing works in Blazor Server.&lt;br>
 Routing starts in the &lt;code>Startup.cs&lt;/code> file. The following code will responsible for it&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-csharp" data-lang="csharp">&lt;span style="display:flex;">&lt;span> app.UseRouting();

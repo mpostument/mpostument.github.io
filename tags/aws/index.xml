@@ -525,7 +525,7 @@ At the root of the repository, I create a file &lt;code>serverless.yml&lt;/code>
 Today I will show how you can filter ebs snapshots by date with golang.
 To begin with I will create a folder and in it, I will initialize the go module
 mkdir snapshotFilter cd snapshotFilter go mod init snapshotFilter You need to create main.go which will contain the code. Let&amp;rsquo;s start with the main function and imports
-package main import ( &amp;#34;flag&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;log&amp;#34; &amp;#34;sort&amp;#34; &amp;#34;time&amp;#34; &amp;#34;github.</description><content>&lt;p>Hello!&lt;/p>
+package main import ( &amp;#34;flag&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;log&amp;#34; &amp;#34;sort&amp;#34; &amp;#34;time&amp;#34; &amp;#34;github.com/aws/aws-sdk-go/aws&amp;#34; &amp;#34;github.com/aws/aws-sdk-go/aws/session&amp;#34; &amp;#34;github.com/aws/aws-sdk-go/service/ec2&amp;#34; ) func main() { sess := session.</description><content>&lt;p>Hello!&lt;/p>
 &lt;p>Today I will show how you can filter ebs snapshots by date with golang.&lt;/p>
 &lt;p>To begin with I will create a folder and in it, I will initialize the go module&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>mkdir snapshotFilter

@@ -32,12 +32,12 @@
 </span></span><span style=display:flex><span>&lt;/EditForm&gt;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>@code {
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> User <span style=color:#ae81ff>_</span>user = <span style=color:#66d9ef>new</span> User();
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>string</span> <span style=color:#ae81ff>_f</span>ormResult = <span style=color:#e6db74>&#34;&#34;</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> User _user = <span style=color:#66d9ef>new</span> User();
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>string</span> _formResult = <span style=color:#e6db74>&#34;&#34;</span>;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> HandleValidSubmit()
 </span></span><span style=display:flex><span>    {
-</span></span><span style=display:flex><span>        <span style=color:#ae81ff>_f</span>ormResult = <span style=color:#e6db74>$&#34;{_user.UserName}, {_user.LastName} was created&#34;</span>;
+</span></span><span style=display:flex><span>        _formResult = <span style=color:#e6db74>$&#34;{_user.UserName}, {_user.LastName} was created&#34;</span>;
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p><img src=https://i.imgur.com/Iv4lXzE.gif alt=FormNoValidation></p><p>Форма працює, але в полі Age я ввів -30 і ніякої валідації не відбулось. Добавимо тепер валідацію</p><h2 id=form-validation>Form Validation<a href=#form-validation class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Валідація добавляється за допомогою атрибутів. Повернемось до моделі і внесемо декілька змін.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#66d9ef>using</span> System.ComponentModel.DataAnnotations;
@@ -96,12 +96,12 @@
 </span></span><span style=display:flex><span>&lt;/EditForm&gt;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>@code {
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> User <span style=color:#ae81ff>_</span>user = <span style=color:#66d9ef>new</span> User();
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>string</span> <span style=color:#ae81ff>_f</span>ormResult = <span style=color:#e6db74>&#34;&#34;</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> User _user = <span style=color:#66d9ef>new</span> User();
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>string</span> _formResult = <span style=color:#e6db74>&#34;&#34;</span>;
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>void</span> HandleValidSubmit()
 </span></span><span style=display:flex><span>    {
-</span></span><span style=display:flex><span>        <span style=color:#ae81ff>_f</span>ormResult = <span style=color:#e6db74>$&#34;{_user.UserName}, {_user.LastName} was created&#34;</span>;
+</span></span><span style=display:flex><span>        _formResult = <span style=color:#e6db74>$&#34;{_user.UserName}, {_user.LastName} was created&#34;</span>;
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p><img src=https://i.imgur.com/qgtdGQP.gif alt=FinalResult></p></div></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button previous"><a href=https://mpostument.com/ua/2020/10/17/blazor-server-authorization/><span class=button__icon>←</span>
