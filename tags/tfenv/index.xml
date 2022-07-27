@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>tfenv on Maksym Postument</title><link>https://mpostument.com/tags/tfenv/</link><description>Recent content in tfenv on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 26 Jul 2022 20:54:23 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/tfenv/index.xml" rel="self" type="application/rss+xml"/><item><title>Manage terraform with tfenv</title><link>https://mpostument.com/2022/07/26/terraform-install/</link><pubDate>Tue, 26 Jul 2022 20:54:23 +0300</pubDate><guid>https://mpostument.com/2022/07/26/terraform-install/</guid><description>Hello!
+This is the first article in a series of articles about terraform. In it, we will learn how to install terraform using tfenv and how to configure vscode to work with terraform.
+tfenv You will need tfenv to get started. It makes it very easy to install and manage different versions of terraform. The tfenv code is located at github.
+To install, you need to clone git repository
+git clone --depth=1 https://github.</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>This is the first article in a series of articles about terraform. In it, we will learn how to install terraform using tfenv and how to configure vscode to work with terraform.&lt;/p>
+&lt;h2 id="tfenv">tfenv&lt;/h2>
+&lt;p>You will need tfenv to get started. It makes it very easy to install and manage different versions of terraform.
+The tfenv code is located at &lt;a href="https://github.com/tfutils/tfenv">github&lt;/a>.&lt;/p>
+&lt;p>To install, you need to clone git repository&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>git clone --depth&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span> https://github.com/tfutils/tfenv.git ~/.tfenv
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now if I call the &lt;code>tfenv&lt;/code> command I will get an error. To make &lt;code>tfenv&lt;/code> work, you need to add &lt;code>tfenv&lt;/code> to the PATH or execute the command &lt;code>ln -s ~/.tfenv/bin/* /usr/local/bin&lt;/code>. And now if I call &lt;code>tfenv&lt;/code> I will see the result&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ tfenv
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>tfenv 2.2.2-158-gc05c364
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Usage: tfenv &amp;lt;command&amp;gt; &lt;span style="color:#f92672">[&lt;/span>&amp;lt;options&amp;gt;&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Commands:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> install Install a specific version of Terraform
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> use Switch a version to use
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> uninstall Uninstall a specific version of Terraform
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> list List all installed versions
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> list-remote List all installable versions
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> version-name Print current version
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> init Update environment to use tfenv correctly.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> pin Write the current active version to ./.terraform-version
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Finally &lt;code>tfenv&lt;/code> is ready to use. In order to install &lt;code>terraform&lt;/code>, you can call the &lt;code>tfenv install&lt;/code> command, which download the latest available version of &lt;code>terraform&lt;/code>. To install a specific version, you need to call the command &lt;code>tfenv install 0.13.2&lt;/code>, and terraform version &lt;code>0.13.2&lt;/code> will be installed.&lt;/p>
+&lt;p>To see the list of versions available for installation, you need to execute the &lt;code>tfenv list-remote&lt;/code> command&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ tfenv list-remote
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.3.0-alpha20220706
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.3.0-alpha20220622
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.3.0-alpha20220608
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.5
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.4
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.3
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.0-rc2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.0-rc1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.0-beta1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.0-alpha20220413
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.0-alpha
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.1.9
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.1.8
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You can also check the versions that are already installed using &lt;code>tfenv list&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ tfenv list
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 1.2.4
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 1.1.9
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 1.1.6
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 1.0.11
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 1.0.5
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 1.0.1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 1.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 0.14.11
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 0.14.10784023458628
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>And to specify which version of terraform to use, you need to execute the command &lt;span style="color:#e6db74">`&lt;/span>tfenv use VERSION&lt;span style="color:#e6db74">`&lt;/span>.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">```&lt;/span>shell
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ tfenv use 0.14.6
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Switching default version to v0.14.6
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Switching completed
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ terraform version
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform v0.14.6
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Your version of Terraform is out of date! The latest version
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>is 1.2.5. You can update by downloading from https://www.terraform.io/downloads.html
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Make sure terraform version is already installed&lt;/p>
+&lt;p>In addition, &lt;code>tfenv&lt;/code> supports the &lt;code>.terraform-version&lt;/code> file. In this file, you can specify the version of &lt;code>terraform&lt;/code> and &lt;code>tfenv&lt;/code> will automatically download and start using the correct version of &lt;code>terraform&lt;/code>. For example, I will create a file &lt;code>.terraform-version&lt;/code> with the content &lt;code>1.1.1&lt;/code> and in the same directory I execute the command &lt;code>tfenv use&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ tfenv use
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>No installed versions of terraform matched &lt;span style="color:#e6db74">&amp;#39;1.1.1:^1.1.1$&amp;#39;&lt;/span>. Trying to install a matching version since TFENV_AUTO_INSTALL&lt;span style="color:#f92672">=&lt;/span>true
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Installing Terraform v1.1.1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Downloading release tarball from https://releases.hashicorp.com/terraform/1.1.1/terraform_1.1.1_linux_amd64.zip
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">################################################################################################################################################ 100,0%&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Downloading SHA hash file from https://releases.hashicorp.com/terraform/1.1.1/terraform_1.1.1_SHA256SUMS
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Not instructed to use Local PGP &lt;span style="color:#f92672">(&lt;/span>/home/maksym/.tfenv/use-&lt;span style="color:#f92672">{&lt;/span>gpgv,gnupg&lt;span style="color:#f92672">})&lt;/span> &amp;amp; No keybase install found, skipping OpenPGP signature verification
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Archive: /tmp/tfenv_download.xtUx15/terraform_1.1.1_linux_amd64.zip
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> inflating: /home/maksym/.tfenv/versions/1.1.1/terraform
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Installation of terraform v1.1.1 successful. To make this your default version, run &lt;span style="color:#e6db74">&amp;#39;tfenv use 1.1.1&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Switching default version to v1.1.1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Default version file overridden by /tmp/.terraform-version, changing the default version has no effect
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Default version &lt;span style="color:#f92672">(&lt;/span>when not overridden by .terraform-version or TFENV_TERRAFORM_VERSION&lt;span style="color:#f92672">)&lt;/span> is now: 1.1.1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ Terraform v1.1.1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>on linux_amd64
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Your version of Terraform is out of date! The latest version
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>is 1.2.5. You can update by downloading from https://www.terraform.io/downloads.html
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Although it is not necessary to call &lt;code>tfenv use&lt;/code>. I will change the version of &lt;code>terraform&lt;/code> in &lt;code>.terraform-version&lt;/code> to &lt;code>1.1.2&lt;/code> and execute &lt;code>terraform&lt;/code>. And version will be automatically installed and selected for use&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ terraform version
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>version &lt;span style="color:#e6db74">&amp;#39;1.1.2&amp;#39;&lt;/span> is not installed &lt;span style="color:#f92672">(&lt;/span>set by /tmp/.terraform-version&lt;span style="color:#f92672">)&lt;/span>. Installing now as TFENV_AUTO_INSTALL&lt;span style="color:#f92672">==&lt;/span>true
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Installing Terraform v1.1.2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Downloading release tarball from https://releases.hashicorp.com/terraform/1.1.2/terraform_1.1.2_linux_amd64.zip
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">################################################################################################################################################ 100,0%&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Downloading SHA hash file from https://releases.hashicorp.com/terraform/1.1.2/terraform_1.1.2_SHA256SUMS
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Not instructed to use Local PGP &lt;span style="color:#f92672">(&lt;/span>/home/maksym/.tfenv/use-&lt;span style="color:#f92672">{&lt;/span>gpgv,gnupg&lt;span style="color:#f92672">})&lt;/span> &amp;amp; No keybase install found, skipping OpenPGP signature verification
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Archive: /tmp/tfenv_download.6MKarM/terraform_1.1.2_linux_amd64.zip
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> inflating: /home/maksym/.tfenv/versions/1.1.2/terraform
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Installation of terraform v1.1.2 successful. To make this your default version, run &lt;span style="color:#e6db74">&amp;#39;tfenv use 1.1.2&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform v1.1.2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>on linux_amd64
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Your version of Terraform is out of date! The latest version
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>is 1.2.5. You can update by downloading from https://www.terraform.io/downloads.html
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>With &lt;code>.terraform-version&lt;/code> it is very easy to control which version of &lt;code>terraform&lt;/code> is used in different projects.&lt;/p>
+&lt;h2 id="vscode">VSCode&lt;/h2>
+&lt;p>To make easier to write &lt;code>terraform&lt;/code> code, I use the &lt;a href="https://code.visualstudio.com/Download">Visual Studio Code&lt;/a>. After the vscode is installed, you need to install &lt;code>HashiCorp Terraform&lt;/code> extension for it. To install the extension, you need to press Ctrl+Shift+X or click on &lt;img src="https://i.imgur.com/LBbwNV2.png" alt="extension"> and enter &lt;code>terraform&lt;/code> in the search, select &lt;code>HashiCorp Terraform&lt;/code> and click &lt;code>Install&lt;/code>&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/BkCOuIO.png" alt="tf">&lt;/p>
+&lt;p>&lt;code>terraform&lt;/code> has a command called &lt;code>terraform fmt&lt;/code> and it formats &lt;code>terraform&lt;/code> code. This process can be automated using vscode. To do this, you need to press Ctrl+Shift+P and in the panel that appear, type &lt;code>&amp;gt;Open Settings (Json)&lt;/code> and select the corresponding item in the menu and add &lt;code>editor.formatOnSave: true&lt;/code> in the right window that opens&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/334BSgG.png" alt="settings">&lt;/p>
+&lt;p>Now every time a file is saved, &lt;code>terraform fmt&lt;/code> will automatically be called for that file.&lt;/p></content></item></channel></rss>

@@ -1,4 +1,113 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Terraform on Maksym Postument</title><link>https://mpostument.com/ua/tags/terraform/</link><description>Recent content in Terraform on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 08 Mar 2022 20:29:47 +0200</lastBuildDate><atom:link href="https://mpostument.com/ua/tags/terraform/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS Synthetics With Terraform. Problems?</title><link>https://mpostument.com/ua/2022/03/08/aws-synthetics-with-terraform/</link><pubDate>Tue, 08 Mar 2022 20:29:47 +0200</pubDate><guid>https://mpostument.com/ua/2022/03/08/aws-synthetics-with-terraform/</guid><description>Привіт!
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Terraform on Maksym Postument</title><link>https://mpostument.com/ua/tags/terraform/</link><description>Recent content in Terraform on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 26 Jul 2022 20:54:23 +0300</lastBuildDate><atom:link href="https://mpostument.com/ua/tags/terraform/index.xml" rel="self" type="application/rss+xml"/><item><title>Manage terraform with tfenv</title><link>https://mpostument.com/ua/2022/07/26/terraform-install/</link><pubDate>Tue, 26 Jul 2022 20:54:23 +0300</pubDate><guid>https://mpostument.com/ua/2022/07/26/terraform-install/</guid><description>Привіт!
+Це перша стаття з серії статей про terraform. В ній розглянемо як можна встановити terraform за допомогою tfenv та як налаштувати vscode для зручної роботи.
+tfenv Для початку буде потрібен tfenv. Він дозволяє дуже легко встановлювати та управляти різними версії terraform. Код tfenv знаходиться в github.
+Щоб встановити потрібно клонувати репозиторій
+git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv Тепер якщо викликати команду tfenv отримаємо помилку. Щоб не було помилки потрібно добавити tfenv в PATH або виконати команду ln -s ~/.</description><content>&lt;p>Привіт!&lt;/p>
+&lt;p>Це перша стаття з серії статей про terraform. В ній розглянемо як можна встановити terraform за допомогою tfenv та як налаштувати vscode для зручної роботи.&lt;/p>
+&lt;h2 id="tfenv">tfenv&lt;/h2>
+&lt;p>Для початку буде потрібен tfenv. Він дозволяє дуже легко встановлювати та управляти різними версії terraform.
+Код tfenv знаходиться в &lt;a href="https://github.com/tfutils/tfenv">github&lt;/a>.&lt;/p>
+&lt;p>Щоб встановити потрібно клонувати репозиторій&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>git clone --depth&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span> https://github.com/tfutils/tfenv.git ~/.tfenv
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер якщо викликати команду &lt;code>tfenv&lt;/code> отримаємо помилку. Щоб не було помилки потрібно добавити &lt;code>tfenv&lt;/code> в PATH або виконати команду &lt;code>ln -s ~/.tfenv/bin/* /usr/local/bin&lt;/code>. І тепер якщо викликати &lt;code>tfenv&lt;/code> отримаємо результат&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ tfenv
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>tfenv 2.2.2-84-g459d15b
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Usage: tfenv &amp;lt;command&amp;gt; &lt;span style="color:#f92672">[&lt;/span>&amp;lt;options&amp;gt;&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Commands:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> install Install a specific version of Terraform
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> use Switch a version to use
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> uninstall Uninstall a specific version of Terraform
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> list List all installed versions
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> list-remote List all installable versions
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> version-name Print current version
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> init Update environment to use tfenv correctly.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> pin Write the current active version to ./.terraform-version
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>tfenv&lt;/code> готовий до використання. Для того щоб встановити &lt;code>terraform&lt;/code> можна викликати команду &lt;code>tfenv install&lt;/code>, в такому випадку буде встановлено останню доступну версію &lt;code>terraform&lt;/code>. Щоб встановити конкретну версію потрібно викликати команду &lt;code>tfenv install 0.13.2&lt;/code> і буде встановлено версію &lt;code>0.13.2&lt;/code>.&lt;/p>
+&lt;p>Щоб подивитись список версій доступних для встановлення потрібно виконати команду &lt;code>tfenv list-remote&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ tfenv list-remote
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.3.0-alpha20220706
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.3.0-alpha20220622
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.3.0-alpha20220608
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.5
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.4
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.3
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.0-rc2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.0-rc1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.0-beta1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.0-alpha20220413
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.2.0-alpha
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.1.9
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>1.1.8
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Також можна перевірити версії які вже є встановленні за допомогою &lt;code>tfenv list&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ tfenv list
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 1.2.4
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 1.1.9
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 1.1.6
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 1.0.11
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 1.0.5
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 1.0.1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 1.0.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 0.14.11
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 0.14.10784023458628
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>А для того щоб вказати яку версію використовувати потрібно виконати команду &lt;span style="color:#e6db74">`&lt;/span>tfenv use VERSION&lt;span style="color:#e6db74">`&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">```&lt;/span>shell
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ tfenv use 0.14.6
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Switching default version to v0.14.6
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Switching completed
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ terraform version
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform v0.14.6
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Your version of Terraform is out of date! The latest version
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>is 1.2.5. You can update by downloading from https://www.terraform.io/downloads.html
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Окрім цього &lt;code>tfenv&lt;/code> підтримує файл &lt;code>.terraform-version&lt;/code>. В цьому файлі можна вказати версію &lt;code>terraform&lt;/code> і &lt;code>tfenv&lt;/code> автоматично завантажить і почне використовувати потрібну версію &lt;code>terraform&lt;/code>. Наприклад я створю файл &lt;code>.terraform-version&lt;/code> з контентом &lt;code>1.1.1&lt;/code> і в тій ж самій директорії викличу команду &lt;code>tfenv use&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ tfenv use
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>No installed versions of terraform matched &lt;span style="color:#e6db74">&amp;#39;1.1.1:^1.1.1$&amp;#39;&lt;/span>. Trying to install a matching version since TFENV_AUTO_INSTALL&lt;span style="color:#f92672">=&lt;/span>true
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Installing Terraform v1.1.1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Downloading release tarball from https://releases.hashicorp.com/terraform/1.1.1/terraform_1.1.1_linux_amd64.zip
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">################################################################################################################################################ 100,0%&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Downloading SHA hash file from https://releases.hashicorp.com/terraform/1.1.1/terraform_1.1.1_SHA256SUMS
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Not instructed to use Local PGP &lt;span style="color:#f92672">(&lt;/span>/home/maksym/.tfenv/use-&lt;span style="color:#f92672">{&lt;/span>gpgv,gnupg&lt;span style="color:#f92672">})&lt;/span> &amp;amp; No keybase install found, skipping OpenPGP signature verification
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Archive: /tmp/tfenv_download.xtUx15/terraform_1.1.1_linux_amd64.zip
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> inflating: /home/maksym/.tfenv/versions/1.1.1/terraform
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Installation of terraform v1.1.1 successful. To make this your default version, run &lt;span style="color:#e6db74">&amp;#39;tfenv use 1.1.1&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Switching default version to v1.1.1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Default version file overridden by /tmp/.terraform-version, changing the default version has no effect
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Default version &lt;span style="color:#f92672">(&lt;/span>when not overridden by .terraform-version or TFENV_TERRAFORM_VERSION&lt;span style="color:#f92672">)&lt;/span> is now: 1.1.1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ Terraform v1.1.1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>on linux_amd64
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Your version of Terraform is out of date! The latest version
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>is 1.2.5. You can update by downloading from https://www.terraform.io/downloads.html
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Хоча &lt;code>tfenv use&lt;/code> викликати навіть не обов&amp;rsquo;язково. Зміню версію &lt;code>terraform&lt;/code> в &lt;code>.terraform-version&lt;/code> на &lt;code>1.1.2&lt;/code> і викличу &lt;code>terraform&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ terraform version
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>version &lt;span style="color:#e6db74">&amp;#39;1.1.2&amp;#39;&lt;/span> is not installed &lt;span style="color:#f92672">(&lt;/span>set by /tmp/.terraform-version&lt;span style="color:#f92672">)&lt;/span>. Installing now as TFENV_AUTO_INSTALL&lt;span style="color:#f92672">==&lt;/span>true
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Installing Terraform v1.1.2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Downloading release tarball from https://releases.hashicorp.com/terraform/1.1.2/terraform_1.1.2_linux_amd64.zip
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">################################################################################################################################################ 100,0%&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Downloading SHA hash file from https://releases.hashicorp.com/terraform/1.1.2/terraform_1.1.2_SHA256SUMS
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Not instructed to use Local PGP &lt;span style="color:#f92672">(&lt;/span>/home/maksym/.tfenv/use-&lt;span style="color:#f92672">{&lt;/span>gpgv,gnupg&lt;span style="color:#f92672">})&lt;/span> &amp;amp; No keybase install found, skipping OpenPGP signature verification
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Archive: /tmp/tfenv_download.6MKarM/terraform_1.1.2_linux_amd64.zip
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> inflating: /home/maksym/.tfenv/versions/1.1.2/terraform
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Installation of terraform v1.1.2 successful. To make this your default version, run &lt;span style="color:#e6db74">&amp;#39;tfenv use 1.1.2&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform v1.1.2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>on linux_amd64
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Your version of Terraform is out of date! The latest version
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>is 1.2.5. You can update by downloading from https://www.terraform.io/downloads.html
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>За допомогою &lt;code>.terraform-version&lt;/code> дуже легко контролювати яка версія &lt;code>terraform&lt;/code> використовується якщо для різних проектів потрібні різні версії.&lt;/p>
+&lt;h2 id="vscode">VSCode&lt;/h2>
+&lt;p>Для того щоб зручно було писати &lt;code>terraform&lt;/code> код я використовую текстовий редактор &lt;a href="https://code.visualstudio.com/Download">Visual Studio Code&lt;/a>. Після того як редактор встановлено для нього потрібно поставити &lt;code>HashiCorp Terraform&lt;/code> додаток. Щоб встановити додаток потрібно натиснути Ctrl+Shift+X або натиснути на &lt;img src="https://i.imgur.com/LBbwNV2.png" alt="extension"> і в пошуку ввести &lt;code>terraform&lt;/code>, обрати &lt;code>HashiCorp Terraform&lt;/code> та натиснути &lt;code>Install&lt;/code>&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/BkCOuIO.png" alt="tf">&lt;/p>
+&lt;p>&lt;code>terraform&lt;/code> має команду яка називається &lt;code>terraform fmt&lt;/code> і вона форматує &lt;code>terraform&lt;/code> код. Цей процес можна автоматизувати за допомогою vscode. Для цього потрібно натиснути Ctrl+Shift+P і в панелі що відкрилась вести &lt;code>&amp;gt;Open Settings (Json)&lt;/code> та вибрати відповідний елемент в меню і в правому вікні що відкрилось додати &lt;code>editor.formatOnSave&amp;quot;: true&lt;/code>&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/334BSgG.png" alt="settings">&lt;/p>
+&lt;p>Тепер кожен раз як файл зберігається &lt;code>terraform fmt&lt;/code> автоматично буде викликано для цього файлу.&lt;/p></content></item><item><title>AWS Synthetics With Terraform. Problems?</title><link>https://mpostument.com/ua/2022/03/08/aws-synthetics-with-terraform/</link><pubDate>Tue, 08 Mar 2022 20:29:47 +0200</pubDate><guid>https://mpostument.com/ua/2022/03/08/aws-synthetics-with-terraform/</guid><description>Привіт!
 Недавно я за допомогою terraform автоматизовував створення AWS Synthetics, і стикнувся з декількома проблемами та хочу поділитись як я їх вирішив.
 locals { common_tags = { cost-center = &amp;#34;observability&amp;#34; label = &amp;#34;canary&amp;#34; environment = &amp;#34;staging&amp;#34; } } data &amp;#34;archive_file&amp;#34; &amp;#34;login&amp;#34; { type = &amp;#34;zip&amp;#34; source_dir = &amp;#34;${path.module}/functions/login/&amp;#34; output_path = &amp;#34;${path.module}/functions/login.zip&amp;#34; } resource &amp;#34;aws_synthetics_canary&amp;#34; &amp;#34;login&amp;#34; { name = &amp;#34;login_test&amp;#34; artifact_s3_location = &amp;#34;s3://my_canary_bucket/&amp;#34; execution_role_arn = &amp;#34;role_arn&amp;#34; handler = &amp;#34;index.handler&amp;#34; zip_file = data.</description><content>&lt;p>Привіт!&lt;/p>
 &lt;p>Недавно я за допомогою terraform автоматизовував створення &lt;code>AWS Synthetics&lt;/code>, і стикнувся з декількома проблемами та хочу поділитись як я їх вирішив.&lt;/p>
