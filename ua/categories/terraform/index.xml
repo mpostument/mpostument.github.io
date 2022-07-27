@@ -105,4 +105,7 @@ git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv Тепер я�
 &lt;p>&lt;img src="https://i.imgur.com/BkCOuIO.png" alt="tf">&lt;/p>
 &lt;p>&lt;code>terraform&lt;/code> має команду яка називається &lt;code>terraform fmt&lt;/code> і вона форматує &lt;code>terraform&lt;/code> код. Цей процес можна автоматизувати за допомогою vscode. Для цього потрібно натиснути Ctrl+Shift+P і в панелі що відкрилась вести &lt;code>&amp;gt;Open Settings (Json)&lt;/code> та вибрати відповідний елемент в меню і в правому вікні що відкрилось додати &lt;code>editor.formatOnSave&amp;quot;: true&lt;/code>&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/334BSgG.png" alt="settings">&lt;/p>
-&lt;p>Тепер кожен раз як файл зберігається &lt;code>terraform fmt&lt;/code> автоматично буде викликано для цього файлу.&lt;/p></content></item></channel></rss>
+&lt;p>Тепер кожен раз як файл зберігається &lt;code>terraform fmt&lt;/code> автоматично буде викликано для цього файлу.&lt;/p>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/spUmYQckLX4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item></channel></rss>
