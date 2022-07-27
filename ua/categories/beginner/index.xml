@@ -54,11 +54,8 @@ git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv Тепер я�
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 1.0.0
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 0.14.11
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 0.14.10784023458628
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>А для того щоб вказати яку версію використовувати потрібно виконати команду &lt;span style="color:#e6db74">`&lt;/span>tfenv use VERSION&lt;span style="color:#e6db74">`&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74">```&lt;/span>shell
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ tfenv use 0.14.6
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>А для того щоб вказати яку версію використовувати потрібно виконати команду &lt;code>tfenv use VERSION&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ tfenv use 0.14.6
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Switching default version to v0.14.6
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Switching completed
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ terraform version
