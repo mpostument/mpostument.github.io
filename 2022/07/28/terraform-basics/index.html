@@ -1,0 +1,234 @@
+<!doctype html><html lang=en><head><title>Terraform Basics :: Maksym Postument</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Second article in series about terraform. In this article i will show install terraform provider and create AWS EC2 using terraform"><meta name=keywords content="VSCode,Devops,Terraform,tfenv,HashiCorp,Beginner,AWS"><meta name=robots content="noodp"><link rel=canonical href=https://mpostument.com/2022/07/28/terraform-basics/><script async src="https://www.googletagmanager.com/gtag/js?id=G-SBRJXS94DC"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-SBRJXS94DC",{anonymize_ip:!1})}</script><link rel=stylesheet href=https://mpostument.com/assets/style.css><link rel=stylesheet href=https://mpostument.com/assets/blue.css><link rel=apple-touch-icon href=https://mpostument.com/img/apple-touch-icon-192x192.png><link rel="shortcut icon" href=https://mpostument.com/img/favicon/blue.png><meta name=twitter:card content="summary"><meta name=twitter:site content="mpostument.com"><meta name=twitter:creator content="Maks_Postument"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="Terraform Basics"><meta property="og:description" content="Second article in series about terraform. In this article i will show install terraform provider and create AWS EC2 using terraform"><meta property="og:url" content="https://mpostument.com/2022/07/28/terraform-basics/"><meta property="og:site_name" content="Maksym Postument"><meta property="og:image" content="https://i.imgur.com/1D8KPBs.jpg"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:section" content="Devops"><meta property="article:section" content="Terraform"><meta property="article:section" content="Beginner"><meta property="article:published_time" content="2022-07-28 20:27:17 +0300 +0300"><p align=center style=background-color:#23b0ff>Sign up for my <a href=https://tinyletter.com/mpostument>email newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of new blog posts.</p></head><body class=blue><div class="container center headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/><div class=logo>mpostument.com</div></a></div><div class=menu-trigger>menu</div></div><nav class=menu><ul class="menu__inner menu__inner--desktop"><li><a href=/>Home</a></li><li><a href=/categories/>Categories</a></li><li><a href=/tags/>Tags</a></li><li><a href=/projects/>Projects</a></li><div class=spacer></div><ul class=language-selector><ul class=language-selector-current><li>English ▾</li></ul><ul class="language-selector__more hidden"><li><a href=https://mpostument.com/>English</a></li><li><a href=https://mpostument.com/ua/>Ukraine</a></li></ul></ul></ul><ul class="menu__inner menu__inner--mobile"><li><a href=/>Home</a></li><li><a href=/categories/>Categories</a></li><li><a href=/tags/>Tags</a></li><li><a href=/projects/>Projects</a></li><hr><li><a href=https://mpostument.com/>English</a></li><li><a href=https://mpostument.com/ua/>Ukraine</a></li></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://mpostument.com/2022/07/28/terraform-basics/>Terraform Basics</a></h1><div class=post-meta><span class=post-date>2022-07-28</span>
+<span class=post-author>:: Maksym Postument</span>
+<span class=post-reading-time>:: 7 min read (1437 words)</span></div><span class=post-tags>#<a href=https://mpostument.com/tags/vscode/>VSCode</a>&nbsp;
+#<a href=https://mpostument.com/tags/devops/>Devops</a>&nbsp;
+#<a href=https://mpostument.com/tags/terraform/>Terraform</a>&nbsp;
+#<a href=https://mpostument.com/tags/tfenv/>tfenv</a>&nbsp;
+#<a href=https://mpostument.com/tags/hashicorp/>HashiCorp</a>&nbsp;
+#<a href=https://mpostument.com/tags/beginner/>Beginner</a>&nbsp;
+#<a href=https://mpostument.com/tags/aws/>AWS</a>&nbsp;</span>
+<img src=https://i.imgur.com/1D8KPBs.jpg class=post-cover alt="Terraform Basics" title="Cover Image"><div class=post-content><div><p><a href=https://mpostument.com/2022/07/26/terraform-install/ title="Part 1 - Terraform Install">Part 1 - Terraform Install</a></p><p>Hello!</p><p>In the previous article, we learn how to install terraform. And now we will learn how using terraform you can create and delete resources in AWS.</p><p>In order for terraform to manage resources in AWS, you need to install terraform AWS provider. Terraform will do this automatically if I specify AWS provider in the terraform code and call <code>terraform init</code>.</p><p>I will create a terraform_code directory and in this directory i will create a file with name provider.tf. The name of the file can be any, but I prefer to call it provider.tf, because it is easier to understand what in this file based on name.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>mkdir terraform_code
+</span></span><span style=display:flex><span>touch provider.tf
+</span></span></code></pre></div><p>I will add the following content to provider.tf</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#a6e22e>terraform</span> {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>required_providers</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>aws</span> = {
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>source</span> = <span style=color:#e6db74>&#34;hashicorp/aws&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>version</span> = <span style=color:#e6db74>&#34;4.23.0&#34;</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>The terraform section indicates which provider to use and which version. AWS Provicer release information can be found in <a href=https://github.com/hashicorp/terraform-provider-aws/releases>GitHub</a>.</p><p>Once file is saved, you can immediately execute <code>terraform init</code> to load the provider. But before that, you need to choose which version of terraform will be used. To do this, I will create a file named .terraform-version and write 1.2.6 into it. Then tfenv will do everything automatically.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ terraform init
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Initializing the backend...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Initializing provider plugins...
+</span></span><span style=display:flex><span>- Finding hashicorp/aws versions matching <span style=color:#e6db74>&#34;4.23.0&#34;</span>...
+</span></span><span style=display:flex><span>- Installing hashicorp/aws v4.23.0...
+</span></span><span style=display:flex><span>- Installed hashicorp/aws v4.23.0 <span style=color:#f92672>(</span>signed by HashiCorp<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Terraform has created a lock file .terraform.lock.hcl to record the provider
+</span></span><span style=display:flex><span>selections it made above. Include this file in your version control repository
+</span></span><span style=display:flex><span>so that Terraform can guarantee to make the same selections by default when
+</span></span><span style=display:flex><span>you run <span style=color:#e6db74>&#34;terraform init&#34;</span> in the future.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Terraform has been successfully initialized!
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>You may now begin working with Terraform. Try running <span style=color:#e6db74>&#34;terraform plan&#34;</span> to see
+</span></span><span style=display:flex><span>any changes that are required <span style=color:#66d9ef>for</span> your infrastructure. All Terraform commands
+</span></span><span style=display:flex><span>should now work.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>If you ever set or change modules or backend configuration <span style=color:#66d9ef>for</span> Terraform,
+</span></span><span style=display:flex><span>rerun this command to reinitialize your working directory. If you forget, other
+</span></span><span style=display:flex><span>commands will detect it and remind you to <span style=color:#66d9ef>do</span> so <span style=color:#66d9ef>if</span> necessary.
+</span></span></code></pre></div><p>When the command finished successfully, a file named .terraform.lock.hcl and a directory named .terraform will be created. The content of .terraform.lock.hcl will look something like this</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#75715e># This file is maintained automatically by &#34;terraform init&#34;.
+</span></span></span><span style=display:flex><span><span style=color:#75715e># Manual edits may be lost in future updates.
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>
+</span></span></span><span style=display:flex><span><span style=color:#66d9ef>provider</span> <span style=color:#e6db74>&#34;registry.terraform.io/hashicorp/aws&#34;</span> {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>version</span>     = <span style=color:#e6db74>&#34;4.23.0&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>constraints</span> = <span style=color:#e6db74>&#34;4.23.0&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>hashes</span> = [
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;h1:JDJLmKK61GLw8gHQtCzmvlwPNZIu46/M5uBg/TDlBa0=&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;zh:17adbedc9a80afc571a8de7b9bfccbe2359e2b3ce1fffd02b456d92248ec9294&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;zh:23d8956b031d78466de82a3d2bbe8c76cc58482c931af311580b8eaef4e6a38f&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;zh:343fe19e9a9f3021e26f4af68ff7f4828582070f986b6e5e5b23d89df5514643&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;zh:6b8ff83d884b161939b90a18a4da43dd464c4b984f54b5f537b2870ce6bd94bc&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;zh:7777d614d5e9d589ad5508eecf4c6d8f47d50fcbaf5d40fa7921064240a6b440&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;zh:82f4578861a6fd0cde9a04a1926920bd72d993d524e5b34d7738d4eff3634c44&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;zh:9b12af85486a96aedd8d7984b0ff811a4b42e3d88dad1a3fb4c0b580d04fa425&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;zh:a08fefc153bbe0586389e814979cf7185c50fcddbb2082725991ed02742e7d1e&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;zh:ae789c0e7cb777d98934387f8888090ccb2d8973ef10e5ece541e8b624e1fb00&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;zh:b4608aab78b4dbb32c629595797107fc5a84d1b8f0682f183793d13837f0ecf0&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;zh:ed2c791c2354764b565f9ba4be7fc845c619c1a32cefadd3154a5665b312ab00&#34;</span>,
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;zh:f94ac0072a8545eebabf417bc0acbdc77c31c006ad8760834ee8ee5cdb64e743&#34;</span>,
+</span></span><span style=display:flex><span>  ]
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>In this file, all the versions of the dependencies used by terraform will be specified, and the versions specified in the file will be used when i run <code>terraform init</code> next time. The .terraform directory will contain downloaded modules and providers</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>|-- .terraform
+</span></span><span style=display:flex><span>|   <span style=color:#e6db74>`</span>-- providers
+</span></span><span style=display:flex><span>|       <span style=color:#e6db74>`</span>-- registry.terraform.io
+</span></span><span style=display:flex><span>|           <span style=color:#e6db74>`</span>-- hashicorp
+</span></span><span style=display:flex><span>|               <span style=color:#e6db74>`</span>-- aws
+</span></span><span style=display:flex><span>|                   <span style=color:#e6db74>`</span>-- 4.23.0
+</span></span><span style=display:flex><span>|                       <span style=color:#e6db74>`</span>-- linux_amd64
+</span></span><span style=display:flex><span>|                           <span style=color:#e6db74>`</span>-- terraform-provider-aws_v4.23.0_x5
+</span></span></code></pre></div><p>Also, in order to manage AWS resources, you need to generate an Access Key and Secret Key in AWS for your user and save them in the file ~/.aws/credentials</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#f92672>[</span>default<span style=color:#f92672>]</span>
+</span></span><span style=display:flex><span>aws_access_key_id <span style=color:#f92672>=</span> ACCESS_KEY
+</span></span><span style=display:flex><span>aws_secret_access_key <span style=color:#f92672>=</span> SECRET_KEY
+</span></span></code></pre></div><p>Let&rsquo;s start writing the code. I will create a file named main.tf, which should be in the same directory as provider.tf. The following content can be added both in provider.tf and in main.tf or you create a completely new file, for example, terraform.tf. I will add next lines to the provider.tf, because it is also configuration of provider</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#66d9ef>provider</span> <span style=color:#e6db74>&#34;aws&#34;</span> {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>region</span>              = <span style=color:#e6db74>&#34;us-east-1&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>profile</span>             = <span style=color:#e6db74>&#34;default&#34;</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>I specify which region and which AWS profile to use. A few steps above I created a profile named default when saved Access Key and Secret Key. One terraform code can use several profiles which will use different regions or different AWS accounts.</p><p>In main.tf i will add next</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_instance&#34;</span> <span style=color:#e6db74>&#34;foo&#34;</span> {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>ami</span>                    = <span style=color:#e6db74>&#34;ami-0cff7528ff583bf9a&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>instance_type</span>          = <span style=color:#e6db74>&#34;t2.micro&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>subnet_id</span>              = <span style=color:#e6db74>&#34;subnet-222a93327f9a744ed&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>vpc_security_group_ids</span> = [<span style=color:#e6db74>&#34;sg-2220a119757753b6e&#34;</span>]
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>tags</span> = {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>Env</span> = <span style=color:#e6db74>&#34;Dev&#34;</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>volume_tags</span> = {
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;Env&#34;</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>This code describes with which parameters to create an ec2 instance. I specify which AMI to use (Amazon Linux 2), in which subnet and with which security group to create a server. I also indicate which tags to use for the server and disk.</p><p>I save the file and run <code>terraform plan -out tf.plan</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ terraform plan -out tf.plan
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+</span></span><span style=display:flex><span>  + create
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Terraform will perform the following actions:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#75715e># aws_instance.foo will be created</span>
+</span></span><span style=display:flex><span>  + resource <span style=color:#e6db74>&#34;aws_instance&#34;</span> <span style=color:#e6db74>&#34;foo&#34;</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>      + ami                                  <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;ami-0cff7528ff583bf9a&#34;</span>
+</span></span><span style=display:flex><span>      + arn                                  <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + associate_public_ip_address          <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + availability_zone                    <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + cpu_core_count                       <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + cpu_threads_per_core                 <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + disable_api_stop                     <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + disable_api_termination              <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + ebs_optimized                        <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + get_password_data                    <span style=color:#f92672>=</span> false
+</span></span><span style=display:flex><span>      + host_id                              <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + id                                   <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + instance_initiated_shutdown_behavior <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + instance_state                       <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + instance_type                        <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;t2.micro&#34;</span>
+</span></span><span style=display:flex><span>      + ipv6_address_count                   <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + ipv6_addresses                       <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + key_name                             <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + monitoring                           <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + outpost_arn                          <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + password_data                        <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + placement_group                      <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + placement_partition_number           <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + primary_network_interface_id         <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + private_dns                          <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + private_ip                           <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + public_dns                           <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + public_ip                            <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + secondary_private_ips                <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + security_groups                      <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + source_dest_check                    <span style=color:#f92672>=</span> true
+</span></span><span style=display:flex><span>      + subnet_id                            <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;subnet-222a93327f9a744ed&#34;</span>
+</span></span><span style=display:flex><span>      + tags                                 <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>          + <span style=color:#e6db74>&#34;Env&#34;</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>      + tags_all                             <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>          + <span style=color:#e6db74>&#34;Env&#34;</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>      + tenancy                              <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + user_data                            <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + user_data_base64                     <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>      + user_data_replace_on_change          <span style=color:#f92672>=</span> false
+</span></span><span style=display:flex><span>      + volume_tags                          <span style=color:#f92672>=</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>          + <span style=color:#e6db74>&#34;Env&#34;</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>      + vpc_security_group_ids               <span style=color:#f92672>=</span> <span style=color:#f92672>[</span>
+</span></span><span style=display:flex><span>          + <span style=color:#e6db74>&#34;sg-2220a119757753b6e&#34;</span>,
+</span></span><span style=display:flex><span>        <span style=color:#f92672>]</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      + capacity_reservation_specification <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>          + capacity_reservation_preference <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>          + capacity_reservation_target <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>              + capacity_reservation_id                 <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>              + capacity_reservation_resource_group_arn <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      + ebs_block_device <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>          + delete_on_termination <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + device_name           <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + encrypted             <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + iops                  <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + kms_key_id            <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + snapshot_id           <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + tags                  <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + throughput            <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + volume_id             <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + volume_size           <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + volume_type           <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      + enclave_options <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>          + enabled <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      + ephemeral_block_device <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>          + device_name  <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + no_device    <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + virtual_name <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      + maintenance_options <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>          + auto_recovery <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      + metadata_options <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>          + http_endpoint               <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + http_put_response_hop_limit <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + http_tokens                 <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + instance_metadata_tags      <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      + network_interface <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>          + delete_on_termination <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + device_index          <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + network_card_index    <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + network_interface_id  <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      + private_dns_name_options <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>          + enable_resource_name_dns_a_record    <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + enable_resource_name_dns_aaaa_record <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + hostname_type                        <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      + root_block_device <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>          + delete_on_termination <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + device_name           <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + encrypted             <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + iops                  <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + kms_key_id            <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + tags                  <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + throughput            <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + volume_id             <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + volume_size           <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>          + volume_type           <span style=color:#f92672>=</span> <span style=color:#f92672>(</span>known after apply<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Plan: <span style=color:#ae81ff>1</span> to add, <span style=color:#ae81ff>0</span> to change, <span style=color:#ae81ff>0</span> to destroy.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Saved the plan to: tf.plan
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>To perform exactly these actions, run the following command to apply:
+</span></span><span style=display:flex><span>    terraform apply <span style=color:#e6db74>&#34;tf.plan&#34;</span>
+</span></span></code></pre></div><p>The <code>terraform plan -out tf.plan</code> command will analyze what should be created and display it on the screen. Some of the values will be specified as, for example, <code>+ ami = "ami-0cff7528ff583bf9a"</code>, the rest will have the value <code>user_data = (known after apply)</code>, which means that at the moment terraform does not yet know what the values of these parameters will be and they will be known after the resources are created. Using the <code>-out tf.plan</code> key, the result will be saved to a file. And if you agree with resources which terraform going to create/delete/update, you need to run <code>terraform apply "tf.plan"</code> and the corresponding resources will be create/delete/update.</p><p>If resources which created by terraform are not needed anymore they can be deleted with <code>terraform destroy</code></p></div></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button next"><a href=https://mpostument.com/2022/07/26/terraform-install/><span class=button__text>Manage terraform with tfenv</span>
+<span class=button__icon>→</span></a></span></div></div><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//mpostument-com.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 Powered by <a href=http://gohugo.io>Hugo</a></span>
+<span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span></div></div></footer><script src=https://mpostument.com/assets/main.js></script>
+<script src=https://mpostument.com/assets/prism.js></script>
+<script src=https://mpostument.com/assets/languageSelector.js></script></div></body></html>

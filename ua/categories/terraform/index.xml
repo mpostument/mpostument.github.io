@@ -1,4 +1,244 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Terraform on Maksym Postument</title><link>https://mpostument.com/ua/categories/terraform/</link><description>Recent content in Terraform on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 26 Jul 2022 20:54:23 +0300</lastBuildDate><atom:link href="https://mpostument.com/ua/categories/terraform/index.xml" rel="self" type="application/rss+xml"/><item><title>Manage terraform with tfenv</title><link>https://mpostument.com/ua/2022/07/26/terraform-install/</link><pubDate>Tue, 26 Jul 2022 20:54:23 +0300</pubDate><guid>https://mpostument.com/ua/2022/07/26/terraform-install/</guid><description>Привіт!
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Terraform on Maksym Postument</title><link>https://mpostument.com/ua/categories/terraform/</link><description>Recent content in Terraform on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 28 Jul 2022 20:27:17 +0300</lastBuildDate><atom:link href="https://mpostument.com/ua/categories/terraform/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraform Basics</title><link>https://mpostument.com/ua/2022/07/28/terraform-basics/</link><pubDate>Thu, 28 Jul 2022 20:27:17 +0300</pubDate><guid>https://mpostument.com/ua/2022/07/28/terraform-basics/</guid><description>Частина 1 - Terraform Install
+Привіт!
+В попередній статті ми розглянули як встановити terraform. А зараз розглянемо як за допомогою terraform можна створювати та видаляти ресурси в AWS.
+Для того щоб terraform міг керувати ресурсами в AWS потрібно встановити terraform AWS provider. Terraform зробить це автоматично якщо я вкажу використовувати AWS provider в terraform коді і викличу terraform init.
+Для цього я створю директорію terraform_code і в ній створю файл provider.</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/2022/07/26/terraform-install/" title="Частина 1 - Terraform Install">Частина 1 - Terraform Install&lt;/a>&lt;/p>
+&lt;p>Привіт!&lt;/p>
+&lt;p>В попередній статті ми розглянули як встановити terraform. А зараз розглянемо як за допомогою terraform можна створювати та видаляти ресурси в AWS.&lt;/p>
+&lt;p>Для того щоб terraform міг керувати ресурсами в AWS потрібно встановити terraform AWS provider. Terraform зробить це автоматично якщо я вкажу використовувати AWS provider в terraform коді і викличу &lt;code>terraform init&lt;/code>.&lt;/p>
+&lt;p>Для цього я створю директорію terraform_code і в ній створю файл provider.tf. Назва файлу може будь якою але якщо він називається provider.tf то одразу стає зрозумілим що в цьому файлі знаходиться&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>mkdir terraform_code
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>touch provider.tf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Добавлю наступний контент в provider.tf&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">terraform&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">required_providers&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">aws&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">source&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;hashicorp/aws&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">version&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;4.23.0&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>В секції terraform вказано який provider використовувати та яку версію. Інформацію про версії можна знайти в &lt;a href="https://github.com/hashicorp/terraform-provider-aws/releases">GitHub&lt;/a>.&lt;/p>
+&lt;p>Як файл збережено одразу можна виконати &lt;code>terraform init&lt;/code> для того щоб завантажити provider. Але перед тим потрібно вибрати яка версія terraform буде використовуватись. Для цього створю файл з назвою .terraform-version і в нього запишу 1.2.6 (версія terraform). Далі tfenv зробить все автоматично.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ terraform init
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Initializing the backend...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Initializing provider plugins...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- Finding hashicorp/aws versions matching &lt;span style="color:#e6db74">&amp;#34;4.23.0&amp;#34;&lt;/span>...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- Installing hashicorp/aws v4.23.0...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- Installed hashicorp/aws v4.23.0 &lt;span style="color:#f92672">(&lt;/span>signed by HashiCorp&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform has created a lock file .terraform.lock.hcl to record the provider
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>selections it made above. Include this file in your version control repository
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>so that Terraform can guarantee to make the same selections by default when
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>you run &lt;span style="color:#e6db74">&amp;#34;terraform init&amp;#34;&lt;/span> in the future.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform has been successfully initialized!
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>You may now begin working with Terraform. Try running &lt;span style="color:#e6db74">&amp;#34;terraform plan&amp;#34;&lt;/span> to see
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>any changes that are required &lt;span style="color:#66d9ef">for&lt;/span> your infrastructure. All Terraform commands
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>should now work.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>If you ever set or change modules or backend configuration &lt;span style="color:#66d9ef">for&lt;/span> Terraform,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>rerun this command to reinitialize your working directory. If you forget, other
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>commands will detect it and remind you to &lt;span style="color:#66d9ef">do&lt;/span> so &lt;span style="color:#66d9ef">if&lt;/span> necessary.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Як команда закінчить виконання буде створено файл з назвою .terraform.lock.hcl та директорія з назвою .terraform. Контент .terraform.lock.hcl буде мати приблизно такий вигляд&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># This file is maintained automatically by &amp;#34;terraform init&amp;#34;.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># Manual edits may be lost in future updates.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>&lt;span style="color:#66d9ef">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">provider&lt;/span> &lt;span style="color:#e6db74">&amp;#34;registry.terraform.io/hashicorp/aws&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">version&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;4.23.0&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">constraints&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;4.23.0&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">hashes&lt;/span> = [
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;h1:JDJLmKK61GLw8gHQtCzmvlwPNZIu46/M5uBg/TDlBa0=&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;zh:17adbedc9a80afc571a8de7b9bfccbe2359e2b3ce1fffd02b456d92248ec9294&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;zh:23d8956b031d78466de82a3d2bbe8c76cc58482c931af311580b8eaef4e6a38f&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;zh:343fe19e9a9f3021e26f4af68ff7f4828582070f986b6e5e5b23d89df5514643&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;zh:6b8ff83d884b161939b90a18a4da43dd464c4b984f54b5f537b2870ce6bd94bc&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;zh:7777d614d5e9d589ad5508eecf4c6d8f47d50fcbaf5d40fa7921064240a6b440&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;zh:82f4578861a6fd0cde9a04a1926920bd72d993d524e5b34d7738d4eff3634c44&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;zh:9b12af85486a96aedd8d7984b0ff811a4b42e3d88dad1a3fb4c0b580d04fa425&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;zh:a08fefc153bbe0586389e814979cf7185c50fcddbb2082725991ed02742e7d1e&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;zh:ae789c0e7cb777d98934387f8888090ccb2d8973ef10e5ece541e8b624e1fb00&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;zh:b4608aab78b4dbb32c629595797107fc5a84d1b8f0682f183793d13837f0ecf0&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;zh:ed2c791c2354764b565f9ba4be7fc845c619c1a32cefadd3154a5665b312ab00&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;zh:f94ac0072a8545eebabf417bc0acbdc77c31c006ad8760834ee8ee5cdb64e743&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>В цьому файлі будуть вказані усі версію залежностей які використовує terraform і при наступних запусках &lt;code>terraform init&lt;/code> будуть використані версії які вказані в файлі. В директорії .terraform будуть знаходитись завантаженні модулі та провайдери&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>|-- .terraform
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>| &lt;span style="color:#e6db74">`&lt;/span>-- providers
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>| &lt;span style="color:#e6db74">`&lt;/span>-- registry.terraform.io
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>| &lt;span style="color:#e6db74">`&lt;/span>-- hashicorp
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>| &lt;span style="color:#e6db74">`&lt;/span>-- aws
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>| &lt;span style="color:#e6db74">`&lt;/span>-- 4.23.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>| &lt;span style="color:#e6db74">`&lt;/span>-- linux_amd64
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>| &lt;span style="color:#e6db74">`&lt;/span>-- terraform-provider-aws_v4.23.0_x5
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Також для того щоб керувати ресурсами потрібно в AWS для свого користувача згенерувати Access Key та Secret Key і зберегти їх в в файлі ~/.aws/credentials&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>default&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>aws_access_key_id &lt;span style="color:#f92672">=&lt;/span> ACCESS_KEY
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>aws_secret_access_key &lt;span style="color:#f92672">=&lt;/span> SECRET_KEY
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Приступимо до написання коду. Для цього створю файл з назвою main.tf який має знаходитись в тій самій директорії що і provider.tf. Наступний контент можна додати як і в provider.tf так і в main.tf або створити взагалі інший файл наприклад terraform.tf. Я добавлю в файл provider.tf&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">provider&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">region&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;us-east-1&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">profile&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;default&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>В якому вказую який регіон використовувати та який aws profile використовуємо. Декілька кроків вище я створив profile з назвою default. В одному terraform коді може використовуватись декілька profile які будуть використовувати різні регіони або різні AWS акаунти.&lt;/p>
+&lt;p>В main.tf додам наступний контент&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ami&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;ami-0cff7528ff583bf9a&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">instance_type&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;t2.micro&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">subnet_id&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;subnet-222a93327f9a744ed&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">vpc_security_group_ids&lt;/span> = [&lt;span style="color:#e6db74">&amp;#34;sg-2220a119757753b6e&amp;#34;&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Env&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">volume_tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;Env&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Цей код описує з якими параметрами створити ec2 instance. Я вказую яку AMI використовувати (Amazon Linux 2) в якому subnet та з якою security group створювати сервер. Також зазначаю які теги має мати сервер та диск.&lt;/p>
+&lt;p>Зберігаю файл та запускаю &lt;code>terraform plan -out tf.plan&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ terraform plan -out tf.plan
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + create
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform will perform the following actions:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># aws_instance.foo will be created&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + resource &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ami &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;ami-0cff7528ff583bf9a&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + arn &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + associate_public_ip_address &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + availability_zone &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + cpu_core_count &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + cpu_threads_per_core &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + disable_api_stop &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + disable_api_termination &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ebs_optimized &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + get_password_data &lt;span style="color:#f92672">=&lt;/span> false
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + host_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + instance_initiated_shutdown_behavior &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + instance_state &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + instance_type &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;t2.micro&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ipv6_address_count &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ipv6_addresses &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + key_name &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + monitoring &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + outpost_arn &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + password_data &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + placement_group &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + placement_partition_number &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + primary_network_interface_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + private_dns &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + private_ip &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + public_dns &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + public_ip &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + secondary_private_ips &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + security_groups &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + source_dest_check &lt;span style="color:#f92672">=&lt;/span> true
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + subnet_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;subnet-222a93327f9a744ed&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + tags &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + &lt;span style="color:#e6db74">&amp;#34;Env&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + tags_all &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + &lt;span style="color:#e6db74">&amp;#34;Env&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + tenancy &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + user_data &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + user_data_base64 &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + user_data_replace_on_change &lt;span style="color:#f92672">=&lt;/span> false
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + volume_tags &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + &lt;span style="color:#e6db74">&amp;#34;Env&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + vpc_security_group_ids &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + &lt;span style="color:#e6db74">&amp;#34;sg-2220a119757753b6e&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + capacity_reservation_specification &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + capacity_reservation_preference &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + capacity_reservation_target &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + capacity_reservation_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + capacity_reservation_resource_group_arn &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ebs_block_device &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + delete_on_termination &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + device_name &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + encrypted &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + iops &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + kms_key_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + snapshot_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + tags &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + throughput &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + volume_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + volume_size &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + volume_type &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + enclave_options &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + enabled &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ephemeral_block_device &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + device_name &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + no_device &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + virtual_name &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + maintenance_options &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + auto_recovery &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + metadata_options &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + http_endpoint &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + http_put_response_hop_limit &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + http_tokens &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + instance_metadata_tags &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + network_interface &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + delete_on_termination &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + device_index &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + network_card_index &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + network_interface_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + private_dns_name_options &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + enable_resource_name_dns_a_record &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + enable_resource_name_dns_aaaa_record &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + hostname_type &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + root_block_device &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + delete_on_termination &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + device_name &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + encrypted &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + iops &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + kms_key_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + tags &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + throughput &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + volume_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + volume_size &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + volume_type &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Plan: &lt;span style="color:#ae81ff">1&lt;/span> to add, &lt;span style="color:#ae81ff">0&lt;/span> to change, &lt;span style="color:#ae81ff">0&lt;/span> to destroy.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Saved the plan to: tf.plan
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>To perform exactly these actions, run the following command to apply:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> terraform apply &lt;span style="color:#e6db74">&amp;#34;tf.plan&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Команда &lt;code>terraform plan -out tf.plan&lt;/code> проаналізує що має бути створено і виведе це на екран. Частина значень буде вказано як наприклад &lt;code>+ ami = &amp;quot;ami-0cff7528ff583bf9a&amp;quot;&lt;/code> решта будуть мати значення &lt;code>user_data = (known after apply)&lt;/code>, це означає що на даний момент terraform ще не знає які будуть значення цих параметрів і вони будуть відомі після того як ресурс буде створено. За допомогою ключа &lt;code>-out tf.plan&lt;/code> результат буде збережено в файл. І якщо те що вивів terraform потрібно запустити &lt;code>terraform apply &amp;quot;tf.plan&amp;quot;&lt;/code> і відповідні ресурси будуть створенні.&lt;/p>
+&lt;p>Для того щоб видалити створенні ресурси можна запустити &lt;code>terraform destroy&lt;/code>&lt;/p></content></item><item><title>Manage terraform with tfenv</title><link>https://mpostument.com/ua/2022/07/26/terraform-install/</link><pubDate>Tue, 26 Jul 2022 20:54:23 +0300</pubDate><guid>https://mpostument.com/ua/2022/07/26/terraform-install/</guid><description>Привіт!
 Це перша стаття з серії статей про terraform. В ній розглянемо як можна встановити terraform за допомогою tfenv та як налаштувати vscode для зручної роботи.
 tfenv Для початку буде потрібен tfenv. Він дозволяє дуже легко встановлювати та управляти різними версії terraform. Код tfenv знаходиться в github.
 Щоб встановити потрібно клонувати репозиторій
