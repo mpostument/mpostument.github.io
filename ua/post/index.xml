@@ -1,7 +1,68 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Maksym Postument</title><link>https://mpostument.com/ua/post/</link><description>Recent content in Posts on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 31 Jul 2022 20:30:06 +0300</lastBuildDate><atom:link href="https://mpostument.com/ua/post/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraform State</title><link>https://mpostument.com/ua/2022/07/31/terraform-state/</link><pubDate>Sun, 31 Jul 2022 20:30:06 +0300</pubDate><guid>https://mpostument.com/ua/2022/07/31/terraform-state/</guid><description>Частина 1 - Terraform Install Частина 2 - Terraform Basics
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Maksym Postument</title><link>https://mpostument.com/ua/post/</link><description>Recent content in Posts on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 11 Aug 2022 20:59:58 +0300</lastBuildDate><atom:link href="https://mpostument.com/ua/post/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraform Template</title><link>https://mpostument.com/ua/2022/08/11/terraform-template/</link><pubDate>Thu, 11 Aug 2022 20:59:58 +0300</pubDate><guid>https://mpostument.com/ua/2022/08/11/terraform-template/</guid><description>Частина 1 - Terraform Install
+Частина 2 - Terraform Basics
+Частина 3 - Terraform Basics
+Привіт!
+В цій статі я розкажу як в terraform можна використовувати статичні файли або ж генерувати файли динамічно. Покажу це на прикладі user_data в EC2. За допомогою user_data можна передати скрипт який виконається на сервері в момент створення. Цей файл можна мати одразу готовий і передавати за допомогою terraform в user_data, або ж контент можна генерувати динамічно і передавати в user_data.</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/2022/07/26/terraform-install/" title="Частина 1 - Terraform Install">Частина 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/2022/07/28/terraform-basics/" title="Частина 2 - Terraform Basics">Частина 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/2022/07/31/terraform-state/" title="Частина 2 - Terraform State">Частина 3 - Terraform Basics&lt;/a>&lt;/p>
+&lt;p>Привіт!&lt;/p>
+&lt;p>В цій статі я розкажу як в terraform можна використовувати статичні файли або ж генерувати файли динамічно. Покажу це на прикладі user_data в EC2. За допомогою user_data можна передати скрипт який виконається на сервері в момент створення. Цей файл можна мати одразу готовий і передавати за допомогою terraform в user_data, або ж контент можна генерувати динамічно і передавати в user_data.&lt;/p>
+&lt;h2 id="terraform-file">Terraform file&lt;/h2>
+&lt;p>Створю файл з назвою setup_httpd.sh в якому буде наступний контент&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/bin/bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>yum install httpd -y
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>/sbin/chkconfig --levels &lt;span style="color:#ae81ff">235&lt;/span> httpd on
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>service httpd start
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>echo &lt;span style="color:#e6db74">&amp;#34;&amp;lt;h1&amp;gt;Maksym Website&amp;lt;/h1&amp;gt;&amp;#34;&lt;/span> &amp;gt; /var/www/html/index.html
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Цей скрипт встановить httpd і створить html сторінку. Тепер як я можу використати цей файл? Візьму terraform код з попередньої статті і добавлю в нього user_data.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ami&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;ami-0cff7528ff583bf9a&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">instance_type&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;t2.micro&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">subnet_id&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;subnet-222a93327f9a744ed&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">vpc_security_group_ids&lt;/span> = [&lt;span style="color:#e6db74">&amp;#34;sg-2220a119757753b6e&amp;#34;&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">user_data&lt;/span> = file(&lt;span style="color:#e6db74">&amp;#34;setup_httpd.sh&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Env&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">volume_tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;Env&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>І тепер запущу terraform. І як сервер створиться в AWS console можна подивитись скрипт який було згенеровано.&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/IaHlXOq.png" alt="file">&lt;/p>
+&lt;p>І якщо відкрити IP address сервера в браузері то побачу&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/PekL5GA.png" alt="file-website">&lt;/p>
+&lt;h2 id="terraform-template">Terraform Template&lt;/h2>
+&lt;p>Але цей файл був статичний і якщо потрібно змінити наприклад контент вебсторінки файл потрібно міняти, але в terraform є метод templatefile() який дозволяє генерувати контент файлу динамічно. Для цього створю новий файл який буде називатись &lt;code>setup_httpd.sh.tpl&lt;/code> якому контент буде майже такий самий як і в попередньою але з однією різницею. В останньому рядку замість тексту Maksym Website, я використовую ${user} Website. Де ${user} це параметр який terraform замінить на відповідне значення.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/bin/bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>yum install httpd -y
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>/sbin/chkconfig --levels &lt;span style="color:#ae81ff">235&lt;/span> httpd on
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>service httpd start
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>echo &lt;span style="color:#e6db74">&amp;#34;&amp;lt;h1&amp;gt;&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>user&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74"> Website&amp;lt;/h1&amp;gt;&amp;#34;&lt;/span> &amp;gt;/var/www/html/index.html
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Також потрібно і змінити сам код terraform. В цьому випадку виклик методі file я заміню на templatefile і окрім самого файлу передам параметр user.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ami&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;ami-0cff7528ff583bf9a&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">instance_type&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;t2.micro&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">subnet_id&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;subnet-222a93327f9a744ed&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">vpc_security_group_ids&lt;/span> = [&lt;span style="color:#e6db74">&amp;#34;sg-2220a119757753b6e&amp;#34;&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">user_data&lt;/span> = templatefile(&lt;span style="color:#e6db74">&amp;#34;setup_httpd.sh.tpl&amp;#34;&lt;/span>, {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">user&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Jhon&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> })
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Env&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">volume_tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;Env&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Так само як і попереднього разу гляну згенерований скрипт&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/9O5CJQT.png" alt="templatefile">&lt;/p>
+&lt;p>І відкрию IP address сервера&lt;/p>
+&lt;p>&lt;img src="https://i.imgur.com/p7GfshK.png" alt="template-site">&lt;/p></content></item><item><title>Terraform State</title><link>https://mpostument.com/ua/2022/07/31/terraform-state/</link><pubDate>Sun, 31 Jul 2022 20:30:06 +0300</pubDate><guid>https://mpostument.com/ua/2022/07/31/terraform-state/</guid><description>Частина 1 - Terraform Install
+Частина 2 - Terraform Basics
 Привіт!
 В попередній статті я створював ec2 в AWS і після того викликав terraform destroy і terraform видалив тільки ec2 який створив, не зачепивши інших ресурсів. Як ж йому це вдалось?
-Local State Щоб це зрозуміти потрібно подивитись на terraform директорію після того як виконався terraform apply. Одразу після виклику terraform apply буде створено файл з назвою terraform.tfstate з наступним контентом</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/2022/07/26/terraform-install/" title="Частина 1 - Terraform Install">Частина 1 - Terraform Install&lt;/a>
+Local State Щоб це зрозуміти потрібно подивитись на terraform директорію після того як виконався terraform apply. Одразу після виклику terraform apply буде створено файл з назвою terraform.tfstate з наступним контентом</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/2022/07/26/terraform-install/" title="Частина 1 - Terraform Install">Частина 1 - Terraform Install&lt;/a>&lt;br>
 &lt;a href="https://mpostument.com/ua/2022/07/28/terraform-basics/" title="Частина 2 - Terraform Basics">Частина 2 - Terraform Basics&lt;/a>&lt;/p>
 &lt;p>Привіт!&lt;/p>
 &lt;p>В попередній статті я створював ec2 в AWS і після того викликав &lt;code>terraform destroy&lt;/code> і terraform видалив тільки ec2 який створив, не зачепивши інших ресурсів. Як ж йому це вдалось?&lt;/p>
