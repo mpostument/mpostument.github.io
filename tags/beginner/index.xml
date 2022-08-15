@@ -58,7 +58,10 @@ In this article, I will show how in terraform you can use static files or genera
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Just like the previous time, I will look at the generated script&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/9O5CJQT.png" alt="templatefile">&lt;/p>
 &lt;p>And open the IP address of the server&lt;/p>
-&lt;p>&lt;img src="https://i.imgur.com/p7GfshK.png" alt="template-site">&lt;/p></content></item><item><title>Terraform State</title><link>https://mpostument.com/2022/07/31/terraform-state/</link><pubDate>Sun, 31 Jul 2022 20:30:06 +0300</pubDate><guid>https://mpostument.com/2022/07/31/terraform-state/</guid><description>Part 1 - Terraform Install
+&lt;p>&lt;img src="https://i.imgur.com/p7GfshK.png" alt="template-site">&lt;/p>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/Dl_Jdo3hMZM" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>Terraform State</title><link>https://mpostument.com/2022/07/31/terraform-state/</link><pubDate>Sun, 31 Jul 2022 20:30:06 +0300</pubDate><guid>https://mpostument.com/2022/07/31/terraform-state/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Hello!
 In the previous article, I created an ec2 in AWS and then executed terraform destroy and terraform only deleted the created ec2 without affecting other resources. How did he do it?
@@ -321,7 +324,10 @@ Terraform has such a concept as &lt;a href="https://www.terraform.io/language/se
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">dynamodb_table&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;terraform-state-lock&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After that, only one terraform execution will work at the same time, if someone starts terraform in parallel, he will receive a message that state is now locked.&lt;/p></content></item><item><title>Terraform Basics</title><link>https://mpostument.com/2022/07/28/terraform-basics/</link><pubDate>Thu, 28 Jul 2022 20:27:17 +0300</pubDate><guid>https://mpostument.com/2022/07/28/terraform-basics/</guid><description>Part 1 - Terraform Install
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After that, only one terraform execution will work at the same time, if someone starts terraform in parallel, he will receive a message that state is now locked.&lt;/p>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/iPzrUvhlty4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>Terraform Basics</title><link>https://mpostument.com/2022/07/28/terraform-basics/</link><pubDate>Thu, 28 Jul 2022 20:27:17 +0300</pubDate><guid>https://mpostument.com/2022/07/28/terraform-basics/</guid><description>Part 1 - Terraform Install
 Hello!
 In the previous article, we learn how to install terraform. And now we will learn how using terraform you can create and delete resources in AWS.
 In order for terraform to manage resources in AWS, you need to install terraform AWS provider. Terraform will do this automatically if I specify AWS provider in the terraform code and call terraform init.

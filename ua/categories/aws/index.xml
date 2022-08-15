@@ -58,7 +58,10 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Так само як і попереднього разу гляну згенерований скрипт&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/9O5CJQT.png" alt="templatefile">&lt;/p>
 &lt;p>І відкрию IP address сервера&lt;/p>
-&lt;p>&lt;img src="https://i.imgur.com/p7GfshK.png" alt="template-site">&lt;/p></content></item><item><title>Terraform State</title><link>https://mpostument.com/ua/2022/07/31/terraform-state/</link><pubDate>Sun, 31 Jul 2022 20:30:06 +0300</pubDate><guid>https://mpostument.com/ua/2022/07/31/terraform-state/</guid><description>Частина 1 - Terraform Install
+&lt;p>&lt;img src="https://i.imgur.com/p7GfshK.png" alt="template-site">&lt;/p>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/Dl_Jdo3hMZM" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>Terraform State</title><link>https://mpostument.com/ua/2022/07/31/terraform-state/</link><pubDate>Sun, 31 Jul 2022 20:30:06 +0300</pubDate><guid>https://mpostument.com/ua/2022/07/31/terraform-state/</guid><description>Частина 1 - Terraform Install
 Частина 2 - Terraform Basics
 Привіт!
 В попередній статті я створював ec2 в AWS і після того викликав terraform destroy і terraform видалив тільки ec2 який створив, не зачепивши інших ресурсів. Як ж йому це вдалось?
@@ -321,7 +324,10 @@ Local State Щоб це зрозуміти потрібно подивитись
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">dynamodb_table&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;terraform-state-lock&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Після цього тільки один запуск terraform буде працювати, якщо хтось запустить terraform в паралель то він всього лиш отримає повідомлення що state зараз є заблокованим.&lt;/p></content></item><item><title>AWS Synthetics With Terraform. Problems?</title><link>https://mpostument.com/ua/2022/03/08/aws-synthetics-with-terraform/</link><pubDate>Tue, 08 Mar 2022 20:29:47 +0200</pubDate><guid>https://mpostument.com/ua/2022/03/08/aws-synthetics-with-terraform/</guid><description>Привіт!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Після цього тільки один запуск terraform буде працювати, якщо хтось запустить terraform в паралель то він всього лиш отримає повідомлення що state зараз є заблокованим.&lt;/p>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/iPzrUvhlty4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>AWS Synthetics With Terraform. Problems?</title><link>https://mpostument.com/ua/2022/03/08/aws-synthetics-with-terraform/</link><pubDate>Tue, 08 Mar 2022 20:29:47 +0200</pubDate><guid>https://mpostument.com/ua/2022/03/08/aws-synthetics-with-terraform/</guid><description>Привіт!
 Недавно я за допомогою terraform автоматизовував створення AWS Synthetics, і стикнувся з декількома проблемами та хочу поділитись як я їх вирішив.
 locals { common_tags = { cost-center = &amp;#34;observability&amp;#34; label = &amp;#34;canary&amp;#34; environment = &amp;#34;staging&amp;#34; } } data &amp;#34;archive_file&amp;#34; &amp;#34;login&amp;#34; { type = &amp;#34;zip&amp;#34; source_dir = &amp;#34;${path.module}/functions/login/&amp;#34; output_path = &amp;#34;${path.module}/functions/login.zip&amp;#34; } resource &amp;#34;aws_synthetics_canary&amp;#34; &amp;#34;login&amp;#34; { name = &amp;#34;login_test&amp;#34; artifact_s3_location = &amp;#34;s3://my_canary_bucket/&amp;#34; execution_role_arn = &amp;#34;role_arn&amp;#34; handler = &amp;#34;index.handler&amp;#34; zip_file = data.</description><content>&lt;p>Привіт!&lt;/p>
 &lt;p>Недавно я за допомогою terraform автоматизовував створення &lt;code>AWS Synthetics&lt;/code>, і стикнувся з декількома проблемами та хочу поділитись як я їх вирішив.&lt;/p>

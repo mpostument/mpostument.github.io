@@ -58,7 +58,10 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Так само як і попереднього разу гляну згенерований скрипт&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/9O5CJQT.png" alt="templatefile">&lt;/p>
 &lt;p>І відкрию IP address сервера&lt;/p>
-&lt;p>&lt;img src="https://i.imgur.com/p7GfshK.png" alt="template-site">&lt;/p></content></item><item><title>Terraform State</title><link>https://mpostument.com/ua/2022/07/31/terraform-state/</link><pubDate>Sun, 31 Jul 2022 20:30:06 +0300</pubDate><guid>https://mpostument.com/ua/2022/07/31/terraform-state/</guid><description>Частина 1 - Terraform Install
+&lt;p>&lt;img src="https://i.imgur.com/p7GfshK.png" alt="template-site">&lt;/p>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/Dl_Jdo3hMZM" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>Terraform State</title><link>https://mpostument.com/ua/2022/07/31/terraform-state/</link><pubDate>Sun, 31 Jul 2022 20:30:06 +0300</pubDate><guid>https://mpostument.com/ua/2022/07/31/terraform-state/</guid><description>Частина 1 - Terraform Install
 Частина 2 - Terraform Basics
 Привіт!
 В попередній статті я створював ec2 в AWS і після того викликав terraform destroy і terraform видалив тільки ec2 який створив, не зачепивши інших ресурсів. Як ж йому це вдалось?
@@ -321,7 +324,10 @@ Local State Щоб це зрозуміти потрібно подивитись
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">dynamodb_table&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;terraform-state-lock&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Після цього тільки один запуск terraform буде працювати, якщо хтось запустить terraform в паралель то він всього лиш отримає повідомлення що state зараз є заблокованим.&lt;/p></content></item><item><title>Terraform Basics</title><link>https://mpostument.com/ua/2022/07/28/terraform-basics/</link><pubDate>Thu, 28 Jul 2022 20:27:17 +0300</pubDate><guid>https://mpostument.com/ua/2022/07/28/terraform-basics/</guid><description>Частина 1 - Terraform Install
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Після цього тільки один запуск terraform буде працювати, якщо хтось запустить terraform в паралель то він всього лиш отримає повідомлення що state зараз є заблокованим.&lt;/p>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/iPzrUvhlty4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>Terraform Basics</title><link>https://mpostument.com/ua/2022/07/28/terraform-basics/</link><pubDate>Thu, 28 Jul 2022 20:27:17 +0300</pubDate><guid>https://mpostument.com/ua/2022/07/28/terraform-basics/</guid><description>Частина 1 - Terraform Install
 Привіт!
 В попередній статті ми розглянули як встановити terraform. А зараз розглянемо як за допомогою terraform можна створювати та видаляти ресурси в AWS.
 Для того щоб terraform міг керувати ресурсами в AWS потрібно встановити terraform AWS provider. Terraform зробить це автоматично якщо я вкажу використовувати AWS provider в terraform коді і викличу terraform init.

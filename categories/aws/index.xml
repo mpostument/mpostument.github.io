@@ -58,7 +58,10 @@ In this article, I will show how in terraform you can use static files or genera
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Just like the previous time, I will look at the generated script&lt;/p>
 &lt;p>&lt;img src="https://i.imgur.com/9O5CJQT.png" alt="templatefile">&lt;/p>
 &lt;p>And open the IP address of the server&lt;/p>
-&lt;p>&lt;img src="https://i.imgur.com/p7GfshK.png" alt="template-site">&lt;/p></content></item><item><title>Terraform State</title><link>https://mpostument.com/2022/07/31/terraform-state/</link><pubDate>Sun, 31 Jul 2022 20:30:06 +0300</pubDate><guid>https://mpostument.com/2022/07/31/terraform-state/</guid><description>Part 1 - Terraform Install
+&lt;p>&lt;img src="https://i.imgur.com/p7GfshK.png" alt="template-site">&lt;/p>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/Dl_Jdo3hMZM" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>Terraform State</title><link>https://mpostument.com/2022/07/31/terraform-state/</link><pubDate>Sun, 31 Jul 2022 20:30:06 +0300</pubDate><guid>https://mpostument.com/2022/07/31/terraform-state/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Hello!
 In the previous article, I created an ec2 in AWS and then executed terraform destroy and terraform only deleted the created ec2 without affecting other resources. How did he do it?
@@ -321,7 +324,10 @@ Terraform has such a concept as &lt;a href="https://www.terraform.io/language/se
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">dynamodb_table&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;terraform-state-lock&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After that, only one terraform execution will work at the same time, if someone starts terraform in parallel, he will receive a message that state is now locked.&lt;/p></content></item><item><title>AWS Synthetics With Terraform. Problems?</title><link>https://mpostument.com/2022/03/08/aws-synthetics-with-terraform/</link><pubDate>Tue, 08 Mar 2022 20:29:47 +0200</pubDate><guid>https://mpostument.com/2022/03/08/aws-synthetics-with-terraform/</guid><description>Hi there!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After that, only one terraform execution will work at the same time, if someone starts terraform in parallel, he will receive a message that state is now locked.&lt;/p>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/iPzrUvhlty4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>AWS Synthetics With Terraform. Problems?</title><link>https://mpostument.com/2022/03/08/aws-synthetics-with-terraform/</link><pubDate>Tue, 08 Mar 2022 20:29:47 +0200</pubDate><guid>https://mpostument.com/2022/03/08/aws-synthetics-with-terraform/</guid><description>Hi there!
 Recently, I used terraform to automate the creation for AWS Synthetics, and I encountered several problems and I want to share how I solved them.
 locals { common_tags = { cost-center = &amp;#34;observability&amp;#34; label = &amp;#34;canary&amp;#34; environment = &amp;#34;staging&amp;#34; } } data &amp;#34;archive_file&amp;#34; &amp;#34;login&amp;#34; { type = &amp;#34;zip&amp;#34; source_dir = &amp;#34;${path.module}/functions/login/&amp;#34; output_path = &amp;#34;${path.module}/functions/login.zip&amp;#34; } resource &amp;#34;aws_synthetics_canary&amp;#34; &amp;#34;login&amp;#34; { name = &amp;#34;login_test&amp;#34; artifact_s3_location = &amp;#34;s3://my_canary_bucket/&amp;#34; execution_role_arn = &amp;#34;role_arn&amp;#34; handler = &amp;#34;index.</description><content>&lt;p>Hi there!&lt;/p>
 &lt;p>Recently, I used terraform to automate the creation for &lt;code>AWS Synthetics&lt;/code>, and I encountered several problems and I want to share how I solved them.&lt;/p>
