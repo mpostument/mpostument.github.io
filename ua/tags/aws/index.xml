@@ -293,6 +293,7 @@ Lifecycle create_before_destroy Lifecycle є мета параметром як�
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">protocol&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;-1&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">cidr_blocks&lt;/span> = [&lt;span style="color:#e6db74">&amp;#34;0.0.0.0/0&amp;#34;&lt;/span>]
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>Plan: &lt;span style="color:#ae81ff">2&lt;/span> to add, &lt;span style="color:#ae81ff">0&lt;/span> to change, &lt;span style="color:#ae81ff">0&lt;/span> to destroy.
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Do you want to perform these actions?
@@ -348,7 +349,10 @@ Lifecycle create_before_destroy Lifecycle є мета параметром як�
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Outputs:
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>instance_ip_addr &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;172.31.43.168&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Terraform Dynamic</title><link>https://mpostument.com/ua/2022/08/22/terraform-dynamic/</link><pubDate>Mon, 22 Aug 2022 20:25:57 +0300</pubDate><guid>https://mpostument.com/ua/2022/08/22/terraform-dynamic/</guid><description>Частина 1 - Terraform Install
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/qdGpvePGSJs" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>Terraform Dynamic</title><link>https://mpostument.com/ua/2022/08/22/terraform-dynamic/</link><pubDate>Mon, 22 Aug 2022 20:25:57 +0300</pubDate><guid>https://mpostument.com/ua/2022/08/22/terraform-dynamic/</guid><description>Частина 1 - Terraform Install
 Частина 2 - Terraform Basics
 Частина 3 - Terraform State
 Частина 4 - Terraform Template
