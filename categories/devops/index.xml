@@ -170,7 +170,10 @@ Conditions Conditions in terraform are used to select one value depending on ano
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;Env&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And now whatever value of the env variable I would pass the desired server type will be used.&lt;/p></content></item><item><title>Terraform Variables</title><link>https://mpostument.com/2022/09/09/terraform-variables/</link><pubDate>Fri, 09 Sep 2022 20:31:09 +0300</pubDate><guid>https://mpostument.com/2022/09/09/terraform-variables/</guid><description>Part 1 - Terraform Install
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And now whatever value of the env variable I would pass the desired server type will be used.&lt;/p>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/uN6sm22CyrE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>Terraform Variables</title><link>https://mpostument.com/2022/09/09/terraform-variables/</link><pubDate>Fri, 09 Sep 2022 20:31:09 +0300</pubDate><guid>https://mpostument.com/2022/09/09/terraform-variables/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Part 3 - Terraform State
 Part 4 - Terraform Template
