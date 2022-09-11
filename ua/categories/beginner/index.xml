@@ -1,4 +1,176 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Beginner on Maksym Postument</title><link>https://mpostument.com/ua/categories/beginner/</link><description>Recent content in Beginner on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 09 Sep 2022 20:31:09 +0300</lastBuildDate><atom:link href="https://mpostument.com/ua/categories/beginner/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraform Variables</title><link>https://mpostument.com/ua/2022/09/09/terraform-variables/</link><pubDate>Fri, 09 Sep 2022 20:31:09 +0300</pubDate><guid>https://mpostument.com/ua/2022/09/09/terraform-variables/</guid><description>Part 1 - Terraform Install
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Beginner on Maksym Postument</title><link>https://mpostument.com/ua/categories/beginner/</link><description>Recent content in Beginner on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 11 Sep 2022 11:23:40 +0300</lastBuildDate><atom:link href="https://mpostument.com/ua/categories/beginner/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraform Condition and Lookup</title><link>https://mpostument.com/ua/2022/09/11/terraform-condition-and-lookup/</link><pubDate>Sun, 11 Sep 2022 11:23:40 +0300</pubDate><guid>https://mpostument.com/ua/2022/09/11/terraform-condition-and-lookup/</guid><description>Part 1 - Terraform Install
+Part 2 - Terraform Basics
+Part 3 - Terraform State
+Part 4 - Terraform Template
+Part 5 - Terraform Dynamic
+Part 6 - Terraform Lifecycle
+Part 7 - Terraform Lifecycle
+Привіт!
+В цьому пості розкажу про condition та lookups.
+Conditions Умови в terraform використовуються для того щоб вибрати одне значення в залежності від іншого. Наприклад якщо це дев середовище то використовувати тип сервера t3.micro а якщо продакшин то m5.</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/2022/07/31/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/2022/08/11/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/2022/08/22/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/2022/08/28/terraform-lifecycle/" title="Part 6 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/2022/09/09/terraform-variables/" title="Part 7 - Terraform Variables">Part 7 - Terraform Lifecycle&lt;/a>&lt;/p>
+&lt;p>Привіт!&lt;/p>
+&lt;p>В цьому пості розкажу про condition та lookups.&lt;/p>
+&lt;h2 id="conditions">Conditions&lt;/h2>
+&lt;p>Умови в terraform використовуються для того щоб вибрати одне значення в залежності від іншого. Наприклад якщо це дев середовище то використовувати тип сервера t3.micro а якщо продакшин то m5.large. Це легко зробити за допомогою умови. Записуються умови так &lt;code>condition ? true_val : false_val&lt;/code>. І якщо нам потрібно зробити умову на тип середовища то це буде мати такий вигляд &lt;code>var.env == &amp;quot;prod&amp;quot; ? &amp;quot;m5.large&amp;quot; : &amp;quot;t3.micro&amp;quot;&lt;/code>. Тут перевіряю чи параметр &lt;code>env&lt;/code> має значення prod, і якщо так то використовую m5.large, в усіх ж інших випадках це t3.micro. Повний код створення ec2 буде виглядати так.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">variable&lt;/span> &lt;span style="color:#e6db74">&amp;#34;env&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">default&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">description&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Environment name&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">type&lt;/span> = &lt;span style="color:#a6e22e">string&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ami&lt;/span> = data.&lt;span style="color:#a6e22e">aws_ami&lt;/span>.&lt;span style="color:#a6e22e">amzn&lt;/span>.&lt;span style="color:#a6e22e">id&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">instance_type&lt;/span> = var.&lt;span style="color:#a6e22e">env&lt;/span> =&lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;prod&amp;#34;&lt;/span> &lt;span style="color:#f92672">?&lt;/span> &lt;span style="color:#e6db74">&amp;#34;m5.large&amp;#34;&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#e6db74">&amp;#34;t3.micro&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">subnet_id&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;subnet-5f70bf74&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">vpc_security_group_ids&lt;/span> = [&lt;span style="color:#e6db74">&amp;#34;sg-b04b8cd4&amp;#34;&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Env&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">volume_tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;Env&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Спочатку запущу terraform з дефолтним значенням і тип сервера буде t3.micro&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ terraform plan
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>data.aws_ami.amzn: Reading...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>data.aws_ami.amzn: Read complete after 1s &lt;span style="color:#f92672">[&lt;/span>id&lt;span style="color:#f92672">=&lt;/span>ami-05fa00d4c63e32376&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>following symbols:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + create
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform will perform the following actions:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># aws_instance.foo will be created&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + resource &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ami &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;ami-05fa00d4c63e32376&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + arn &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + associate_public_ip_address &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + availability_zone &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + cpu_core_count &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + cpu_threads_per_core &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + disable_api_stop &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + disable_api_termination &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ebs_optimized &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + get_password_data &lt;span style="color:#f92672">=&lt;/span> false
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + host_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + instance_initiated_shutdown_behavior &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + instance_state &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + instance_type &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;t3.micro&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер запущу вказавши значення env як prod&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ terraform plan -var env&lt;span style="color:#f92672">=&lt;/span>prod
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>data.aws_ami.amzn: Reading...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>data.aws_ami.amzn: Read complete after 1s &lt;span style="color:#f92672">[&lt;/span>id&lt;span style="color:#f92672">=&lt;/span>ami-05fa00d4c63e32376&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>following symbols:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + create
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform will perform the following actions:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># aws_instance.foo will be created&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + resource &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ami &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;ami-05fa00d4c63e32376&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + arn &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + associate_public_ip_address &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + availability_zone &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + cpu_core_count &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + cpu_threads_per_core &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + disable_api_stop &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + disable_api_termination &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ebs_optimized &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + get_password_data &lt;span style="color:#f92672">=&lt;/span> false
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + host_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + instance_initiated_shutdown_behavior &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + instance_state &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + instance_type &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;m5.large&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Також за допомогою умов можна вказувати чи створювати ресурс чи ні. В попередньому прикладі для dev середовища я використовував менший розмір сервера, але в деяких випадках може бути потрібно для dev цього ресурсу взагалі не створювати. Для цього потрібно додати атрибут count і в ньому вказати - якщо prod то створити один сервер а якщо не prod то 0&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">count&lt;/span> = var.&lt;span style="color:#a6e22e">env&lt;/span> =&lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;prod&amp;#34;&lt;/span> &lt;span style="color:#f92672">?&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ami&lt;/span> = data.&lt;span style="color:#a6e22e">aws_ami&lt;/span>.&lt;span style="color:#a6e22e">amzn&lt;/span>.&lt;span style="color:#a6e22e">id&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">instance_type&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;m5.large&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">subnet_id&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;subnet-5f70bf74&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">vpc_security_group_ids&lt;/span> = [&lt;span style="color:#e6db74">&amp;#34;sg-b04b8cd4&amp;#34;&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Env&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">volume_tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;Env&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ terraform plan
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>data.aws_ami.amzn: Reading...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>data.aws_ami.amzn: Read complete after 1s &lt;span style="color:#f92672">[&lt;/span>id&lt;span style="color:#f92672">=&lt;/span>ami-05fa00d4c63e32376&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>No changes. Your infrastructure matches the configuration.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>А якщо ж запустити з значенням prod то сервер буде створено&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ terraform plan -var env&lt;span style="color:#f92672">=&lt;/span>prod
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>data.aws_ami.amzn: Reading...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>data.aws_ami.amzn: Read complete after 1s &lt;span style="color:#f92672">[&lt;/span>id&lt;span style="color:#f92672">=&lt;/span>ami-05fa00d4c63e32376&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>following symbols:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + create
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform will perform the following actions:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># aws_instance.foo[0] will be created&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + resource &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ami &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;ami-05fa00d4c63e32376&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Єдине на що потрібно звернути увагу коли використовується count атрибут. Що до ресурсу більше не можна буде звернутись як раніше, наприклад &lt;code>aws.instance.foo.private_ip&lt;/code>. Буде така помилка&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">terraform&lt;/span> &lt;span style="color:#a6e22e">plan&lt;/span> &lt;span style="color:#f92672">-&lt;/span>var &lt;span style="color:#a6e22e">env&lt;/span>=&lt;span style="color:#a6e22e">prod&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">╷&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">│&lt;/span> &lt;span style="color:#a6e22e">Error&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">Missing&lt;/span> &lt;span style="color:#a6e22e">resource&lt;/span> &lt;span style="color:#a6e22e">instance&lt;/span> &lt;span style="color:#a6e22e">key&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">│&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">│&lt;/span> &lt;span style="color:#a6e22e">on&lt;/span> &lt;span style="color:#a6e22e">outputs&lt;/span>.&lt;span style="color:#a6e22e">tf&lt;/span> &lt;span style="color:#a6e22e">line&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>, &lt;span style="color:#66d9ef">in&lt;/span> &lt;span style="color:#a6e22e">output&lt;/span> &lt;span style="color:#e6db74">&amp;#34;instance_ip_addr&amp;#34;&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">│&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>&lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#a6e22e">value&lt;/span> = &lt;span style="color:#a6e22e">aws_instance&lt;/span>.&lt;span style="color:#a6e22e">foo&lt;/span>.&lt;span style="color:#a6e22e">private_ip&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">│&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">│&lt;/span> &lt;span style="color:#a6e22e">Because&lt;/span> &lt;span style="color:#a6e22e">aws_instance&lt;/span>.&lt;span style="color:#a6e22e">foo&lt;/span> &lt;span style="color:#a6e22e">has&lt;/span> &lt;span style="color:#e6db74">&amp;#34;count&amp;#34;&lt;/span> &lt;span style="color:#a6e22e">set&lt;/span>, &lt;span style="color:#a6e22e">its&lt;/span> &lt;span style="color:#a6e22e">attributes&lt;/span> &lt;span style="color:#a6e22e">must&lt;/span> &lt;span style="color:#a6e22e">be&lt;/span> &lt;span style="color:#a6e22e">accessed&lt;/span> &lt;span style="color:#a6e22e">on&lt;/span> &lt;span style="color:#a6e22e">specific&lt;/span> &lt;span style="color:#a6e22e">instances&lt;/span>.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">│&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">│&lt;/span> &lt;span style="color:#a6e22e">For&lt;/span> &lt;span style="color:#a6e22e">example&lt;/span>, &lt;span style="color:#a6e22e">to&lt;/span> &lt;span style="color:#a6e22e">correlate&lt;/span> &lt;span style="color:#a6e22e">with&lt;/span> &lt;span style="color:#a6e22e">indices&lt;/span> &lt;span style="color:#a6e22e">of&lt;/span> &lt;span style="color:#a6e22e">a&lt;/span> &lt;span style="color:#a6e22e">referring&lt;/span> &lt;span style="color:#a6e22e">resource&lt;/span>, &lt;span style="color:#a6e22e">use&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">│&lt;/span> &lt;span style="color:#a6e22e">aws_instance&lt;/span>.&lt;span style="color:#a6e22e">foo&lt;/span>[count.&lt;span style="color:#a6e22e">index&lt;/span>]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер для того щоб звернутись потрібно вказати індекс. Оскільки я створюю тільки один сервер то індекс в мене буде 0, і звернення буде виглядати так &lt;code>aws_instance.foo[0].private_ip&lt;/code>. Якщо ж створюється більше ніж один сервер то до них можна буде звертатись по їх індексах 1,2,3 і так далі.&lt;/p>
+&lt;h2 id="lookup">Lookup&lt;/h2>
+&lt;p>З умовами я міг вказати що якщо prod то один тип сервера а якщо ні то інший. А що робити якщо в нас декілька середовищ як dev, test, staging, prod і для кожного з них потрібні різні типи серверів. З цим нам допоможе lookup. Lookup функція дозволяє отримати значення з map в залежності від значення ключа.&lt;/p>
+&lt;p>Для початку потрібно створити map яка буде мати значення типу сервера до середовища.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">variable&lt;/span> &lt;span style="color:#e6db74">&amp;#34;env&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">default&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">description&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Environment name&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">type&lt;/span> = &lt;span style="color:#a6e22e">string&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">variable&lt;/span> &lt;span style="color:#e6db74">&amp;#34;instance_types&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">type&lt;/span> = map(&lt;span style="color:#a6e22e">string&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">default&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;prod&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;m5.xlarge&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;staging&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;m5.large&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;test&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;t3.large&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;dev&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;t3.micro&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер це можна використати в aws_instance коді. Для &lt;code>lookup&lt;/code> функції потрібно три аргументи. Перший map яка містить значення, другий це значення ключа по якому робимо пошук і третій це дефолтне значення на випадок якщо потрібно ключа в map не буде&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">count&lt;/span> = var.&lt;span style="color:#a6e22e">env&lt;/span> =&lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;prod&amp;#34;&lt;/span> &lt;span style="color:#f92672">?&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#f92672">:&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ami&lt;/span> = data.&lt;span style="color:#a6e22e">aws_ami&lt;/span>.&lt;span style="color:#a6e22e">amzn&lt;/span>.&lt;span style="color:#a6e22e">id&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">instance_type&lt;/span> = lookup(var.&lt;span style="color:#a6e22e">instance_types&lt;/span>, var.&lt;span style="color:#a6e22e">env&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;t3.micro&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">subnet_id&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;subnet-5f70bf74&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">vpc_security_group_ids&lt;/span> = [&lt;span style="color:#e6db74">&amp;#34;sg-b04b8cd4&amp;#34;&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Env&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">volume_tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;Env&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>І тепер яке б значення env параметра я б не передав потрібний тип сервера буде використано.&lt;/p></content></item><item><title>Terraform Variables</title><link>https://mpostument.com/ua/2022/09/09/terraform-variables/</link><pubDate>Fri, 09 Sep 2022 20:31:09 +0300</pubDate><guid>https://mpostument.com/ua/2022/09/09/terraform-variables/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Part 3 - Terraform State
 Part 4 - Terraform Template
@@ -12,7 +184,7 @@ variable &amp;#34;instance_type&amp;#34; { default = &amp;#34;t2.micro&amp;#34; 
 &lt;a href="https://mpostument.com/ua/2022/07/31/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
 &lt;a href="https://mpostument.com/ua/2022/08/11/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
 &lt;a href="https://mpostument.com/ua/2022/08/22/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/08/28/terraform-lifecycle/" title="Part 5 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;/p>
+&lt;a href="https://mpostument.com/ua/2022/08/28/terraform-lifecycle/" title="Part 6 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;/p>
 &lt;p>Привіт!&lt;/p>
 &lt;p>В цьому пості розкажу про параметри в terraform та terraform data.&lt;/p>
 &lt;h2 id="variables">Variables&lt;/h2>
@@ -43,7 +215,7 @@ variable &amp;#34;instance_type&amp;#34; { default = &amp;#34;t2.micro&amp;#34; 
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Якщо мені потрібно використати інший тип сервера то тут є декілька варіантів. Перший це передати при запуску terraform за допомогою опції &lt;code>-var&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$terraform apply -var instance_type&lt;span style="color:#f92672">=&lt;/span>t3.micro
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ terraform apply -var instance_type&lt;span style="color:#f92672">=&lt;/span>t3.micro
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># aws_instance.foo will be created&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + resource &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ami &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;ami-0cff7528ff583bf9a&amp;#34;&lt;/span>
@@ -149,8 +321,8 @@ variable &amp;#34;instance_type&amp;#34; { default = &amp;#34;t2.micro&amp;#34; 
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ami&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;ami-0cff7528ff583bf9a&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">instance_type&lt;/span> = var.&lt;span style="color:#a6e22e">instance_type&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">subnet_id&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;subnet-db73f0ac&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">vpc_security_group_ids&lt;/span> = &lt;span style="color:#a6e22e">local&lt;/span>.&lt;span style="color:#a6e22e">subnet_id&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">subnet_id&lt;/span> = &lt;span style="color:#a6e22e">local&lt;/span>.&lt;span style="color:#a6e22e">subnet_id&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">vpc_security_group_ids&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;sg-123&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">tags&lt;/span> = {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Env&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
@@ -178,8 +350,8 @@ variable &amp;#34;instance_type&amp;#34; { default = &amp;#34;t2.micro&amp;#34; 
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ami&lt;/span> = data.&lt;span style="color:#a6e22e">aws_ami&lt;/span>.&lt;span style="color:#a6e22e">amzn&lt;/span>.&lt;span style="color:#a6e22e">id&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">instance_type&lt;/span> = var.&lt;span style="color:#a6e22e">instance_type&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">subnet_id&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;subnet-db73f0ac&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">vpc_security_group_ids&lt;/span> = &lt;span style="color:#a6e22e">local&lt;/span>.&lt;span style="color:#a6e22e">subnet_id&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">subnet_id&lt;/span> = &lt;span style="color:#a6e22e">local&lt;/span>.&lt;span style="color:#a6e22e">subnet_id&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">vpc_security_group_ids&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;sg-123&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">tags&lt;/span> = {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Env&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
