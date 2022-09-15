@@ -1,4 +1,560 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Terraform on Maksym Postument</title><link>https://mpostument.com/ua/categories/terraform/</link><description>Recent content in Terraform on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 11 Sep 2022 11:23:40 +0300</lastBuildDate><atom:link href="https://mpostument.com/ua/categories/terraform/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraform Condition and Lookup</title><link>https://mpostument.com/ua/2022/09/11/terraform-condition-and-lookup/</link><pubDate>Sun, 11 Sep 2022 11:23:40 +0300</pubDate><guid>https://mpostument.com/ua/2022/09/11/terraform-condition-and-lookup/</guid><description>Part 1 - Terraform Install
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Terraform on Maksym Postument</title><link>https://mpostument.com/ua/categories/terraform/</link><description>Recent content in Terraform on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 14 Sep 2022 20:41:58 +0300</lastBuildDate><atom:link href="https://mpostument.com/ua/categories/terraform/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraform Modules and Import</title><link>https://mpostument.com/ua/2022/09/14/terraform-modules-and-import/</link><pubDate>Wed, 14 Sep 2022 20:41:58 +0300</pubDate><guid>https://mpostument.com/ua/2022/09/14/terraform-modules-and-import/</guid><description>Part 1 - Terraform Install
+Part 2 - Terraform Basics
+Part 3 - Terraform State
+Part 4 - Terraform Template
+Part 5 - Terraform Dynamic
+Part 6 - Terraform Lifecycle
+Part 7 - Terraform Lifecycle
+Part 8 - Terraform Condition and Lookup
+Привіт!
+Сьогодні подивимось як можна імпортувати існуючі ресурси в terraform і як організувати код в модуль для зручного перевикористання.
+Import Буває ситуація коли ресурси вже створенні і ними потрібно почати управляти за допомогою terraform.</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/2022/07/31/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/2022/08/11/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/2022/08/22/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/2022/08/28/terraform-lifecycle/" title="Part 6 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/2022/09/09/terraform-variables/" title="Part 7 - Terraform Variables">Part 7 - Terraform Lifecycle&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/2022/09/11/terraform-condition-and-lookup/" title="Part 8 - Terraform Condition and Lookup">Part 8 - Terraform Condition and Lookup&lt;/a>&lt;/p>
+&lt;p>Привіт!&lt;/p>
+&lt;p>Сьогодні подивимось як можна імпортувати існуючі ресурси в terraform і як організувати код в модуль для зручного перевикористання.&lt;/p>
+&lt;h2 id="import">Import&lt;/h2>
+&lt;p>Буває ситуація коли ресурси вже створенні і ними потрібно почати управляти за допомогою terraform. Або ж ресурс був видалений з terraform state і потрібно його знову туди додати. Це дуже просто за допомогою &lt;code>terraform import&lt;/code>.&lt;/p>
+&lt;p>Є код який створює ec2 сервер, але сервер вже існує&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ami&lt;/span> = data.&lt;span style="color:#a6e22e">aws_ami&lt;/span>.&lt;span style="color:#a6e22e">amzn&lt;/span>.&lt;span style="color:#a6e22e">id&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">instance_type&lt;/span> = var.&lt;span style="color:#a6e22e">instance_type&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">subnet_id&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;subnet-db73f0ac&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">vpc_security_group_ids&lt;/span> = [&lt;span style="color:#e6db74">&amp;#34;sg-b04b8cd4&amp;#34;&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Env&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">volume_tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;Env&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Якщо запустити terraform то сервер буде створено ще один раз&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ terraform plan
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>data.aws_ami.amzn: Reading...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>data.aws_ami.amzn: Read complete after 0s &lt;span style="color:#f92672">[&lt;/span>id&lt;span style="color:#f92672">=&lt;/span>ami-05fa00d4c63e32376&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + create
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform will perform the following actions:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># aws_instance.foo will be created&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + resource &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ami &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;ami-05fa00d4c63e32376&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + arn &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + associate_public_ip_address &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + availability_zone &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + cpu_core_count &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + cpu_threads_per_core &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + disable_api_stop &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + disable_api_termination &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ebs_optimized &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + get_password_data &lt;span style="color:#f92672">=&lt;/span> false
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + host_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + instance_initiated_shutdown_behavior &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + instance_state &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + instance_type &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;c5.large&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ipv6_address_count &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ipv6_addresses &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + key_name &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + monitoring &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + outpost_arn &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + password_data &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + placement_group &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + placement_partition_number &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + primary_network_interface_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + private_dns &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + private_ip &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + public_dns &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + public_ip &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + secondary_private_ips &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + security_groups &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + source_dest_check &lt;span style="color:#f92672">=&lt;/span> true
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + subnet_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;subnet-db73f0ac&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + tags &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + &lt;span style="color:#e6db74">&amp;#34;Env&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + tags_all &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + &lt;span style="color:#e6db74">&amp;#34;Env&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + tenancy &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + user_data &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + user_data_base64 &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + user_data_replace_on_change &lt;span style="color:#f92672">=&lt;/span> false
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + volume_tags &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + &lt;span style="color:#e6db74">&amp;#34;Env&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + vpc_security_group_ids &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + &lt;span style="color:#e6db74">&amp;#34;sg-b04b8cd4&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + capacity_reservation_specification &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + capacity_reservation_preference &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + capacity_reservation_target &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + capacity_reservation_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + capacity_reservation_resource_group_arn &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ebs_block_device &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + delete_on_termination &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + device_name &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + encrypted &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + iops &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + kms_key_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + snapshot_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + tags &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + throughput &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + volume_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + volume_size &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + volume_type &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + enclave_options &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + enabled &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ephemeral_block_device &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + device_name &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + no_device &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + virtual_name &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + maintenance_options &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + auto_recovery &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + metadata_options &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + http_endpoint &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + http_put_response_hop_limit &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + http_tokens &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + instance_metadata_tags &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + network_interface &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + delete_on_termination &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + device_index &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + network_card_index &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + network_interface_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + private_dns_name_options &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + enable_resource_name_dns_a_record &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + enable_resource_name_dns_aaaa_record &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + hostname_type &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + root_block_device &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + delete_on_termination &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + device_name &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + encrypted &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + iops &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + kms_key_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + tags &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + throughput &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + volume_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + volume_size &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + volume_type &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Plan: &lt;span style="color:#ae81ff">1&lt;/span> to add, &lt;span style="color:#ae81ff">0&lt;/span> to change, &lt;span style="color:#ae81ff">0&lt;/span> to destroy.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Для того щоб імпортувати вже створений сервер в terraform потрібно запустити &lt;code>terraform import tf_resource.resource_name existing_resource_id&lt;/code>. Оскільки я хочу імпортувати aws_instance з назвою foo кий має id i-0ea46560d61c09724 то команда буде виглядати так &lt;code>terraform import aws_instance.foo i-0ea46560d61c09724&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ terraform import aws_instance.foo i-0ea46560d61c09724
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>aws_instance.foo: Importing from ID &lt;span style="color:#e6db74">&amp;#34;i-0ea46560d61c09724&amp;#34;&lt;/span>...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>aws_instance.foo: Import prepared!
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Prepared aws_instance &lt;span style="color:#66d9ef">for&lt;/span> import
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>aws_instance.foo: Refreshing state... &lt;span style="color:#f92672">[&lt;/span>id&lt;span style="color:#f92672">=&lt;/span>i-0ea46560d61c09724&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Import successful!
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>The resources that were imported are shown above. These resources are now in
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>your Terraform state and will henceforth be managed by Terraform.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Якщо знову запустити &lt;code>terraform plan&lt;/code> то результат буде інший.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ terraform plan
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>data.aws_ami.amzn: Reading...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>data.aws_ami.amzn: Read complete after 0s &lt;span style="color:#f92672">[&lt;/span>id&lt;span style="color:#f92672">=&lt;/span>ami-05fa00d4c63e32376&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>aws_instance.foo: Refreshing state... &lt;span style="color:#f92672">[&lt;/span>id&lt;span style="color:#f92672">=&lt;/span>i-0ea46560d61c09724&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>No changes. Your infrastructure matches the configuration.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="modules">Modules&lt;/h2>
+&lt;p>Модуль дозволяє об&amp;rsquo;єднати декілька terraform ресурсів в одну абстракцію для зручного повторного використання. Візьму код з одного з попередніх постів який створює сервер так security group. І припустимо що потрібно створити ще 5 схожих серверів та security group. Звичайно може 5 раз скопіювати цей код і поміняти значення параметрів, а можна його параметризувати то створити модуль.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ami&lt;/span> = data.&lt;span style="color:#a6e22e">aws_ami&lt;/span>.&lt;span style="color:#a6e22e">amzn&lt;/span>.&lt;span style="color:#a6e22e">id&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">instance_type&lt;/span> = var.&lt;span style="color:#a6e22e">instance_type&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">subnet_id&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;subnet-db73f0ac&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">vpc_security_group_ids&lt;/span> = [&lt;span style="color:#a6e22e">aws_security_group&lt;/span>.&lt;span style="color:#a6e22e">test_sg&lt;/span>.&lt;span style="color:#a6e22e">id&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Env&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">volume_tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;Env&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_security_group&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;test_sg&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">name&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;test-sg&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">description&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;allow traffic to web app&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">vpc_id&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;vcp-123&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">dynamic&lt;/span> &lt;span style="color:#e6db74">&amp;#34;ingress&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">for_each&lt;/span> = [&lt;span style="color:#ae81ff">8080&lt;/span>, &lt;span style="color:#ae81ff">443&lt;/span>, &lt;span style="color:#ae81ff">22&lt;/span>, &lt;span style="color:#ae81ff">80&lt;/span>, &lt;span style="color:#ae81ff">3000&lt;/span>, &lt;span style="color:#ae81ff">8082&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">content&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">from_port&lt;/span> = &lt;span style="color:#a6e22e">ingress&lt;/span>.&lt;span style="color:#a6e22e">value&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">to_port&lt;/span> = &lt;span style="color:#a6e22e">ingress&lt;/span>.&lt;span style="color:#a6e22e">value&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">protocol&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;tcp&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">cidr_blocks&lt;/span> = [
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;0.0.0.0/0&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">egress&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">from_port&lt;/span> = &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">to_port&lt;/span> = &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">protocol&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;-1&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">cidr_blocks&lt;/span> = [&lt;span style="color:#e6db74">&amp;#34;0.0.0.0/0&amp;#34;&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Для початку потрібно максимально параметризувати. Для security_group я створю два параметри vpc i інша зі списком портів які мають бути відкриті. Для сервера буде чотири параметри це ami, subnet, instance_type i security group. І один загальний параметр який буде називатись prefix. він потрібен для того щоб створювати різні назви для ресурсів, а можна і просто зробити параметр name який буде задавати для всього назву&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">variable&lt;/span> &lt;span style="color:#e6db74">&amp;#34;instance_type&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">default&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;t2.micro&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">description&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Instance type for test instance&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">type&lt;/span> = &lt;span style="color:#a6e22e">string&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">variable&lt;/span> &lt;span style="color:#e6db74">&amp;#34;subnet_id&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">description&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Subnet id where server will be created&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">type&lt;/span> = &lt;span style="color:#a6e22e">string&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">variable&lt;/span> &lt;span style="color:#e6db74">&amp;#34;security_groups&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">description&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;List of sg for instance&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">type&lt;/span> = list(&lt;span style="color:#a6e22e">string&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">variable&lt;/span> &lt;span style="color:#e6db74">&amp;#34;ports_list&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">description&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;List of port which should be open&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">type&lt;/span> = list(&lt;span style="color:#a6e22e">number&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">variable&lt;/span> &lt;span style="color:#e6db74">&amp;#34;ami_id&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">description&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Id of ami which should be used for instance&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">type&lt;/span> = &lt;span style="color:#a6e22e">string&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">variable&lt;/span> &lt;span style="color:#e6db74">&amp;#34;vpc_id&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">description&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Id of vpc where sg will be created&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">type&lt;/span> = &lt;span style="color:#a6e22e">string&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">variable&lt;/span> &lt;span style="color:#e6db74">&amp;#34;prefix&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">description&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Prefix to be added to all created resources&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">type&lt;/span> = &lt;span style="color:#a6e22e">string&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>І в самому коді вкажемо використовувати ці параметри&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ami&lt;/span> = var.&lt;span style="color:#a6e22e">ami_id&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">instance_type&lt;/span> = var.&lt;span style="color:#a6e22e">instance_type&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">subnet_id&lt;/span> = var.&lt;span style="color:#a6e22e">subnet_id&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">vpc_security_group_ids&lt;/span> = concat(var.&lt;span style="color:#a6e22e">security_groups&lt;/span>, [&lt;span style="color:#a6e22e">aws_security_group&lt;/span>.&lt;span style="color:#a6e22e">test_sg&lt;/span>.&lt;span style="color:#a6e22e">id&lt;/span>])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Name&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>var.&lt;span style="color:#a6e22e">prefix&lt;/span>&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">-common-instance&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_security_group&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;test_sg&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">name&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;&lt;/span>&lt;span style="color:#e6db74">${&lt;/span>var.&lt;span style="color:#a6e22e">prefix&lt;/span>&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">-common-sg&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">description&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;allow traffic to &lt;/span>&lt;span style="color:#e6db74">${&lt;/span>var.&lt;span style="color:#a6e22e">prefix&lt;/span>&lt;span style="color:#e6db74">}&lt;/span>&lt;span style="color:#e6db74">-common-instance&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">vpc_id&lt;/span> = var.&lt;span style="color:#a6e22e">vpc_id&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">dynamic&lt;/span> &lt;span style="color:#e6db74">&amp;#34;ingress&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">for_each&lt;/span> = var.&lt;span style="color:#a6e22e">ports_list&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">content&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">from_port&lt;/span> = &lt;span style="color:#a6e22e">ingress&lt;/span>.&lt;span style="color:#a6e22e">value&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">to_port&lt;/span> = &lt;span style="color:#a6e22e">ingress&lt;/span>.&lt;span style="color:#a6e22e">value&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">protocol&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;tcp&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">cidr_blocks&lt;/span> = [
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;0.0.0.0/0&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">egress&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">from_port&lt;/span> = &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">to_port&lt;/span> = &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">protocol&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;-1&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">cidr_blocks&lt;/span> = [&lt;span style="color:#e6db74">&amp;#34;0.0.0.0/0&amp;#34;&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер що залишилось це перенести це в окрему теку і використати як модуль. Я створю теку modules в які створю ще одну common_server в яку переміщу створений код.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ tree modules
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>modules
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>└── common_server
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── main.tf
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> └── variables.tf
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">1&lt;/span> directory, &lt;span style="color:#ae81ff">2&lt;/span> files
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер я можу створити новий terraform файл(main.tf) і вказати використовувати модуль&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">module&lt;/span> &lt;span style="color:#e6db74">&amp;#34;common_server&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">source&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;./modules/common_server&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ami_id&lt;/span> = data.&lt;span style="color:#a6e22e">aws_ami&lt;/span>.&lt;span style="color:#a6e22e">amzn&lt;/span>.&lt;span style="color:#a6e22e">id&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">security_groups&lt;/span> = [&lt;span style="color:#e6db74">&amp;#34;sg-b04b8cd4&amp;#34;&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">vpc_id&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;vpc-e5543380&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">subnet_id&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;subnet-5f70bf74&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ports_list&lt;/span> = [&lt;span style="color:#ae81ff">80&lt;/span>, &lt;span style="color:#ae81ff">443&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">prefix&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;maksym&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">instance_type&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;t2.micro&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Якщо я одразу запущу terraform то отримаю помилку&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ terraform plan
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>╷
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>│ Error: Module not installed
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>│
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>│ on main.tf line 1:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>│ 1: module &lt;span style="color:#e6db74">&amp;#34;common_server&amp;#34;&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>│
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>│ This module is not yet installed. Run &lt;span style="color:#e6db74">&amp;#34;terraform init&amp;#34;&lt;/span> to install all modules required by this configuration.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Спочатку потрібно запустити &lt;code>terraform init&lt;/code> щоб ініціалізувати модуль.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ terraform init
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Initializing modules...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- common_server in modules/common_server
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Initializing the backend...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Initializing provider plugins...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- Reusing previous version of hashicorp/aws from the dependency lock file
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- Using previously-installed hashicorp/aws v4.23.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform has made some changes to the provider dependency selections recorded
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>in the .terraform.lock.hcl file. Review those changes and commit them to your
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>version control system &lt;span style="color:#66d9ef">if&lt;/span> they represent changes you intended to make.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform has been successfully initialized!
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>You may now begin working with Terraform. Try running &lt;span style="color:#e6db74">&amp;#34;terraform plan&amp;#34;&lt;/span> to see
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>any changes that are required &lt;span style="color:#66d9ef">for&lt;/span> your infrastructure. All Terraform commands
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>should now work.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>If you ever set or change modules or backend configuration &lt;span style="color:#66d9ef">for&lt;/span> Terraform,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>rerun this command to reinitialize your working directory. If you forget, other
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>commands will detect it and remind you to &lt;span style="color:#66d9ef">do&lt;/span> so &lt;span style="color:#66d9ef">if&lt;/span> necessary.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Після цього можна запустити &lt;code>terraform plan&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>terraform plan
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>data.aws_ami.amzn: Reading...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>data.aws_ami.amzn: Read complete after 1s &lt;span style="color:#f92672">[&lt;/span>id&lt;span style="color:#f92672">=&lt;/span>ami-05fa00d4c63e32376&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + create
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform will perform the following actions:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># module.common_server.aws_instance.foo will be created&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + resource &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ami &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;ami-05fa00d4c63e32376&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + arn &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + associate_public_ip_address &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + availability_zone &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + cpu_core_count &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + cpu_threads_per_core &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + disable_api_stop &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + disable_api_termination &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ebs_optimized &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + get_password_data &lt;span style="color:#f92672">=&lt;/span> false
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + host_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + instance_initiated_shutdown_behavior &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + instance_state &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + instance_type &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;t2.micro&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ipv6_address_count &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ipv6_addresses &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + key_name &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + monitoring &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + outpost_arn &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + password_data &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + placement_group &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + placement_partition_number &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + primary_network_interface_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + private_dns &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + private_ip &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + public_dns &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + public_ip &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + secondary_private_ips &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + security_groups &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + source_dest_check &lt;span style="color:#f92672">=&lt;/span> true
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + subnet_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;subnet-5f70bf74&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + tags &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + &lt;span style="color:#e6db74">&amp;#34;Name&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;maksym-common-instance&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + tags_all &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + &lt;span style="color:#e6db74">&amp;#34;Name&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;maksym-common-instance&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + tenancy &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + user_data &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + user_data_base64 &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + user_data_replace_on_change &lt;span style="color:#f92672">=&lt;/span> false
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + vpc_security_group_ids &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + capacity_reservation_specification &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + capacity_reservation_preference &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + capacity_reservation_target &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + capacity_reservation_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + capacity_reservation_resource_group_arn &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ebs_block_device &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + delete_on_termination &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + device_name &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + encrypted &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + iops &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + kms_key_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + snapshot_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + tags &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + throughput &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + volume_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + volume_size &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + volume_type &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + enclave_options &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + enabled &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ephemeral_block_device &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + device_name &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + no_device &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + virtual_name &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + maintenance_options &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + auto_recovery &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + metadata_options &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + http_endpoint &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + http_put_response_hop_limit &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + http_tokens &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + instance_metadata_tags &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + network_interface &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + delete_on_termination &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + device_index &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + network_card_index &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + network_interface_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + private_dns_name_options &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + enable_resource_name_dns_a_record &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + enable_resource_name_dns_aaaa_record &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + hostname_type &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + root_block_device &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + delete_on_termination &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + device_name &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + encrypted &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + iops &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + kms_key_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + tags &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + throughput &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + volume_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + volume_size &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + volume_type &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># module.common_server.aws_security_group.test_sg will be created&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + resource &lt;span style="color:#e6db74">&amp;#34;aws_security_group&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;test_sg&amp;#34;&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + arn &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + description &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;allow traffic to maksym-common-instance&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + egress &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + cidr_blocks &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + &lt;span style="color:#e6db74">&amp;#34;0.0.0.0/0&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + description &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + from_port &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ipv6_cidr_blocks &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + prefix_list_ids &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + protocol &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;-1&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + security_groups &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + self &lt;span style="color:#f92672">=&lt;/span> false
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + to_port &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ingress &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + cidr_blocks &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + &lt;span style="color:#e6db74">&amp;#34;0.0.0.0/0&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + description &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + from_port &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">443&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ipv6_cidr_blocks &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + prefix_list_ids &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + protocol &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;tcp&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + security_groups &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + self &lt;span style="color:#f92672">=&lt;/span> false
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + to_port &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">443&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + cidr_blocks &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + &lt;span style="color:#e6db74">&amp;#34;0.0.0.0/0&amp;#34;&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + description &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + from_port &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">80&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + ipv6_cidr_blocks &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + prefix_list_ids &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + protocol &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;tcp&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + security_groups &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + self &lt;span style="color:#f92672">=&lt;/span> false
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + to_port &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">80&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + name &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;maksym-common-sg&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + name_prefix &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + owner_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + revoke_rules_on_delete &lt;span style="color:#f92672">=&lt;/span> false
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + tags_all &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">(&lt;/span>known after apply&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + vpc_id &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;vpc-e5543380&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Plan: &lt;span style="color:#ae81ff">2&lt;/span> to add, &lt;span style="color:#ae81ff">0&lt;/span> to change, &lt;span style="color:#ae81ff">0&lt;/span> to destroy.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер щоб створити декілька версії серверів потрібно просто скопіювати виклик модуля і змінити параметри.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">module&lt;/span> &lt;span style="color:#e6db74">&amp;#34;common_server&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">source&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;./modules/common_server&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ami_id&lt;/span> = data.&lt;span style="color:#a6e22e">aws_ami&lt;/span>.&lt;span style="color:#a6e22e">amzn&lt;/span>.&lt;span style="color:#a6e22e">id&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">security_groups&lt;/span> = [&lt;span style="color:#e6db74">&amp;#34;sg-b04b8cd4&amp;#34;&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">vpc_id&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;vpc-e5543380&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">subnet_id&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;subnet-5f70bf74&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ports_list&lt;/span> = [&lt;span style="color:#ae81ff">80&lt;/span>, &lt;span style="color:#ae81ff">443&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">prefix&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;maksym&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">instance_type&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;t2.micro&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">module&lt;/span> &lt;span style="color:#e6db74">&amp;#34;appserver&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">source&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;./modules/common_server&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ami_id&lt;/span> = data.&lt;span style="color:#a6e22e">aws_ami&lt;/span>.&lt;span style="color:#a6e22e">amzn&lt;/span>.&lt;span style="color:#a6e22e">id&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">security_groups&lt;/span> = [&lt;span style="color:#e6db74">&amp;#34;sg-b04a9dc5&amp;#34;&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">vpc_id&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;vpc-e5543380&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">subnet_id&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;subnet-5f70bf74&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ports_list&lt;/span> = [&lt;span style="color:#ae81ff">80&lt;/span>, &lt;span style="color:#ae81ff">443&lt;/span>, &lt;span style="color:#ae81ff">9090&lt;/span>, &lt;span style="color:#ae81ff">8888&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">prefix&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;app&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">instance_type&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;m5.large&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Модуль не обов&amp;rsquo;язково має знаходить на файловій системі щоб його використовувати, як source можна вказати і посилання на source control як github чи на &lt;a href="https://registry.terraform.io/">terraform registry&lt;/a> і модуль буде автоматично завантажено.&lt;/p>
+&lt;h2 id="modules-import">Modules import&lt;/h2>
+&lt;p>Тепер якщо спробувати імпортувати ресурс так як ми робили на початку не вийде тому що тепер ресурси мають інші назви. Наприклад aws_instance до модуля відображався як &lt;code>aws_instance.foo&lt;/code> тепер ж нове посилання буде &lt;code>module.common_server.aws_instance.foo&lt;/code>. Відповідно щоб імпортувати цей самий сервер що спочатку команда буде виглядати як &lt;code>terraform import module.common_server.aws_instance.foo i-0ea46560d61c09724&lt;/code>.&lt;/p></content></item><item><title>Terraform Condition and Lookup</title><link>https://mpostument.com/ua/2022/09/11/terraform-condition-and-lookup/</link><pubDate>Sun, 11 Sep 2022 11:23:40 +0300</pubDate><guid>https://mpostument.com/ua/2022/09/11/terraform-condition-and-lookup/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Part 3 - Terraform State
 Part 4 - Terraform Template
@@ -678,8 +1234,9 @@ Lifecycle create_before_destroy Lifecycle є мета параметром як�
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Apply complete! Resources: &lt;span style="color:#ae81ff">2&lt;/span> added, &lt;span style="color:#ae81ff">0&lt;/span> changed, &lt;span style="color:#ae81ff">0&lt;/span> destroyed.
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="todo-add-terraform-output">TODO: Add terraform output&lt;/h2>
 &lt;h2 id="outputs">Outputs&lt;/h2>
-&lt;p>Outputs схоже до return в мовах програмування. Він вертає значення які будуть надруковані в консолі після виконання terraform, також ці значення можуть використовуватись іншим terraform кодом. Найчастіше це використовується в модулях коли child модуль передає якісь значення parent модуль, або ж як просто вивід інформації в термінал.&lt;/p>
-&lt;p>Якщо terraform створює ec2 і після створення я хочу вивести його ip адрес то це можна зробити так&lt;/p>
+&lt;p>Outputs схоже до return в мовах програмування. Він вертає значення які будуть надруковані в консолі після виконання terraform, також ці значення можуть використовуватись іншим terraform кодом. Найчастіше це використовується в модулях коли child модуль передає якісь значення parent модуль, або ж як просто вивід інформації в термінал.
+dynamic &amp;ldquo;ingress&amp;rdquo; {
+Якщо terraform створює ec2 і після створення я хочу вивести його ip адрес то це можна зробити так&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ami&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;ami-0cff7528ff583bf9a&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">instance_type&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;t2.micro&amp;#34;&lt;/span>
@@ -827,6 +1384,7 @@ resource &amp;#34;aws_security_group&amp;#34; &amp;#34;test_sg&amp;#34; { name =
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">protocol&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;-1&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">cidr_blocks&lt;/span> = [&lt;span style="color:#e6db74">&amp;#34;0.0.0.0/0&amp;#34;&lt;/span>]
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/Aeu2sGehp7Q" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
