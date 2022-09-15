@@ -166,7 +166,7 @@ Import There is a situation when the resources have already been created and you
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Plan: &lt;span style="color:#ae81ff">1&lt;/span> to add, &lt;span style="color:#ae81ff">0&lt;/span> to change, &lt;span style="color:#ae81ff">0&lt;/span> to destroy.
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In order to import existing server into terraform, you need to run &lt;code>terraform import tf_resource.resource_name existing_resource_id&lt;/code>. Since I want to import aws_instance named foo with id i-0ea46560d61c09724, the command will look like &lt;code>terraform import aws_instance.foo i-0ea46560d61c09724&lt;/code>.&lt;/p>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>To import the existing server into terraform, you need to run &lt;code>terraform import tf_resource.resource_name existing_resource_id&lt;/code>. Since I want to import aws_instance named foo with id i-0ea46560d61c09724, the command will look like &lt;code>terraform import aws_instance.foo i-0ea46560d61c09724&lt;/code>.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ terraform import aws_instance.foo i-0ea46560d61c09724
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>aws_instance.foo: Importing from ID &lt;span style="color:#e6db74">&amp;#34;i-0ea46560d61c09724&amp;#34;&lt;/span>...
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>aws_instance.foo: Import prepared!
@@ -187,7 +187,7 @@ Import There is a situation when the resources have already been created and you
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="modules">Modules&lt;/h2>
-&lt;p>The module allows you to combine several terraform resources into one abstraction for convenient reuse. I will take the code from one of the previous posts that creates a server and security group. And let&amp;rsquo;s assume that you need to create 5 more similar servers and a security groups. Of course, you can copy this code 5 times and change the attributes, or you can parameterize it and create a module.&lt;/p>
+&lt;p>The module allows you to combine several terraform resources into one abstraction for convenient reuse. I will take the code from one of the previous posts that creates a server and security group. And let&amp;rsquo;s assume that you need to create 5 more similar servers and security groups. Of course, you can copy this code 5 times and change the attributes, or you can parameterize it and create a module.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ami&lt;/span> = data.&lt;span style="color:#a6e22e">aws_ami&lt;/span>.&lt;span style="color:#a6e22e">amzn&lt;/span>.&lt;span style="color:#a6e22e">id&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">instance_type&lt;/span> = var.&lt;span style="color:#a6e22e">instance_type&lt;/span>
@@ -224,7 +224,7 @@ Import There is a situation when the resources have already been created and you
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">cidr_blocks&lt;/span> = [&lt;span style="color:#e6db74">&amp;#34;0.0.0.0/0&amp;#34;&lt;/span>]
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Let&amp;rsquo;s add parameters. For security_group, I will create two parameters vpc and another with a list of ports that should be opened. There will be four parameters for the server: ami, subnet, instance_type and security group. And one general parameter which will be called prefix. It is needed in order to create different names for resources, or you can simply make a &lt;code>name&lt;/code> parameter that will set the name for everything&lt;/p>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Let&amp;rsquo;s add parameters. For security_group, I will create two parameters vpc and another with a list of ports that should be opened. There will be four parameters for the server: ami, subnet, instance_type, and security group. And one general parameter will be called prefix. It is needed to create different names for resources, or you can simply make a &lt;code>name&lt;/code> parameter that will set the name for everything&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">variable&lt;/span> &lt;span style="color:#e6db74">&amp;#34;instance_type&amp;#34;&lt;/span> {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">default&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;t2.micro&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">description&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Instance type for test instance&amp;#34;&lt;/span>
@@ -260,7 +260,7 @@ Import There is a situation when the resources have already been created and you
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">description&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Prefix to be added to all created resources&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">type&lt;/span> = &lt;span style="color:#a6e22e">string&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And in the code itself, we will specify to use these parameters. Inside of &lt;code>vpc_security_group_ids&lt;/code> i am using &lt;code>concat&lt;/code> method to add security group id from new security group to list with security groups &lt;code>var.security_groups&lt;/code>.&lt;/p>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And in the code itself, we will specify to use of these parameters. Inside of &lt;code>vpc_security_group_ids&lt;/code> i am using &lt;code>concat&lt;/code> method to add security group id from new security group to list with security groups &lt;code>var.security_groups&lt;/code>.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ami&lt;/span> = var.&lt;span style="color:#a6e22e">ami_id&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">instance_type&lt;/span> = var.&lt;span style="color:#a6e22e">instance_type&lt;/span>
@@ -302,7 +302,7 @@ Import There is a situation when the resources have already been created and you
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> └── variables.tf
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">1&lt;/span> directory, &lt;span style="color:#ae81ff">2&lt;/span> files
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now I can create a new terraform file(main.tf) and specify to use the module. Where source is module location in file system.&lt;/p>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now I can create a new terraform file(main.tf) and specify to use the module. Where a source is module location in a file system.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">module&lt;/span> &lt;span style="color:#e6db74">&amp;#34;common_server&amp;#34;&lt;/span> {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">source&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;./modules/common_server&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ami_id&lt;/span> = data.&lt;span style="color:#a6e22e">aws_ami&lt;/span>.&lt;span style="color:#a6e22e">amzn&lt;/span>.&lt;span style="color:#a6e22e">id&lt;/span>
@@ -322,7 +322,7 @@ Import There is a situation when the resources have already been created and you
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>│ 1: module &lt;span style="color:#e6db74">&amp;#34;common_server&amp;#34;&lt;/span> &lt;span style="color:#f92672">{&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>│
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>│ This module is not yet installed. Run &lt;span style="color:#e6db74">&amp;#34;terraform init&amp;#34;&lt;/span> to install all modules required by this configuration.
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>First you need to run &lt;code>terraform init&lt;/code> to initialize the module.&lt;/p>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>First, you need to run &lt;code>terraform init&lt;/code> to initialize the module.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ terraform init
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Initializing modules...
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- common_server in modules/common_server
@@ -346,7 +346,7 @@ Import There is a situation when the resources have already been created and you
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>If you ever set or change modules or backend configuration &lt;span style="color:#66d9ef">for&lt;/span> Terraform,
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>rerun this command to reinitialize your working directory. If you forget, other
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>commands will detect it and remind you to &lt;span style="color:#66d9ef">do&lt;/span> so &lt;span style="color:#66d9ef">if&lt;/span> necessary.
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After that you can run &lt;code>terraform plan&lt;/code>.&lt;/p>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After that, you can run &lt;code>terraform plan&lt;/code>.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>terraform plan
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>data.aws_ami.amzn: Reading...
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>data.aws_ami.amzn: Read complete after 1s &lt;span style="color:#f92672">[&lt;/span>id&lt;span style="color:#f92672">=&lt;/span>ami-05fa00d4c63e32376&lt;span style="color:#f92672">]&lt;/span>
@@ -552,7 +552,7 @@ Import There is a situation when the resources have already been created and you
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">prefix&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;app&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">instance_type&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;m5.large&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The module does not necessarily have to be located on the file system to be used, as a source you can specify a link to source control such as github or to &lt;a href="https://registry.terraform.io/">terraform registry&lt;/a> and the module will be automatically downloaded.&lt;/p>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The module does not necessarily have to be located on the file system to be used, as a source you can specify a link to source control such as GitHub or to &lt;a href="https://registry.terraform.io/">terraform registry&lt;/a>, and the module will be automatically downloaded.&lt;/p>
 &lt;h2 id="modules-import">Modules import&lt;/h2>
 &lt;p>Now, if you try to import the resource as we did at the beginning, it will not work because now the resources have different terraform names. For example, aws_instance before the module was displayed as &lt;code>aws_instance.foo&lt;/code>, now the new name will be &lt;code>module.common_server.aws_instance.foo&lt;/code>. Accordingly, to import this same server, the command will look like &lt;code>terraform import module.common_server.aws_instance.foo i-0ea46560d61c09724&lt;/code>.&lt;/p></content></item><item><title>Terraform Condition and Lookup</title><link>https://mpostument.com/2022/09/11/terraform-condition-and-lookup/</link><pubDate>Sun, 11 Sep 2022 11:23:40 +0300</pubDate><guid>https://mpostument.com/2022/09/11/terraform-condition-and-lookup/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
@@ -562,7 +562,7 @@ Part 5 - Terraform Dynamic
 Part 6 - Terraform Lifecycle
 Part 7 - Terraform Lifecycle
 Hello!
-In this post I will talk about condition and lookups.
+In this post, I will talk about conditions and lookups.
 Conditions Conditions in terraform are used to select one value depending on another. For example, if it is a dev environment, then use the t3.</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
 &lt;a href="https://mpostument.com/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
 &lt;a href="https://mpostument.com/2022/07/31/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
@@ -571,7 +571,7 @@ Conditions Conditions in terraform are used to select one value depending on ano
 &lt;a href="https://mpostument.com/2022/08/28/terraform-lifecycle/" title="Part 6 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;br>
 &lt;a href="https://mpostument.com/2022/09/09/terraform-variables/" title="Part 7 - Terraform Variables">Part 7 - Terraform Lifecycle&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
-&lt;p>In this post I will talk about condition and lookups.&lt;/p>
+&lt;p>In this post, I will talk about conditions and lookups.&lt;/p>
 &lt;h2 id="conditions">Conditions&lt;/h2>
 &lt;p>Conditions in terraform are used to select one value depending on another. For example, if it is a dev environment, then use the t3.micro server type, and if it is a production environment, then use m5.large. This is easy to do with a condition. Conditions are written like &lt;code>condition ? true_val : false_val&lt;/code>. For server type conditions will look like &lt;code>var.env == &amp;quot;prod&amp;quot; ? &amp;quot;m5.large&amp;quot; : &amp;quot;t3.micro&amp;quot;&lt;/code>. Here I check whether the parameter &lt;code>env&lt;/code> has the value prod, and if so, I use m5.large, in all other cases it is t3.micro. The complete ec2 creation code will look like this.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">variable&lt;/span> &lt;span style="color:#e6db74">&amp;#34;env&amp;#34;&lt;/span> {
@@ -695,8 +695,8 @@ Conditions Conditions in terraform are used to select one value depending on ano
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">│&lt;/span> &lt;span style="color:#a6e22e">aws_instance&lt;/span>.&lt;span style="color:#a6e22e">foo&lt;/span>[count.&lt;span style="color:#a6e22e">index&lt;/span>]
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now, in order to reference, you need to specify the index. Since I am creating only one server, my index will be 0, and the request will look like &lt;code>aws_instance.foo[0].private_ip&lt;/code>. If more than one server is created, it will be possible to refer to them by their indexes 1,2,3 and so on.&lt;/p>
 &lt;h2 id="lookup">Lookup&lt;/h2>
-&lt;p>With the conditions, I could specify that if prod, then one type of server, and if not, then another. And what to do if we have several environments such as dev, test, staging, prod and each of them requires different types of servers. Lookup will help us with this. The Lookup function allows you to get the value from the map depending on the value of the key.&lt;/p>
-&lt;p>To begin with, you need to create a mapping server type to environment.&lt;/p>
+&lt;p>With the conditions, I could specify that if prod, then one type of server, and if not, then another. And what to do if we have several environments such as dev, test, staging, and prod and each of them requires different types of servers. Lookup will help us with this. The Lookup function allows you to get the value from the map depending on the value of the key.&lt;/p>
+&lt;p>To begin with, you need to create a mapping server type to the environment.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">variable&lt;/span> &lt;span style="color:#e6db74">&amp;#34;env&amp;#34;&lt;/span> {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">default&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;dev&amp;#34;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">description&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Environment name&amp;#34;&lt;/span>
