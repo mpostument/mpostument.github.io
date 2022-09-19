@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ansible on Maksym Postument</title><link>https://mpostument.com/categories/ansible/</link><description>Recent content in Ansible on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 19 Sep 2022 10:54:18 +0300</lastBuildDate><atom:link href="https://mpostument.com/categories/ansible/index.xml" rel="self" type="application/rss+xml"/><item><title>Manager Ansible Versions With pyenv</title><link>https://mpostument.com/2022/09/19/manager-ansible-versions-with-tfenv/</link><pubDate>Mon, 19 Sep 2022 10:54:18 +0300</pubDate><guid>https://mpostument.com/2022/09/19/manager-ansible-versions-with-tfenv/</guid><description>Hello!
+This is the first post in the series about Ansible, in which I will show how you can manage versions of Ansible and Python using pyenv.
+Pyenv pyenv allows you to install different versions of python and also create a virtual env in which ansible will be installed.
+In order to install pyenv, you need to execute the command
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv and add pyenv to PATH
+echo &amp;#39;export PYENV_ROOT=&amp;#34;$HOME/.</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>This is the first post in the series about Ansible, in which I will show how you can manage versions of Ansible and Python using pyenv.&lt;/p>
+&lt;h2 id="pyenv">Pyenv&lt;/h2>
+&lt;p>&lt;a href="https://github.com/pyenv/pyenv">pyenv&lt;/a> allows you to install different versions of python and also create a virtual env in which ansible will be installed.&lt;/p>
+&lt;p>In order to install pyenv, you need to execute the command&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>and add pyenv to PATH&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>echo &lt;span style="color:#e6db74">&amp;#39;export PYENV_ROOT=&amp;#34;$HOME/.pyenv&amp;#34;&amp;#39;&lt;/span> &amp;gt;&amp;gt; ~/.bashrc
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>echo &lt;span style="color:#e6db74">&amp;#39;command -v pyenv &amp;gt;/dev/null || export PATH=&amp;#34;$PYENV_ROOT/bin:$PATH&amp;#34;&amp;#39;&lt;/span> &amp;gt;&amp;gt; ~/.bashrc
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>echo &lt;span style="color:#e6db74">&amp;#39;eval &amp;#34;$(pyenv init -)&amp;#34;&amp;#39;&lt;/span> &amp;gt;&amp;gt; ~/.bashrc
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After the shell is restarted, the &lt;code>pyenv&lt;/code> command will be available. But in order to create a virtualenv, you need an additional &lt;a href="https://github.com/pyenv/pyenv-virtualenv">plugin&lt;/a> that can be installed using the command:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>git clone https://github.com/pyenv/pyenv-virtualenv.git &lt;span style="color:#66d9ef">$(&lt;/span>pyenv root&lt;span style="color:#66d9ef">)&lt;/span>/plugins/pyenv-virtualenv
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You also need to install certain &lt;a href="https://github.com/pyenv/pyenv/wiki#suggested-build-environment">packages&lt;/a> in order for python to compile. For ubuntu it will be:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>sudo apt-get update; sudo apt-get install make build-essential libssl-dev zlib1g-dev &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span>libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm &lt;span style="color:#ae81ff">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">&lt;/span>libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now that everything is ready, you can install the required version of python and ansible. Before ansible 2.5 there was support only for python 2, from version higher than 2.5 you can use python 3. I will install python 3 and ansible version 2.10.&lt;/p>
+&lt;h2 id="install-python">Install python&lt;/h2>
+&lt;p>To view available versions of python, you can execute the &lt;code>pyenv install --list&lt;/code> command&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ pyenv install --list
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Available versions:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 2.1.3
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 2.2.3
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 2.3.7
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 2.4.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 2.4.1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 2.4.2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 2.4.3
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 2.4.4
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 2.4.5
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 2.4.6
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 2.5.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 2.5.1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 2.5.2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 2.5.3
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 2.5.4
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 2.5.5
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 2.5.6
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ...
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After the desired python version is selected, it can be installed using &lt;code>pyenv install PYTHON_VERSION&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ pyenv install 3.10.7
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Downloading Python-3.10.7.tar.xz...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>-&amp;gt; https://www.python.org/ftp/python/3.10.7/Python-3.10.7.tar.xz
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Installing Python-3.10.7...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Installed Python-3.10.7 to /home/maksym/.pyenv/versions/3.10.7
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Ansible can be installed now, but if several versions are required, it will be difficult to do so. Since the versions will overwrite each other. It is better to use virtualenv. It can be created using &lt;code>pyenv virtualenv PYTHON_VERSION VIRTUALENV_NAME&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>pyenv virtualenv 3.10.7 ansible-2.10
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>When a virtualenv is created it needs to be activated, and this is how you can have multiple versions of ansible installed, with a separate virtualenv for each ansible version.&lt;/p>
+&lt;p>You can activate virtualenv using the &lt;code>pyenv activate VIRTUALENV_NAME&lt;/code> command&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>pyenv activate ansible-2.10
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now you are ready to install ansible. This can be done using the &lt;code>pip install PACKAGE_NAME&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ pip install ansible&lt;span style="color:#f92672">==&lt;/span>2.10.7
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Collecting ansible&lt;span style="color:#f92672">==&lt;/span>2.10.7
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Downloading ansible-2.10.7.tar.gz &lt;span style="color:#f92672">(&lt;/span>29.9 MB&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 29.9/29.9 MB 8.3 MB/s eta 0:00:00
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Preparing metadata &lt;span style="color:#f92672">(&lt;/span>setup.py&lt;span style="color:#f92672">)&lt;/span> ... &lt;span style="color:#66d9ef">done&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Collecting ansible-base&amp;lt;2.11,&amp;gt;&lt;span style="color:#f92672">=&lt;/span>2.10.5
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Downloading ansible-base-2.10.17.tar.gz &lt;span style="color:#f92672">(&lt;/span>6.1 MB&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 6.1/6.1 MB 9.5 MB/s eta 0:00:00
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Preparing metadata &lt;span style="color:#f92672">(&lt;/span>setup.py&lt;span style="color:#f92672">)&lt;/span> ... &lt;span style="color:#66d9ef">done&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Collecting jinja2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Using cached Jinja2-3.1.2-py3-none-any.whl &lt;span style="color:#f92672">(&lt;/span>&lt;span style="color:#ae81ff">133&lt;/span> kB&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Collecting PyYAML
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Downloading PyYAML-6.0-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl &lt;span style="color:#f92672">(&lt;/span>&lt;span style="color:#ae81ff">682&lt;/span> kB&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 682.2/682.2 kB 8.6 MB/s eta 0:00:00
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Collecting cryptography
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Downloading cryptography-38.0.1-cp36-abi3-manylinux_2_28_x86_64.whl &lt;span style="color:#f92672">(&lt;/span>4.2 MB&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.2/4.2 MB 9.9 MB/s eta 0:00:00
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Collecting packaging
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Downloading packaging-21.3-py3-none-any.whl &lt;span style="color:#f92672">(&lt;/span>&lt;span style="color:#ae81ff">40&lt;/span> kB&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 40.8/40.8 kB 3.0 MB/s eta 0:00:00
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Collecting cffi&amp;gt;&lt;span style="color:#f92672">=&lt;/span>1.12
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Downloading cffi-1.15.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl &lt;span style="color:#f92672">(&lt;/span>&lt;span style="color:#ae81ff">441&lt;/span> kB&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 441.8/441.8 kB 8.9 MB/s eta 0:00:00
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Collecting MarkupSafe&amp;gt;&lt;span style="color:#f92672">=&lt;/span>2.0
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Downloading MarkupSafe-2.1.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl &lt;span style="color:#f92672">(&lt;/span>&lt;span style="color:#ae81ff">25&lt;/span> kB&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Collecting pyparsing!&lt;span style="color:#f92672">=&lt;/span>3.0.5,&amp;gt;&lt;span style="color:#f92672">=&lt;/span>2.0.2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Downloading pyparsing-3.0.9-py3-none-any.whl &lt;span style="color:#f92672">(&lt;/span>&lt;span style="color:#ae81ff">98&lt;/span> kB&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 98.3/98.3 kB 6.2 MB/s eta 0:00:00
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Collecting pycparser
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Using cached pycparser-2.21-py2.py3-none-any.whl &lt;span style="color:#f92672">(&lt;/span>&lt;span style="color:#ae81ff">118&lt;/span> kB&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Using legacy &lt;span style="color:#e6db74">&amp;#39;setup.py install&amp;#39;&lt;/span> &lt;span style="color:#66d9ef">for&lt;/span> ansible, since package &lt;span style="color:#e6db74">&amp;#39;wheel&amp;#39;&lt;/span> is not installed.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Using legacy &lt;span style="color:#e6db74">&amp;#39;setup.py install&amp;#39;&lt;/span> &lt;span style="color:#66d9ef">for&lt;/span> ansible-base, since package &lt;span style="color:#e6db74">&amp;#39;wheel&amp;#39;&lt;/span> is not installed.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Installing collected packages: PyYAML, pyparsing, pycparser, MarkupSafe, packaging, jinja2, cffi, cryptography, ansible-base, ansible
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Running setup.py install &lt;span style="color:#66d9ef">for&lt;/span> ansible-base ... &lt;span style="color:#66d9ef">done&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Running setup.py install &lt;span style="color:#66d9ef">for&lt;/span> ansible ... &lt;span style="color:#66d9ef">done&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Successfully installed MarkupSafe-2.1.1 PyYAML-6.0 ansible-2.10.7 ansible-base-2.10.17 cffi-1.15.1 cryptography-38.0.1 jinja2-3.1.2 packaging-21.3 pycparser-2.21 pyparsing-3.0.9
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Ansible is now ready to use&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ ansible --version
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ansible 2.10.17
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> config file &lt;span style="color:#f92672">=&lt;/span> None
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> configured module search path &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">[&lt;/span>&lt;span style="color:#e6db74">&amp;#39;/home/maksym/.ansible/plugins/modules&amp;#39;&lt;/span>, &lt;span style="color:#e6db74">&amp;#39;/usr/share/ansible/plugins/modules&amp;#39;&lt;/span>&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ansible python module location &lt;span style="color:#f92672">=&lt;/span> /home/maksym/.pyenv/versions/3.10.7/envs/ansible-2.10/lib/python3.10/site-packages/ansible
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> executable location &lt;span style="color:#f92672">=&lt;/span> /home/maksym/.pyenv/versions/ansible-2.10/bin/ansible
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> python version &lt;span style="color:#f92672">=&lt;/span> 3.10.7 &lt;span style="color:#f92672">(&lt;/span>main, Sep &lt;span style="color:#ae81ff">19&lt;/span> 2022, 11:11:49&lt;span style="color:#f92672">)&lt;/span> &lt;span style="color:#f92672">[&lt;/span>GCC 9.4.0&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you need to install another version of ansible, you can deactivate virtualenv, create a new one and install ansible&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ pyenv deactivate
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ pyenv virtualenv 3.10.7 ansible-2.9
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ pip install ansible&lt;span style="color:#f92672">==&lt;/span>2.9.27
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item></channel></rss>
