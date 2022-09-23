@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>EC2 on Maksym Postument</title><link>https://mpostument.com/ua/tags/ec2/</link><description>Recent content in EC2 on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 22 Sep 2022 22:45:30 +0300</lastBuildDate><atom:link href="https://mpostument.com/ua/tags/ec2/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS 101: EC2 Part 1</title><link>https://mpostument.com/ua/2022/09/22/aws-101-ec2-part-1/</link><pubDate>Thu, 22 Sep 2022 22:45:30 +0300</pubDate><guid>https://mpostument.com/ua/2022/09/22/aws-101-ec2-part-1/</guid><description>Привіт!
+Цим посту розпочну серію про AWS, в яких покажу як використовувати різні AWS сервіси, автоматизовувати за допомогою terraform та AWS SDK. І розпочнемо з сервісу EC2.
+EC2 є основним обчислювальним компонентом AWS. На практиці EC2 полегшує життя розробникам, надаючи безпечну обчислювальну потужність у AWS зі змінним розміром. Він значно полегшує процес збільшення або зменшення масштабу, може бути інтегрований у кілька інших служб і поставляється з планом, згідно з яким ви платите лише за те, скільки використовуєте.</description><content>&lt;p>Привіт!&lt;/p>
+&lt;p>Цим посту розпочну серію про AWS, в яких покажу як використовувати різні AWS сервіси, автоматизовувати за допомогою &lt;code>terraform&lt;/code> та AWS SDK. І розпочнемо з сервісу EC2.&lt;/p>
+&lt;p>EC2 є основним обчислювальним компонентом AWS. На практиці EC2 полегшує життя розробникам, надаючи безпечну обчислювальну потужність у AWS зі змінним розміром. Він значно полегшує процес збільшення або зменшення масштабу, може бути інтегрований у кілька інших служб і поставляється з планом, згідно з яким ви платите лише за те, скільки використовуєте.&lt;/p>
+&lt;h2 id="ui-overview">UI Overview&lt;/h2>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-ui.png" alt="ec2-ui">&lt;/p>
+&lt;p>Так виглядає EC2 UI. В ньому є декілька категорій:&lt;/p>
+&lt;ul>
+&lt;li>Instance&lt;/li>
+&lt;li>Images&lt;/li>
+&lt;li>EBS&lt;/li>
+&lt;li>Network &amp;amp; Security&lt;/li>
+&lt;li>Load Balancing&lt;/li>
+&lt;li>Auto Scaling&lt;/li>
+&lt;/ul>
+&lt;h3 id="instance">Instance&lt;/h3>
+&lt;p>В секції instance можна створювати сервери, переглядати існуючі, і створювати шаблони конфігурацій серверів для подальшого перевикористання. Для того щоб створити сервер потрібно натиснути Launch Instance.&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-launch.png" alt="ec2-launch">&lt;/p>
+&lt;p>Де потрібно вказати атрибути майбутнього ec2. З обов&amp;rsquo;язкового потрібно вказати AMI. AMI це образ операційної системі яка буде використовуватись для EC2. Це може бути як чиста OS без додаткових налаштувань, або ж образ з певними налаштуваннями, наприклад з LAMP Stack чи Wordpress.&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2ami.png" alt="ec2-ami">&lt;/p>
+&lt;p>Наступними обов&amp;rsquo;язковими параметрами є Instance Type та Key Pair.
+Тип сервера визначає скільки в нього буде оперативної пам&amp;rsquo;яті та ядер процесора. В залежності від типу сервера буде визначатись ціна.&lt;/p>
+&lt;p>Різні типи серверів мають різні призначення:&lt;/p>
+&lt;ol>
+&lt;li>Загального призначення - балансують обчислювальні, мережеві ресурси та пам&amp;rsquo;ять. Їх можна використовувати для багатьох різних робочих навантажень. Ці сервери ідеально підходять для програм, які використовують такі ресурси в однакових обсягах, наприклад, веб-серверів та репозиторіїв коду. Типи T та M&lt;/li>
+&lt;li>Оптимізовані для обчислень - ідеально підходять для додатків з обмеженнями швидкості обчислень, які можуть використовувати високопродуктивні процесори. Сервери, що належать до цього сімейства, добре підходять для робочих навантажень з пакетною обробкою, перекодування мультимедіа, високопродуктивних веб-серверів, високопродуктивних обчислень (HPC), наукового моделювання, виділених ігрових та рекламних серверів, висновків машинного навчання та інших додатків, що потребують великих обчислювальних ресурсів. Тип C&lt;/li>
+&lt;li>Оптимізовані для пам&amp;rsquo;яті - забезпечують високу продуктивність робочих навантажень, пов&amp;rsquo;язаних з обробкою великих наборів даних у пам&amp;rsquo;яті. Тип R&lt;/li>
+&lt;li>Прискорених обчислень - використовують апаратні прискорювачі (співпроцесори) для таких операцій, як обчислення з плаваючою комою, обробка графіки та зіставлення зразків даних, і в результаті виконують їх ефективніше, ніж це можливо при роботі програмного забезпечення лише на ЦПУ. Типи P, G, F&lt;/li>
+&lt;li>Оптимізовані для зберігання - оптимізовані для зберігання, підходять для робочих навантажень, що потребують послідовного доступу для численних операцій читання та запису до пакетів великих даних у локальному сховищі. Вони оптимізовані для доставки десятків тисяч випадкових операцій введення/виводу за секунду з низькою затримкою (IOPS) додатків. Типи I, D&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-instance-type.png" alt="ec2-type">&lt;/p>
+&lt;p>Key Type вказує який ssh ключ буде використовуватись для доступу до сервера, або ж не використовувати ключ взагалі. В такому випадку ssh доступу до сервера не буде.&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-network.png" alt="ec2-network">&lt;/p>
+&lt;p>В цій секції вказується в якому subnet створювати сервер та яку security group використовувати. Security Group являє собою firewall який керує які порти будуть відкриті на сервері&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-volume.png" alt="ec2-volume">&lt;/p>
+&lt;p>В цій секції налаштовується розмір та тип диску для сервера, а також можна підключити файлову систему як EFS чи FSx.&lt;/p>
+&lt;p>Також важливою категорією є теги, варто завжди додавати хоча б декілька для того щоб в майбутньому можна було дізнатись чий цей сервер, до якого середовища він належить, його призначення і тд. Теги це значення ключ значення, наприклад Name = WebServer.&lt;/p>
+&lt;p>Остання секція це Advanced details. Де можна вказати багато інших параметрів найважливіші з яких це IAM instance profile (визначає доступ до яких AWS ресурсів буде з цього сервера), та User Data (Скрипт який виконується при створенні сервера).&lt;/p>
+&lt;p>Після того як всі параметри вказані потрібно натиснути Launch Instance і сервер буде створено.&lt;/p>
+&lt;h3 id="instance-type">Instance Type&lt;/h3>
+&lt;p>В цій секції можна переглянути існуючі типи серверів та ціни на них.&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-types.png" alt="ec-types">&lt;/p>
+&lt;h3 id="launch-template">Launch Template&lt;/h3>
+&lt;p>Launch template має майже всі ті ж самі поля що і при створенні сервера. Але створення Launch Template не створює сервер, а створює тільки шаблон який можна використати для створення серверів з однаковою конфігурацією. Окрім стандартних параметрів EC2 потрібно вказати назву шаблона.&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-launch-tpl.png" alt="ec2-launch-tpl">&lt;/p>
+&lt;p>І як тільки шаблон створено з нього можна створити сервер, також його можна використати в auto scaling group.&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-tpl-launch.png" alt="ec2-tpl-launch">&lt;/p>
+&lt;h3 id="spot-requests">Spot Requests&lt;/h3>
+&lt;p>Spot-сервери - це по суті продаж вільних зараз ресурсів з відмінною знижкою. При цьому сервер можуть у будь-який момент вимкнути та забрати назад. Під час замовлення ви робите ставку (bid) - вказуєте максимальну ціну, яку ви готові платити за використання. Саме баланс ставок та вільних ресурсів формує підсумкову вартість, яка при цьому відрізняється у різних регіонах.&lt;/p>
+&lt;h3 id="savings-plan">Savings Plan&lt;/h3>
+&lt;p>Дозволяє отримати знижку на ec2/lambda/fargate за зобов&amp;rsquo;язання використовувати певну кількість ресурсів протягом 1 чи 3 років.&lt;/p>
+&lt;h3 id="reserved-instances">Reserved instances&lt;/h3>
+&lt;p>По факту схоже на Savings Plan тільки з тією відмінністю що reserved instance купується на якийсь конкретний тип сервера на 1 чи 3 роки&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-reserved.png" alt="ec2-reserved">&lt;/p>
+&lt;h3 id="images">Images&lt;/h3>
+&lt;p>В images є AMI Catalog де можна знайти всі публічно доступні ami. А також AMIs. В секції AMIs знаходяться всі наші створенні AMI. AMI можна створити натиснувши правою кнопкою миші на сервері, в меню що з&amp;rsquo;явилось обрати Image and Templates -&amp;gt; Create Image.&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-create-ami.png" alt="ec2-create-ami">&lt;/p>
+&lt;p>Як уся інформація введена потрібно натиснути Create Image і створену AMI можна знайдено в розділі AMIs&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-ami-ready.png" alt="ec2-ami-reade">&lt;/p>
+&lt;p>Тепер з цієї AMI можна створювати нові сервери&lt;/p>
+&lt;h3 id="elastic-block-store">Elastic Block Store&lt;/h3>
+&lt;p>В цьому розділі зберігається усе що стосується дисків.&lt;/p>
+&lt;h4 id="volumes">Volumes&lt;/h4>
+&lt;p>Тут знаходяться диски які зараз використовуються сервером або ж які тимчасово нічим не використовуються&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-volume-ready.png" alt="ec2-volume-ready">&lt;/p>
+&lt;h4 id="snapshots">Snapshots&lt;/h4>
+&lt;p>В цьому розділі знаходяться знімки диска в певний момент часу. За допомогою них можна створити новий volume якщо потрібно відновити дані які були втрачено на самому диску. Зауважте що коли ми створили AMI автоматично створився знімок диску. І його неможливо буде видалити доки існує AMI. Спочатку потрібно видалити ami і тільки тоді можна буде видалити знімок&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-snapshot.png" alt="ec2-snapshot">&lt;/p>
+&lt;h4 id="lifecycle-manager">Lifecycle Manager&lt;/h4>
+&lt;p>Дозволяє створювати правила за якими автоматично будуть створюватись знімки дисків/ami і видалятись.&lt;/p>
+&lt;p>На першій сторінці конфігурації потрібно вказати назву полісі і також вибрати AIM роль за допомогою якою створення/видалення буде відбуватись. І також вказати для яких серверів це буде відбуватись. Це вказується за допомогою тегів. Наприклад якщо в мене є тег type = database то я можу вказати що тільки для серверів з ним робити знімки або ж AMI.&lt;/p>
+&lt;p>На наступній сторінці вказується графік за яким полісі буде працювати і скільки зберігати знімків. Наприклад запускати кожен день в 12-00 UTC і зберігати 20 останніх.&lt;/p>
+&lt;h3 id="network--security">Network &amp;amp; Security&lt;/h3>
+&lt;p>В цьому розділі знаходяться security groups які керують налаштуванням доступів до портів на сервері. SSH ключі для доступу до статичні IP адреси.&lt;/p>
+&lt;h4 id="security-groups">Security Groups&lt;/h4>
+&lt;p>Security Group дозволяють відкрити певні порти для доступу до сервера. Наприклад можна відкрити порт 443 для https доступу на сервер, або ж порт 22 для доступу по ssh.&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-sg.png" alt="ec2-sg">&lt;/p>
+&lt;p>Правила є двох типі Inbound та Outbound якими контролюється вхідний трафік та вихідний. В даному прикладі в вхідному трафіку буде одне правило як дозволяє доступ по 22 порту з певного ip адресу. Вихідний трафік доступний весь. Без будь яких обмежень.&lt;/p>
+&lt;p>Security group можна обрати при створенні сервера, або ж натиснути правою кнопкою миші на сервері і там обрати Security &amp;gt; Change security groups. Вибрати/видалити потрібну групу і натиснути Save.&lt;/p>
+&lt;h4 id="elastic-ips">Elastic IPs&lt;/h4>
+&lt;p>Change security groups
+Дозволяє зарезервувати статичний публічний ip адрес. Якщо сервер в AWS видаляється чи зупиняється то його ip адрес змінюється. Якщо нам потрібно щоб він завжди був однаковий це можна зробити цьому розділі.
+Достатньо натиснути Allocate Elastic IP Address&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-elastic.png" alt="ec2-elastic">&lt;/p>
+&lt;p>Тепер потрібно вказати серверу щоб використовував цей адрес. Для цього потрібно його виділити і в меню натиснути Actions -&amp;gt; Associate Elastic IP address. Вибрати сервер ти його приватну IP і натиснути Associate.&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-eip-associate.png" alt="ec2-eip-associate">&lt;/p>
+&lt;p>Якщо ж IP більше не потрібен то його можна видалити натиснувши Actions -&amp;gt; Release Elastic IP address і підтвердити видалення.&lt;/p>
+&lt;h3 id="placement-groups">Placement groups&lt;/h3>
+&lt;p>Коли ви запускаєте новий сервер, AWS намагається розмістити його таким чином, щоб усі сервери були розподілені на одному обладнанні, щоб мінімізувати корельовані збої&lt;/p>
+&lt;h4 id="key-pairs">Key Pairs&lt;/h4>
+&lt;p>В Key Pairs зберігаються публічні частини SSH ключів. Їх можна обрати при створенні сервера&lt;/p>
+&lt;h4 id="network-interfaces">Network interfaces&lt;/h4>
+&lt;p>Тут знаходяться мережеві інтерфейси усіх AWS сервісів.&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-eni.png" alt="ec2-eni">&lt;/p>
+&lt;h3 id="load-balancer-та-autoscaling-будуть-розглянуті-в-наступному-пості">Load Balancer та Autoscaling будуть розглянуті в наступному пості&lt;/h3>
+&lt;h2 id="how-to-create-ec2-with-terraform">How to create ec2 with terraform&lt;/h2>
+&lt;p>За допомогою terraform дуже просто створити сервер. Для цього в terraform є ресурс який називається &lt;a href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance">aws_instance&lt;/a>.&lt;/p>
+&lt;p>Найпростіший приклад коду буде виглядати ось так&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ami&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;ami-0cff7528ff583bf9a&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">instance_type&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;t2.micro&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">subnet_id&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;subnet-db73f0ac&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">vpc_security_group_ids&lt;/span> = [&lt;span style="color:#e6db74">&amp;#34;sg-b04b8cd4&amp;#34;&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Env&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Dev222&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">volume_tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;Env&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>В цьому прикладі викликається terraform ресурс aws_instance в який передаємо набір параметрів, тих ж самих які ми передавали коли створювали сервер через UI.&lt;/p>
+&lt;p>Якщо хочеш дізнатись більше про terraform і його застосування рекомендую почитати &lt;a href="https://mpostument.com/ua/2022/07/26/terraform-install/" title="серію постів про terraform">серію постів про terraform&lt;/a>&lt;/p>
+&lt;h2 id="golang-sdk">Golang SDK&lt;/h2>
+&lt;p>Іншим варіантом як створити сервер є AWS SDK, а конкретніше &lt;a href="https://aws.github.io/aws-sdk-go-v2/docs/getting-started/">Golang AWS SDK&lt;/a>. Щоб його використати &lt;a href="https://go.dev/doc/install">golang має бути встановлено&lt;/a> разом з &lt;a href="https://aws.github.io/aws-sdk-go-v2/docs/getting-started/#install-the-aws-sdk-for-go-v2">AWS SDK&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> (
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;context&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go-v2/aws&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go-v2/config&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go-v2/service/ec2&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go-v2/service/ec2/types&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// Load the Shared AWS Configuration (~/.aws/config)
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">cfg&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">config&lt;/span>.&lt;span style="color:#a6e22e">LoadDefaultConfig&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">TODO&lt;/span>(),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">config&lt;/span>.&lt;span style="color:#a6e22e">WithSharedConfigProfile&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;default&amp;#34;&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatal&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">client&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">NewFromConfig&lt;/span>(&lt;span style="color:#a6e22e">cfg&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">input&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">RunInstancesInput&lt;/span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ImageId&lt;/span>: &lt;span style="color:#a6e22e">aws&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;ami-0cff7528ff583bf9a&amp;#34;&lt;/span>),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">InstanceType&lt;/span>: &lt;span style="color:#a6e22e">types&lt;/span>.&lt;span style="color:#a6e22e">InstanceTypeT2Micro&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">SubnetId&lt;/span>: &lt;span style="color:#a6e22e">aws&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;subnet-db73f0ac&amp;#34;&lt;/span>),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">SecurityGroupIds&lt;/span>: &lt;span style="color:#a6e22e">aws&lt;/span>.&lt;span style="color:#a6e22e">ToStringSlice&lt;/span>([]&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#66d9ef">string&lt;/span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">aws&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;sg-b04b8cd4&amp;#34;&lt;/span>),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">MaxCount&lt;/span>: &lt;span style="color:#a6e22e">aws&lt;/span>.&lt;span style="color:#a6e22e">Int32&lt;/span>(&lt;span style="color:#ae81ff">1&lt;/span>),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">MinCount&lt;/span>: &lt;span style="color:#a6e22e">aws&lt;/span>.&lt;span style="color:#a6e22e">Int32&lt;/span>(&lt;span style="color:#ae81ff">1&lt;/span>),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">RunInstances&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Background&lt;/span>(), &lt;span style="color:#a6e22e">input&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatal&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>В коді відбувається декілька подій. Перше створюємо AWS client в якому вказую що хочу використовувати профіль з назвою default. Сам профіль знаходиться в теці ~/.aws/credentials. Тут мають бути зазначені AWS Access Key та Secret Key які можна &lt;a href="https://aws.amazon.com/premiumsupport/knowledge-center/create-access-key/">згенерувати&lt;/a> для свого користувача в AWS UI.&lt;/p>
+&lt;p>В &lt;code>RunInstancesInput&lt;/code> вказуємо параметри з якими створимо сервер. Тут все те ж саме що і при створенні з UI що при використанні terraform. І створюємо сервер з цими параметрами. Перевагою terraform над цим способом є те що все що створив terraform можна видалити за допомогою &lt;code>terraform destroy&lt;/code>. В цьому ж випадку прийдеться створити свою логіку як буде відбуватись видалення або ж видалити з UI.&lt;/p></content></item></channel></rss>

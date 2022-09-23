@@ -1,4 +1,158 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Devops on Maksym Postument</title><link>https://mpostument.com/tags/devops/</link><description>Recent content in Devops on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 19 Sep 2022 10:54:18 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Manage Ansible Versions With pyenv</title><link>https://mpostument.com/2022/09/19/manage-ansible-versions-with-tfenv/</link><pubDate>Mon, 19 Sep 2022 10:54:18 +0300</pubDate><guid>https://mpostument.com/2022/09/19/manage-ansible-versions-with-tfenv/</guid><description>Hello!
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Devops on Maksym Postument</title><link>https://mpostument.com/tags/devops/</link><description>Recent content in Devops on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 22 Sep 2022 22:45:30 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS 101: EC2 Part 1</title><link>https://mpostument.com/2022/09/22/aws-101-ec2-part-1/</link><pubDate>Thu, 22 Sep 2022 22:45:30 +0300</pubDate><guid>https://mpostument.com/2022/09/22/aws-101-ec2-part-1/</guid><description>Hello!
+With this post, I will start a series about AWS, in which I will show how to use various AWS services, and automate them using terraform and the AWS SDK. And let&amp;rsquo;s start with the EC2 service.
+EC2 is the core compute component of AWS. In practice, EC2 makes life easier for developers by providing scalable, secure computing power on AWS. It makes scaling up or down much easier, can be integrated with several other services, and comes with a plan where you only pay for what you use.</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>With this post, I will start a series about AWS, in which I will show how to use various AWS services, and automate them using &lt;code>terraform&lt;/code> and the AWS SDK. And let&amp;rsquo;s start with the EC2 service.&lt;/p>
+&lt;p>EC2 is the core compute component of AWS. In practice, EC2 makes life easier for developers by providing scalable, secure computing power on AWS. It makes scaling up or down much easier, can be integrated with several other services, and comes with a plan where you only pay for what you use.&lt;/p>
+&lt;h2 id="ui-overview">UI Overview&lt;/h2>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-ui.png" alt="ec2-ui">&lt;/p>
+&lt;p>This is what the EC2 UI looks like. It has several categories:&lt;/p>
+&lt;ul>
+&lt;li>Instance&lt;/li>
+&lt;li>Images&lt;/li>
+&lt;li>EBS&lt;/li>
+&lt;li>Network &amp;amp; Security&lt;/li>
+&lt;li>Load Balancing&lt;/li>
+&lt;li>Auto Scaling&lt;/li>
+&lt;/ul>
+&lt;h3 id="instance">Instance&lt;/h3>
+&lt;p>In the instance section, you can create instances, view existing ones, and create templates of instance configurations for further reuse. To create an instance, you need to click Launch Instance.&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-launch.png" alt="ec2-launch">&lt;/p>
+&lt;p>Here we need to specify the attributes of our future instance. AMI is mandatory. AMI is an image of the operating system that will be used for EC2. It can be a clean OS without additional settings, or an image with certain settings, for example, with LAMP Stack or WordPress.&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2ami.png" alt="ec2-ami">&lt;/p>
+&lt;p>The next mandatory parameters are Instance Type and Key Pair.
+The type of instance determines how much RAM and processor cores it will have. Depending on the type of instance, the price will be determined.&lt;/p>
+&lt;p>Different types of instances have different purposes:&lt;/p>
+&lt;ol>
+&lt;li>General purpose - balance computing, network resources, and memory. They can be used for many different workloads. These instances are ideal for applications that use such resources in equal amounts, such as web instances and code repositories. Types T and M&lt;/li>
+&lt;li>Computationally optimized - ideal for applications with computational speed limitations that can use high-performance processors. instances in this family are well-suited for batch workloads, multimedia transcoding, high-performance web instances, high-performance computing (HPC), scientific modeling, dedicated game and ad instances, machine learning inference, and other applications that require large computing resources. Type C&lt;/li>
+&lt;li>Optimized for memory - provide high performance of workloads related to the processing of large data sets in memory. Type R&lt;/li>
+&lt;li>Accelerated computing - use hardware accelerators (coprocessors) for operations such as floating-point calculations, graphics processing, and mapping of data samples, and as a result, perform them more efficiently than is possible when the software runs only on the CPU. Types P, G, F&lt;/li>
+&lt;li>Storage-Optimized - Storage-optimized, suitable for workloads that require sequential access for multiple read and write operations to large data packets on local storage. They are optimized to deliver tens of thousands of random I/O operations per second (IOPS) to applications with low latency. Types I, D&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-instance-type.png" alt="ec2-type">&lt;/p>
+&lt;p>Key Type indicates which ssh key will be used to access the instance, or not to use a key at all. In this case, there will be no ssh access to the instance.&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-network.png" alt="ec2-network">&lt;/p>
+&lt;p>This section specifies which subnet will be used for the instance and which security group to use. Security Group is a firewall that controls which ports will be opened on the instance&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-volume.png" alt="ec2-volume">&lt;/p>
+&lt;p>In this section, you configure the size and type of disk for the instance, and you can mount the additional file system like EFS or FSx.&lt;/p>
+&lt;p>Tags are also an important category, you should always add at least a few so that in the future you can find out whose instance this is, what environment it belongs to, its purpose, etc. Tags are key-value pairs, for example, Name = Webinstance.&lt;/p>
+&lt;p>The last section is Advanced details. Where you can specify many other parameters, the most important of which are the IAM instance profile (determines access to which AWS resources will be from this instance), and User Data (the script that is executed when the instance is created).&lt;/p>
+&lt;p>After all, parameters are specified, click Launch Instance and the instance will be created.&lt;/p>
+&lt;h3 id="instance-type">Instance Type&lt;/h3>
+&lt;p>In this section, you can view existing types of instances and their prices.&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-types.png" alt="ec-types">&lt;/p>
+&lt;h3 id="launch-template">Launch Template&lt;/h3>
+&lt;p>The launch template has almost all the same fields as when creating an instance. But creating a Launch Template does not create an instance, but only creates a template that can be used to create instances with the same configuration. In addition to the standard EC2 parameters, you need to specify the name of the template. Also, a template can be created from an existing instance&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-launch-tpl.png" alt="ec2-launch-tpl">&lt;/p>
+&lt;p>And as soon as the template is created, you can create an instance from it, and you can also use it in an auto-scaling group.&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-tpl-launch.png" alt="ec2-tpl-launch">&lt;/p>
+&lt;h3 id="spot-requests">Spot Requests&lt;/h3>
+&lt;p>Spot instances are essentially the sale of available resources at a great discount. At the same time, the instance can be turned off and taken back at any time. When ordering, you make a bid - indicate the maximum price you are willing to pay for use. It is the balance of rates and free resources that forms the final cost, which at the same time differs in different regions.&lt;/p>
+&lt;h3 id="savings-plan">Savings Plan&lt;/h3>
+&lt;p>Allows you to get a discount on ec2/lambda/fargate for committing to use a certain amount of resources for 1 or 3 years.&lt;/p>
+&lt;h3 id="reserved-instances">Reserved instances&lt;/h3>
+&lt;p>It is similar to the Savings Plan with the only difference that a reserved instance is purchased for a specific type of instance for 1 or 3 years&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-reserved.png" alt="ec2-reserved">&lt;/p>
+&lt;h3 id="images">Images&lt;/h3>
+&lt;p>Images have an AMI Catalog where you can find all publicly available ami. The AMIs section contains all of our created AMIs. AMI can be created by right-clicking on the instance, in the menu that appears, and selecting Image and Templates -&amp;gt; Create Image.&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-create-ami.png" alt="ec2-create-ami">&lt;/p>
+&lt;p>Once all the information is entered, click Create Image and you can found in the AMIs section&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-ami-ready.png" alt="ec2-ami-reade">&lt;/p>
+&lt;p>Now you can create new instances from this AMI&lt;/p>
+&lt;h3 id="elastic-block-store">Elastic Block Store&lt;/h3>
+&lt;p>This section stores everything related to disks.&lt;/p>
+&lt;h4 id="volumes">Volumes&lt;/h4>
+&lt;p>Some disks are currently used by the instance or that are temporarily not used by anything. From here disk can be deleted, detached, resized, or mounted.&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-volume-ready.png" alt="ec2-volume-ready">&lt;/p>
+&lt;h4 id="snapshots">Snapshots&lt;/h4>
+&lt;p>This section contains snapshots of the disk at a certain point in time. With their help, you can create a new volume if you need to restore data that was lost on the disk itself. Note that when we created the AMI, a disk image was automatically created. And it won&amp;rsquo;t be able to be removed as long as the AMI exists. First, you need to delete ami and only then you can delete the picture&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-snapshot.png" alt="ec2-snapshot">&lt;/p>
+&lt;h4 id="lifecycle-manager">Lifecycle Manager&lt;/h4>
+&lt;p>Allows you to create rules according to which disk snapshot/ami will be automatically created and deleted.&lt;/p>
+&lt;p>On the first page of the configuration, you need to specify the name of the policy and also select the IAM role that will be used to create/delete AMIs and snapshots. To select an instance that will be used in the policy you need to specify the tag of this instance. For example, if I have a tag on my servers as type = database, then I can specify that tag, and the policy will be applied only to this instance.&lt;/p>
+&lt;p>On the next page, you need to define the schedule on which snapshots/AMIs will be created and how many snapshots/AMIs to keep. For example, run every day at 12-00 UTC and save the last 20.&lt;/p>
+&lt;h3 id="network--security">Network &amp;amp; Security&lt;/h3>
+&lt;p>In this section, there are security groups that control the configuration of access to ports on the instance. SSH keys and static IP are also located here.&lt;/p>
+&lt;h4 id="security-groups">Security Groups&lt;/h4>
+&lt;p>Security Groups allow you to open specific ports to access the instance. For example, you can open port 443 for HTTPS access, or port 22 for ssh access.&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-sg.png" alt="ec2-sg">&lt;/p>
+&lt;p>The are two types of rules: Inbound and Outbound, which control incoming and outgoing traffic. In this example, there will be one rule in the incoming traffic that allows access to port 22 from a certain IP address. All outgoing traffic is available. Without any restrictions.&lt;/p>
+&lt;p>The security group can be selected when creating the instance, or right-click on the existing instance and select Security &amp;gt; Change security groups. Select/delete the desired group and press Save.&lt;/p>
+&lt;h4 id="elastic-ips">Elastic IPs&lt;/h4>
+&lt;p>Allows you to reserve a static public IP address. If an instance in AWS is removed or stopped, its public IP address changes. If we need it to always be the same, it can be done in this section.
+Just click on Allocate Elastic IP Address&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-elastic.png" alt="ec2-elastic">&lt;/p>
+&lt;p>Now you need to tell the instance to use this address. To do this, you need to select the IP address and click Actions -&amp;gt; Associate Elastic IP address in the menu. Select the instance and its private IP and click Associate.&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-eip-associate.png" alt="ec2-eip-associate">&lt;/p>
+&lt;p>If the IP is no longer needed, it can be deleted by clicking Actions -&amp;gt; Release Elastic IP address and confirming the deletion.&lt;/p>
+&lt;h3 id="placement-groups">Placement groups&lt;/h3>
+&lt;p>When you start a new instance, AWS tries to place it so that all instances are distributed on the same hardware to minimize correlated failures&lt;/p>
+&lt;h4 id="key-pairs">Key Pairs&lt;/h4>
+&lt;p>Public parts of SSH keys are stored in Key Pairs. They can be selected when creating an instance. A new public key can also be uploaded here&lt;/p>
+&lt;h4 id="network-interfaces">Network interfaces&lt;/h4>
+&lt;p>Here are the network interfaces of all AWS services.&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-eni.png" alt="ec2-eni">&lt;/p>
+&lt;h3 id="load-balancer-та-autoscaling-будуть-розглянуті-в-наступному-пості">Load Balancer та Autoscaling будуть розглянуті в наступному пості&lt;/h3>
+&lt;h2 id="how-to-create-ec2-with-terraform">How to create ec2 with terraform&lt;/h2>
+&lt;p>Using terraform, it is very easy to create an instance. For this, terraform has a resource called &lt;a href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance">aws_instance&lt;/a>.&lt;/p>
+&lt;p>The simplest code example will look like this&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-terraform" data-lang="terraform">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">resource&lt;/span> &lt;span style="color:#e6db74">&amp;#34;aws_instance&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;foo&amp;#34;&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ami&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;ami-0cff7528ff583bf9a&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">instance_type&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;t2.micro&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">subnet_id&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;subnet-db73f0ac&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">vpc_security_group_ids&lt;/span> = [&lt;span style="color:#e6db74">&amp;#34;sg-b04b8cd4&amp;#34;&lt;/span>]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Env&lt;/span> = &lt;span style="color:#e6db74">&amp;#34;Dev222&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">volume_tags&lt;/span> = {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;Env&amp;#34;&lt;/span> &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Dev&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In this example, the terraform execute a resource named aws_instance, to which we pass a set of parameters, the same ones we passed when creating the instance through the UI.&lt;/p>
+&lt;p>If you want to learn more about terraform and its usage, I recommend reading &lt;a href="https://mpostument.com/2022/07/26/terraform-install/" title="series of posts about terraform">series of posts about terraform&lt;/a>&lt;/p>
+&lt;h2 id="golang-sdk">Golang SDK&lt;/h2>
+&lt;p>Another option for creating an instance is the AWS SDK, more specifically the &lt;a href="https://aws.github.io/aws-sdk-go-v2/docs/getting-started/">Golang AWS SDK&lt;/a>. To use it &lt;a href="https://go.dev/doc/install">golang must be installed&lt;/a> together with the &lt;a href="https://aws.github.io/aws-sdk-go-v2/docs/getting-started/#install-the-aws-sdk-for-go-v2">AWS SDK&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> (
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;context&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go-v2/aws&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go-v2/config&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go-v2/service/ec2&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;github.com/aws/aws-sdk-go-v2/service/ec2/types&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// Load the Shared AWS Configuration (~/.aws/config)
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#a6e22e">cfg&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">config&lt;/span>.&lt;span style="color:#a6e22e">LoadDefaultConfig&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">TODO&lt;/span>(),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">config&lt;/span>.&lt;span style="color:#a6e22e">WithSharedConfigProfile&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;default&amp;#34;&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatal&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">client&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">NewFromConfig&lt;/span>(&lt;span style="color:#a6e22e">cfg&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">input&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">ec2&lt;/span>.&lt;span style="color:#a6e22e">RunInstancesInput&lt;/span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ImageId&lt;/span>: &lt;span style="color:#a6e22e">aws&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;ami-0cff7528ff583bf9a&amp;#34;&lt;/span>),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">InstanceType&lt;/span>: &lt;span style="color:#a6e22e">types&lt;/span>.&lt;span style="color:#a6e22e">InstanceTypeT2Micro&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">SubnetId&lt;/span>: &lt;span style="color:#a6e22e">aws&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;subnet-db73f0ac&amp;#34;&lt;/span>),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">SecurityGroupIds&lt;/span>: &lt;span style="color:#a6e22e">aws&lt;/span>.&lt;span style="color:#a6e22e">ToStringSlice&lt;/span>([]&lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#66d9ef">string&lt;/span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">aws&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;sg-b04b8cd4&amp;#34;&lt;/span>),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">MaxCount&lt;/span>: &lt;span style="color:#a6e22e">aws&lt;/span>.&lt;span style="color:#a6e22e">Int32&lt;/span>(&lt;span style="color:#ae81ff">1&lt;/span>),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">MinCount&lt;/span>: &lt;span style="color:#a6e22e">aws&lt;/span>.&lt;span style="color:#a6e22e">Int32&lt;/span>(&lt;span style="color:#ae81ff">1&lt;/span>),
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> = &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">RunInstances&lt;/span>(&lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Background&lt;/span>(), &lt;span style="color:#a6e22e">input&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatal&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Several events occur in the code. First, we create an AWS client in which I specify that I want to use a profile named default. The profile configuration itself is in the ~/.aws/credentials folder. AWS Access Key and Secret Key should be stored there. You can &lt;a href="https://aws.amazon.com/premiumsupport/knowledge-center/create-access-key/">generate&lt;/a> Access and Secret key for your user in the AWS UI.&lt;/p>
+&lt;p>In &lt;code>RunInstancesInput&lt;/code> we specify the parameters with which we will create the instance. Here everything is the same as when creating with UI as when using terraform. And we create an instance with these parameters. The advantage of terraform over this method is that everything created by terraform can be removed using &lt;code>terraform destroy&lt;/code>. In this case, you would need to create your logic for how to delete or delete resources from the UI.&lt;/p></content></item><item><title>Manage Ansible Versions With pyenv</title><link>https://mpostument.com/2022/09/19/manage-ansible-versions-with-tfenv/</link><pubDate>Mon, 19 Sep 2022 10:54:18 +0300</pubDate><guid>https://mpostument.com/2022/09/19/manage-ansible-versions-with-tfenv/</guid><description>Hello!
 This is the first post in the series about Ansible, in which I will show how you can manage versions of Ansible and Python using pyenv.
 Pyenv pyenv allows you to install different versions of python and also create a virtual env in which ansible will be installed.
 To install pyenv, you need to execute the command
