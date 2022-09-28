@@ -1,4 +1,92 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ansible on Maksym Postument</title><link>https://mpostument.com/ua/tags/ansible/</link><description>Recent content in Ansible on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 19 Sep 2022 10:54:18 +0300</lastBuildDate><atom:link href="https://mpostument.com/ua/tags/ansible/index.xml" rel="self" type="application/rss+xml"/><item><title>Manage Ansible Versions With pyenv</title><link>https://mpostument.com/ua/2022/09/19/manage-ansible-versions-with-pyenv/</link><pubDate>Mon, 19 Sep 2022 10:54:18 +0300</pubDate><guid>https://mpostument.com/ua/2022/09/19/manage-ansible-versions-with-pyenv/</guid><description>Привіт!
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ansible on Maksym Postument</title><link>https://mpostument.com/ua/tags/ansible/</link><description>Recent content in Ansible on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 27 Sep 2022 21:39:08 +0300</lastBuildDate><atom:link href="https://mpostument.com/ua/tags/ansible/index.xml" rel="self" type="application/rss+xml"/><item><title>Ansible Inventory</title><link>https://mpostument.com/ua/2022/09/27/ansible-inventory/</link><pubDate>Tue, 27 Sep 2022 21:39:08 +0300</pubDate><guid>https://mpostument.com/ua/2022/09/27/ansible-inventory/</guid><description>Частина 1 - Manage Ansible Versions With pyenv
+Привіт!
+Сьогодні розкажу що таке inventory в ansible так яких типів він буває.
+В ansible є два типи inventory - це static та dynamic. Static використовується коли ми на перед знаємо список серверів на яких має відпрацювати ansible. А dynamic коли цих даних наперед ми не маємо і отримуємо динамічно.
+Static inventory Щоб використовувати static inventory достатньо просто створити файл наприклад inventory і в ньому можна вказувати ip адрес наприклад:</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/2022/09/19/manage-ansible-versions-with-pyenv/" title="Частина 1 - Manage Ansible Versions With pyenv">Частина 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;/p>
+&lt;p>Привіт!&lt;/p>
+&lt;p>Сьогодні розкажу що таке inventory в ansible так яких типів він буває.&lt;/p>
+&lt;p>В ansible є два типи inventory - це static та dynamic. Static використовується коли ми на перед знаємо список серверів на яких має відпрацювати ansible. А dynamic коли цих даних наперед ми не маємо і отримуємо динамічно.&lt;/p>
+&lt;h2 id="static-inventory">Static inventory&lt;/h2>
+&lt;p>Щоб використовувати static inventory достатньо просто створити файл наприклад &lt;code>inventory&lt;/code> і в ньому можна вказувати ip адрес наприклад:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>192.168.1.1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>І його одразу ж можна використовувати вказавши цей файл в ansible команді за допомогою &lt;code>-i inventory all&lt;/code>. all означає запустити ansible на всі сервери з inventory файлу.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ ansible -m ping -i inventory all --private-key SSH_KEY --user SSH_USER
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>192.168.1.1 | SUCCESS &lt;span style="color:#f92672">=&lt;/span>&amp;gt; &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;ansible_facts&amp;#34;&lt;/span>: &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;discovered_interpreter_python&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;/usr/bin/python&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;changed&amp;#34;&lt;/span>: false,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;ping&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;pong&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Також сервери можна об&amp;rsquo;єднувати в групи.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>web&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>192.168.1.1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>database&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>192.168.1.1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>І тепер можна запускати ansible тільки для якоїсь групи. Для цього потрібно замість all вказати назву групи. Якщо потрібно запусти для усіх серверів то можна знову ж вказати all.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ ansible -m ping -i inventory web --private-key SSH_KEY --user SSH_USER
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>192.168.1.1 | SUCCESS &lt;span style="color:#f92672">=&lt;/span>&amp;gt; &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;ansible_facts&amp;#34;&lt;/span>: &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;discovered_interpreter_python&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;/usr/bin/python&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;changed&amp;#34;&lt;/span>: false,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;ping&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;pong&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Також в inventory для кожного сервера або групи можна вказувати набір параметрів. Наприклад значення яке ми передавали за допомогою ключа &amp;ndash;user можна вказати в inventory.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>web&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>192.168.1.1 ansible_user&lt;span style="color:#f92672">=&lt;/span>centos
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер ключ &amp;ndash;user можна не додавати&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ ansible -m ping -i inventory web --private-key SSH_KEY
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>192.168.1.1 | SUCCESS &lt;span style="color:#f92672">=&lt;/span>&amp;gt; &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;ansible_facts&amp;#34;&lt;/span>: &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;discovered_interpreter_python&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;/usr/bin/python&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">}&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;changed&amp;#34;&lt;/span>: false,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;ping&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;pong&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Також параметри можна задати на рівні групи, для цього потрібно додати ще одну групу з назвою [GROUP_NAME:vars]&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>web&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>192.168.1.1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>web:vars&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ansible_user&lt;span style="color:#f92672">=&lt;/span>centos
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Результат буде такий ж як і в попередньому варіанті, тільки тепер ці параметри будуть застосовані до цієї групи.&lt;/p>
+&lt;p>Як параметри можуть передаватись будь які значення які в подальшому будуть використовуватись в плейбуках.&lt;/p>
+&lt;p>Також декілька груп можна додавати в одну групу.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>web&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>192.168.1.1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>db&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>192.168.1.2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>webdb:children&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>web
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>db
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>І якщо при запуску ansible я вкажу -i inventory webdb, ansible буде запущено для усіх серверів з цих двох груп.&lt;/p>
+&lt;h2 id="group-vars">Group Vars&lt;/h2>
+&lt;p>Inventory не краще місце для зберігання параметрів. Краще для цього створити теку з назвою group_vars і в ній організувати параметри для кожної групи. Групу можна організувати як текою так і файлом. В цьому прикладі я створив теку web яка відповідає назві групи а всередині файл який може мати будь яку назву.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>tree group_vars
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>group_vars
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>└── web
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> └── web
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>І якщо я запущу ansible то знову отримаю результат як і попереднього разу.&lt;/p>
+&lt;h2 id="dynamic-inventory">Dynamic Inventory&lt;/h2>
+&lt;p>Dynamic inventory потрібен якщо нам наперед не відомі IP адреси наперед. Наприклад з AWS де сервери можуть часто мінятись і мати різні IP адреси. Dynamic inventory це скрипт який передається параметру -i і при запуску цей скрипт отримаю всю потрібну інформацію про сервери. Деякі dynamic inventory стали частиною ansible і їх уже не потрібно додатково завантажувати, а достатньо просто вказати що його потрібно використати.&lt;/p>
+&lt;p>Для того щоб використати AWS dynamic inventory потрібна додаткова python бібліотека boto3. Її можна встановити за допомогою &lt;code>pip install boto3&lt;/code>.&lt;/p>
+&lt;p>Оскільки AWS dynamic inventory є частиною ansible, ніяких скриптів завантажувати не потрібно. Але потрібно створити конфігураційний файл aws_ec2.yml. Найпростіший буде виглядати так&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">plugin&lt;/span>: &lt;span style="color:#ae81ff">aws_ec2&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">regions&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">REGION&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">boto_profile&lt;/span>: &lt;span style="color:#ae81ff">AWS_PROFILE&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>В такому випадку ansible буде запущено на усі сервери які є в даному AWS акаунті в вказаному регіоні. Можна використовувати фільтри для того щоб відфільтрувати тільки потрібні сервери. Наприклад тільки сервери в яких є тег type = database.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">plugin&lt;/span>: &lt;span style="color:#ae81ff">aws_ec2&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">regions&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">REGION&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">boto_profile&lt;/span>: &lt;span style="color:#ae81ff">AWS_PROFILE&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">filters&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">tag:type&lt;/span>: &lt;span style="color:#ae81ff">database&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Фільтри можна комбінувати один з одним. Всі можливі опції можна знайти в документації конкретного dynamic inventory(&lt;a href="https://docs.ansible.com/ansible/latest/collections/amazon/aws/aws_ec2_inventory.html#examples">AWS docs&lt;/a>).&lt;/p></content></item><item><title>Manage Ansible Versions With pyenv</title><link>https://mpostument.com/ua/2022/09/19/manage-ansible-versions-with-pyenv/</link><pubDate>Mon, 19 Sep 2022 10:54:18 +0300</pubDate><guid>https://mpostument.com/ua/2022/09/19/manage-ansible-versions-with-pyenv/</guid><description>Привіт!
 Це перший пост з циклу про ansible, в якому я покажу як можна управляти версіями ansible та python за допомогою pyenv.
 Pyenv pyenv дозволяє встановлювати різні версії python і також створювати virtual env в яких буде встановлено ansible.
 Для того щоб встановити pyenv потрібно виконати команду
