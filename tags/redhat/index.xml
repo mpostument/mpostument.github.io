@@ -70,6 +70,8 @@ Static inventory To use static inventory, it is enough to simply create a file, 
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>group_vars
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>└── web
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> └── web
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In file web now i can add variables which will be used for group web&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">ansible_user&lt;/span>: &lt;span style="color:#ae81ff">centos&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And if I run ansible, I get the same result as last time.&lt;/p>
 &lt;h2 id="dynamic-inventory">Dynamic Inventory&lt;/h2>
 &lt;p>Dynamic inventory is needed if we do not know the IP addresses in advance. For example, with AWS, where servers can often change and have different IP addresses. Dynamic inventory is a script that is passed to the -i parameter, and when this script is run, I will get all the necessary information about the servers. Some dynamic inventories have become part of ansible and do not need to be downloaded additionally, it is enough to simply indicate that it needs to be used.&lt;/p>
@@ -86,7 +88,10 @@ Static inventory To use static inventory, it is enough to simply create a file, 
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">boto_profile&lt;/span>: &lt;span style="color:#ae81ff">AWS_PROFILE&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">filters&lt;/span>:
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">tag:type&lt;/span>: &lt;span style="color:#ae81ff">database&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Filters can be combined. All possible options can be found in the documentation of a specific dynamic plugin(&lt;a href="https://docs.ansible.com/ansible/latest/collections/amazon/aws/aws_ec2_inventory.html#examples">AWS docs&lt;/a>).&lt;/p></content></item><item><title>Manage Ansible Versions With pyenv</title><link>https://mpostument.com/2022/09/19/manage-ansible-versions-with-pyenv/</link><pubDate>Mon, 19 Sep 2022 10:54:18 +0300</pubDate><guid>https://mpostument.com/2022/09/19/manage-ansible-versions-with-pyenv/</guid><description>Hello!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Filters can be combined. All possible options can be found in the documentation of a specific dynamic plugin(&lt;a href="https://docs.ansible.com/ansible/latest/collections/amazon/aws/aws_ec2_inventory.html#examples">AWS docs&lt;/a>).&lt;/p>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/k74GIVucO_Y" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>Manage Ansible Versions With pyenv</title><link>https://mpostument.com/2022/09/19/manage-ansible-versions-with-pyenv/</link><pubDate>Mon, 19 Sep 2022 10:54:18 +0300</pubDate><guid>https://mpostument.com/2022/09/19/manage-ansible-versions-with-pyenv/</guid><description>Hello!
 This is the first post in the series about Ansible, in which I will show how you can manage versions of Ansible and Python using pyenv.
 Pyenv pyenv allows you to install different versions of python and also create a virtual env in which ansible will be installed.
 To install pyenv, you need to execute the command
