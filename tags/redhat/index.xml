@@ -1,4 +1,301 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>RedHat on Maksym Postument</title><link>https://mpostument.com/tags/redhat/</link><description>Recent content in RedHat on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 04 Oct 2022 22:51:59 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/redhat/index.xml" rel="self" type="application/rss+xml"/><item><title>Ansible Playbook</title><link>https://mpostument.com/2022/10/04/ansible-playbook/</link><pubDate>Tue, 04 Oct 2022 22:51:59 +0300</pubDate><guid>https://mpostument.com/2022/10/04/ansible-playbook/</guid><description>Part 1 - Manage Ansible Versions With pyenv
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>RedHat on Maksym Postument</title><link>https://mpostument.com/tags/redhat/</link><description>Recent content in RedHat on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 15 Oct 2022 17:49:02 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/redhat/index.xml" rel="self" type="application/rss+xml"/><item><title>Ansible Role</title><link>https://mpostument.com/2022/10/15/ansible-role/</link><pubDate>Sat, 15 Oct 2022 17:49:02 +0300</pubDate><guid>https://mpostument.com/2022/10/15/ansible-role/</guid><description>Hello!
+So what is a role in Ansible? Roles are a logical organization of Ansible code. For example, you can create a role that will install a MySQL database, put it in a separate repository, and make it publicly available or shared with other teams, and everyone should be able to use it
+Create a Role So how to create a role? You can create all the necessary files and folders manually or use the command ansible-galaxy role init ROLE_NAME.</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>So what is a role in Ansible? Roles are a logical organization of Ansible code. For example, you can create a role that will install a MySQL database, put it in a separate repository, and make it publicly available or shared with other teams, and everyone should be able to use it&lt;/p>
+&lt;h2 id="create-a-role">Create a Role&lt;/h2>
+&lt;p>So how to create a role? You can create all the necessary files and folders manually or use the command &lt;code>ansible-galaxy role init ROLE_NAME&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>ansible-galaxy role init roles/httpd
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- Role roles/httpd was created successfully
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>I specify roles/httpd for ansible to create the &lt;code>roles&lt;/code> folder. If roles/ is not specified, the role will be created in the folder where the command was executed.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ tree roles
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>roles
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>└── httpd
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── README.md
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── defaults
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> │ └── main.yml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── files
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── handlers
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> │ └── main.yml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── meta
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> │ └── main.yml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── tasks
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> │ └── main.yml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── templates
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── tests
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> │ ├── inventory
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> │ └── test.yml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> └── vars
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> └── main.yml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">9&lt;/span> directories, &lt;span style="color:#ae81ff">8&lt;/span> files
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>What is inside the roles/httpd folder?&lt;/p>
+&lt;ul>
+&lt;li>defaults - here are the parameters that have the lowest priority, that is, the default values ​​of the parameters that can then be overwritten.&lt;/li>
+&lt;li>files - static files required for the role&lt;/li>
+&lt;li>handlers - handlers, this is code that is always executed at the very end, under certain conditions. For example, restart the service if the configuration file has changed.&lt;/li>
+&lt;li>meta - meta-information about the role. Title, version, author, etc&lt;/li>
+&lt;li>tasks - here are the tasks that will be performed by Ansible&lt;/li>
+&lt;li>templates - a place for files that will be dynamically generated using jinja2&lt;/li>
+&lt;li>tests - tests&lt;/li>
+&lt;li>vars - parameters that have a higher priority than the default&lt;/li>
+&lt;/ul>
+&lt;p>The main folder in which we will work tasks. Our role will install httpd, so in main.yml we will add the code that will install httpd depending on the OS.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Install apache on Redhat&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">ansible.builtin.yum&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">httpd&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">state&lt;/span>: &lt;span style="color:#ae81ff">latest&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">become&lt;/span>: &lt;span style="color:#66d9ef">yes&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">when&lt;/span>: &lt;span style="color:#ae81ff">ansible_facts[&amp;#39;os_family&amp;#39;] == &amp;#34;RedHat&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Install apache on Debian&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">ansible.builtin.apt&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">apache2&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">state&lt;/span>: &lt;span style="color:#ae81ff">latest&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">become&lt;/span>: &lt;span style="color:#66d9ef">yes&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">when&lt;/span>: &lt;span style="color:#ae81ff">ansible_facts[&amp;#39;os_family&amp;#39;] == &amp;#34;Debian&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After running the playbook, the httpd package will be installed but not started. To start it and enable automatic start after OS restart, we will use the &lt;a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/service_module.html">service&lt;/a> module&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Start service httpd, if not started&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">ansible.builtin.service&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">apache2&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">state&lt;/span>: &lt;span style="color:#ae81ff">started&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">enabled&lt;/span>: &lt;span style="color:#66d9ef">yes&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">become&lt;/span>: &lt;span style="color:#66d9ef">yes&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">when&lt;/span>: &lt;span style="color:#ae81ff">ansible_facts[&amp;#39;os_family&amp;#39;] == &amp;#34;Debian&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Start service httpd, if not started&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">ansible.builtin.service&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">httpd&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">state&lt;/span>: &lt;span style="color:#ae81ff">started&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">enabled&lt;/span>: &lt;span style="color:#66d9ef">yes&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">become&lt;/span>: &lt;span style="color:#66d9ef">yes&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">when&lt;/span>: &lt;span style="color:#ae81ff">ansible_facts[&amp;#39;os_family&amp;#39;] == &amp;#34;RedHat&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now ansible will start the httpd service on the server. Let&amp;rsquo;s add the index.html page using a template. To do this, I will create an index.html.j2 file with the following content in the templates folder&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-html" data-lang="html">&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#f92672">b&lt;/span>&amp;gt;Hello {{ user_name }}!&amp;lt;/&lt;span style="color:#f92672">b&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Where &lt;code>{{ user_name }}&lt;/code> is an ansible parameter that will be inserted into the generated file. But for this, you need to create a parameter. I will create it in defaults/main.yml.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">user_name&lt;/span>: &lt;span style="color:#ae81ff">Maksym&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And finally, there is a task that will generate the file. I will add it to tasks/main.yml.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Generate index.html&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">template&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">src&lt;/span>: &lt;span style="color:#ae81ff">index.html.j2&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">dest&lt;/span>: &lt;span style="color:#ae81ff">/var/www/html/index.html&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">become&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>We can also use handlers. For example, if you want httpd to restart every time index.html is updated. To do this, I will add the following to handlers/main.yml&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Restart service httpd Debian&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">ansible.builtin.service&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">apache2&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">state&lt;/span>: &lt;span style="color:#ae81ff">restarted&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">become&lt;/span>: &lt;span style="color:#66d9ef">yes&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">when&lt;/span>: &lt;span style="color:#ae81ff">ansible_facts[&amp;#39;os_family&amp;#39;] == &amp;#34;Debian&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Restart service httpd Redhat&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">ansible.builtin.service&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">httpd&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">state&lt;/span>: &lt;span style="color:#ae81ff">restarted&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">become&lt;/span>: &lt;span style="color:#66d9ef">yes&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">when&lt;/span>: &lt;span style="color:#ae81ff">ansible_facts[&amp;#39;os_family&amp;#39;] == &amp;#34;RedHat&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This is similar to the code that start httpd in the tasks folder. But this code will be called only when someone notifies handlers to run, and in our case, it will be called by creating index.html. In the code where we create index.html, we need to add a handler call.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Generate index.html&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">template&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">src&lt;/span>: &lt;span style="color:#ae81ff">index.html.j2&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">dest&lt;/span>: &lt;span style="color:#ae81ff">/var/www/html/index.html&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">become&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">notify&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">Restart service httpd Debian&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">Restart service httpd Redhat&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Here I am calling two handlers, but only one will actually be executed depending on the OS.&lt;/p>
+&lt;p>Now the role can be used. To do this, in our main main.yml we can specify the role which we are going to use. But without roles/ in the name.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>---
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Configure webserver&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">hosts&lt;/span>: &lt;span style="color:#ae81ff">web&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">gather_facts&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">roles&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">httpd&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>main.yml located outside of roles folders. This is what the final file structure looks like&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ tree ansible
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ansible
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>├── inventory
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>├── main.yml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>└── roles
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> └── httpd
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── README.md
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── defaults
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> │ └── main.yml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── files
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── handlers
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> │ └── main.yml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── meta
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> │ └── main.yml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── tasks
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> │ └── main.yml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── templates
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> │ └── index.html.j2
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── tests
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> │ ├── inventory
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> │ └── test.yml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> └── vars
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> └── main.yml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">10&lt;/span> directories, &lt;span style="color:#ae81ff">11&lt;/span> files
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And the result&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ ansible-playbook -i inventory main.yml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PLAY &lt;span style="color:#f92672">[&lt;/span>Configure webserver&lt;span style="color:#f92672">]&lt;/span> *************************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>Gathering Facts&lt;span style="color:#f92672">]&lt;/span> *****************************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ok: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>httpd : Install apache on redhat&lt;span style="color:#f92672">]&lt;/span> ************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>changed: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>httpd : Start httpd&lt;span style="color:#f92672">]&lt;/span> *************************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>changed: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>httpd : Generate index.html&lt;span style="color:#f92672">]&lt;/span> *****************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>changed: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>RUNNING HANDLER &lt;span style="color:#f92672">[&lt;/span>httpd : Restart httpd&lt;span style="color:#f92672">]&lt;/span> ************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>changed: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PLAY RECAP *****************************************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>44.201.242.83 : ok&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">5&lt;/span> changed&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">4&lt;/span> unreachable&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> failed&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> skipped&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> rescued&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> ignored&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="ansible-galaxy">Ansible galaxy&lt;/h2>
+&lt;p>The Ansible community has many great roles created. You can find them at &lt;a href="https://galaxy.ansible.com/">ansible galaxy&lt;/a>. For example, after entering &lt;code>httpd&lt;/code> in the search, I found a &lt;a href="https://galaxy.ansible.com/buluma/httpd">role&lt;/a> that installs httpd. Here you can read the role documentation and instructions on how to download it.
+This would normally be &lt;code>ansible-galaxy install ROLE_NAME&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ ansible-galaxy install buluma.httpd
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Starting galaxy role install process
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- downloading role &lt;span style="color:#e6db74">&amp;#39;httpd&amp;#39;&lt;/span>, owned by buluma
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- downloading role from https://github.com/buluma/ansible-role-httpd/archive/1.0.9.tar.gz
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- extracting buluma.httpd to /home/maksym/.ansible/roles/buluma.httpd
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- buluma.httpd &lt;span style="color:#f92672">(&lt;/span>1.0.9&lt;span style="color:#f92672">)&lt;/span> was installed successfully
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now I can specify this role in main.yml&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>---
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Configure webserver&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">hosts&lt;/span>: &lt;span style="color:#ae81ff">web&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">gather_facts&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">become&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">roles&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">buluma.httpd&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>ansible-playbook -i inventory main.yml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PLAY &lt;span style="color:#f92672">[&lt;/span>Configure webserver&lt;span style="color:#f92672">]&lt;/span> *************************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>Gathering Facts&lt;span style="color:#f92672">]&lt;/span> *****************************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ok: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Test &lt;span style="color:#66d9ef">if&lt;/span> httpd_servername is set correctly&lt;span style="color:#f92672">]&lt;/span> ************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ok: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83 -&amp;gt; localhost&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Test &lt;span style="color:#66d9ef">if&lt;/span> httpd_port is set correctly&lt;span style="color:#f92672">]&lt;/span> ******************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ok: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83 -&amp;gt; localhost&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Test &lt;span style="color:#66d9ef">if&lt;/span> https_ssl_enable is set correctly&lt;span style="color:#f92672">]&lt;/span> ************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ok: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83 -&amp;gt; localhost&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Test &lt;span style="color:#66d9ef">if&lt;/span> httpd_ssl_servername is set correctly&lt;span style="color:#f92672">]&lt;/span> ********************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ok: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83 -&amp;gt; localhost&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Test &lt;span style="color:#66d9ef">if&lt;/span> httpd_ssl_port is set correctly&lt;span style="color:#f92672">]&lt;/span> **************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ok: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83 -&amp;gt; localhost&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Test &lt;span style="color:#66d9ef">if&lt;/span> httpd_locations is set correctly&lt;span style="color:#f92672">]&lt;/span> *************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Test &lt;span style="color:#66d9ef">if&lt;/span> item in httpd_locations is set correctly&lt;span style="color:#f92672">]&lt;/span> *****************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Test &lt;span style="color:#66d9ef">if&lt;/span> httpd_vhosts is set correctly&lt;span style="color:#f92672">]&lt;/span> ****************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Test &lt;span style="color:#66d9ef">if&lt;/span> item in httpd_vhosts is set correctly&lt;span style="color:#f92672">]&lt;/span> ********************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Test &lt;span style="color:#66d9ef">if&lt;/span> item.create_docroot in httpd_vhosts is set correctly&lt;span style="color:#f92672">]&lt;/span> *****************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Test &lt;span style="color:#66d9ef">if&lt;/span> item.serveralias in httpd_vhosts is set correctly&lt;span style="color:#f92672">]&lt;/span> ********************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Test &lt;span style="color:#66d9ef">if&lt;/span> httpd_directories is set correctly&lt;span style="color:#f92672">]&lt;/span> ***********************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Test &lt;span style="color:#66d9ef">if&lt;/span> item.name in httpd_directories is set correctly&lt;span style="color:#f92672">]&lt;/span> **********************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Test &lt;span style="color:#66d9ef">if&lt;/span> item.options in httpd_directories is set correctly&lt;span style="color:#f92672">]&lt;/span> *******************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Test &lt;span style="color:#66d9ef">if&lt;/span> item.allow_override in httpd_directories is set correctly&lt;span style="color:#f92672">]&lt;/span> ************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Test &lt;span style="color:#66d9ef">if&lt;/span> httpd_remove_example is set correctly&lt;span style="color:#f92672">]&lt;/span> ********************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ok: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83 -&amp;gt; localhost&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Install apache httpd&lt;span style="color:#f92672">]&lt;/span> *********************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ok: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Modify selinux settings&lt;span style="color:#f92672">]&lt;/span> ******************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">=&lt;/span>&amp;gt; &lt;span style="color:#f92672">(&lt;/span>item&lt;span style="color:#f92672">=&lt;/span>httpd_can_network_connect&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Allow connections to custom port&lt;span style="color:#f92672">]&lt;/span> *********************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">=&lt;/span>&amp;gt; &lt;span style="color:#f92672">(&lt;/span>item&lt;span style="color:#f92672">=&lt;/span>80&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">=&lt;/span>&amp;gt; &lt;span style="color:#f92672">(&lt;/span>item&lt;span style="color:#f92672">=&lt;/span>443&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Configure httpd&lt;span style="color:#f92672">]&lt;/span> **************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>changed: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Install ssl packages&lt;span style="color:#f92672">]&lt;/span> *********************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Place configuration&lt;span style="color:#f92672">]&lt;/span> **********************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Configure redirect from http to https&lt;span style="color:#f92672">]&lt;/span> ****************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Enable modules&lt;span style="color:#f92672">]&lt;/span> ***************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">=&lt;/span>&amp;gt; &lt;span style="color:#f92672">(&lt;/span>item&lt;span style="color:#f92672">=&lt;/span>proxy&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">=&lt;/span>&amp;gt; &lt;span style="color:#f92672">(&lt;/span>item&lt;span style="color:#f92672">=&lt;/span>proxy_http&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Configure locations&lt;span style="color:#f92672">]&lt;/span> **********************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Create docroot&lt;span style="color:#f92672">]&lt;/span> ***************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Configure vhosts&lt;span style="color:#f92672">]&lt;/span> *************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Configure ports&lt;span style="color:#f92672">]&lt;/span> **************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Create directories&lt;span style="color:#f92672">]&lt;/span> ***********************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Configure directories&lt;span style="color:#f92672">]&lt;/span> ********************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Flush handlers&lt;span style="color:#f92672">]&lt;/span> ***************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>RUNNING HANDLER &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Test httpd configuration validity&lt;span style="color:#f92672">]&lt;/span> *********************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ok: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>RUNNING HANDLER &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Restart httpd&lt;span style="color:#f92672">]&lt;/span> *****************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>changed: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Removing default html&lt;span style="color:#f92672">]&lt;/span> ********************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>skipping: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>buluma.httpd : Start and enable httpd&lt;span style="color:#f92672">]&lt;/span> *******************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ok: &lt;span style="color:#f92672">[&lt;/span>44.201.242.83&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PLAY RECAP *****************************************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>44.201.242.83 : ok&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">12&lt;/span> changed&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">2&lt;/span> unreachable&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> failed&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> skipped&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">23&lt;/span> rescued&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> ignored&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/oeihNr9e5I4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>Ansible Playbook</title><link>https://mpostument.com/2022/10/04/ansible-playbook/</link><pubDate>Tue, 04 Oct 2022 22:51:59 +0300</pubDate><guid>https://mpostument.com/2022/10/04/ansible-playbook/</guid><description>Part 1 - Manage Ansible Versions With pyenv
 Part 2 - Ansible Inventory
 Hello!
 Today I will show what ansible-playbook is and how to create it.
