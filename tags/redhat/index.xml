@@ -1,6 +1,163 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>RedHat on Maksym Postument</title><link>https://mpostument.com/tags/redhat/</link><description>Recent content in RedHat on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 15 Oct 2022 17:49:02 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/redhat/index.xml" rel="self" type="application/rss+xml"/><item><title>Ansible Role</title><link>https://mpostument.com/2022/10/15/ansible-role/</link><pubDate>Sat, 15 Oct 2022 17:49:02 +0300</pubDate><guid>https://mpostument.com/2022/10/15/ansible-role/</guid><description>Hello!
-So what is a role in Ansible? Roles are a logical organization of Ansible code. For example, you can create a role that will install a MySQL database, put it in a separate repository, and make it publicly available or shared with other teams, and everyone should be able to use it
-Create a Role So how to create a role? You can create all the necessary files and folders manually or use the command ansible-galaxy role init ROLE_NAME.</description><content>&lt;p>Hello!&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>RedHat on Maksym Postument</title><link>https://mpostument.com/tags/redhat/</link><description>Recent content in RedHat on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 19 Oct 2022 17:28:26 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/redhat/index.xml" rel="self" type="application/rss+xml"/><item><title>Ansible Vault</title><link>https://mpostument.com/2022/10/19/ansible-vault/</link><pubDate>Wed, 19 Oct 2022 17:28:26 +0300</pubDate><guid>https://mpostument.com/2022/10/19/ansible-vault/</guid><description>Part 1 - Manage Ansible Versions With pyenv
+Part 2 - Ansible Inventory
+Part 3 - Ansible Playbook
+Part 4 - Ansible Role
+Hello!
+What if we need to create a user in the database and store their password securely in code? This can be done using ansible vault. Ansible vault allows you to encrypt both the entire file or individual variables.
+Encrypted file Let&amp;rsquo;s create a file that will contain our variables.</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/09/19/manage-ansible-versions-with-pyenv/" title="Part 1 - Manage Ansible Versions With pyenv">Part 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/2022/09/27/ansible-inventory/" title="Part 2 - Ansible Inventory">Part 2 - Ansible Inventory&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/2022/10/04/ansible-playbook/" title="Part 3 - Ansible Playbook">Part 3 - Ansible Playbook&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/2022/10/15/ansible-role/" title="Part 4 - Ansible Role">Part 4 - Ansible Role&lt;/a>&lt;/p>
+&lt;p>Hello!&lt;/p>
+&lt;p>What if we need to create a user in the database and store their password securely in code? This can be done using &lt;a href="https://docs.ansible.com/ansible/latest/user_guide/vault.html">ansible vault&lt;/a>. Ansible vault allows you to encrypt both the entire file or individual variables.&lt;/p>
+&lt;h2 id="encrypted-file">Encrypted file&lt;/h2>
+&lt;p>Let&amp;rsquo;s create a file that will contain our variables.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">db_password&lt;/span>: &lt;span style="color:#ae81ff">secure_password!&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">admin_password&lt;/span>: &lt;span style="color:#ae81ff">super_securee_password!&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>We cannot simply leave this file because it stores passwords. But it can be encrypted using the &lt;code>ansible-vault encrypt VAR_FILE&lt;/code> command. You will need to enter a password that will be used for decryption.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ ansible-vault encrypt 1.yml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>New Vault password:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Confirm New Vault password:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Encryption successful
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And the file itself will look like this, and it can be added to source control.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ANSIBLE_VAULT;1.1;AES256
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">32393936363535383238323361373334376664613530346332336333653066366437336232313761&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>3638396339376462636630336161376161396637366338360a653962326431616266656463613966
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">32366130613763343937366363623864646263616664323231633662626333353331613537613733&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>3132393337346431660a613037333166626563306634346461303538383237376263373734626666
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">64623136336535323230303631313736376162363633626264346538646163363339643438396633&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">62653234373230323538616563306130353334333931616338363561346530633335346562363837&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">62656166613939303139653233346466393636666637353438376230393935336638363664303037&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">64313162363661396161&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This file is used as a normal file with variables, but when running &lt;code>ansible-playbook&lt;/code> you need to pass a password for decryption. There are several ways to do it. First, with `&amp;ndash;ask-vault-pass&amp;rsquo; key, in this case, Ansible will ask for a password at startup. Accordingly, this option is not suitable for automatically starting Ansible, because the password must be entered every time.&lt;/p>
+&lt;p>Let&amp;rsquo;s use the following code for the test, where vars are our encrypted variables&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>---
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Run localy&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">hosts&lt;/span>: &lt;span style="color:#ae81ff">localhost&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">connection&lt;/span>: &lt;span style="color:#ae81ff">local &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">vars_files&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">vars.yml&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">tasks&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Print var&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">debug&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">msg&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;{{ db_password }}&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ ansible-playbook -i &lt;span style="color:#e6db74">&amp;#34;localhost,&amp;#34;&lt;/span> main.yml --ask-vault-pass
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Vault password:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PLAY &lt;span style="color:#f92672">[&lt;/span>Run localy&lt;span style="color:#f92672">]&lt;/span> *****************************************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>Gathering Facts&lt;span style="color:#f92672">]&lt;/span> ************************************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ok: &lt;span style="color:#f92672">[&lt;/span>localhost&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>Print var&lt;span style="color:#f92672">]&lt;/span> ******************************************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ok: &lt;span style="color:#f92672">[&lt;/span>localhost&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">=&lt;/span>&amp;gt; &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;msg&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;secure_password&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PLAY RECAP ************************************************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>localhost : ok&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">2&lt;/span> changed&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> unreachable&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> failed&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> skipped&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> rescued&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> ignored&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The next option is using a file with a password. For this, a file is created in which the password will be stored and ansible is launched with the key &lt;code>--vault-password-file PATH_TO_FILE&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ ansible-playbook -i &lt;span style="color:#e6db74">&amp;#34;localhost,&amp;#34;&lt;/span> main.yml --vault-password-file .vault_pass
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PLAY &lt;span style="color:#f92672">[&lt;/span>Run localy&lt;span style="color:#f92672">]&lt;/span> *****************************************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>Gathering Facts&lt;span style="color:#f92672">]&lt;/span> ************************************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ok: &lt;span style="color:#f92672">[&lt;/span>localhost&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>Print var&lt;span style="color:#f92672">]&lt;/span> ******************************************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ok: &lt;span style="color:#f92672">[&lt;/span>localhost&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">=&lt;/span>&amp;gt; &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;msg&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;secure_password&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PLAY RECAP ************************************************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>localhost : ok&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">2&lt;/span> changed&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> unreachable&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> failed&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> skipped&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> rescued&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> ignored&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you run it without these variables, you will get&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>ansible-playbook -i &lt;span style="color:#e6db74">&amp;#34;localhost,&amp;#34;&lt;/span> main.yml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ERROR! Attempting to decrypt but no vault secrets found
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="decrypt-file">Decrypt file&lt;/h2>
+&lt;p>In order to edit the encrypted file, you can use the &lt;code>ansible-vault edit ENCRYPTED_FILE&lt;/code> command, enter the password and edit the file.&lt;/p>
+&lt;h2 id="change-vault-password">Change vault password&lt;/h2>
+&lt;p>The password can be changed using the &lt;code>ansible-vault rekey VAULT_FILE&lt;/code> command&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>ansible-vault rekey vars.yml
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Vault password:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>New Vault password:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Confirm New Vault password:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Rekey successful
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="encrypted-variable">Encrypted variable&lt;/h2>
+&lt;p>If you do not need to encrypt an entire file, but only one parameter, this can also be done using the `ansible-vault encrypt_string &amp;lsquo;TEXT_TO_ENCRYPT&amp;rsquo; &amp;ndash;name &amp;lsquo;VARIABLE_NAME&amp;rsquo;&amp;rsquo; command.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>ansible-vault encrypt_string &lt;span style="color:#e6db74">&amp;#39;secure&amp;#39;&lt;/span> --name db_password
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>New Vault password:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Confirm New Vault password:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Encryption successful
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>db_password: !vault |
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> $ANSIBLE_VAULT;1.1;AES256
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">32613335323933306136303139616131303039396139646332656337343532383034336439363739&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 3032376165376462653533633731626366613337356234340a353662343931366436643635383666
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">32313163373765333666623065373930616431333365656331376362316464363038636136346138&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 3033376563636437630a663533383336353434336566633935396137373737303662636432326433
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">3630&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>As a result, we get a parameter that can be added to other unencrypted variables. But as with an encrypted file, when you run ansible, you need to pass the password for decryption. If we encrypt several variables, they must have one password for decryption&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">app_port&lt;/span>: &lt;span style="color:#ae81ff">8080&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">db_user&lt;/span>: &lt;span style="color:#ae81ff">postgres&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">db_password&lt;/span>: !&lt;span style="color:#ae81ff">vault |&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">$ANSIBLE_VAULT;1.1;AES256&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">32613335323933306136303139616131303039396139646332656337343532383034336439363739&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">3032376165376462653533633731626366613337356234340a353662343931366436643635383666&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">32313163373765333666623065373930616431333365656331376362316464363038636136346138&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">3033376563636437630a663533383336353434336566633935396137373737303662636432326433&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">3630&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In order not to specify the password in the terminal when encrypting, you can also use a file with a password using the &lt;code>--vault-password-file&lt;/code> key.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>ansible-vault encrypt_string --vault-password-file pass &lt;span style="color:#e6db74">&amp;#39;secure&amp;#39;&lt;/span> --name db_password
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Encryption successful
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>db_password: !vault |
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> $ANSIBLE_VAULT;1.1;AES256
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">31623232663866376238643739353231323835646530326531333766623831363637396130363330&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 6139303362643962343432353765643639623339396134370a653236336433613064303530623933
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">34633765636536333935363833323537356134653333326562363435653437366639393136316336&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> 6462363437633130330a366439653933353766326565623464353364626234623862666265643539
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">3338&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>For the test, we will use the following code:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>---
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Run localy&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">hosts&lt;/span>: &lt;span style="color:#ae81ff">localhost&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">connection&lt;/span>: &lt;span style="color:#ae81ff">local &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">vars&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">admin_password&lt;/span>: !&lt;span style="color:#ae81ff">vault |&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">$ANSIBLE_VAULT;1.1;AES256&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">31386261643538643135333865383233656435366161333865393232643035393265393963646331&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">6130636537343866653733623938363030333739313031300a393663356165343038656164323365&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">32303230376536306633633936303430396234343961393862323434663435626136313062663032&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">3661653564353539650a323733376635306562383263613738383934313931353062633266323762&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">34343231386139303737613538346430633336383165333065303532373738636661&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">tasks&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Print var&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">debug&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">msg&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;{{ admin_password }}&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And I will get the result&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ ansible-playbook -i &lt;span style="color:#e6db74">&amp;#34;localhost,&amp;#34;&lt;/span> main.yml --vault-password-file .vault_pass
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PLAY &lt;span style="color:#f92672">[&lt;/span>Run localy&lt;span style="color:#f92672">]&lt;/span> *****************************************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>Gathering Facts&lt;span style="color:#f92672">]&lt;/span> ************************************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ok: &lt;span style="color:#f92672">[&lt;/span>localhost&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>TASK &lt;span style="color:#f92672">[&lt;/span>Print var&lt;span style="color:#f92672">]&lt;/span> ******************************************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ok: &lt;span style="color:#f92672">[&lt;/span>localhost&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">=&lt;/span>&amp;gt; &lt;span style="color:#f92672">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;msg&amp;#34;&lt;/span>: &lt;span style="color:#e6db74">&amp;#34;secure_admin_password&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PLAY RECAP ************************************************************************************************************************
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>localhost : ok&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">2&lt;/span> changed&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> unreachable&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> failed&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> skipped&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> rescued&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> ignored&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2></content></item><item><title>Ansible Role</title><link>https://mpostument.com/2022/10/15/ansible-role/</link><pubDate>Sat, 15 Oct 2022 17:49:02 +0300</pubDate><guid>https://mpostument.com/2022/10/15/ansible-role/</guid><description>Part 1 - Manage Ansible Versions With pyenv
+Part 2 - Ansible Inventory
+Part 3 - Ansible Playbook
+Hello!
+So what is a role in Ansible? Roles are a logical organization of Ansible code. For example, you can create a role that will install a MySQL database, put it in a separate repository, and make it publicly available or shared with other teams, and everyone should be able to use it</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/09/19/manage-ansible-versions-with-pyenv/" title="Part 1 - Manage Ansible Versions With pyenv">Part 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/2022/09/27/ansible-inventory/" title="Part 2 - Ansible Inventory">Part 2 - Ansible Inventory&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/2022/10/04/ansible-playbook/" title="Part 3 - Ansible Playbook">Part 3 - Ansible Playbook&lt;/a>&lt;/p>
+&lt;p>Hello!&lt;/p>
 &lt;p>So what is a role in Ansible? Roles are a logical organization of Ansible code. For example, you can create a role that will install a MySQL database, put it in a separate repository, and make it publicly available or shared with other teams, and everyone should be able to use it&lt;/p>
 &lt;h2 id="create-a-role">Create a Role&lt;/h2>
 &lt;p>So how to create a role? You can create all the necessary files and folders manually or use the command &lt;code>ansible-galaxy role init ROLE_NAME&lt;/code>.&lt;/p>
