@@ -1,4 +1,84 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Golang on Maksym Postument</title><link>https://mpostument.com/categories/golang/</link><description>Recent content in Golang on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 22 Mar 2022 20:31:29 +0200</lastBuildDate><atom:link href="https://mpostument.com/categories/golang/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker Sdk Part One</title><link>https://mpostument.com/2022/03/22/docker-sdk-part-one/</link><pubDate>Tue, 22 Mar 2022 20:31:29 +0200</pubDate><guid>https://mpostument.com/2022/03/22/docker-sdk-part-one/</guid><description>Hi there!
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Golang on Maksym Postument</title><link>https://mpostument.com/categories/golang/</link><description>Recent content in Golang on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 28 Oct 2022 21:31:30 +0300</lastBuildDate><atom:link href="https://mpostument.com/categories/golang/index.xml" rel="self" type="application/rss+xml"/><item><title>Setup Go</title><link>https://mpostument.com/2022/10/28/setup-go/</link><pubDate>Fri, 28 Oct 2022 21:31:30 +0300</pubDate><guid>https://mpostument.com/2022/10/28/setup-go/</guid><description>Hello!
+This post is the start of a series of posts about golang. In this one, we will install golang and configure vscode.
+Install go The current version of golang can be downloaded from official site. I&amp;rsquo;m using Linux so I&amp;rsquo;ll download the Linux version
+$ wget https://go.dev/dl/go1.19.2.linux-amd64.tar.gz --2022-10-28 22:35:40-- https://go.dev/dl/go1.19.2.linux-amd64.tar.gz Resolving go.dev (go.dev)... 216.239.36.21, 216.239.34.21, 216.239.38.21, ... Connecting to go.dev (go.dev)|216.239.36.21|:443... connected. HTTP request sent, awaiting response... 302 Found Location: https://dl.</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>This post is the start of a series of posts about golang. In this one, we will install golang and configure vscode.&lt;/p>
+&lt;h2 id="install-go">Install go&lt;/h2>
+&lt;p>The current version of golang can be downloaded from &lt;a href="https://go.dev/dl/">official site&lt;/a>. I&amp;rsquo;m using Linux so I&amp;rsquo;ll download the Linux version&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ wget https://go.dev/dl/go1.19.2.linux-amd64.tar.gz
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>--2022-10-28 22:35:40-- https://go.dev/dl/go1.19.2.linux-amd64.tar.gz
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Resolving go.dev &lt;span style="color:#f92672">(&lt;/span>go.dev&lt;span style="color:#f92672">)&lt;/span>... 216.239.36.21, 216.239.34.21, 216.239.38.21, ...
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Connecting to go.dev &lt;span style="color:#f92672">(&lt;/span>go.dev&lt;span style="color:#f92672">)&lt;/span>|216.239.36.21|:443... connected.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>HTTP request sent, awaiting response... &lt;span style="color:#ae81ff">302&lt;/span> Found
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Location: https://dl.google.com/go/go1.19.2.linux-amd64.tar.gz &lt;span style="color:#f92672">[&lt;/span>following&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>--2022-10-28 22:35:40-- https://dl.google.com/go/go1.19.2.linux-amd64.tar.gz
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Resolving dl.google.com &lt;span style="color:#f92672">(&lt;/span>dl.google.com&lt;span style="color:#f92672">)&lt;/span>... 216.58.215.78, 2a00:1450:401b:810::200e
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Connecting to dl.google.com &lt;span style="color:#f92672">(&lt;/span>dl.google.com&lt;span style="color:#f92672">)&lt;/span>|216.58.215.78|:443... connected.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>HTTP request sent, awaiting response... &lt;span style="color:#ae81ff">200&lt;/span> OK
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Length: &lt;span style="color:#ae81ff">148883574&lt;/span> &lt;span style="color:#f92672">(&lt;/span>142M&lt;span style="color:#f92672">)&lt;/span> &lt;span style="color:#f92672">[&lt;/span>application/x-gzip&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Saving to: ‘go1.19.2.linux-amd64.tar.gz’
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>go1.19.2.linux-amd64.tar.gz 100%&lt;span style="color:#f92672">[================================================================&lt;/span>&amp;gt;&lt;span style="color:#f92672">]&lt;/span> 141,99M 20,8MB/s in 13s
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>2022-10-28 16:36:03 &lt;span style="color:#f92672">(&lt;/span>10,6 MB/s&lt;span style="color:#f92672">)&lt;/span> - ‘go1.19.2.linux-amd64.tar.gz’ saved &lt;span style="color:#f92672">[&lt;/span>148883574/148883574&lt;span style="color:#f92672">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now you need to unpack the archive to /usr/local folder&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>sudo tar -C /usr/local -xzf go1.19.2.linux-amd64.tar.gz
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>For the &lt;code>go&lt;/code> command to become available, it must be added to the PATH. I use zsh, so I will add the path to go to the &lt;code>~/.zshrc&lt;/code> file&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>export PATH&lt;span style="color:#f92672">=&lt;/span>$PATH:/usr/local/go/bin
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After restarting the terminal, the go command is available&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ go version
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>go version go1.19.2 linux/amd64
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="vscode-install">Vscode install&lt;/h2>
+&lt;p>To make it convenient to write &lt;code>go&lt;/code> code, I use the &lt;a href="https://code.visualstudio.com/Download">Visual Studio Code&lt;/a> text, editor. After the editor is installed, you need to install the &lt;code>Go&lt;/code> application. To install the application, press &lt;code>Ctrl+Shift+X&lt;/code> or click on &lt;img src="https://i.imgur.com/LBbwNV2.png" alt="extension">.
+Enter &lt;code>go&lt;/code> in the search, select &lt;code>Go&lt;/code>, and click &lt;code>Install&lt;/code>.&lt;/p>
+&lt;p>For the &lt;code>go&lt;/code> application to work, you need to install additional &lt;code>go&lt;/code> libraries. To do this, you need to press &lt;code>Ctrl+Shift+P&lt;/code> and write &lt;code>go: install/update tools&lt;/code>. Select all libraries from the list and click OK. Vscode output will be produced&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>Tools environment: GOPATH&lt;span style="color:#f92672">=&lt;/span>/home/maksym/go
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Installing &lt;span style="color:#ae81ff">7&lt;/span> tools at /home/maksym/go/bin in module mode.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> gotests
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> gomodifytags
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> impl
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> goplay
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> dlv
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> golangci-lint
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> gopls
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Installing github.com/cweill/gotests/gotests@latest &lt;span style="color:#f92672">(&lt;/span>/home/maksym/go/bin/gotests&lt;span style="color:#f92672">)&lt;/span> SUCCEEDED
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Installing github.com/fatih/gomodifytags@latest &lt;span style="color:#f92672">(&lt;/span>/home/maksym/go/bin/gomodifytags&lt;span style="color:#f92672">)&lt;/span> SUCCEEDED
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Installing github.com/josharian/impl@latest &lt;span style="color:#f92672">(&lt;/span>/home/maksym/go/bin/impl&lt;span style="color:#f92672">)&lt;/span> SUCCEEDED
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Installing github.com/haya14busa/goplay/cmd/goplay@latest &lt;span style="color:#f92672">(&lt;/span>/home/maksym/go/bin/goplay&lt;span style="color:#f92672">)&lt;/span> SUCCEEDED
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Installing github.com/go-delve/delve/cmd/dlv@latest &lt;span style="color:#f92672">(&lt;/span>/home/maksym/go/bin/dlv&lt;span style="color:#f92672">)&lt;/span> SUCCEEDED
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Installing github.com/golangci/golangci-lint/cmd/golangci-lint@latest &lt;span style="color:#f92672">(&lt;/span>/home/maksym/go/bin/golangci-lint&lt;span style="color:#f92672">)&lt;/span> SUCCEEDED
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Installing golang.org/x/tools/gopls@latest &lt;span style="color:#f92672">(&lt;/span>/home/maksym/go/bin/gopls&lt;span style="color:#f92672">)&lt;/span> SUCCEEDED
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>All tools successfully installed. You are ready to Go. :&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="hello-world">Hello World&lt;/h2>
+&lt;p>Now let&amp;rsquo;s create the first program on go. To begin with, I will create a directory in which the code will be stored&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>mkdir -p ~/go/src/github.com/mpostument/hello_world
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In the hello_world folder, you first need to initialize the go module.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ go mod init
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>go: creating new go.mod: module github.com/mpostument/hello_world
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In the hello_world folder, you first need to initialize the go module with &lt;code>go mod init&lt;/code> command. If the command ends successfully, the file &lt;code>go.mod&lt;/code> will appear, which will contain information about all 3rd party libraries used in module. But now this file only contains information about the version of go and the name of the module.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#a6e22e">module&lt;/span> &lt;span style="color:#a6e22e">github&lt;/span>.&lt;span style="color:#a6e22e">com&lt;/span>&lt;span style="color:#f92672">/&lt;/span>&lt;span style="color:#a6e22e">mpostument&lt;/span>&lt;span style="color:#f92672">/&lt;/span>&lt;span style="color:#a6e22e">hello_world&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">go&lt;/span> &lt;span style="color:#ae81ff">1.19&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now you can start writing code. Let&amp;rsquo;s create a file &lt;code>main.go&lt;/code> and add the following code to it&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> &lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Hello World!&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Since we are not writing a library, but creating executable, the package name should be main. Next, is the libraries import, we need &lt;code>fmt&lt;/code> to print text to console. The main function is called as we execute binary. In &lt;code>main&lt;/code> function, we print text to the terminal using the &lt;code>Println&lt;/code> method from the &lt;code>fmt&lt;/code> library.&lt;/p>
+&lt;p>The code can be run in two ways. Compile the binary or run with &lt;code>go run&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ go run main.go
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Hello World!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ go build
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ ls
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>go.mod hello_world main.go
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ ./hello_world
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Hello World!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Docker Sdk Part One</title><link>https://mpostument.com/2022/03/22/docker-sdk-part-one/</link><pubDate>Tue, 22 Mar 2022 20:31:29 +0200</pubDate><guid>https://mpostument.com/2022/03/22/docker-sdk-part-one/</guid><description>Hi there!
 This is the first part of the article about docker SDK. In the current article, we will see how with the help of golang it is possible to make pull and list docker images.
 Docker pull As usual, initialize the go module, load the docker SDK and create the main.go file
 go mod init go get github.com/docker/docker/client Let&amp;rsquo;s create a PullImage method in which we will create a docker client using the client.</description><content>&lt;p>Hi there!&lt;/p>
