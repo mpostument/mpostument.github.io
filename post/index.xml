@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Maksym Postument</title><link>https://mpostument.com/post/</link><description>Recent content in Posts on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 28 Oct 2022 21:31:30 +0300</lastBuildDate><atom:link href="https://mpostument.com/post/index.xml" rel="self" type="application/rss+xml"/><item><title>Setup Go</title><link>https://mpostument.com/2022/10/28/setup-go/</link><pubDate>Fri, 28 Oct 2022 21:31:30 +0300</pubDate><guid>https://mpostument.com/2022/10/28/setup-go/</guid><description>Hello!
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Maksym Postument</title><link>https://mpostument.com/post/</link><description>Recent content in Posts on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 28 Oct 2022 21:31:30 +0300</lastBuildDate><atom:link href="https://mpostument.com/post/index.xml" rel="self" type="application/rss+xml"/><item><title>Golang - Setting Up Development Environment</title><link>https://mpostument.com/2022/10/28/setup-go/</link><pubDate>Fri, 28 Oct 2022 21:31:30 +0300</pubDate><guid>https://mpostument.com/2022/10/28/setup-go/</guid><description>Hello!
 This post is the start of a series of posts about golang. In this one, we will install golang and configure vscode.
 Install go The current version of golang can be downloaded from official site. I&amp;rsquo;m using Linux so I&amp;rsquo;ll download the Linux version
 $ wget https://go.dev/dl/go1.19.2.linux-amd64.tar.gz --2022-10-28 22:35:40-- https://go.dev/dl/go1.19.2.linux-amd64.tar.gz Resolving go.dev (go.dev)... 216.239.36.21, 216.239.34.21, 216.239.38.21, ... Connecting to go.dev (go.dev)|216.239.36.21|:443... connected. HTTP request sent, awaiting response... 302 Found Location: https://dl.</description><content>&lt;p>Hello!&lt;/p>
@@ -78,7 +78,10 @@ Enter &lt;code>go&lt;/code> in the search, select &lt;code>Go&lt;/code>, and cli
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>go.mod hello_world main.go
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$ ./hello_world
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Hello World!
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Ansible Vault</title><link>https://mpostument.com/2022/10/19/ansible-vault/</link><pubDate>Wed, 19 Oct 2022 17:28:26 +0300</pubDate><guid>https://mpostument.com/2022/10/19/ansible-vault/</guid><description>Part 1 - Manage Ansible Versions With pyenv
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/Lk6gB5q2xBw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>Ansible Vault</title><link>https://mpostument.com/2022/10/19/ansible-vault/</link><pubDate>Wed, 19 Oct 2022 17:28:26 +0300</pubDate><guid>https://mpostument.com/2022/10/19/ansible-vault/</guid><description>Part 1 - Manage Ansible Versions With pyenv
 Part 2 - Ansible Inventory
 Part 3 - Ansible Playbook
 Part 4 - Ansible Role
