@@ -33,7 +33,7 @@ Object coordinates Об&amp;rsquo;єкт може бути добавлений 
 &lt;p>Кожен раз коли ми робимо клік то в цю точці розміщується саме лівий верхній куток об&amp;rsquo;єкта. Це тому що туди встановлено origin. Origin вказується на рівні спрайта і може бути змінений. Для цього потрібно відкрити спрайт і одразу буде видно що origin встановлено в верхній лівий кут. За допомогою миші його можна перенести в будь яку точку або ж вибрати один з існуючих варіантів як Top Left, Top Center та інші.&lt;/p>
 &lt;p>&lt;img src="https://mpostument.com/game_maker/origin.jpg" alt="origin">&lt;/p>
 &lt;p>Якщо я переміщу origin в іншу точку та запущу гру і переміщу об&amp;rsquo;єкт то в цю точку поміститься саме те місце яке вказане як origin&lt;/p>
-&lt;p>&lt;img src="game_maker/center_origin.jpg" alt="center_origin">&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/game_maker/center_origin.jpg" alt="center_origin">&lt;/p>
 &lt;p>Але тепер як видно текст який ми виводимо змістився. Тому що він відображається відповідно до origin. Тому щоб знову зробити текст всередині об&amp;rsquo;єкта координати в методі &lt;code>draw_text&lt;/code> потрібно змінити&lt;/p>
 &lt;p>Наприклад ось так якщо origin стоїть в центрі&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>draw_self()

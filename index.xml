@@ -32,7 +32,7 @@ This is the basic information you need to know by coordinates.</description><con
 &lt;p>Every time we click, the upper left corner of the object is placed at this point. This is because the origin is set there. Origin is specified at the sprite level and can be changed. To do this, you need to open the sprite and you will immediately see that the origin is set to the upper left corner. With the help of the mouse, you can move it to any point or choose one of the existing options such as Top Left, Top Center, and others.&lt;/p>
 &lt;p>&lt;img src="https://mpostument.com/game_maker/origin.jpg" alt="origin">&lt;/p>
 &lt;p>If I move the origin to another point and start the game and move the object, then exactly the place specified as the origin will fit in this point&lt;/p>
-&lt;p>&lt;img src="game_maker/center_origin.jpg" alt="center_origin">&lt;/p>
+&lt;p>&lt;img src="https://mpostument.com/game_maker/center_origin.jpg" alt="center_origin">&lt;/p>
 &lt;p>But now, as you can see, the text that we display has shifted. Because it displays according to origin. Therefore, to redraw the text inside the object, the coordinates in the &lt;code>draw_text&lt;/code> method need to be changed&lt;/p>
 &lt;p>For example, this is the case if the origin is in the center&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>draw_self()
