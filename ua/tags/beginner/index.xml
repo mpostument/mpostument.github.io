@@ -40,7 +40,9 @@ Object coordinates Об&amp;rsquo;єкт може бути добавлений 
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>draw_text(x&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">20&lt;/span>, y&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">15&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;X:&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> string(x))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>draw_text(x&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">20&lt;/span>, y, &lt;span style="color:#e6db74">&amp;#34;Y:&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> string(y))
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
-&lt;p>Coming soon&lt;/p></content></item><item><title>Go Variables</title><link>https://mpostument.com/ua/2022/11/02/go-variables/</link><pubDate>Wed, 02 Nov 2022 18:00:24 +0200</pubDate><guid>https://mpostument.com/ua/2022/11/02/go-variables/</guid><description>Привіт!
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/b5odh89pfjg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>Go Variables</title><link>https://mpostument.com/ua/2022/11/02/go-variables/</link><pubDate>Wed, 02 Nov 2022 18:00:24 +0200</pubDate><guid>https://mpostument.com/ua/2022/11/02/go-variables/</guid><description>Привіт!
 Сьогодні поговоримо про параметри в golang. Є три варіанти як можна створити параметри розглянемо кожен з них.
 Var keyword Перший варіант це створення параметра за допомогою ключового слова var. Так можна створити параметр який не буде мати значення (буде мати початкове значення для кожного типу). Виглядає це так var PARAM_NAME PARAM_TYPE наприклад var level int
 package main import &amp;#34;fmt&amp;#34; func main() { var level int fmt.Println(level) } $ go run main.</description><content>&lt;p>Привіт!&lt;/p>

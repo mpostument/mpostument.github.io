@@ -39,7 +39,9 @@ This is the basic information you need to know by coordinates.</description><con
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>draw_text(x&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">20&lt;/span>, y&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">15&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;X:&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> string(x))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>draw_text(x&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">20&lt;/span>, y, &lt;span style="color:#e6db74">&amp;#34;Y:&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> string(y))
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
-&lt;p>Coming soon&lt;/p></content></item><item><title>Go Variables</title><link>https://mpostument.com/2022/11/02/go-variables/</link><pubDate>Wed, 02 Nov 2022 18:00:24 +0200</pubDate><guid>https://mpostument.com/2022/11/02/go-variables/</guid><description>Hello!
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/b5odh89pfjg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>Go Variables</title><link>https://mpostument.com/2022/11/02/go-variables/</link><pubDate>Wed, 02 Nov 2022 18:00:24 +0200</pubDate><guid>https://mpostument.com/2022/11/02/go-variables/</guid><description>Hello!
 Today we will talk about variables in golang. There are three ways to create variables, let&amp;rsquo;s try each of them.
 Var keyword The first way is to create a variable using the var keyword. This is how you can create a variable that will have no value (will have an initial value depending on variable type). It looks like this var PARAM_NAME PARAM_TYPE for example var level int
 package main import &amp;#34;fmt&amp;#34; func main() { var level int fmt.</description><content>&lt;p>Hello!&lt;/p>
