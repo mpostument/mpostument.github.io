@@ -192,7 +192,7 @@ package main import &amp;#34;fmt&amp;#34; func main() { var level int fmt.</desc
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">level&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">level&lt;/span> = &lt;span style="color:#ae81ff">20&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">level&lt;/span> = &lt;span style="color:#ae81ff">20&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">level&lt;/span>)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">printLevel&lt;/span>()
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
@@ -205,7 +205,11 @@ package main import &amp;#34;fmt&amp;#34; func main() { var level int fmt.</desc
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">1&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">20&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>As can be seen from the result, first the output of the package level variable took place, then the output of the local variable from the function, and at the end the package variable again&lt;/p></content></item><item><title>Game Maker - Variables</title><link>https://mpostument.com/2022/10/30/variables/</link><pubDate>Sun, 30 Oct 2022 18:48:32 +0200</pubDate><guid>https://mpostument.com/2022/10/30/variables/</guid><description>Hello!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>As can be seen from the result, first the output of the package level variable took place, then the output of the local variable from the function, and at the end the package variable again&lt;/p>
+&lt;h2 id="video">Video&lt;/h2>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/w3q_VVYFDKc" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>Game Maker - Variables</title><link>https://mpostument.com/2022/10/30/variables/</link><pubDate>Sun, 30 Oct 2022 18:48:32 +0200</pubDate><guid>https://mpostument.com/2022/10/30/variables/</guid><description>Hello!
 Let&amp;rsquo;s dive into the world of game development with Game Maker 2. And today we&amp;rsquo;ll start with options in Game Maker. Let&amp;rsquo;s create a new project by selecting New Blank and naming its variables.
 Object Parameters can be added to objects. The object can be almost anything, starting with the hero and enemies, and ending with objects that control some logic in the game. Right-click the Objects folder in the Assets Browser to create an object and select Create -&amp;gt; Object.</description><content>&lt;p>Hello!&lt;/p>
 &lt;p>Let&amp;rsquo;s dive into the world of game development with Game Maker 2. And today we&amp;rsquo;ll start with options in Game Maker. Let&amp;rsquo;s create a new project by selecting &lt;code>New Blank&lt;/code> and naming its variables.&lt;/p>

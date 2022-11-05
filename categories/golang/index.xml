@@ -151,7 +151,7 @@ package main import &amp;#34;fmt&amp;#34; func main() { var level int fmt.</desc
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">level&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">level&lt;/span> = &lt;span style="color:#ae81ff">20&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">level&lt;/span> = &lt;span style="color:#ae81ff">20&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">level&lt;/span>)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">printLevel&lt;/span>()
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
@@ -164,7 +164,11 @@ package main import &amp;#34;fmt&amp;#34; func main() { var level int fmt.</desc
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">1&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">20&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>As can be seen from the result, first the output of the package level variable took place, then the output of the local variable from the function, and at the end the package variable again&lt;/p></content></item><item><title>Golang - Setting Up Development Environment</title><link>https://mpostument.com/2022/10/28/setup-go/</link><pubDate>Fri, 28 Oct 2022 21:31:30 +0300</pubDate><guid>https://mpostument.com/2022/10/28/setup-go/</guid><description>Hello!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>As can be seen from the result, first the output of the package level variable took place, then the output of the local variable from the function, and at the end the package variable again&lt;/p>
+&lt;h2 id="video">Video&lt;/h2>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/w3q_VVYFDKc" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>Golang - Setting Up Development Environment</title><link>https://mpostument.com/2022/10/28/setup-go/</link><pubDate>Fri, 28 Oct 2022 21:31:30 +0300</pubDate><guid>https://mpostument.com/2022/10/28/setup-go/</guid><description>Hello!
 This post is the start of a series of posts about golang. In this one, we will install golang and configure vscode.
 Install go The current version of golang can be downloaded from official site. I&amp;rsquo;m using Linux so I&amp;rsquo;ll download the Linux version
 $ wget https://go.dev/dl/go1.19.2.linux-amd64.tar.gz --2022-10-28 22:35:40-- https://go.dev/dl/go1.19.2.linux-amd64.tar.gz Resolving go.dev (go.dev)... 216.239.36.21, 216.239.34.21, 216.239.38.21, ... Connecting to go.dev (go.dev)|216.239.36.21|:443... connected. HTTP request sent, awaiting response... 302 Found Location: https://dl.</description><content>&lt;p>Hello!&lt;/p>
