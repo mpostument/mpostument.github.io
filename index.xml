@@ -1,4 +1,84 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Maksym Postument</title><link>https://mpostument.com/</link><description>Recent content on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 04 Nov 2022 19:17:15 +0200</lastBuildDate><atom:link href="https://mpostument.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Game Maker - Coordinates</title><link>https://mpostument.com/2022/11/04/coordinates/</link><pubDate>Fri, 04 Nov 2022 19:17:15 +0200</pubDate><guid>https://mpostument.com/2022/11/04/coordinates/</guid><description>Hello!
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Maksym Postument</title><link>https://mpostument.com/</link><description>Recent content on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 06 Nov 2022 13:30:58 +0200</lastBuildDate><atom:link href="https://mpostument.com/index.xml" rel="self" type="application/rss+xml"/><item><title>Game Maker - Conditions</title><link>https://mpostument.com/2022/11/06/conditions/</link><pubDate>Sun, 06 Nov 2022 13:30:58 +0200</pubDate><guid>https://mpostument.com/2022/11/06/conditions/</guid><description>Hello!
+Let&amp;rsquo;s explore conditions in Game Maker. Conditions can be created using if/else or switch statements. Let&amp;rsquo;s try both options.
+If/Else In Game Maker if/else conditions are the same as in other programming languages. The block itself looks like this:
+if (&amp;lt;expression&amp;gt;) { &amp;lt;statement&amp;gt;; } else { &amp;lt;statement&amp;gt;; } For example, we can check the health of our object. If hp &amp;lt; 0, we destroy the object. In order to do this, we will use a new type of event called Step.</description><content>&lt;p>Hello!&lt;/p>
+&lt;p>Let&amp;rsquo;s explore conditions in Game Maker. Conditions can be created using if/else or switch statements. Let&amp;rsquo;s try both options.&lt;/p>
+&lt;h2 id="ifelse">If/Else&lt;/h2>
+&lt;p>In Game Maker if/else conditions are the same as in other programming languages. The block itself looks like this:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#f92672">&amp;lt;&lt;/span>expression&lt;span style="color:#f92672">&amp;gt;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>statement&lt;span style="color:#f92672">&amp;gt;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>statement&lt;span style="color:#f92672">&amp;gt;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>For example, we can check the health of our object. If hp &amp;lt; 0, we destroy the object. In order to do this, we will use a new type of event called &lt;code>Step&lt;/code>. This event is executed every frame. Usually, the main game logic happens in this event.&lt;/p>
+&lt;p>First, we set the initial amount of hp in the &lt;code>Create&lt;/code> event&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>hp &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">100&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Then add event &lt;code>Step&lt;/code> with the following code in it. In parentheses next to if is our condition. Where we check if hp is less than 100. In addition to &amp;lt;= less or equal, there is also &amp;lt; less than, &amp;gt; greater than, = equal to, not equal to, !=, &amp;gt;= greater or equal to. You can also use more than one condition at once, for this there is &amp;amp;&amp;amp; which means and and || which means or. You can write both symbols or letters in the code. And it can look like this if (hp &amp;lt;= and armor &amp;lt;= 0)&lt;/p>
+&lt;p>If our condition returns &lt;code>False&lt;/code> because the number of hp is greater than 0, we go to else. In else, we simply move our object diagonally and subtract 1 hp. If condition is checked every frame and after a few seconds the number of hp will be less than 0 and the object will be destroyed.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> (hp &lt;span style="color:#f92672">&amp;lt;=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> instance_destroy()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">else&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> x &lt;span style="color:#f92672">=&lt;/span> x &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> y &lt;span style="color:#f92672">=&lt;/span> y &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> hp &lt;span style="color:#f92672">=&lt;/span> hp &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If we need to use several conditions, we can use else if. For example, if there is less than 50 hp left, add another object&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> (hp &lt;span style="color:#f92672">&amp;lt;=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> instance_destroy()
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> (hp &lt;span style="color:#f92672">&amp;lt;=&lt;/span> &lt;span style="color:#ae81ff">50&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> instance_create_layer(x, y, &lt;span style="color:#e6db74">&amp;#34;Instances&amp;#34;&lt;/span>, obj_vars)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">else&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> x &lt;span style="color:#f92672">=&lt;/span> x &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> y &lt;span style="color:#f92672">=&lt;/span> y &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> hp &lt;span style="color:#f92672">=&lt;/span> hp &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If there are many conditions, then it is better to use switch.&lt;/p>
+&lt;h2 id="switch">Switch&lt;/h2>
+&lt;p>This is what a switch looks like&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>switch (&lt;span style="color:#f92672">&amp;lt;&lt;/span>expression&lt;span style="color:#f92672">&amp;gt;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> case &lt;span style="color:#f92672">&amp;lt;&lt;/span>constant1&lt;span style="color:#f92672">&amp;gt;&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>code&lt;span style="color:#f92672">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> case &lt;span style="color:#f92672">&amp;lt;&lt;/span>constant2&lt;span style="color:#f92672">&amp;gt;&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>code&lt;span style="color:#f92672">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">//&lt;/span> more cases (&lt;span style="color:#66d9ef">with&lt;/span> breaks)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> default:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>code&lt;span style="color:#f92672">&amp;gt;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>For example, we can perform some action depending on which key is pressed. In the parentheses next to the switch, we specify keyboard_key, which is a built-in parameter that takes a value depending on which key is pressed. And then we describe each case. If the up key is pressed, we move the hero up, if down, then down, and so on&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>switch (keyboard_key)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> case vk_left:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> x &lt;span style="color:#f92672">-=&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> case vk_right:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> x &lt;span style="color:#f92672">+=&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> case vk_up:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> y &lt;span style="color:#f92672">-=&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> case vk_down:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> y &lt;span style="color:#f92672">+=&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>There may also be a default action in the case, it is performed if all other cases returned false.&lt;/p>
+&lt;h2 id="video">Video&lt;/h2>
+&lt;p>Coming Soon&lt;/p></content></item><item><title>Game Maker - Coordinates</title><link>https://mpostument.com/2022/11/04/coordinates/</link><pubDate>Fri, 04 Nov 2022 19:17:15 +0200</pubDate><guid>https://mpostument.com/2022/11/04/coordinates/</guid><description>Hello!
 Let&amp;rsquo;s consider how coordinates work in Game Maker.
 Room coordinates I will open the room (Room1) and if you move the mouse to the upper left corner, the coordinates x = 0, y = 0 will be there. If you move to the right/left, the x coordinate will change, and if you move up/down, the y coordinate will change.
 This is the basic information you need to know by coordinates.</description><content>&lt;p>Hello!&lt;/p>
