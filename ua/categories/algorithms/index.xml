@@ -249,7 +249,7 @@
 По модулю віднімаю від 10 значення цілі. |10 - 13|= 3. Та порівнює це з теперішнім найближчим числом (13-6=7). 3 менше за 7. А отже нове найближче число 10.&lt;/p>
 &lt;p>Залишився останній елемент дерева. Знову від цілі віднімаю значення з дерева |23 - 10| = 13. І порівнюю з теперішнім найближчим числом (13-10=3). 13 є більше 3, тому найближчим числом залишається 10. Більше елементів в дереві немає а отже найближчим числом до 13 являється 10.&lt;/p>
 &lt;p>Приклад розв&amp;rsquo;язку на golang&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-golang" data-lang="golang">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> (
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>

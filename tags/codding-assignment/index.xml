@@ -245,7 +245,7 @@ Do the same with the next element of the tree which is equal to 10.
 By the module, I subtract from the 10 values ​​that we are looking for. | 10 - 13 | = 3. And compares it with the current nearest number (13-6 = 7). 3 is less than 7. Hence, the new nearest number is 10.&lt;/p>
 &lt;p>The last element of a tree remained. Again, I subtract the value from the tree with goal number | 23 - 10 | = 13. And compare with the current nearest number (13-10 = 3). 13 is more than 3, so the nearest number remains 10. There are no more elements in the tree and therefore the closest number to 13 is 10.&lt;/p>
 &lt;p>An example of a solution to golang&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-golang" data-lang="golang">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> (
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
