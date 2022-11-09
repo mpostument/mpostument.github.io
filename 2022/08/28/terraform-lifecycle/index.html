@@ -10,20 +10,20 @@ newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of ne
 #<a href=https://mpostument.com/tags/beginner/>Beginner</a>&nbsp;
 #<a href=https://mpostument.com/tags/aws/>AWS</a>&nbsp;</span>
 <img src=https://mpostument.com/terraform/terraform-lifecycle.jpg class=post-cover alt="Terraform Lifecycle and Outputs" title="Cover Image"><div class=table-of-contents><h2>Table of Contents</h2><nav id=TableOfContents><ul><li><a href=#lifecycle>Lifecycle</a><ul><li><a href=#create_before_destroy>create_before_destroy</a></li><li><a href=#prevent_destroy>prevent_destroy</a></li></ul></li><li><a href=#ignore_changes>ignore_changes</a><ul><li><a href=#replace_triggered_by>replace_triggered_by</a></li></ul></li><li><a href=#depends-on>Depends On</a></li><li><a href=#todo-add-terraform-output>TODO: Add terraform output</a></li><li><a href=#outputs>Outputs</a></li><li><a href=#video>Video</a></li></ul></nav></div><div class=post-content><div><p><a href=https://mpostument.com/2022/07/26/terraform-install/ title="Part 1 - Terraform Install">Part 1 - Terraform Install</a><br><a href=https://mpostument.com/2022/07/28/terraform-basics/ title="Part 2 - Terraform Basics">Part 2 - Terraform Basics</a><br><a href=https://mpostument.com/2022/07/31/terraform-state/ title="Part 3 - Terraform State">Part 3 - Terraform State</a><br><a href=https://mpostument.com/2022/08/11/terraform-template/ title="Part 4 - Terraform Template">Part 4 - Terraform Template</a><br><a href=https://mpostument.com/2022/08/21/terraform-dynamic/ title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic</a></p><p>Hello!</p><p>In this post i will explain what is lifecycle, dependent_on and outputs in terraform.</p><h2 id=lifecycle>Lifecycle<a href=#lifecycle class=hanchor arialabel=Anchor>&#8983;</a></h2><h3 id=create_before_destroy>create_before_destroy<a href=#create_before_destroy class=hanchor arialabel=Anchor>&#8983;</a></h3><p>Lifecycle is a meta parameter supported by most resources. And with its help, you can control the behavior when creating/deleting resources.
-I will take the terraform ec2 creation code from one of the previous posts and add the lifecycle block to it. Inside of it I will specify <code>create_before_destroy = true</code>. Now, if I make changes that require recreating ec2, terraform will first create a new server and only then delete the old one.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_instance&#34;</span> <span style=color:#e6db74>&#34;foo&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>ami</span>                    = <span style=color:#e6db74>&#34;ami-0cff7528ff583bf9a&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>instance_type</span>          = <span style=color:#e6db74>&#34;t2.micro&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>subnet_id</span>              = <span style=color:#e6db74>&#34;subnet-222a93327f9a744ed&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>vpc_security_group_ids</span> = [<span style=color:#e6db74>&#34;sg-2220a119757753b6e&#34;</span>]
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>tags</span> = {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>Env</span> = <span style=color:#e6db74>&#34;Dev&#34;</span>
+I will take the terraform ec2 creation code from one of the previous posts and add the lifecycle block to it. Inside of it I will specify <code>create_before_destroy = true</code>. Now, if I make changes that require recreating ec2, terraform will first create a new server and only then delete the old one.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_instance&#34; &#34;foo&#34;</span> {
+</span></span><span style=display:flex><span>  ami                    <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;ami-0cff7528ff583bf9a&#34;</span>
+</span></span><span style=display:flex><span>  instance_type          <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;t2.micro&#34;</span>
+</span></span><span style=display:flex><span>  subnet_id              <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;subnet-222a93327f9a744ed&#34;</span>
+</span></span><span style=display:flex><span>  vpc_security_group_ids <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#34;sg-2220a119757753b6e&#34;</span>]
+</span></span><span style=display:flex><span>  tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    Env <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
 </span></span><span style=display:flex><span>  }
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>volume_tags</span> = {
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;Env&#34;</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
+</span></span><span style=display:flex><span>  volume_tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    &#34;Env&#34; <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>lifecycle</span> {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>create_before_destroy</span> = <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>lifecycle</span> {
+</span></span><span style=display:flex><span>    create_before_destroy <span style=color:#f92672>=</span> <span style=color:#66d9ef>true</span>
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>Plan: <span style=color:#ae81ff>1</span> to add, <span style=color:#ae81ff>0</span> to change, <span style=color:#ae81ff>1</span> to destroy.
@@ -44,8 +44,8 @@ I will take the terraform ec2 creation code from one of the previous posts and a
 </span></span><span style=display:flex><span>aws_instance.foo: Still destroying... <span style=color:#f92672>[</span>id<span style=color:#f92672>=</span>i-082a6b3816e202929, 20s elapsed<span style=color:#f92672>]</span>
 </span></span><span style=display:flex><span>aws_instance.foo: Still destroying... <span style=color:#f92672>[</span>id<span style=color:#f92672>=</span>i-082a6b3816e202929, 30s elapsed<span style=color:#f92672>]</span>
 </span></span><span style=display:flex><span>aws_instance.foo: Destruction complete after 31s
-</span></span></code></pre></div><h3 id=prevent_destroy>prevent_destroy<a href=#prevent_destroy class=hanchor arialabel=Anchor>&#8983;</a></h3><p>The next parameter is <code>prevent_destroy</code>. If it is specified, then terraform will not be able to delete the resource in which <code>prevent_destroy = true</code> is specified.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span>  <span style=color:#a6e22e>lifecycle</span> {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>prevent_destroy</span> = <span style=color:#66d9ef>true</span>
+</span></span></code></pre></div><h3 id=prevent_destroy>prevent_destroy<a href=#prevent_destroy class=hanchor arialabel=Anchor>&#8983;</a></h3><p>The next parameter is <code>prevent_destroy</code>. If it is specified, then terraform will not be able to delete the resource in which <code>prevent_destroy = true</code> is specified.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span>  <span style=color:#66d9ef>lifecycle</span> {
+</span></span><span style=display:flex><span>    prevent_destroy <span style=color:#f92672>=</span> <span style=color:#66d9ef>true</span>
 </span></span><span style=display:flex><span>  }
 </span></span></code></pre></div><p>I immediately get an error as it is not possible to delete the resource.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>terraform apply
 </span></span><span style=display:flex><span>aws_instance.foo: Refreshing state... <span style=color:#f92672>[</span>id<span style=color:#f92672>=</span>i-0c9601ce9bd144f5e<span style=color:#f92672>]</span>
@@ -57,9 +57,9 @@ I will take the terraform ec2 creation code from one of the previous posts and a
 </span></span><span style=display:flex><span>│ 
 </span></span><span style=display:flex><span>│ Resource aws_instance.foo has lifecycle.prevent_destroy set, but the plan calls <span style=color:#66d9ef>for</span> this resource to be destroyed. To avoid this error and <span style=color:#66d9ef>continue</span> with the plan, either disable lifecycle.prevent_destroy or reduce the
 </span></span><span style=display:flex><span>│ scope of the plan using the -target flag.
-</span></span></code></pre></div><h2 id=ignore_changes>ignore_changes<a href=#ignore_changes class=hanchor arialabel=Anchor>&#8983;</a></h2><p>The next parameter is <code>ignore_changes</code>. It receives a list of attributes which terraform should ignore. For example, a new version of the AMI for EC2 was released, but now i don&rsquo;t want to rebuild server with new AMI. In that case, I can tell terraform to ignore the AMI attribute</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span>  <span style=color:#a6e22e>lifecycle</span> {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>ignore_changes</span> = [
-</span></span><span style=display:flex><span>        <span style=color:#a6e22e>ami</span>
+</span></span></code></pre></div><h2 id=ignore_changes>ignore_changes<a href=#ignore_changes class=hanchor arialabel=Anchor>&#8983;</a></h2><p>The next parameter is <code>ignore_changes</code>. It receives a list of attributes which terraform should ignore. For example, a new version of the AMI for EC2 was released, but now i don&rsquo;t want to rebuild server with new AMI. In that case, I can tell terraform to ignore the AMI attribute</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span>  <span style=color:#66d9ef>lifecycle</span> {
+</span></span><span style=display:flex><span>    ignore_changes <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>ami</span>
 </span></span><span style=display:flex><span>    ]
 </span></span><span style=display:flex><span>  }
 </span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>terraform plan
@@ -68,9 +68,9 @@ I will take the terraform ec2 creation code from one of the previous posts and a
 </span></span><span style=display:flex><span>No changes. Your infrastructure matches the configuration.
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
-</span></span></code></pre></div><h3 id=replace_triggered_by>replace_triggered_by<a href=#replace_triggered_by class=hanchor arialabel=Anchor>&#8983;</a></h3><p>The last parameter is <code>replace_triggered_by</code>. It recreates the resource in case some attribute of resource has changed (Added in terraform version 1.2)</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span>  <span style=color:#a6e22e>lifecycle</span> {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>replace_triggered_by</span> = [
-</span></span><span style=display:flex><span>      <span style=color:#a6e22e>aws_instance</span>.<span style=color:#a6e22e>foo</span>
+</span></span></code></pre></div><h3 id=replace_triggered_by>replace_triggered_by<a href=#replace_triggered_by class=hanchor arialabel=Anchor>&#8983;</a></h3><p>The last parameter is <code>replace_triggered_by</code>. It recreates the resource in case some attribute of resource has changed (Added in terraform version 1.2)</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span>  <span style=color:#66d9ef>lifecycle</span> {
+</span></span><span style=display:flex><span>    replace_triggered_by <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>aws_instance</span>.<span style=color:#66d9ef>foo</span>
 </span></span><span style=display:flex><span>    ]
 </span></span><span style=display:flex><span>  }
 </span></span></code></pre></div><p>I will add a new resource that will generate a random string and specify it as a replace trigger.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>resource <span style=color:#e6db74>&#34;random_id&#34;</span> <span style=color:#e6db74>&#34;server&#34;</span> <span style=color:#f92672>{</span>
@@ -236,44 +236,44 @@ I will take the terraform ec2 creation code from one of the previous posts and a
 </span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>Plan: <span style=color:#ae81ff>2</span> to add, <span style=color:#ae81ff>0</span> to change, <span style=color:#ae81ff>2</span> to destroy.
-</span></span></code></pre></div><h2 id=depends-on>Depends On<a href=#depends-on class=hanchor arialabel=Anchor>&#8983;</a></h2><p><code>depends_on</code> is another meta parameter supported by most terraform resources. And it allows you to create resources in a certain sequence. For example, I want to create an ec2 server and a security group. And I can specify that the server should be created only after the security group has already been created. I can do this by specifying the <code>depends_on</code> parameter in the aws_instance resource.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_instance&#34;</span> <span style=color:#e6db74>&#34;foo&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>ami</span>                    = <span style=color:#e6db74>&#34;ami-0cff7528ff583bf9a&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>instance_type</span>          = <span style=color:#e6db74>&#34;t2.micro&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>subnet_id</span>              = <span style=color:#e6db74>&#34;subnet-222a93327f9a744ed&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>vpc_security_group_ids</span> = [<span style=color:#e6db74>&#34;sg-2220a119757753b6e&#34;</span>]
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>tags</span> = {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>Env</span> = <span style=color:#e6db74>&#34;Dev&#34;</span>
+</span></span></code></pre></div><h2 id=depends-on>Depends On<a href=#depends-on class=hanchor arialabel=Anchor>&#8983;</a></h2><p><code>depends_on</code> is another meta parameter supported by most terraform resources. And it allows you to create resources in a certain sequence. For example, I want to create an ec2 server and a security group. And I can specify that the server should be created only after the security group has already been created. I can do this by specifying the <code>depends_on</code> parameter in the aws_instance resource.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_instance&#34; &#34;foo&#34;</span> {
+</span></span><span style=display:flex><span>  ami                    <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;ami-0cff7528ff583bf9a&#34;</span>
+</span></span><span style=display:flex><span>  instance_type          <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;t2.micro&#34;</span>
+</span></span><span style=display:flex><span>  subnet_id              <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;subnet-222a93327f9a744ed&#34;</span>
+</span></span><span style=display:flex><span>  vpc_security_group_ids <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#34;sg-2220a119757753b6e&#34;</span>]
+</span></span><span style=display:flex><span>  tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    Env <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
 </span></span><span style=display:flex><span>  }
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>volume_tags</span> = {
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;Env&#34;</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
+</span></span><span style=display:flex><span>  volume_tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    &#34;Env&#34; <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>depends_on</span> = [
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>aws_security_group</span>.<span style=color:#a6e22e>test_sg</span>
+</span></span><span style=display:flex><span>  depends_on <span style=color:#f92672>=</span> [
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>aws_security_group</span>.<span style=color:#66d9ef>test_sg</span>
 </span></span><span style=display:flex><span>  ]
 </span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span><span style=color:#66d9ef>
-</span></span></span><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_security_group&#34;</span> <span style=color:#e6db74>&#34;test_sg&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>name</span>        = <span style=color:#e6db74>&#34;test-sg&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>description</span> = <span style=color:#e6db74>&#34;allow traffic to web app&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>vpc_id</span>      = <span style=color:#e6db74>&#34;vcp-123&#34;</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>dynamic</span> <span style=color:#e6db74>&#34;ingress&#34;</span> {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>for_each</span> = [<span style=color:#ae81ff>8080</span>, <span style=color:#ae81ff>443</span>, <span style=color:#ae81ff>22</span>, <span style=color:#ae81ff>80</span>, <span style=color:#ae81ff>3000</span>, <span style=color:#ae81ff>8082</span>]
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>content</span> {
-</span></span><span style=display:flex><span>      <span style=color:#a6e22e>from_port</span> = <span style=color:#a6e22e>ingress</span>.<span style=color:#a6e22e>value</span>
-</span></span><span style=display:flex><span>      <span style=color:#a6e22e>to_port</span>   = <span style=color:#a6e22e>ingress</span>.<span style=color:#a6e22e>value</span>
-</span></span><span style=display:flex><span>      <span style=color:#a6e22e>protocol</span>  = <span style=color:#e6db74>&#34;tcp&#34;</span>
-</span></span><span style=display:flex><span>      <span style=color:#a6e22e>cidr_blocks</span> = [
+</span></span><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_security_group&#34; &#34;test_sg&#34;</span> {
+</span></span><span style=display:flex><span>  name        <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;test-sg&#34;</span>
+</span></span><span style=display:flex><span>  description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;allow traffic to web app&#34;</span>
+</span></span><span style=display:flex><span>  vpc_id      <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;vcp-123&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>dynamic</span> <span style=color:#e6db74>&#34;ingress&#34;</span> {
+</span></span><span style=display:flex><span>    for_each <span style=color:#f92672>=</span> [<span style=color:#ae81ff>8080</span>, <span style=color:#ae81ff>443</span>, <span style=color:#ae81ff>22</span>, <span style=color:#ae81ff>80</span>, <span style=color:#ae81ff>3000</span>, <span style=color:#ae81ff>8082</span>]
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>content</span> {
+</span></span><span style=display:flex><span>      from_port <span style=color:#f92672>=</span> <span style=color:#66d9ef>ingress</span>.<span style=color:#66d9ef>value</span>
+</span></span><span style=display:flex><span>      to_port   <span style=color:#f92672>=</span> <span style=color:#66d9ef>ingress</span>.<span style=color:#66d9ef>value</span>
+</span></span><span style=display:flex><span>      protocol  <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;tcp&#34;</span>
+</span></span><span style=display:flex><span>      cidr_blocks <span style=color:#f92672>=</span> [
 </span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;0.0.0.0/0&#34;</span>
 </span></span><span style=display:flex><span>      ]
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>  }
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>egress</span> {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>from_port</span>   = <span style=color:#ae81ff>0</span>
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>to_port</span>     = <span style=color:#ae81ff>0</span>
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>protocol</span>    = <span style=color:#e6db74>&#34;-1&#34;</span>
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>cidr_blocks</span> = [<span style=color:#e6db74>&#34;0.0.0.0/0&#34;</span>]
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>egress</span> {
+</span></span><span style=display:flex><span>    from_port   <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>    to_port     <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>    protocol    <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;-1&#34;</span>
+</span></span><span style=display:flex><span>    cidr_blocks <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#34;0.0.0.0/0&#34;</span>]
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>Plan: <span style=color:#ae81ff>2</span> to add, <span style=color:#ae81ff>0</span> to change, <span style=color:#ae81ff>0</span> to destroy.
@@ -291,21 +291,21 @@ I will take the terraform ec2 creation code from one of the previous posts and a
 </span></span><span style=display:flex><span>aws_instance.foo: Creation complete after 15s <span style=color:#f92672>[</span>id<span style=color:#f92672>=</span>i-070da129fdd9d4c92<span style=color:#f92672>]</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>Apply complete! Resources: <span style=color:#ae81ff>2</span> added, <span style=color:#ae81ff>0</span> changed, <span style=color:#ae81ff>0</span> destroyed.
-</span></span></code></pre></div><h2 id=todo-add-terraform-output>TODO: Add terraform output<a href=#todo-add-terraform-output class=hanchor arialabel=Anchor>&#8983;</a></h2><h2 id=outputs>Outputs<a href=#outputs class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Outputs is similar to return in programming languages. It returns values ​​that will be printed to the console after terraform is executed, and these values ​​can also be used by other terraform code. Most often, this is used in modules when the child module transmits some values ​​to the parent module, or as a simple output to the terminal.</p><p>If terraform creates ec2 and after creation I want to display its IP address, then it can be done like this</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_instance&#34;</span> <span style=color:#e6db74>&#34;foo&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>ami</span>                    = <span style=color:#e6db74>&#34;ami-0cff7528ff583bf9a&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>instance_type</span>          = <span style=color:#e6db74>&#34;t2.micro&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>subnet_id</span>              = <span style=color:#e6db74>&#34;subnet-222a93327f9a744ed&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>vpc_security_group_ids</span> = [<span style=color:#e6db74>&#34;sg-2220a119757753b6e&#34;</span>]
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>tags</span> = {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>Env</span> = <span style=color:#e6db74>&#34;Dev&#34;</span>
+</span></span></code></pre></div><h2 id=todo-add-terraform-output>TODO: Add terraform output<a href=#todo-add-terraform-output class=hanchor arialabel=Anchor>&#8983;</a></h2><h2 id=outputs>Outputs<a href=#outputs class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Outputs is similar to return in programming languages. It returns values ​​that will be printed to the console after terraform is executed, and these values ​​can also be used by other terraform code. Most often, this is used in modules when the child module transmits some values ​​to the parent module, or as a simple output to the terminal.</p><p>If terraform creates ec2 and after creation I want to display its IP address, then it can be done like this</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_instance&#34; &#34;foo&#34;</span> {
+</span></span><span style=display:flex><span>  ami                    <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;ami-0cff7528ff583bf9a&#34;</span>
+</span></span><span style=display:flex><span>  instance_type          <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;t2.micro&#34;</span>
+</span></span><span style=display:flex><span>  subnet_id              <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;subnet-222a93327f9a744ed&#34;</span>
+</span></span><span style=display:flex><span>  vpc_security_group_ids <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#34;sg-2220a119757753b6e&#34;</span>]
+</span></span><span style=display:flex><span>  tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    Env <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
 </span></span><span style=display:flex><span>  }
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>volume_tags</span> = {
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;Env&#34;</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
+</span></span><span style=display:flex><span>  volume_tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    &#34;Env&#34; <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span><span style=color:#66d9ef>
-</span></span></span><span style=display:flex><span><span style=color:#66d9ef>output</span> <span style=color:#e6db74>&#34;instance_ip_addr&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>value</span> = <span style=color:#a6e22e>aws_instance</span>.<span style=color:#a6e22e>foo</span>.<span style=color:#a6e22e>private_ip</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>output</span> <span style=color:#e6db74>&#34;instance_ip_addr&#34;</span> {
+</span></span><span style=display:flex><span>  value <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_instance</span>.<span style=color:#66d9ef>foo</span>.<span style=color:#66d9ef>private_ip</span>
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>Plan: <span style=color:#ae81ff>1</span> to add, <span style=color:#ae81ff>0</span> to change, <span style=color:#ae81ff>0</span> to destroy.
 </span></span><span style=display:flex><span>

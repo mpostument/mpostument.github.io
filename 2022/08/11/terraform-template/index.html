@@ -14,17 +14,17 @@ newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of ne
 </span></span><span style=display:flex><span>/sbin/chkconfig --levels <span style=color:#ae81ff>235</span> httpd on
 </span></span><span style=display:flex><span>service httpd start
 </span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#34;&lt;h1&gt;Maksym Website&lt;/h1&gt;&#34;</span> &gt; /var/www/html/index.html
-</span></span></code></pre></div><p>This script will install httpd and create an html page. Now how can I use this file? I will take the terraform code from the previous article and add user_data to it.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_instance&#34;</span> <span style=color:#e6db74>&#34;foo&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>ami</span>                    = <span style=color:#e6db74>&#34;ami-0cff7528ff583bf9a&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>instance_type</span>          = <span style=color:#e6db74>&#34;t2.micro&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>subnet_id</span>              = <span style=color:#e6db74>&#34;subnet-222a93327f9a744ed&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>vpc_security_group_ids</span> = [<span style=color:#e6db74>&#34;sg-2220a119757753b6e&#34;</span>]
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>user_data</span>              = file(<span style=color:#e6db74>&#34;setup_httpd.sh&#34;</span>)
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>tags</span> = {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>Env</span> = <span style=color:#e6db74>&#34;Dev&#34;</span>
+</span></span></code></pre></div><p>This script will install httpd and create an html page. Now how can I use this file? I will take the terraform code from the previous article and add user_data to it.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_instance&#34; &#34;foo&#34;</span> {
+</span></span><span style=display:flex><span>  ami                    <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;ami-0cff7528ff583bf9a&#34;</span>
+</span></span><span style=display:flex><span>  instance_type          <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;t2.micro&#34;</span>
+</span></span><span style=display:flex><span>  subnet_id              <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;subnet-222a93327f9a744ed&#34;</span>
+</span></span><span style=display:flex><span>  vpc_security_group_ids <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#34;sg-2220a119757753b6e&#34;</span>]
+</span></span><span style=display:flex><span>  user_data              <span style=color:#f92672>=</span> <span style=color:#66d9ef>file</span>(<span style=color:#e6db74>&#34;setup_httpd.sh&#34;</span>)
+</span></span><span style=display:flex><span>  tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    Env <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
 </span></span><span style=display:flex><span>  }
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>volume_tags</span> = {
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;Env&#34;</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
+</span></span><span style=display:flex><span>  volume_tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    &#34;Env&#34; <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>And now I will start terraform. Once server is created I can check generated script in the AWS console.</p><p><img src=https://i.imgur.com/IaHlXOq.png alt=file></p><p>And if you open the IP address of the server in the browser, you will see this</p><p><img src=https://i.imgur.com/PekL5GA.png alt=file-website></p><h2 id=terraform-template>Terraform Template<a href=#terraform-template class=hanchor arialabel=Anchor>&#8983;</a></h2><p>But this file was static and if it is necessary to change, for example, the content of a web page, the file must be changed. Terraform provided method templatefile() that allows you to generate the content of the file dynamically. To do this, I will create a new file called `setup_httpd.sh.tpl&rsquo;, the content of file will be almost the same as in the previous one, but with one difference. In the last line, instead of the text Maksym Website, I use ${user} Website. Where ${user} is a parameter that terraform will replace with the appropriate value.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#75715e>#!/bin/bash
@@ -32,19 +32,19 @@ newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of ne
 </span></span><span style=display:flex><span>/sbin/chkconfig --levels <span style=color:#ae81ff>235</span> httpd on
 </span></span><span style=display:flex><span>service httpd start
 </span></span><span style=display:flex><span>echo <span style=color:#e6db74>&#34;&lt;h1&gt;</span><span style=color:#e6db74>${</span>user<span style=color:#e6db74>}</span><span style=color:#e6db74> Website&lt;/h1&gt;&#34;</span> &gt;/var/www/html/index.html
-</span></span></code></pre></div><p>You also need to change the terraform code itself. I will replace the file method with templatefile and add the user parameter in addition to the file itself.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_instance&#34;</span> <span style=color:#e6db74>&#34;foo&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>ami</span>                    = <span style=color:#e6db74>&#34;ami-0cff7528ff583bf9a&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>instance_type</span>          = <span style=color:#e6db74>&#34;t2.micro&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>subnet_id</span>              = <span style=color:#e6db74>&#34;subnet-222a93327f9a744ed&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>vpc_security_group_ids</span> = [<span style=color:#e6db74>&#34;sg-2220a119757753b6e&#34;</span>]
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>user_data</span> = templatefile(<span style=color:#e6db74>&#34;setup_httpd.sh.tpl&#34;</span>, {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>user</span> = <span style=color:#e6db74>&#34;Jhon&#34;</span>
+</span></span></code></pre></div><p>You also need to change the terraform code itself. I will replace the file method with templatefile and add the user parameter in addition to the file itself.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_instance&#34; &#34;foo&#34;</span> {
+</span></span><span style=display:flex><span>  ami                    <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;ami-0cff7528ff583bf9a&#34;</span>
+</span></span><span style=display:flex><span>  instance_type          <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;t2.micro&#34;</span>
+</span></span><span style=display:flex><span>  subnet_id              <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;subnet-222a93327f9a744ed&#34;</span>
+</span></span><span style=display:flex><span>  vpc_security_group_ids <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#34;sg-2220a119757753b6e&#34;</span>]
+</span></span><span style=display:flex><span>  user_data <span style=color:#f92672>=</span> <span style=color:#66d9ef>templatefile</span>(<span style=color:#e6db74>&#34;setup_httpd.sh.tpl&#34;</span>, {
+</span></span><span style=display:flex><span>    user <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Jhon&#34;</span>
 </span></span><span style=display:flex><span>  })
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>tags</span> = {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>Env</span> = <span style=color:#e6db74>&#34;Dev&#34;</span>
+</span></span><span style=display:flex><span>  tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    Env <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
 </span></span><span style=display:flex><span>  }
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>volume_tags</span> = {
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;Env&#34;</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
+</span></span><span style=display:flex><span>  volume_tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    &#34;Env&#34; <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>Just like the previous time, I will look at the generated script</p><p><img src=https://i.imgur.com/9O5CJQT.png alt=templatefile></p><p>And open the IP address of the server</p><p><img src=https://i.imgur.com/p7GfshK.png alt=template-site></p><h2 id=video>Video<a href=#video class=hanchor arialabel=Anchor>&#8983;</a></h2><div style=position:relative;padding-bottom:56.25%;height:0;overflow:hidden><iframe src=https://www.youtube.com/embed/Dl_Jdo3hMZM style=position:absolute;top:0;left:0;width:100%;height:100%;border:0 allowfullscreen title="YouTube Video"></iframe></div></div></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button previous"><a href=https://mpostument.com/2022/08/21/terraform-dynamic/><span class=button__icon>←</span>

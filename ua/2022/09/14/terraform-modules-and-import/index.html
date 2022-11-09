@@ -9,16 +9,16 @@ newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of ne
 #<a href=https://mpostument.com/ua/tags/hashicorp/>HashiCorp</a>&nbsp;
 #<a href=https://mpostument.com/ua/tags/beginner/>Beginner</a>&nbsp;
 #<a href=https://mpostument.com/ua/tags/aws/>AWS</a>&nbsp;</span>
-<img src=https://mpostument.com/terraform/terraform-modules-and-import.jpg class=post-cover alt="Terraform Modules and Import" title="Cover Image"><div class=post-content><div><p><a href=https://mpostument.com/ua/2022/07/26/terraform-install/ title="Part 1 - Terraform Install">Part 1 - Terraform Install</a><br><a href=https://mpostument.com/ua/2022/07/28/terraform-basics/ title="Part 2 - Terraform Basics">Part 2 - Terraform Basics</a><br><a href=https://mpostument.com/ua/2022/07/31/terraform-state/ title="Part 3 - Terraform State">Part 3 - Terraform State</a><br><a href=https://mpostument.com/ua/2022/08/11/terraform-template/ title="Part 4 - Terraform Template">Part 4 - Terraform Template</a><br><a href=https://mpostument.com/ua/2022/08/22/terraform-dynamic/ title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic</a><br><a href=https://mpostument.com/ua/2022/08/28/terraform-lifecycle/ title="Part 6 - Terraform Lifecycle">Part 6 - Terraform Lifecycle</a><br><a href=https://mpostument.com/ua/2022/09/09/terraform-variables/ title="Part 7 - Terraform Variables">Part 7 - Terraform Lifecycle</a><br><a href=https://mpostument.com/ua/2022/09/11/terraform-condition-and-lookup/ title="Part 8 - Terraform Condition and Lookup">Part 8 - Terraform Condition and Lookup</a></p><p>Привіт!</p><p>Сьогодні подивимось як можна імпортувати існуючі ресурси в terraform і як організувати код в модуль для зручного перевикористання.</p><h2 id=import>Import<a href=#import class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Буває ситуація коли ресурси вже створенні і ними потрібно почати управляти за допомогою terraform. Або ж ресурс був видалений з terraform state і потрібно його знову туди додати. Це дуже просто за допомогою <code>terraform import</code>.</p><p>Є код який створює ec2 сервер, але сервер вже існує</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_instance&#34;</span> <span style=color:#e6db74>&#34;foo&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>ami</span>                    = data.<span style=color:#a6e22e>aws_ami</span>.<span style=color:#a6e22e>amzn</span>.<span style=color:#a6e22e>id</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>instance_type</span>          = var.<span style=color:#a6e22e>instance_type</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>subnet_id</span>              = <span style=color:#e6db74>&#34;subnet-db73f0ac&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>vpc_security_group_ids</span> = [<span style=color:#e6db74>&#34;sg-b04b8cd4&#34;</span>]
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>tags</span> = {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>Env</span> = <span style=color:#e6db74>&#34;Dev&#34;</span>
+<img src=https://mpostument.com/terraform/terraform-modules-and-import.jpg class=post-cover alt="Terraform Modules and Import" title="Cover Image"><div class=post-content><div><p><a href=https://mpostument.com/ua/2022/07/26/terraform-install/ title="Part 1 - Terraform Install">Part 1 - Terraform Install</a><br><a href=https://mpostument.com/ua/2022/07/28/terraform-basics/ title="Part 2 - Terraform Basics">Part 2 - Terraform Basics</a><br><a href=https://mpostument.com/ua/2022/07/31/terraform-state/ title="Part 3 - Terraform State">Part 3 - Terraform State</a><br><a href=https://mpostument.com/ua/2022/08/11/terraform-template/ title="Part 4 - Terraform Template">Part 4 - Terraform Template</a><br><a href=https://mpostument.com/ua/2022/08/22/terraform-dynamic/ title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic</a><br><a href=https://mpostument.com/ua/2022/08/28/terraform-lifecycle/ title="Part 6 - Terraform Lifecycle">Part 6 - Terraform Lifecycle</a><br><a href=https://mpostument.com/ua/2022/09/09/terraform-variables/ title="Part 7 - Terraform Variables">Part 7 - Terraform Lifecycle</a><br><a href=https://mpostument.com/ua/2022/09/11/terraform-condition-and-lookup/ title="Part 8 - Terraform Condition and Lookup">Part 8 - Terraform Condition and Lookup</a></p><p>Привіт!</p><p>Сьогодні подивимось як можна імпортувати існуючі ресурси в terraform і як організувати код в модуль для зручного перевикористання.</p><h2 id=import>Import<a href=#import class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Буває ситуація коли ресурси вже створенні і ними потрібно почати управляти за допомогою terraform. Або ж ресурс був видалений з terraform state і потрібно його знову туди додати. Це дуже просто за допомогою <code>terraform import</code>.</p><p>Є код який створює ec2 сервер, але сервер вже існує</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_instance&#34; &#34;foo&#34;</span> {
+</span></span><span style=display:flex><span>  ami                    <span style=color:#f92672>=</span> <span style=color:#66d9ef>data</span>.<span style=color:#66d9ef>aws_ami</span>.<span style=color:#66d9ef>amzn</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>  instance_type          <span style=color:#f92672>=</span> <span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>instance_type</span>
+</span></span><span style=display:flex><span>  subnet_id              <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;subnet-db73f0ac&#34;</span>
+</span></span><span style=display:flex><span>  vpc_security_group_ids <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#34;sg-b04b8cd4&#34;</span>]
+</span></span><span style=display:flex><span>  tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    Env <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
 </span></span><span style=display:flex><span>  }
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>volume_tags</span> = {
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;Env&#34;</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
+</span></span><span style=display:flex><span>  volume_tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    &#34;Env&#34; <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>Якщо запустити terraform то сервер буде створено ще один раз</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ terraform plan
@@ -171,108 +171,108 @@ newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of ne
 </span></span><span style=display:flex><span>No changes. Your infrastructure matches the configuration.
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
-</span></span></code></pre></div><h2 id=modules>Modules<a href=#modules class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Модуль дозволяє об&rsquo;єднати декілька terraform ресурсів в одну абстракцію для зручного повторного використання. Візьму код з одного з попередніх постів який створює сервер так security group. І припустимо що потрібно створити ще 5 схожих серверів та security group. Звичайно може 5 раз скопіювати цей код і поміняти значення параметрів, а можна його параметризувати то створити модуль.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_instance&#34;</span> <span style=color:#e6db74>&#34;foo&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>ami</span>                    = data.<span style=color:#a6e22e>aws_ami</span>.<span style=color:#a6e22e>amzn</span>.<span style=color:#a6e22e>id</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>instance_type</span>          = var.<span style=color:#a6e22e>instance_type</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>subnet_id</span>              = <span style=color:#e6db74>&#34;subnet-db73f0ac&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>vpc_security_group_ids</span> = [<span style=color:#a6e22e>aws_security_group</span>.<span style=color:#a6e22e>test_sg</span>.<span style=color:#a6e22e>id</span>]
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>tags</span> = {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>Env</span> = <span style=color:#e6db74>&#34;Dev&#34;</span>
+</span></span></code></pre></div><h2 id=modules>Modules<a href=#modules class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Модуль дозволяє об&rsquo;єднати декілька terraform ресурсів в одну абстракцію для зручного повторного використання. Візьму код з одного з попередніх постів який створює сервер так security group. І припустимо що потрібно створити ще 5 схожих серверів та security group. Звичайно може 5 раз скопіювати цей код і поміняти значення параметрів, а можна його параметризувати то створити модуль.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_instance&#34; &#34;foo&#34;</span> {
+</span></span><span style=display:flex><span>  ami                    <span style=color:#f92672>=</span> <span style=color:#66d9ef>data</span>.<span style=color:#66d9ef>aws_ami</span>.<span style=color:#66d9ef>amzn</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>  instance_type          <span style=color:#f92672>=</span> <span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>instance_type</span>
+</span></span><span style=display:flex><span>  subnet_id              <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;subnet-db73f0ac&#34;</span>
+</span></span><span style=display:flex><span>  vpc_security_group_ids <span style=color:#f92672>=</span> [<span style=color:#66d9ef>aws_security_group</span>.<span style=color:#66d9ef>test_sg</span>.<span style=color:#66d9ef>id</span>]
+</span></span><span style=display:flex><span>  tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    Env <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
 </span></span><span style=display:flex><span>  }
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>volume_tags</span> = {
-</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;Env&#34;</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
+</span></span><span style=display:flex><span>  volume_tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    &#34;Env&#34; <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Dev&#34;</span>
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span><span style=color:#66d9ef>
-</span></span></span><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_security_group&#34;</span> <span style=color:#e6db74>&#34;test_sg&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>name</span>        = <span style=color:#e6db74>&#34;test-sg&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>description</span> = <span style=color:#e6db74>&#34;allow traffic to web app&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>vpc_id</span>      = <span style=color:#e6db74>&#34;vcp-123&#34;</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>dynamic</span> <span style=color:#e6db74>&#34;ingress&#34;</span> {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>for_each</span> = [<span style=color:#ae81ff>8080</span>, <span style=color:#ae81ff>443</span>, <span style=color:#ae81ff>22</span>, <span style=color:#ae81ff>80</span>, <span style=color:#ae81ff>3000</span>, <span style=color:#ae81ff>8082</span>]
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>content</span> {
-</span></span><span style=display:flex><span>      <span style=color:#a6e22e>from_port</span> = <span style=color:#a6e22e>ingress</span>.<span style=color:#a6e22e>value</span>
-</span></span><span style=display:flex><span>      <span style=color:#a6e22e>to_port</span>   = <span style=color:#a6e22e>ingress</span>.<span style=color:#a6e22e>value</span>
-</span></span><span style=display:flex><span>      <span style=color:#a6e22e>protocol</span>  = <span style=color:#e6db74>&#34;tcp&#34;</span>
-</span></span><span style=display:flex><span>      <span style=color:#a6e22e>cidr_blocks</span> = [
+</span></span><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_security_group&#34; &#34;test_sg&#34;</span> {
+</span></span><span style=display:flex><span>  name        <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;test-sg&#34;</span>
+</span></span><span style=display:flex><span>  description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;allow traffic to web app&#34;</span>
+</span></span><span style=display:flex><span>  vpc_id      <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;vcp-123&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>dynamic</span> <span style=color:#e6db74>&#34;ingress&#34;</span> {
+</span></span><span style=display:flex><span>    for_each <span style=color:#f92672>=</span> [<span style=color:#ae81ff>8080</span>, <span style=color:#ae81ff>443</span>, <span style=color:#ae81ff>22</span>, <span style=color:#ae81ff>80</span>, <span style=color:#ae81ff>3000</span>, <span style=color:#ae81ff>8082</span>]
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>content</span> {
+</span></span><span style=display:flex><span>      from_port <span style=color:#f92672>=</span> <span style=color:#66d9ef>ingress</span>.<span style=color:#66d9ef>value</span>
+</span></span><span style=display:flex><span>      to_port   <span style=color:#f92672>=</span> <span style=color:#66d9ef>ingress</span>.<span style=color:#66d9ef>value</span>
+</span></span><span style=display:flex><span>      protocol  <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;tcp&#34;</span>
+</span></span><span style=display:flex><span>      cidr_blocks <span style=color:#f92672>=</span> [
 </span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;0.0.0.0/0&#34;</span>
 </span></span><span style=display:flex><span>      ]
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>  }
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>egress</span> {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>from_port</span>   = <span style=color:#ae81ff>0</span>
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>to_port</span>     = <span style=color:#ae81ff>0</span>
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>protocol</span>    = <span style=color:#e6db74>&#34;-1&#34;</span>
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>cidr_blocks</span> = [<span style=color:#e6db74>&#34;0.0.0.0/0&#34;</span>]
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>egress</span> {
+</span></span><span style=display:flex><span>    from_port   <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>    to_port     <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>    protocol    <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;-1&#34;</span>
+</span></span><span style=display:flex><span>    cidr_blocks <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#34;0.0.0.0/0&#34;</span>]
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>Для початку потрібно максимально параметризувати. Для security_group я створю два параметри vpc i інша зі списком портів які мають бути відкриті. Для сервера буде чотири параметри це ami, subnet, instance_type i security group. І один загальний параметр який буде називатись prefix. він потрібен для того щоб створювати різні назви для ресурсів, а можна і просто зробити параметр name який буде задавати для всього назву</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;instance_type&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>default</span>     = <span style=color:#e6db74>&#34;t2.micro&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>description</span> = <span style=color:#e6db74>&#34;Instance type for test instance&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>type</span>        = <span style=color:#a6e22e>string</span>
+</span></span></code></pre></div><p>Для початку потрібно максимально параметризувати. Для security_group я створю два параметри vpc i інша зі списком портів які мають бути відкриті. Для сервера буде чотири параметри це ami, subnet, instance_type i security group. І один загальний параметр який буде називатись prefix. він потрібен для того щоб створювати різні назви для ресурсів, а можна і просто зробити параметр name який буде задавати для всього назву</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;instance_type&#34;</span> {
+</span></span><span style=display:flex><span>  default     <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;t2.micro&#34;</span>
+</span></span><span style=display:flex><span>  description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Instance type for test instance&#34;</span>
+</span></span><span style=display:flex><span>  type        <span style=color:#f92672>=</span> <span style=color:#66d9ef>string</span>
 </span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span><span style=color:#66d9ef>
-</span></span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;subnet_id&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>description</span> = <span style=color:#e6db74>&#34;Subnet id where server will be created&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>type</span>        = <span style=color:#a6e22e>string</span>
-</span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span><span style=color:#66d9ef>
-</span></span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;security_groups&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>description</span> = <span style=color:#e6db74>&#34;List of sg for instance&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>type</span>        = list(<span style=color:#a6e22e>string</span>)
-</span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span><span style=color:#66d9ef>
-</span></span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;ports_list&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>description</span> = <span style=color:#e6db74>&#34;List of port which should be open&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>type</span>        = list(<span style=color:#a6e22e>number</span>)
-</span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span><span style=color:#66d9ef>
-</span></span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;ami_id&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>description</span> = <span style=color:#e6db74>&#34;Id of ami which should be used for instance&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>type</span>        = <span style=color:#a6e22e>string</span>
-</span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span><span style=color:#66d9ef>
-</span></span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;vpc_id&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>description</span> = <span style=color:#e6db74>&#34;Id of vpc where sg will be created&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>type</span>        = <span style=color:#a6e22e>string</span>
-</span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span><span style=color:#66d9ef>
-</span></span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;prefix&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>description</span> = <span style=color:#e6db74>&#34;Prefix to be added to all created resources&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>type</span>        = <span style=color:#a6e22e>string</span>
-</span></span><span style=display:flex><span>}
-</span></span></code></pre></div><p>І в самому коді вкажемо використовувати ці параметри</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_instance&#34;</span> <span style=color:#e6db74>&#34;foo&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>ami</span>                    = var.<span style=color:#a6e22e>ami_id</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>instance_type</span>          = var.<span style=color:#a6e22e>instance_type</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>subnet_id</span>              = var.<span style=color:#a6e22e>subnet_id</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>vpc_security_group_ids</span> = concat(var.<span style=color:#a6e22e>security_groups</span>, [<span style=color:#a6e22e>aws_security_group</span>.<span style=color:#a6e22e>test_sg</span>.<span style=color:#a6e22e>id</span>])
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>tags</span> = {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>Name</span> = <span style=color:#e6db74>&#34;</span><span style=color:#e6db74>${</span>var.<span style=color:#a6e22e>prefix</span><span style=color:#e6db74>}</span><span style=color:#e6db74>-common-instance&#34;</span>
-</span></span><span style=display:flex><span>  }
-</span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span><span style=color:#66d9ef>
-</span></span></span><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_security_group&#34;</span> <span style=color:#e6db74>&#34;test_sg&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>name</span>        = <span style=color:#e6db74>&#34;</span><span style=color:#e6db74>${</span>var.<span style=color:#a6e22e>prefix</span><span style=color:#e6db74>}</span><span style=color:#e6db74>-common-sg&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>description</span> = <span style=color:#e6db74>&#34;allow traffic to </span><span style=color:#e6db74>${</span>var.<span style=color:#a6e22e>prefix</span><span style=color:#e6db74>}</span><span style=color:#e6db74>-common-instance&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>vpc_id</span>      = var.<span style=color:#a6e22e>vpc_id</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>dynamic</span> <span style=color:#e6db74>&#34;ingress&#34;</span> {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>for_each</span> = var.<span style=color:#a6e22e>ports_list</span>
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>content</span> {
-</span></span><span style=display:flex><span>      <span style=color:#a6e22e>from_port</span> = <span style=color:#a6e22e>ingress</span>.<span style=color:#a6e22e>value</span>
-</span></span><span style=display:flex><span>      <span style=color:#a6e22e>to_port</span>   = <span style=color:#a6e22e>ingress</span>.<span style=color:#a6e22e>value</span>
-</span></span><span style=display:flex><span>      <span style=color:#a6e22e>protocol</span>  = <span style=color:#e6db74>&#34;tcp&#34;</span>
-</span></span><span style=display:flex><span>      <span style=color:#a6e22e>cidr_blocks</span> = [
+</span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;subnet_id&#34;</span> {
+</span></span><span style=display:flex><span>  description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Subnet id where server will be created&#34;</span>
+</span></span><span style=display:flex><span>  type        <span style=color:#f92672>=</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;security_groups&#34;</span> {
+</span></span><span style=display:flex><span>  description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;List of sg for instance&#34;</span>
+</span></span><span style=display:flex><span>  type        <span style=color:#f92672>=</span> <span style=color:#66d9ef>list</span>(<span style=color:#66d9ef>string</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;ports_list&#34;</span> {
+</span></span><span style=display:flex><span>  description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;List of port which should be open&#34;</span>
+</span></span><span style=display:flex><span>  type        <span style=color:#f92672>=</span> <span style=color:#66d9ef>list</span>(<span style=color:#66d9ef>number</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;ami_id&#34;</span> {
+</span></span><span style=display:flex><span>  description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Id of ami which should be used for instance&#34;</span>
+</span></span><span style=display:flex><span>  type        <span style=color:#f92672>=</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;vpc_id&#34;</span> {
+</span></span><span style=display:flex><span>  description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Id of vpc where sg will be created&#34;</span>
+</span></span><span style=display:flex><span>  type        <span style=color:#f92672>=</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>variable</span> <span style=color:#e6db74>&#34;prefix&#34;</span> {
+</span></span><span style=display:flex><span>  description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;Prefix to be added to all created resources&#34;</span>
+</span></span><span style=display:flex><span>  type        <span style=color:#f92672>=</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>І в самому коді вкажемо використовувати ці параметри</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_instance&#34; &#34;foo&#34;</span> {
+</span></span><span style=display:flex><span>  ami                    <span style=color:#f92672>=</span> <span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>ami_id</span>
+</span></span><span style=display:flex><span>  instance_type          <span style=color:#f92672>=</span> <span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>instance_type</span>
+</span></span><span style=display:flex><span>  subnet_id              <span style=color:#f92672>=</span> <span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>subnet_id</span>
+</span></span><span style=display:flex><span>  vpc_security_group_ids <span style=color:#f92672>=</span> <span style=color:#66d9ef>concat</span>(<span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>security_groups</span>, [<span style=color:#66d9ef>aws_security_group</span>.<span style=color:#66d9ef>test_sg</span>.<span style=color:#66d9ef>id</span>])
+</span></span><span style=display:flex><span>  tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    Name <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${var.prefix}-common-instance&#34;</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_security_group&#34; &#34;test_sg&#34;</span> {
+</span></span><span style=display:flex><span>  name        <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${var.prefix}-common-sg&#34;</span>
+</span></span><span style=display:flex><span>  description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;allow traffic to ${var.prefix}-common-instance&#34;</span>
+</span></span><span style=display:flex><span>  vpc_id      <span style=color:#f92672>=</span> <span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>vpc_id</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>dynamic</span> <span style=color:#e6db74>&#34;ingress&#34;</span> {
+</span></span><span style=display:flex><span>    for_each <span style=color:#f92672>=</span> <span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>ports_list</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>content</span> {
+</span></span><span style=display:flex><span>      from_port <span style=color:#f92672>=</span> <span style=color:#66d9ef>ingress</span>.<span style=color:#66d9ef>value</span>
+</span></span><span style=display:flex><span>      to_port   <span style=color:#f92672>=</span> <span style=color:#66d9ef>ingress</span>.<span style=color:#66d9ef>value</span>
+</span></span><span style=display:flex><span>      protocol  <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;tcp&#34;</span>
+</span></span><span style=display:flex><span>      cidr_blocks <span style=color:#f92672>=</span> [
 </span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;0.0.0.0/0&#34;</span>
 </span></span><span style=display:flex><span>      ]
 </span></span><span style=display:flex><span>    }
 </span></span><span style=display:flex><span>  }
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>egress</span> {
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>from_port</span>   = <span style=color:#ae81ff>0</span>
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>to_port</span>     = <span style=color:#ae81ff>0</span>
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>protocol</span>    = <span style=color:#e6db74>&#34;-1&#34;</span>
-</span></span><span style=display:flex><span>    <span style=color:#a6e22e>cidr_blocks</span> = [<span style=color:#e6db74>&#34;0.0.0.0/0&#34;</span>]
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>egress</span> {
+</span></span><span style=display:flex><span>    from_port   <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>    to_port     <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>    protocol    <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;-1&#34;</span>
+</span></span><span style=display:flex><span>    cidr_blocks <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#34;0.0.0.0/0&#34;</span>]
 </span></span><span style=display:flex><span>  }
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>Тепер що залишилось це перенести це в окрему теку і використати як модуль. Я створю теку modules в які створю ще одну common_server в яку переміщу створений код.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ tree modules
@@ -282,15 +282,15 @@ newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of ne
 </span></span><span style=display:flex><span>    └── variables.tf
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#ae81ff>1</span> directory, <span style=color:#ae81ff>2</span> files
-</span></span></code></pre></div><p>Тепер я можу створити новий terraform файл(main.tf) і вказати використовувати модуль</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#66d9ef>module</span> <span style=color:#e6db74>&#34;common_server&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>source</span>          = <span style=color:#e6db74>&#34;./modules/common_server&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>ami_id</span>          = data.<span style=color:#a6e22e>aws_ami</span>.<span style=color:#a6e22e>amzn</span>.<span style=color:#a6e22e>id</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>security_groups</span> = [<span style=color:#e6db74>&#34;sg-b04b8cd4&#34;</span>]
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>vpc_id</span>          = <span style=color:#e6db74>&#34;vpc-e5543380&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>subnet_id</span>       = <span style=color:#e6db74>&#34;subnet-5f70bf74&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>ports_list</span>      = [<span style=color:#ae81ff>80</span>, <span style=color:#ae81ff>443</span>]
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>prefix</span>          = <span style=color:#e6db74>&#34;maksym&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>instance_type</span>   = <span style=color:#e6db74>&#34;t2.micro&#34;</span>
+</span></span></code></pre></div><p>Тепер я можу створити новий terraform файл(main.tf) і вказати використовувати модуль</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#66d9ef>module</span> <span style=color:#e6db74>&#34;common_server&#34;</span> {
+</span></span><span style=display:flex><span>  source          <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;./modules/common_server&#34;</span>
+</span></span><span style=display:flex><span>  ami_id          <span style=color:#f92672>=</span> <span style=color:#66d9ef>data</span>.<span style=color:#66d9ef>aws_ami</span>.<span style=color:#66d9ef>amzn</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>  security_groups <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#34;sg-b04b8cd4&#34;</span>]
+</span></span><span style=display:flex><span>  vpc_id          <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;vpc-e5543380&#34;</span>
+</span></span><span style=display:flex><span>  subnet_id       <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;subnet-5f70bf74&#34;</span>
+</span></span><span style=display:flex><span>  ports_list      <span style=color:#f92672>=</span> [<span style=color:#ae81ff>80</span>, <span style=color:#ae81ff>443</span>]
+</span></span><span style=display:flex><span>  prefix          <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;maksym&#34;</span>
+</span></span><span style=display:flex><span>  instance_type   <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;t2.micro&#34;</span>
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>Якщо я одразу запущу terraform то отримаю помилку</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ terraform plan
 </span></span><span style=display:flex><span>╷
@@ -506,26 +506,26 @@ newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of ne
 </span></span><span style=display:flex><span>    <span style=color:#f92672>}</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>Plan: <span style=color:#ae81ff>2</span> to add, <span style=color:#ae81ff>0</span> to change, <span style=color:#ae81ff>0</span> to destroy.
-</span></span></code></pre></div><p>Тепер щоб створити декілька версії серверів потрібно просто скопіювати виклик модуля і змінити параметри.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-terraform data-lang=terraform><span style=display:flex><span><span style=color:#66d9ef>module</span> <span style=color:#e6db74>&#34;common_server&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>source</span>          = <span style=color:#e6db74>&#34;./modules/common_server&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>ami_id</span>          = data.<span style=color:#a6e22e>aws_ami</span>.<span style=color:#a6e22e>amzn</span>.<span style=color:#a6e22e>id</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>security_groups</span> = [<span style=color:#e6db74>&#34;sg-b04b8cd4&#34;</span>]
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>vpc_id</span>          = <span style=color:#e6db74>&#34;vpc-e5543380&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>subnet_id</span>       = <span style=color:#e6db74>&#34;subnet-5f70bf74&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>ports_list</span>      = [<span style=color:#ae81ff>80</span>, <span style=color:#ae81ff>443</span>]
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>prefix</span>          = <span style=color:#e6db74>&#34;maksym&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>instance_type</span>   = <span style=color:#e6db74>&#34;t2.micro&#34;</span>
+</span></span></code></pre></div><p>Тепер щоб створити декілька версії серверів потрібно просто скопіювати виклик модуля і змінити параметри.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#66d9ef>module</span> <span style=color:#e6db74>&#34;common_server&#34;</span> {
+</span></span><span style=display:flex><span>  source          <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;./modules/common_server&#34;</span>
+</span></span><span style=display:flex><span>  ami_id          <span style=color:#f92672>=</span> <span style=color:#66d9ef>data</span>.<span style=color:#66d9ef>aws_ami</span>.<span style=color:#66d9ef>amzn</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>  security_groups <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#34;sg-b04b8cd4&#34;</span>]
+</span></span><span style=display:flex><span>  vpc_id          <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;vpc-e5543380&#34;</span>
+</span></span><span style=display:flex><span>  subnet_id       <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;subnet-5f70bf74&#34;</span>
+</span></span><span style=display:flex><span>  ports_list      <span style=color:#f92672>=</span> [<span style=color:#ae81ff>80</span>, <span style=color:#ae81ff>443</span>]
+</span></span><span style=display:flex><span>  prefix          <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;maksym&#34;</span>
+</span></span><span style=display:flex><span>  instance_type   <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;t2.micro&#34;</span>
 </span></span><span style=display:flex><span>}
-</span></span><span style=display:flex><span><span style=color:#66d9ef>
-</span></span></span><span style=display:flex><span><span style=color:#66d9ef>module</span> <span style=color:#e6db74>&#34;appserver&#34;</span> {
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>source</span>          = <span style=color:#e6db74>&#34;./modules/common_server&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>ami_id</span>          = data.<span style=color:#a6e22e>aws_ami</span>.<span style=color:#a6e22e>amzn</span>.<span style=color:#a6e22e>id</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>security_groups</span> = [<span style=color:#e6db74>&#34;sg-b04a9dc5&#34;</span>]
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>vpc_id</span>          = <span style=color:#e6db74>&#34;vpc-e5543380&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>subnet_id</span>       = <span style=color:#e6db74>&#34;subnet-5f70bf74&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>ports_list</span>      = [<span style=color:#ae81ff>80</span>, <span style=color:#ae81ff>443</span>, <span style=color:#ae81ff>9090</span>, <span style=color:#ae81ff>8888</span>]
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>prefix</span>          = <span style=color:#e6db74>&#34;app&#34;</span>
-</span></span><span style=display:flex><span>  <span style=color:#a6e22e>instance_type</span>   = <span style=color:#e6db74>&#34;m5.large&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>module</span> <span style=color:#e6db74>&#34;appserver&#34;</span> {
+</span></span><span style=display:flex><span>  source          <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;./modules/common_server&#34;</span>
+</span></span><span style=display:flex><span>  ami_id          <span style=color:#f92672>=</span> <span style=color:#66d9ef>data</span>.<span style=color:#66d9ef>aws_ami</span>.<span style=color:#66d9ef>amzn</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>  security_groups <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#34;sg-b04a9dc5&#34;</span>]
+</span></span><span style=display:flex><span>  vpc_id          <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;vpc-e5543380&#34;</span>
+</span></span><span style=display:flex><span>  subnet_id       <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;subnet-5f70bf74&#34;</span>
+</span></span><span style=display:flex><span>  ports_list      <span style=color:#f92672>=</span> [<span style=color:#ae81ff>80</span>, <span style=color:#ae81ff>443</span>, <span style=color:#ae81ff>9090</span>, <span style=color:#ae81ff>8888</span>]
+</span></span><span style=display:flex><span>  prefix          <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;app&#34;</span>
+</span></span><span style=display:flex><span>  instance_type   <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;m5.large&#34;</span>
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>Модуль не обов&rsquo;язково має знаходить на файловій системі щоб його використовувати, як source можна вказати і посилання на source control як github чи на <a href=https://registry.terraform.io/>terraform registry</a> і модуль буде автоматично завантажено.</p><h2 id=modules-import>Modules import<a href=#modules-import class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Тепер якщо спробувати імпортувати ресурс так як ми робили на початку не вийде тому що тепер ресурси мають інші назви. Наприклад aws_instance до модуля відображався як <code>aws_instance.foo</code> тепер ж нове посилання буде <code>module.common_server.aws_instance.foo</code>. Відповідно щоб імпортувати цей самий сервер що спочатку команда буде виглядати як <code>terraform import module.common_server.aws_instance.foo i-0ea46560d61c09724</code>.</p><div style=position:relative;padding-bottom:56.25%;height:0;overflow:hidden><iframe src=https://www.youtube.com/embed/uCapjyzxJBo style=position:absolute;top:0;left:0;width:100%;height:100%;border:0 allowfullscreen title="YouTube Video"></iframe></div></div></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button previous"><a href=https://mpostument.com/ua/2022/09/19/manage-ansible-versions-with-pyenv/><span class=button__icon>←</span>
 <span class=button__text>Manage Ansible Versions With pyenv</span></a></span>
