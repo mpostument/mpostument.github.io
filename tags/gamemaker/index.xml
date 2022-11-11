@@ -42,12 +42,14 @@ Arrays can contain many elements and then can be one-dimensional or multidimensi
 &lt;p>To display a two-dimensional array, two cycles also be required. And everything else is the same as with one-dimensional&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> (i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">99&lt;/span>, i&lt;span style="color:#f92672">++&lt;/span>) {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (j &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; j &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">99&lt;/span>, i&lt;span style="color:#f92672">++&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> draw_text(&lt;span style="color:#ae81ff">10&lt;/span>&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">70&lt;/span>&lt;span style="color:#f92672">*&lt;/span>i, &lt;span style="color:#ae81ff">10&lt;/span>&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">70&lt;/span>&lt;span style="color:#f92672">*&lt;/span>о, inventory[i][j])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> draw_text(&lt;span style="color:#ae81ff">10&lt;/span>&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">70&lt;/span>&lt;span style="color:#f92672">*&lt;/span>i, &lt;span style="color:#ae81ff">10&lt;/span>&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">70&lt;/span>&lt;span style="color:#f92672">*&lt;/span>j, inventory[i][j])
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://mpostument.com/game_maker/two_d_array.jpg" alt="2d">&lt;/p>
 &lt;h2 id="video">Video&lt;/h2>
-&lt;p>Coming soon&lt;/p></content></item><item><title>Game Maker - Conditions</title><link>https://mpostument.com/2022/11/06/conditions/</link><pubDate>Sun, 06 Nov 2022 13:30:58 +0200</pubDate><guid>https://mpostument.com/2022/11/06/conditions/</guid><description>Hello!
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/63I2HLMvXnY" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>Game Maker - Conditions</title><link>https://mpostument.com/2022/11/06/conditions/</link><pubDate>Sun, 06 Nov 2022 13:30:58 +0200</pubDate><guid>https://mpostument.com/2022/11/06/conditions/</guid><description>Hello!
 Let&amp;rsquo;s explore conditions in Game Maker. Conditions can be created using if/else or switch statements. Let&amp;rsquo;s try both options.
 If/Else In Game Maker if/else conditions are the same as in other programming languages. The block itself looks like this:
 if (&amp;lt;expression&amp;gt;) { &amp;lt;statement&amp;gt;; } else { &amp;lt;statement&amp;gt;; } For example, we can check the health of our object. If hp &amp;lt; 0, we destroy the object. In order to do this, we will use a new type of event called Step.</description><content>&lt;p>Hello!&lt;/p>
@@ -127,7 +129,9 @@ if (&amp;lt;expression&amp;gt;) { &amp;lt;statement&amp;gt;; } else { &amp;lt;st
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>There may also be a default action in the case, it is performed if all other cases returned false.&lt;/p>
 &lt;h2 id="video">Video&lt;/h2>
-&lt;p>Coming Soon&lt;/p></content></item><item><title>Game Maker - Coordinates</title><link>https://mpostument.com/2022/11/04/coordinates/</link><pubDate>Fri, 04 Nov 2022 19:17:15 +0200</pubDate><guid>https://mpostument.com/2022/11/04/coordinates/</guid><description>Hello!
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/b5odh89pfjg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>Game Maker - Coordinates</title><link>https://mpostument.com/2022/11/04/coordinates/</link><pubDate>Fri, 04 Nov 2022 19:17:15 +0200</pubDate><guid>https://mpostument.com/2022/11/04/coordinates/</guid><description>Hello!
 Let&amp;rsquo;s consider how coordinates work in Game Maker.
 Room coordinates I will open the room (Room1) and if you move the mouse to the upper left corner, the coordinates x = 0, y = 0 will be there. If you move to the right/left, the x coordinate will change, and if you move up/down, the y coordinate will change.
 This is the basic information you need to know by coordinates.</description><content>&lt;p>Hello!&lt;/p>
