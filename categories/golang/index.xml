@@ -215,7 +215,9 @@ Naming If you are familiar with constants in other programming languages, you kn
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>6: int
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>7: int
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
-&lt;p>Coming Soon&lt;/p></content></item><item><title>Basic Types in Go</title><link>https://mpostument.com/2022/11/08/go-basic-types/</link><pubDate>Tue, 08 Nov 2022 19:54:39 +0200</pubDate><guid>https://mpostument.com/2022/11/08/go-basic-types/</guid><description>Hello!
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/1VoUYyFbdBw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>Basic Types in Go</title><link>https://mpostument.com/2022/11/08/go-basic-types/</link><pubDate>Tue, 08 Nov 2022 19:54:39 +0200</pubDate><guid>https://mpostument.com/2022/11/08/go-basic-types/</guid><description>Hello!
 In this post, we will look at the basic data types in golang.
 Bool The first type we will consider is bool. In this type, only two values are possible: true and false. You can create a bool variable in one of the following ways:
 var isActive bool var isEnabled = false isLoaded := true In the second and third options, we immediately set the value that the variable will have.</description><content>&lt;p>Hello!&lt;/p>
