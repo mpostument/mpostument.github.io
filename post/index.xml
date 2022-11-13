@@ -50,7 +50,9 @@ While loop The while loop works as long as the condition returns true. The while
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> i&lt;span style="color:#f92672">++&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
-&lt;p>Coming soon!&lt;/p></content></item><item><title>Go Constants</title><link>https://mpostument.com/2022/11/12/go-constant/</link><pubDate>Sat, 12 Nov 2022 07:46:18 +0200</pubDate><guid>https://mpostument.com/2022/11/12/go-constant/</guid><description>Hello!
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/m8l6w4fxFpo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>Go Constants</title><link>https://mpostument.com/2022/11/12/go-constant/</link><pubDate>Sat, 12 Nov 2022 07:46:18 +0200</pubDate><guid>https://mpostument.com/2022/11/12/go-constant/</guid><description>Hello!
 Let&amp;rsquo;s learn what constants are, how they should be named in golang, and also what iota is.
 Naming If you are familiar with constants in other programming languages, you know that their names usually include only capital letters, for example, PORT_NUMBER. In golang, we cannot do this because by making the first letter uppercase, we will immediately make the constant available to other packages. Therefore, in golang, we name constants in the same way as variables portNumber or PortNumber if we want the constant to be available in other packages.</description><content>&lt;p>Hello!&lt;/p>
 &lt;p>Let&amp;rsquo;s learn what constants are, how they should be named in golang, and also what iota is.&lt;/p>
