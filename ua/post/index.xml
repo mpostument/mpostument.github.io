@@ -18,7 +18,11 @@ Timeline Timeline створюється як і будь яка інша сут
 &lt;p>Також потрібно створити path та object з спрайтом так само як ми це робили в цьому &lt;a href="https://mpostument.com/ua/2022/11/16/path/" title="пості">пості&lt;/a>. В об&amp;rsquo;єкті буде наступний код&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>path_start(pth_enemy, &lt;span style="color:#ae81ff">5&lt;/span>, path_action_stop, false)
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Тепер запустимо гру і побачимо як об&amp;rsquo;єкти створюється в одній точці і рухаються по заданому шляху&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/timeline_result.jpg" alt="timeline_result">&lt;/p></content></item><item><title>Game Maker - Path</title><link>https://mpostument.com/ua/2022/11/16/path/</link><pubDate>Wed, 16 Nov 2022 19:27:49 +0200</pubDate><guid>https://mpostument.com/ua/2022/11/16/path/</guid><description>Привіт!
+&lt;p>&lt;img src="https://mpostument.com/game_maker/timeline_result.jpg" alt="timeline_result">&lt;/p>
+&lt;h2 id="video">Video&lt;/h2>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/GVpC8JqXoZ8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div></content></item><item><title>Game Maker - Path</title><link>https://mpostument.com/ua/2022/11/16/path/</link><pubDate>Wed, 16 Nov 2022 19:27:49 +0200</pubDate><guid>https://mpostument.com/ua/2022/11/16/path/</guid><description>Привіт!
 Розглянемо як працюють шляхи в GameMaker. За допомогою них можна задати траєкторію по якій буде рухатись об&amp;rsquo;єкт.
 Path Шлях створюється так само як і будь яка інша сутність в GameMaker. В Asset Browser натиснути правою кнопкою миші і обрати Create-&amp;gt;Path.
 Назву його як pth_enemy і в вікні що з&amp;rsquo;явилось можна малювати шлях. Бажано починати з точки 0,0. І далі натискаючи лівою кнопкою миші вказуємо точки по яких буде рухатись об&amp;rsquo;єкт</description><content>&lt;p>Привіт!&lt;/p>
