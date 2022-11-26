@@ -1,0 +1,281 @@
+<!doctype html><html lang=en><head><title>Arrays and Slices in golang :: Maksym Postument</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Learn how to use array and slices in golang"><meta name=keywords content="Go,VSCode,Beginner,Golang,Array,Slices,Go arrays,Go slices"><meta name=robots content="noodp"><link rel=canonical href=https://mpostument.com/2022/11/23/go-arrays-slices/><script async src="https://www.googletagmanager.com/gtag/js?id=G-SBRJXS94DC"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-SBRJXS94DC",{anonymize_ip:!1})}</script><link rel=stylesheet href=/style.css><link rel="shortcut icon" href=https://mpostument.com/img/theme-colors/blue.png><link rel=apple-touch-icon href=https://mpostument.com/img/theme-colors/blue.png><meta name=twitter:card content="summary"><meta name=twitter:site content="mpostument.com"><meta name=twitter:creator content="Maks_Postument"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="Arrays and Slices in golang"><meta property="og:description" content="Learn how to use array and slices in golang"><meta property="og:url" content="https://mpostument.com/2022/11/23/go-arrays-slices/"><meta property="og:site_name" content="Maksym Postument"><meta property="og:image" content="https://mpostument.com/go/go-arrays-slices.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="627"><meta property="article:section" content="Golang"><meta property="article:published_time" content="2022-11-23 15:41:57 +0200 +0200"><p align=center style=background-color:#23b0ff>Sign up for my <a href=https://tinyletter.com/mpostument>email
+newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of new blog posts.</p><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8633398301520801" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/algoliasearch@4.14.2/dist/algoliasearch-lite.umd.js></script>
+<script src=https://cdn.jsdelivr.net/npm/@algolia/autocomplete-js></script>
+<script src=https://cdn.jsdelivr.net/npm/@algolia/autocomplete-preset-algolia></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@algolia/autocomplete-theme-classic><div id=autocomplete></div><script>var searchClient=algoliasearch("8HJOK7X4MI","a882cdf8954678175d442905d08d8926");const{autocomplete}=window["@algolia/autocomplete-js"],{getAlgoliaResults}=window["@algolia/autocomplete-preset-algolia"];autocomplete({container:"#autocomplete",placeholder:"Search",getSources({query:e}){return[{sourceId:"title",getItems(){return getAlgoliaResults({searchClient,queries:[{indexName:"mpostument",query:e,params:{hitsPerPage:5,attributesToSnippet:["title:15","description:35"],snippetEllipsisText:"…"}}]})},templates:{item({item:e,components:t,html:n}){return n`<div class="aa-ItemWrapper">
+                            <div class="aa-ItemContent">
+                              <div class="aa-ItemContentBody">
+                                <div class="aa-ItemContentTitle">
+                                  ${t.Highlight({hit:e,attribute:"title"})}
+                                </div>
+                                <div class="aa-ItemContentDescription">
+                                  ${t.Snippet({hit:e,attribute:"description"})}
+                                </div>
+                              </div>
+                            </div>
+                          </div>`}},getItemUrl({item:e}){return e.href},onSelect({item:e}){window.location.href=e.href}}]}})</script></head><body class=blue><div class="container center headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/><div class=logo>mpostument.com</div></a></div><ul class="menu menu--mobile"><li class=menu__trigger>Menu&nbsp;▾</li><li><ul class=menu__dropdown><li><a href=/>Home</a></li><li><a href=/categories/>Categories</a></li><li><a href=/tags/>Tags</a></li><li><a href=/projects/>Projects</a></li><hr><li><a href=https://mpostument.com/>English</a></li><li><a href=https://mpostument.com/ua/>Ukraine</a></li></ul></li></ul><ul class="menu menu--desktop menu--language-selector"><li class=menu__trigger>English&nbsp;▾</li><li><ul class=menu__dropdown><li><a href=https://mpostument.com/>English</a></li><li><a href=https://mpostument.com/ua/>Ukraine</a></li></ul></li></ul></div><nav class=navigation-menu><ul class="navigation-menu__inner menu--desktop"><li><a href=/>Home</a></li><li><a href=/categories/>Categories</a></li><li><a href=/tags/>Tags</a></li><li><a href=/projects/>Projects</a></li></ul></nav></header><div class=content><article class=post><h1 class=post-title><a href=https://mpostument.com/2022/11/23/go-arrays-slices/>Arrays and Slices in golang</a></h1><div class=post-meta><time class=post-date>2022-11-23 ::</time>
+<span class=post-author>Maksym Postument</span>
+<span class=post-reading-time>:: 8 min read (1502 words)</span></div><span class=post-tags>#<a href=https://mpostument.com/tags/go/>Go</a>&nbsp;
+#<a href=https://mpostument.com/tags/beginner/>Beginner</a>&nbsp;</span>
+<img src=https://mpostument.com/go/go-arrays-slices.jpg class=post-cover alt="Arrays and Slices in golang" title="Cover Image"><div class=table-of-contents><h2>Table of Contents</h2><nav id=TableOfContents><ul><li><a href=#arrays>Arrays</a><ul><li><a href=#creation>Creation</a></li><li><a href=#change-values>Change values</a></li></ul></li><li><a href=#array-length>Array length</a></li><li><a href=#copy-array>Copy array</a></li><li><a href=#slices>Slices</a><ul><li><a href=#creating>Creating</a></li></ul></li><li><a href=#append-to-slice>Append to slice</a><ul><li><a href=#slice-from-slice>Slice from slice</a></li></ul></li><li><a href=#create-slice-with-make>Create slice with make</a></li><li><a href=#video>Video</a></li></ul></nav></div><div class=post-content><div><p>Привіт!</p><p>В цьому пості розглянемо arrays та slices в golang.</p><h2 id=arrays>Arrays<a href=#arrays class=hanchor arialabel=Anchor>&#8983;</a></h2><h3 id=creation>Creation<a href=#creation class=hanchor arialabel=Anchor>&#8983;</a></h3><p>An array in golang is created as follows <code>[NUMBER_OF_ELEMENTS_IN_ARRAY]TYPE{ELEMENTS}</code>. And allows you to store many objects of the same type</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>students</span> <span style=color:#f92672>:=</span> [<span style=color:#ae81ff>3</span>]<span style=color:#66d9ef>string</span>{<span style=color:#e6db74>&#34;John&#34;</span>, <span style=color:#e6db74>&#34;Lucy&#34;</span>, <span style=color:#e6db74>&#34;Alex&#34;</span>}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>students</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span><span style=color:#f92672>[</span>John Lucy Alex<span style=color:#f92672>]</span>
+</span></span></code></pre></div><p>To not specify a number that will mean the number of elements in the array, you can specify <code>...</code>. In this case, go will automatically determine how many elements there are and create an array of this length.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>students</span> <span style=color:#f92672>:=</span> [<span style=color:#f92672>...</span>]<span style=color:#66d9ef>string</span>{<span style=color:#e6db74>&#34;John&#34;</span>, <span style=color:#e6db74>&#34;Lucy&#34;</span>, <span style=color:#e6db74>&#34;Alex&#34;</span>}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>students</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>When we create an array, it is not necessary to specify the elements of array during creation. You can create an empty one and add elements later. But in this case, you need to specify how many elements there should be. Because if we specify <code>...</code> then an array with a length of 0 will be created and we will not be able to add any elements to it.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>students</span> <span style=color:#f92672>:=</span> [<span style=color:#f92672>...</span>]<span style=color:#66d9ef>string</span>{}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>students</span>[<span style=color:#ae81ff>0</span>] = <span style=color:#e6db74>&#34;John&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>students</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>If we specify the number of elements but do not specify them during creation, then null values of this type will be used. For example, our array will be of type int, it will be filled with zeros.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>studentsGrades</span> <span style=color:#f92672>:=</span> [<span style=color:#ae81ff>3</span>]<span style=color:#66d9ef>int</span>{}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>studentsGrades</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span><span style=color:#f92672>[</span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>0</span> 0<span style=color:#f92672>]</span>
+</span></span></code></pre></div><h3 id=change-values>Change values<a href=#change-values class=hanchor arialabel=Anchor>&#8983;</a></h3><p>Now that we have an empty array, we can add values to it. This is done as follows: arrayName[INDEX] = VALUE. Indexes start from zero, if we need to add the first element, then its index will be equal to 0, the index of the second element will be equal to 1, and so on</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>studentsGrades</span> <span style=color:#f92672>:=</span> [<span style=color:#ae81ff>3</span>]<span style=color:#66d9ef>int</span>{}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>studentsGrades</span>[<span style=color:#ae81ff>0</span>] = <span style=color:#ae81ff>99</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>studentsGrades</span>[<span style=color:#ae81ff>2</span>] = <span style=color:#ae81ff>22</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>studentsGrades</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span><span style=color:#f92672>[</span><span style=color:#ae81ff>99</span> <span style=color:#ae81ff>0</span> 22<span style=color:#f92672>]</span>
+</span></span></code></pre></div><p>In this example, we specified the value for the first element and the third, and the second element remained unchanged.</p><h2 id=array-length>Array length<a href=#array-length class=hanchor arialabel=Anchor>&#8983;</a></h2><p>In order to see the length of the array, you can use the <code>len()</code> method</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>studentsGrades</span> <span style=color:#f92672>:=</span> [<span style=color:#ae81ff>3</span>]<span style=color:#66d9ef>int</span>{}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(len(<span style=color:#a6e22e>studentsGrades</span>))
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span><span style=color:#ae81ff>3</span>
+</span></span></code></pre></div><h2 id=copy-array>Copy array<a href=#copy-array class=hanchor arialabel=Anchor>&#8983;</a></h2><p>An array can be copied by simply assigning it to another variable. Example</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>studentsGrades</span> <span style=color:#f92672>:=</span> [<span style=color:#ae81ff>3</span>]<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>b</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>studentsGrades</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Students grades: %v\n&#34;</span>, <span style=color:#a6e22e>studentsGrades</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Array b: %v\n&#34;</span>, <span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Let&rsquo;s now try to change the value in the array b and print the value</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>studentsGrades</span> <span style=color:#f92672>:=</span> [<span style=color:#ae81ff>3</span>]<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>b</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>studentsGrades</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>b</span>[<span style=color:#ae81ff>0</span>] = <span style=color:#ae81ff>99</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Students grades: %v\n&#34;</span>, <span style=color:#a6e22e>studentsGrades</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Array b: %v\n&#34;</span>, <span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span>Students grades: <span style=color:#f92672>[</span><span style=color:#ae81ff>1</span> <span style=color:#ae81ff>2</span> 3<span style=color:#f92672>]</span>
+</span></span><span style=display:flex><span>Array b: <span style=color:#f92672>[</span><span style=color:#ae81ff>99</span> <span style=color:#ae81ff>2</span> 3<span style=color:#f92672>]</span>
+</span></span></code></pre></div><p>As you can see, only the second array has changed, the first has remained unchanged. And that&rsquo;s because we made a copy of the array. In order to pass the same array to another variable, and not its copy, you need to use <code>&</code>. In future posts, we will take a closer look at what it is, and now we will just try to use it</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>studentsGrades</span> <span style=color:#f92672>:=</span> [<span style=color:#ae81ff>3</span>]<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>b</span> <span style=color:#f92672>:=</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>studentsGrades</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>b</span>[<span style=color:#ae81ff>0</span>] = <span style=color:#ae81ff>99</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Students grades: %v\n&#34;</span>, <span style=color:#a6e22e>studentsGrades</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Array b: %v\n&#34;</span>, <span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>go run main.go
+</span></span><span style=display:flex><span>Students grades: <span style=color:#f92672>[</span><span style=color:#ae81ff>99</span> <span style=color:#ae81ff>2</span> 3<span style=color:#f92672>]</span>
+</span></span><span style=display:flex><span>Array b: &amp;<span style=color:#f92672>[</span><span style=color:#ae81ff>99</span> <span style=color:#ae81ff>2</span> 3<span style=color:#f92672>]</span>
+</span></span></code></pre></div><h2 id=slices>Slices<a href=#slices class=hanchor arialabel=Anchor>&#8983;</a></h2><h3 id=creating>Creating<a href=#creating class=hanchor arialabel=Anchor>&#8983;</a></h3><p>Slices are very similar to arrays, they are even created very similarly. The only thing is that in slices, we do not specify in advance how many elements will be in the slice.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sliceOne</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Slice One: %v\n&#34;</span>, <span style=color:#a6e22e>sliceOne</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span>Slice One: <span style=color:#f92672>[</span><span style=color:#ae81ff>1</span> <span style=color:#ae81ff>2</span> 3<span style=color:#f92672>]</span>
+</span></span></code></pre></div><p>You can also see the length of a slice using the len() method. But we also add the cap method to the output.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sliceOne</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Len: %v, Capacity: %v\n&#34;</span>, len(<span style=color:#a6e22e>sliceOne</span>), cap(<span style=color:#a6e22e>sliceOne</span>))
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span>Len: 3, Capacity: <span style=color:#ae81ff>3</span>
+</span></span></code></pre></div><h2 id=append-to-slice>Append to slice<a href=#append-to-slice class=hanchor arialabel=Anchor>&#8983;</a></h2><p>What does this mean? Slices are using arrays to store data. And capacity indicates the size of the array currently used by the slice.</p><p>The main difference is that we can expand slices (which we can&rsquo;t do with arrays). For example, I create a slice of three elements, in this case len and cap will be equal to three. Let&rsquo;s try to add the fourth element to the slice. For this, you need to use the <code>append</code> method.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sliceOne</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Len: %v, Capacity: %v\n&#34;</span>, len(<span style=color:#a6e22e>sliceOne</span>), cap(<span style=color:#a6e22e>sliceOne</span>))
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sliceOne</span> = append(<span style=color:#a6e22e>sliceOne</span>, <span style=color:#ae81ff>22</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Len: %v, Capacity: %v\n&#34;</span>, len(<span style=color:#a6e22e>sliceOne</span>), cap(<span style=color:#a6e22e>sliceOne</span>))
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span>Len: 3, Capacity: <span style=color:#ae81ff>3</span>
+</span></span><span style=display:flex><span>Len: 4, Capacity: <span style=color:#ae81ff>6</span>
+</span></span></code></pre></div><p>Initially, our len and cap were equal to three. After adding one element, len increased by 1 and became 4, but cap doubled and became 6. Because it is not efficient for go to create a new array every time and copy data there, therefore go itself determines which size array to create in order not to take up a lot of memory, but also do not create a new array every time we add a new element to a slice</p><p>With append you can add many elements to a slice <code>SLICE_NAME = append(SLICE_NAME, ELEM1, ELEM2, ELEM3)</code>. You can also add a slice to a slice. But it will not work if we specify a slice instead of an element in the <code>append</code> method.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sliceOne</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>10</span>}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sliceTwo</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>11</span>, <span style=color:#ae81ff>233</span>, <span style=color:#ae81ff>34</span>}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sliceOne</span> = append(<span style=color:#a6e22e>sliceOne</span>, <span style=color:#a6e22e>sliceTwo</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Slice one: %v\n&#34;</span>, <span style=color:#a6e22e>sliceOne</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Slice two: %v\n&#34;</span>, <span style=color:#a6e22e>sliceTwo</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span><span style=color:#75715e># command-line-arguments</span>
+</span></span><span style=display:flex><span>./main.go:10:30: cannot use sliceTwo <span style=color:#f92672>(</span>variable of type <span style=color:#f92672>[]</span>int<span style=color:#f92672>)</span> as type int in argument to append
+</span></span></code></pre></div><p>In order to be able to add a slice, you need to unpack it, this can be done using <code>...</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sliceOne</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>10</span>}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sliceTwo</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>11</span>, <span style=color:#ae81ff>233</span>, <span style=color:#ae81ff>34</span>}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sliceOne</span> = append(<span style=color:#a6e22e>sliceOne</span>, <span style=color:#a6e22e>sliceTwo</span><span style=color:#f92672>...</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Slice one: %v\n&#34;</span>, <span style=color:#a6e22e>sliceOne</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Slice two: %v\n&#34;</span>, <span style=color:#a6e22e>sliceTwo</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span>Slice one: <span style=color:#f92672>[</span><span style=color:#ae81ff>1</span> <span style=color:#ae81ff>2</span> <span style=color:#ae81ff>3</span> <span style=color:#ae81ff>5</span> <span style=color:#ae81ff>10</span> <span style=color:#ae81ff>11</span> <span style=color:#ae81ff>233</span> 34<span style=color:#f92672>]</span>
+</span></span><span style=display:flex><span>Slice two: <span style=color:#f92672>[</span><span style=color:#ae81ff>11</span> <span style=color:#ae81ff>233</span> 34<span style=color:#f92672>]</span>
+</span></span></code></pre></div><p>Also, unlike arrays, when we assign it to another variable, we do not create a copy, but transfer the slice itself</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sliceOne</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>b</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>sliceOne</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>b</span>[<span style=color:#ae81ff>1</span>] = <span style=color:#ae81ff>999</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Slice one: %v\n&#34;</span>, <span style=color:#a6e22e>sliceOne</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Slice b: %v\n&#34;</span>, <span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span>Slice one: <span style=color:#f92672>[</span><span style=color:#ae81ff>1</span> <span style=color:#ae81ff>999</span> 3<span style=color:#f92672>]</span>
+</span></span><span style=display:flex><span>Slice b: <span style=color:#f92672>[</span><span style=color:#ae81ff>1</span> <span style=color:#ae81ff>999</span> 3<span style=color:#f92672>]</span>
+</span></span></code></pre></div><h3 id=slice-from-slice>Slice from slice<a href=#slice-from-slice class=hanchor arialabel=Anchor>&#8983;</a></h3><p>We can make a slice from an existing slice using indexes like ARRAY_NAME[first_index:last_index]. For example, we have a slice of 5 elements and we need to create a slice that will have only the last three elements, then this can be done as follows</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sliceOne</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>10</span>}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sliceTwo</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>sliceOne</span>[<span style=color:#ae81ff>2</span>:]
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Slice one: %v\n&#34;</span>, <span style=color:#a6e22e>sliceOne</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Slice two: %v\n&#34;</span>, <span style=color:#a6e22e>sliceTwo</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span>Slice one: <span style=color:#f92672>[</span><span style=color:#ae81ff>1</span> <span style=color:#ae81ff>2</span> <span style=color:#ae81ff>3</span> <span style=color:#ae81ff>5</span> 10<span style=color:#f92672>]</span>
+</span></span><span style=display:flex><span>Slice two: <span style=color:#f92672>[</span><span style=color:#ae81ff>3</span> <span style=color:#ae81ff>5</span> 10<span style=color:#f92672>]</span>
+</span></span></code></pre></div><p><code>sliceTwo := sliceOne[2:]</code> we create a new slice that includes all elements starting from the second index to the last. Therefore, you do not need to specify anything after <code>:</code>. If necessary, you can specify the last element that will be included.</p><p>If we try to replace an element in the second slice, it will be replaced in the first, this is because both slices use the same array with data</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sliceOne</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>2</span>, <span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>10</span>}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sliceTwo</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>sliceOne</span>[<span style=color:#ae81ff>1</span>:<span style=color:#ae81ff>3</span>]
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sliceTwo</span>[<span style=color:#ae81ff>0</span>] = <span style=color:#ae81ff>222</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Slice one: %v\n&#34;</span>, <span style=color:#a6e22e>sliceOne</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Slice two: %v\n&#34;</span>, <span style=color:#a6e22e>sliceTwo</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span>Slice one: <span style=color:#f92672>[</span><span style=color:#ae81ff>1</span> <span style=color:#ae81ff>222</span> <span style=color:#ae81ff>3</span> <span style=color:#ae81ff>5</span> 10<span style=color:#f92672>]</span>
+</span></span><span style=display:flex><span>Slice two: <span style=color:#f92672>[</span><span style=color:#ae81ff>222</span> 3<span style=color:#f92672>]</span>
+</span></span></code></pre></div><h2 id=create-slice-with-make>Create slice with make<a href=#create-slice-with-make class=hanchor arialabel=Anchor>&#8983;</a></h2><p>The <code>make(TYPE, LEN, CAP)</code> method can be used to create slices. Capacity is an optional argument. If we use make without capacity, it will correspond to the same thing as we create an empty slice []int{}.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sliceOne</span> <span style=color:#f92672>:=</span> make([]<span style=color:#66d9ef>int</span>, <span style=color:#ae81ff>5</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Slice one len %v, capacity %v\n&#34;</span>, len(<span style=color:#a6e22e>sliceOne</span>), cap(<span style=color:#a6e22e>sliceOne</span>))
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span>Slice one len 5, capacity <span style=color:#ae81ff>5</span>
+</span></span></code></pre></div><p>If we know the required capacity, it can be specified immediately, and then go will not have to create new arrays and transfer data to them as objects are added</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sliceOne</span> <span style=color:#f92672>:=</span> make([]<span style=color:#66d9ef>int</span>, <span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>100</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Slice one len %v, capacity %v\n&#34;</span>, len(<span style=color:#a6e22e>sliceOne</span>), cap(<span style=color:#a6e22e>sliceOne</span>))
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span>Slice one len 5, capacity <span style=color:#ae81ff>100</span>
+</span></span></code></pre></div><h2 id=video>Video<a href=#video class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Coming soong</p></div></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button next"><a href=https://mpostument.com/2022/11/19/timeline/><span class=button__text>Game Maker - Timelines</span>
+<span class=button__icon>→</span></a></span></div></div><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//mpostument-com.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></article></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 Powered by <a href=http://gohugo.io>Hugo</a></span>
+<span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span></div></div></footer><script type=text/javascript src=/bundle.min.js></script></div></body></html>
