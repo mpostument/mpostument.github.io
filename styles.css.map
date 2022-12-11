@@ -1,6 +1,6 @@
 {
 	"version": 3,
-	"file": "style.css",
+	"file": "styles.css",
 	"sourceRoot": "/home/runner/work/content-mpostument/content-mpostument",
 	"sources": [
 		"css/base.scss",
