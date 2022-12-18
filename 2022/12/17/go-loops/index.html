@@ -1,0 +1,209 @@
+<!doctype html><html lang=en><head><title>Loops in golang :: Maksym Postument</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Learn how to use for loop in golang"><meta name=keywords content="Go,VSCode,Beginner,Golang,Array,Slices,Loop,Map,For Loop,While Loop"><meta name=robots content="noodp"><link rel=canonical href=https://mpostument.com/2022/12/17/go-loops/><script async src="https://www.googletagmanager.com/gtag/js?id=G-SBRJXS94DC"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-SBRJXS94DC",{anonymize_ip:!1})}</script><link rel=stylesheet href=https://mpostument.com/styles.css><link rel="shortcut icon" href=https://mpostument.com/img/theme-colors/blue.png><link rel=apple-touch-icon href=https://mpostument.com/img/theme-colors/blue.png><meta name=twitter:card content="summary"><meta name=twitter:site content="mpostument.com"><meta name=twitter:creator content="Maks_Postument"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="Loops in golang"><meta property="og:description" content="Learn how to use for loop in golang"><meta property="og:url" content="https://mpostument.com/2022/12/17/go-loops/"><meta property="og:site_name" content="Maksym Postument"><meta property="og:image" content="https://mpostument.com/go/go-loops.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="627"><meta property="article:section" content="Golang"><meta property="article:published_time" content="2022-12-17 10:13:24 +0200 +0200"><p align=center style=background-color:#23b0ff>Sign up for my <a href=https://tinyletter.com/mpostument>email
+newsletter</a> or use this <a href=/index.xml>RSS feed</a> to get notified of new blog posts.</p><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8633398301520801" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/algoliasearch@4.14.2/dist/algoliasearch-lite.umd.js></script>
+<script src=https://cdn.jsdelivr.net/npm/@algolia/autocomplete-js></script>
+<script src=https://cdn.jsdelivr.net/npm/@algolia/autocomplete-preset-algolia></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@algolia/autocomplete-theme-classic><div id=autocomplete></div><script>var searchClient=algoliasearch("8HJOK7X4MI","a882cdf8954678175d442905d08d8926");const{autocomplete}=window["@algolia/autocomplete-js"],{getAlgoliaResults}=window["@algolia/autocomplete-preset-algolia"];autocomplete({container:"#autocomplete",placeholder:"Search",getSources({query:e}){return[{sourceId:"title",getItems(){return getAlgoliaResults({searchClient,queries:[{indexName:"mpostument",query:e,params:{hitsPerPage:5,attributesToSnippet:["title:15","description:35"],snippetEllipsisText:"…"}}]})},templates:{item({item:e,components:t,html:n}){return n`<div class="aa-ItemWrapper">
+                            <div class="aa-ItemContent">
+                              <div class="aa-ItemContentBody">
+                                <div class="aa-ItemContentTitle">
+                                  ${t.Highlight({hit:e,attribute:"title"})}
+                                </div>
+                                <div class="aa-ItemContentDescription">
+                                  ${t.Snippet({hit:e,attribute:"description"})}
+                                </div>
+                              </div>
+                            </div>
+                          </div>`}},getItemUrl({item:e}){return e.href},onSelect({item:e}){window.location.href=e.href}}]}})</script></head><body class=blue><div class="container center headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/><div class=logo>mpostument.com</div></a></div><ul class="menu menu--mobile"><li class=menu__trigger>Menu&nbsp;▾</li><li><ul class=menu__dropdown><li><a href=/>Home</a></li><li><a href=/categories/>Categories</a></li><li><a href=/tags/>Tags</a></li><li><a href=/projects/>Projects</a></li><hr><li><a href=https://mpostument.com/>English</a></li><li><a href=https://mpostument.com/ua/>Ukraine</a></li></ul></li></ul><ul class="menu menu--desktop menu--language-selector"><li class=menu__trigger>English&nbsp;▾</li><li><ul class=menu__dropdown><li><a href=https://mpostument.com/>English</a></li><li><a href=https://mpostument.com/ua/>Ukraine</a></li></ul></li></ul></div><nav class=navigation-menu><ul class="navigation-menu__inner menu--desktop"><li><a href=/>Home</a></li><li><a href=/categories/>Categories</a></li><li><a href=/tags/>Tags</a></li><li><a href=/projects/>Projects</a></li></ul></nav></header><div class=content><article class=post><h1 class=post-title><a href=https://mpostument.com/2022/12/17/go-loops/>Loops in golang</a></h1><div class=post-meta><time class=post-date>2022-12-17 ::</time>
+<span class=post-author>Maksym Postument</span>
+<span class=post-reading-time>:: 4 min read (826 words)</span></div><span class=post-tags>#<a href=https://mpostument.com/tags/go/>Go</a>&nbsp;
+#<a href=https://mpostument.com/tags/beginner/>Beginner</a>&nbsp;</span>
+<img src=https://mpostument.com/go/go-loops.jpg class=post-cover alt="Loops in golang" title="Cover Image"><div class=table-of-contents><h2>Table of Contents</h2><nav id=TableOfContents><ul><li><a href=#for-loop>For Loop</a></li><li><a href=#break-and-continue>Break and Continue</a><ul><li><a href=#continue>Continue</a></li><li><a href=#break>Break</a></li></ul></li><li><a href=#range>Range</a><ul><li><a href=#range-in-arrayslice>Range in array/slice</a></li><li><a href=#range-in-maps>Range in maps</a></li></ul></li><li><a href=#video>Video</a></li></ul></nav></div><div class=post-content><div><p>Hi there!</p><p>In this post, we will learn how to use loops in golang.</p><h2 id=for-loop>For Loop<a href=#for-loop class=hanchor arialabel=Anchor>&#8983;</a></h2><p>The for loop allows you to perform a certain action as many times as long as the condition returns true.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#ae81ff>6</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>i</span>)
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>The loop starts with the word <code>for</code> keyword, then the parameter <code>i</code> is initialized, then the condition when the loop should stop. In this example, the loop will work until <code>i</code> is less than 6. And at the end, we specify that we want to increase <code>i</code> by 1 after each iteration. Well, in the body of the loop, I simply display the value of <code>i</code>.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>3</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>4</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>5</span>
+</span></span></code></pre></div><p>The <code>i</code> parameter is available only in the body of the loop. If I try to use it outside I get an error</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span><span style=color:#75715e># command-line-arguments</span>
+</span></span><span style=display:flex><span>./main.go:11:14: undefined: i
+</span></span></code></pre></div><p>For <code>i</code> to be used outside the loop, its initialization must be done outside the loop.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> ; <span style=color:#a6e22e>i</span> &lt; <span style=color:#ae81ff>6</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>i</span>)
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Final I is %v\n&#34;</span>, <span style=color:#a6e22e>i</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>3</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>4</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>5</span>
+</span></span><span style=display:flex><span>Final I is <span style=color:#ae81ff>6</span>
+</span></span></code></pre></div><p><code>;</code> must remain, otherwise, the next error will occur</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span><span style=color:#75715e># command-line-arguments</span>
+</span></span><span style=display:flex><span>./main.go:9:17: syntax error: unexpected <span style=color:#f92672>{</span>, expecting semicolon or newline
+</span></span><span style=display:flex><span>./main.go:10:17: syntax error: unexpected newline, expecting <span style=color:#f92672>{</span> after <span style=color:#66d9ef>for</span> clause
+</span></span></code></pre></div><p>The part where we increment <code>i</code> using <code>i++</code> can also be moved to the body of the loop. In this case <code>;</code> can be removed.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> &lt; <span style=color:#ae81ff>6</span> {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span>
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>i</span>)
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Final I is %v\n&#34;</span>, <span style=color:#a6e22e>i</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span><span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>3</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>4</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>5</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>6</span>
+</span></span><span style=display:flex><span>Final I is <span style=color:#ae81ff>6</span>
+</span></span></code></pre></div><p>Also, the increment of <code>i</code> does not necessarily have to be in the form of <code>i++</code>. You can perform other operations. For example, multiplication.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#ae81ff>10</span>; <span style=color:#a6e22e>i</span> = <span style=color:#a6e22e>i</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span><span style=color:#f92672>*</span><span style=color:#ae81ff>2</span> {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>i</span>)
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>4</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>6</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>8</span>
+</span></span></code></pre></div><h2 id=break-and-continue>Break and Continue<a href=#break-and-continue class=hanchor arialabel=Anchor>&#8983;</a></h2><h3 id=continue>Continue<a href=#continue class=hanchor arialabel=Anchor>&#8983;</a></h3><p>Continue can be used if in the loop we want to skip some iteration under a certain condition. In the following example, we check whether <code>i</code> is an even number, if so, we do not continue this iteration and go to the next one</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#ae81ff>10</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>i</span><span style=color:#f92672>%</span><span style=color:#ae81ff>2</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span> {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>i</span>)
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span><span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>3</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>5</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>7</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>9</span>
+</span></span></code></pre></div><h3 id=break>Break<a href=#break class=hanchor arialabel=Anchor>&#8983;</a></h3><p>The break is used if you need to end the loop under a certain condition. In this example, the loop works as long as <code>i</code> is less than 10. But in the body of the loop, there is a check that if i is equal to 5, then the loop ends immediately</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>0</span>; <span style=color:#a6e22e>i</span> &lt; <span style=color:#ae81ff>10</span>; <span style=color:#a6e22e>i</span><span style=color:#f92672>++</span> {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> <span style=color:#a6e22e>i</span> <span style=color:#f92672>==</span> <span style=color:#ae81ff>5</span> {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>i</span>)
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>go run main.go
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>3</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>4</span>
+</span></span></code></pre></div><h2 id=range>Range<a href=#range class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Loops are also used to iterate over elements in data types such as an array, slice, map, and others. This is done using the range keyword. And has the form <code>for INDEX, VALUE := range SLICE {CODE}</code>.</p><h3 id=range-in-arrayslice>Range in array/slice<a href=#range-in-arrayslice class=hanchor arialabel=Anchor>&#8983;</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>a</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>7</span>, <span style=color:#ae81ff>9</span>, <span style=color:#ae81ff>10</span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>i</span>, <span style=color:#a6e22e>v</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>a</span> {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>i</span>, <span style=color:#a6e22e>v</span>)
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span> <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>1</span> <span style=color:#ae81ff>5</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>2</span> <span style=color:#ae81ff>7</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>3</span> <span style=color:#ae81ff>9</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>4</span> <span style=color:#ae81ff>10</span>
+</span></span></code></pre></div><p>In this example, the index of the element in the slice and the element itself are displayed. If we don&rsquo;t need an index, it should be replaced with <code>_</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>a</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>int</span>{<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>7</span>, <span style=color:#ae81ff>9</span>, <span style=color:#ae81ff>10</span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>v</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>a</span> {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>v</span>)
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span><span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>5</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>7</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>9</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>10</span>
+</span></span></code></pre></div><p>If we leave the index parameter in the loop but do not use it in the body of the loop, we will get an error</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span><span style=color:#75715e># command-line-arguments</span>
+</span></span><span style=display:flex><span>./main.go:10:6: i declared but not used
+</span></span></code></pre></div><p>That is why it needs to be replaced with <code>_</code>.</p><h3 id=range-in-maps>Range in maps<a href=#range-in-maps class=hanchor arialabel=Anchor>&#8983;</a></h3><p>The range loop for the map looks the same as for the slice, with the only difference that there will be a key value instead of an index</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>a</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>map</span>[<span style=color:#66d9ef>string</span>]<span style=color:#66d9ef>int</span>{<span style=color:#e6db74>&#34;A&#34;</span>: <span style=color:#ae81ff>1</span>, <span style=color:#e6db74>&#34;B&#34;</span>: <span style=color:#ae81ff>5</span>, <span style=color:#e6db74>&#34;C&#34;</span>: <span style=color:#ae81ff>7</span>, <span style=color:#e6db74>&#34;D&#34;</span>: <span style=color:#ae81ff>9</span>, <span style=color:#e6db74>&#34;E&#34;</span>: <span style=color:#ae81ff>10</span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>for</span> <span style=color:#a6e22e>k</span>, <span style=color:#a6e22e>v</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>a</span> {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>k</span>, <span style=color:#a6e22e>v</span>)
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span>D <span style=color:#ae81ff>9</span>
+</span></span><span style=display:flex><span>E <span style=color:#ae81ff>10</span>
+</span></span><span style=display:flex><span>A <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>B <span style=color:#ae81ff>5</span>
+</span></span><span style=display:flex><span>C <span style=color:#ae81ff>7</span>
+</span></span></code></pre></div><h2 id=video>Video<a href=#video class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Coming soon</p></div></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button next"><a href=https://mpostument.com/2022/12/09/go-if-switch/><span class=button__text>If and Switch in golang</span>
+<span class=button__icon>→</span></a></span></div></div><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//mpostument-com.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></article></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 Powered by <a href=http://gohugo.io>Hugo</a></span>
+<span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span></div></div></footer><script type=text/javascript src=/bundle.min.js></script></div></body></html>
