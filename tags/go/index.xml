@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Go on Maksym Postument</title><link>https://mpostument.com/tags/go/</link><description>Recent content in Go on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 20 Feb 2023 22:20:19 +0200</lastBuildDate><atom:link href="https://mpostument.com/tags/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Goroutines in go</title><link>https://mpostument.com/2023/02/20/go-routines/</link><pubDate>Mon, 20 Feb 2023 22:20:19 +0200</pubDate><guid>https://mpostument.com/2023/02/20/go-routines/</guid><description>Hello!
-The topic of today&amp;rsquo;s post is goroutines. We will learn what they are and how to use them.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Go on Maksym Postument</title><link>https://mpostument.com/tags/go/</link><description>Recent content in Go on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 20 Feb 2023 22:20:19 +0200</lastBuildDate><atom:link href="https://mpostument.com/tags/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Goroutines in go</title><link>https://mpostument.com/programming/golang/basics/go-routines/</link><pubDate>Mon, 20 Feb 2023 22:20:19 +0200</pubDate><guid>https://mpostument.com/programming/golang/basics/go-routines/</guid><description>Hello!
+The topic of today&amp;rsquo;s programming is goroutines. We will learn what they are and how to use them.
 Goroutine A Goroutine allows you to run code concurrently. For example, we can call several functions at the same time without waiting for each other. To create a goroutine before calling the function, add the go keyword.
 package main import &amp;#34;fmt&amp;#34; func main() { go hello() } func hello() { fmt.Println(&amp;#34;Hello!&amp;#34;) } But if run this code, nothing will happen.</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>The topic of today&amp;rsquo;s post is goroutines. We will learn what they are and how to use them.&lt;/p>
+&lt;p>The topic of today&amp;rsquo;s programming is goroutines. We will learn what they are and how to use them.&lt;/p>
 &lt;h2 id="goroutine">Goroutine&lt;/h2>
 &lt;p>A Goroutine allows you to run code concurrently. For example, we can call several functions at the same time without waiting for each other. To create a goroutine before calling the function, add the &lt;code>go&lt;/code> keyword.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
@@ -164,16 +164,16 @@ In this example, goroutines are executed in a loop. One of the functions increme
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/DfnDyLfkomo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Interfaces in Go</title><link>https://mpostument.com/2023/01/15/go-interfaces/</link><pubDate>Sun, 15 Jan 2023 12:53:46 +0200</pubDate><guid>https://mpostument.com/2023/01/15/go-interfaces/</guid><description>Hello!
+&lt;/div></content></item><item><title>Interfaces in Go</title><link>https://mpostument.com/programming/golang/basics/go-interfaces/</link><pubDate>Sun, 15 Jan 2023 12:53:46 +0200</pubDate><guid>https://mpostument.com/programming/golang/basics/go-interfaces/</guid><description>Hello!
 Today&amp;rsquo;s topic is interfaces. Interfaces are a type that defines a collection of a method&amp;rsquo;s signature.
-Interface type Printer interface { Print() string } A type will implement the interface when a Print method is created for it. We discussed how to create methods for a type in the post about functions
+Interface type Printer interface { Print() string } A type will implement the interface when a Print method is created for it. We discussed how to create methods for a type in the programming about functions
 type Book struct { Name string Author string } type Money int func (b Book) Print() string { return fmt.</description><content>&lt;p>Hello!&lt;/p>
 &lt;p>Today&amp;rsquo;s topic is interfaces. Interfaces are a type that defines a collection of a method&amp;rsquo;s signature.&lt;/p>
 &lt;h2 id="interface">Interface&lt;/h2>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">type&lt;/span> &lt;span style="color:#a6e22e">Printer&lt;/span> &lt;span style="color:#66d9ef">interface&lt;/span> {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Print&lt;/span>() &lt;span style="color:#66d9ef">string&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>A type will implement the interface when a &lt;code>Print&lt;/code> method is created for it. We discussed how to create methods for a type in the post about &lt;a href="https://mpostument.com/2023/01/06/go-functions/" title="functions">functions&lt;/a>&lt;/p>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>A type will implement the interface when a &lt;code>Print&lt;/code> method is created for it. We discussed how to create methods for a type in the programming about &lt;a href="https://mpostument.com/programming/golang/basics/go-functions/" title="functions">functions&lt;/a>&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">type&lt;/span> &lt;span style="color:#a6e22e">Book&lt;/span> &lt;span style="color:#66d9ef">struct&lt;/span> {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Name&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Author&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>
@@ -252,11 +252,11 @@ type Book struct { Name string Author string } type Money int func (b Book) Prin
 &lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/sulSzdpPyCU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Go Functions</title><link>https://mpostument.com/2023/01/06/go-functions/</link><pubDate>Fri, 06 Jan 2023 15:46:51 +0200</pubDate><guid>https://mpostument.com/2023/01/06/go-functions/</guid><description>Hello!
-The topic of today&amp;rsquo;s post functions in golang.
+&lt;/div></content></item><item><title>Go Functions</title><link>https://mpostument.com/programming/golang/basics/go-functions/</link><pubDate>Fri, 06 Jan 2023 15:46:51 +0200</pubDate><guid>https://mpostument.com/programming/golang/basics/go-functions/</guid><description>Hello!
+The topic of today&amp;rsquo;s programming functions in golang.
 Function In all previous posts, we have used functions multiple times. For example fmt.Println() is a function. Let&amp;rsquo;s create the simplest function. In golang, there is always a main function, which is the entry point to the program. And accordingly, if we want to call our function, we will add it to the main function
 package main import ( &amp;#34;fmt&amp;#34; ) func main() { printText() } func printText() { fmt.</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>The topic of today&amp;rsquo;s post functions in golang.&lt;/p>
+&lt;p>The topic of today&amp;rsquo;s programming functions in golang.&lt;/p>
 &lt;h2 id="function">Function&lt;/h2>
 &lt;p>In all previous posts, we have used functions multiple times. For example &lt;code>fmt.Println()&lt;/code> is a function. Let&amp;rsquo;s create the simplest function. In golang, there is always a main function, which is the entry point to the program. And accordingly, if we want to call our function, we will add it to the main function&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
@@ -508,10 +508,10 @@ package main import ( &amp;#34;fmt&amp;#34; ) func main() { printText() } func p
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/psEaZ65Zkas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Pointers</title><link>https://mpostument.com/2022/12/30/go-pointers/</link><pubDate>Fri, 30 Dec 2022 12:59:07 +0200</pubDate><guid>https://mpostument.com/2022/12/30/go-pointers/</guid><description>Hi there!
-In this post, we will learn what is pointers in golang. We have already used them several times in previous posts. But let&amp;rsquo;s check them in more detail. Pointer is a parameter that stores the memory address and not the value itself.
+&lt;/div></content></item><item><title>Pointers</title><link>https://mpostument.com/programming/golang/basics/go-pointers/</link><pubDate>Fri, 30 Dec 2022 12:59:07 +0200</pubDate><guid>https://mpostument.com/programming/golang/basics/go-pointers/</guid><description>Hi there!
+In this programming, we will learn what is pointers in golang. We have already used them several times in previous posts. But let&amp;rsquo;s check them in more detail. Pointer is a parameter that stores the memory address and not the value itself.
 Create Pointer If we create one parameter and assign it to another, then golang makes a copy of it. And if we change the value of one parameter, the other will remain unchanged</description><content>&lt;p>Hi there!&lt;/p>
-&lt;p>In this post, we will learn what is pointers in golang. We have already used them several times in previous posts. But let&amp;rsquo;s check them in more detail.
+&lt;p>In this programming, we will learn what is pointers in golang. We have already used them several times in previous posts. But let&amp;rsquo;s check them in more detail.
 Pointer is a parameter that stores the memory address and not the value itself.&lt;/p>
 &lt;h2 id="create-pointer">Create Pointer&lt;/h2>
 &lt;p>If we create one parameter and assign it to another, then golang makes a copy of it. And if we change the value of one parameter, the other will remain unchanged&lt;/p>
@@ -578,11 +578,11 @@ Pointer is created as follows &lt;code>var VAR_NAME *TYPE&lt;/code>&lt;/p>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/-CX9YnwAW6U" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Defer, Panic, and Recovery in Golang</title><link>https://mpostument.com/2022/12/22/go-defer-panic/</link><pubDate>Thu, 22 Dec 2022 12:44:28 +0200</pubDate><guid>https://mpostument.com/2022/12/22/go-defer-panic/</guid><description>Hi there!
-In this post, we will learn what is defer, panic and how to recover from panic
+&lt;/div></content></item><item><title>Defer, Panic, and Recovery in Golang</title><link>https://mpostument.com/programming/golang/basics/go-defer-panic/</link><pubDate>Thu, 22 Dec 2022 12:44:28 +0200</pubDate><guid>https://mpostument.com/programming/golang/basics/go-defer-panic/</guid><description>Hi there!
+In this programming, we will learn what is defer, panic and how to recover from panic
 Defer Defer allows you to postpone the execution of the code and execute it at the moment when there is an exit from the function happening
 package main import &amp;#34;fmt&amp;#34; func main() { defer fmt.Println(&amp;#34;Hello!&amp;#34;) fmt.Println(&amp;#34;Bye!&amp;#34;) } $ go run main.go Bye! Hello! Although the code was supposed to display ``Hello!first,Bye!was displayed first, and only thenHello!</description><content>&lt;p>Hi there!&lt;/p>
-&lt;p>In this post, we will learn what is defer, panic and how to recover from panic&lt;/p>
+&lt;p>In this programming, we will learn what is defer, panic and how to recover from panic&lt;/p>
 &lt;h2 id="defer">Defer&lt;/h2>
 &lt;p>Defer allows you to postpone the execution of the code and execute it at the moment when there is an exit from the function happening&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
@@ -708,11 +708,11 @@ package main import &amp;#34;fmt&amp;#34; func main() { defer fmt.Println(&amp;#
 &lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/pVQuU5JBB90" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Loops in golang</title><link>https://mpostument.com/2022/12/17/go-loops/</link><pubDate>Sat, 17 Dec 2022 10:13:24 +0200</pubDate><guid>https://mpostument.com/2022/12/17/go-loops/</guid><description>Hi there!
-In this post, we will learn how to use loops in golang.
+&lt;/div></content></item><item><title>Loops in golang</title><link>https://mpostument.com/programming/golang/basics/go-loops/</link><pubDate>Sat, 17 Dec 2022 10:13:24 +0200</pubDate><guid>https://mpostument.com/programming/golang/basics/go-loops/</guid><description>Hi there!
+In this programming, we will learn how to use loops in golang.
 For Loop The for loop allows you to perform a certain action as many times as long as the condition returns true.
 package main import ( &amp;#34;fmt&amp;#34; ) func main() { for i := 0; i &amp;lt; 6; i++ { fmt.Println(i) } } The loop starts with the word for keyword, then the parameter i is initialized, then the condition when the loop should stop.</description><content>&lt;p>Hi there!&lt;/p>
-&lt;p>In this post, we will learn how to use loops in golang.&lt;/p>
+&lt;p>In this programming, we will learn how to use loops in golang.&lt;/p>
 &lt;h2 id="for-loop">For Loop&lt;/h2>
 &lt;p>The for loop allows you to perform a certain action as many times as long as the condition returns true.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
@@ -922,11 +922,11 @@ package main import ( &amp;#34;fmt&amp;#34; ) func main() { for i := 0; i &amp;l
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/HHNPPQyC-rA" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>If and Switch in golang</title><link>https://mpostument.com/2022/12/09/go-if-switch/</link><pubDate>Fri, 09 Dec 2022 19:10:00 +0200</pubDate><guid>https://mpostument.com/2022/12/09/go-if-switch/</guid><description>Hello!
-The topic of today&amp;rsquo;s post is If and Switch statements in go.
+&lt;/div></content></item><item><title>If and Switch in golang</title><link>https://mpostument.com/programming/golang/basics/go-if-switch/</link><pubDate>Fri, 09 Dec 2022 19:10:00 +0200</pubDate><guid>https://mpostument.com/programming/golang/basics/go-if-switch/</guid><description>Hello!
+The topic of today&amp;rsquo;s programming is If and Switch statements in go.
 If The if block is executed if the condition returns true.
 package main import &amp;#34;fmt&amp;#34; func main() { if true { fmt.Println(&amp;#34;Condition is true&amp;#34;) } if false { fmt.Println(&amp;#34;Condition is false&amp;#34;) } } $ go run main.go Condition is true In this case, only Conditions is true was printed because the condition in the second if a block was false.</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>The topic of today&amp;rsquo;s post is If and Switch statements in go.&lt;/p>
+&lt;p>The topic of today&amp;rsquo;s programming is If and Switch statements in go.&lt;/p>
 &lt;h2 id="if">If&lt;/h2>
 &lt;p>The if block is executed if the condition returns true.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
@@ -1118,11 +1118,11 @@ package main import &amp;#34;fmt&amp;#34; func main() { if true { fmt.Println(&a
 &lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/8vcDhglpTVY" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Maps and Structs in golang</title><link>https://mpostument.com/2022/12/03/go-maps-structs/</link><pubDate>Sat, 03 Dec 2022 16:46:49 +0200</pubDate><guid>https://mpostument.com/2022/12/03/go-maps-structs/</guid><description>Hello!
-The topic of today&amp;rsquo;s post is about maps and structs. Lets start start with maps
+&lt;/div></content></item><item><title>Maps and Structs in golang</title><link>https://mpostument.com/programming/golang/basics/go-maps-structs/</link><pubDate>Sat, 03 Dec 2022 16:46:49 +0200</pubDate><guid>https://mpostument.com/programming/golang/basics/go-maps-structs/</guid><description>Hello!
+The topic of today&amp;rsquo;s programming is about maps and structs. Lets start start with maps
 Maps Create map Maps is a data structure in which data is specified in pairs, keys, and values. In golang it is created as follows. map[KEY_TYPE]VALUE_TYPE.
 import &amp;#34;fmt&amp;#34; func main() { studentsGrades := map[string]int{&amp;#34;John&amp;#34;: 50, &amp;#34;Alex&amp;#34;: 70} fmt.Println(studentsGrades) } $ go run main.go map[Alex:70 John:50] Another option is to create a map using the make keyword</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>The topic of today&amp;rsquo;s post is about maps and structs. Lets start start with maps&lt;/p>
+&lt;p>The topic of today&amp;rsquo;s programming is about maps and structs. Lets start start with maps&lt;/p>
 &lt;h2 id="maps">Maps&lt;/h2>
 &lt;h3 id="create-map">Create map&lt;/h3>
 &lt;p>Maps is a data structure in which data is specified in pairs, keys, and values. In golang it is created as follows. &lt;code>map[KEY_TYPE]VALUE_TYPE&lt;/code>.&lt;/p>
@@ -1354,11 +1354,11 @@ import &amp;#34;fmt&amp;#34; func main() { studentsGrades := map[string]int{&amp
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/lw8MGe3hup0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Arrays and Slices in golang</title><link>https://mpostument.com/2022/11/23/go-arrays-slices/</link><pubDate>Wed, 23 Nov 2022 15:41:57 +0200</pubDate><guid>https://mpostument.com/2022/11/23/go-arrays-slices/</guid><description>Hello!
-In this post we are going to explore what is arrays та slices в golang.
+&lt;/div></content></item><item><title>Arrays and Slices in golang</title><link>https://mpostument.com/programming/golang/basics/go-arrays-slices/</link><pubDate>Wed, 23 Nov 2022 15:41:57 +0200</pubDate><guid>https://mpostument.com/programming/golang/basics/go-arrays-slices/</guid><description>Hello!
+In this programming we are going to explore what is arrays та slices в golang.
 Arrays Creation An array in golang is created as follows [NUMBER_OF_ELEMENTS_IN_ARRAY]TYPE{ELEMENTS}. And allows you to store many objects of the same type
 package main import ( &amp;#34;fmt&amp;#34; ) func main() { students := [3]string{&amp;#34;John&amp;#34;, &amp;#34;Lucy&amp;#34;, &amp;#34;Alex&amp;#34;} fmt.Println(students) } $ go run main.go [John Lucy Alex] To not specify a number that will mean the number of elements in the array, you can specify .</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>In this post we are going to explore what is arrays та slices в golang.&lt;/p>
+&lt;p>In this programming we are going to explore what is arrays та slices в golang.&lt;/p>
 &lt;h2 id="arrays">Arrays&lt;/h2>
 &lt;h3 id="creation">Creation&lt;/h3>
 &lt;p>An array in golang is created as follows &lt;code>[NUMBER_OF_ELEMENTS_IN_ARRAY]TYPE{ELEMENTS}&lt;/code>. And allows you to store many objects of the same type&lt;/p>
@@ -1652,7 +1652,7 @@ package main import ( &amp;#34;fmt&amp;#34; ) func main() { students := [3]strin
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/9RjULVVeRMQ" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Go Constants</title><link>https://mpostument.com/2022/11/12/go-constant/</link><pubDate>Sat, 12 Nov 2022 07:46:18 +0200</pubDate><guid>https://mpostument.com/2022/11/12/go-constant/</guid><description>Hello!
+&lt;/div></content></item><item><title>Go Constants</title><link>https://mpostument.com/programming/golang/basics/go-constant/</link><pubDate>Sat, 12 Nov 2022 07:46:18 +0200</pubDate><guid>https://mpostument.com/programming/golang/basics/go-constant/</guid><description>Hello!
 Let&amp;rsquo;s learn what constants are, how they should be named in golang, and also what iota is.
 Naming If you are familiar with constants in other programming languages, you know that their names usually include only capital letters, for example, PORT_NUMBER. In golang, we cannot do this because by making the first letter uppercase, we will immediately make the constant available to other packages. Therefore, in golang, we name constants in the same way as variables portNumber or PortNumber if we want the constant to be available in other packages.</description><content>&lt;p>Hello!&lt;/p>
 &lt;p>Let&amp;rsquo;s learn what constants are, how they should be named in golang, and also what iota is.&lt;/p>
@@ -1871,11 +1871,11 @@ Naming If you are familiar with constants in other programming languages, you kn
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/1VoUYyFbdBw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Basic Types in Go</title><link>https://mpostument.com/2022/11/08/go-basic-types/</link><pubDate>Tue, 08 Nov 2022 19:54:39 +0200</pubDate><guid>https://mpostument.com/2022/11/08/go-basic-types/</guid><description>Hello!
-In this post, we will look at the basic data types in golang.
+&lt;/div></content></item><item><title>Basic Types in Go</title><link>https://mpostument.com/programming/golang/basics/go-basic-types/</link><pubDate>Tue, 08 Nov 2022 19:54:39 +0200</pubDate><guid>https://mpostument.com/programming/golang/basics/go-basic-types/</guid><description>Hello!
+In this programming, we will look at the basic data types in golang.
 Bool The first type we will consider is bool. In this type, only two values are possible: true and false. You can create a bool variable in one of the following ways:
 var isActive bool var isEnabled = false isLoaded := true In the second and third options, we immediately set the value that the variable will have.</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>In this post, we will look at the basic data types in golang.&lt;/p>
+&lt;p>In this programming, we will look at the basic data types in golang.&lt;/p>
 &lt;h2 id="bool">Bool&lt;/h2>
 &lt;p>The first type we will consider is bool. In this type, only two values are possible: true and false. You can create a bool variable in one of the following ways:&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">var&lt;/span> &lt;span style="color:#a6e22e">isActive&lt;/span> &lt;span style="color:#66d9ef">bool&lt;/span>
@@ -2066,7 +2066,7 @@ var isActive bool var isEnabled = false isLoaded := true In the second and third
 &lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/E9jE0WrfPvE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Go Variables</title><link>https://mpostument.com/2022/11/02/go-variables/</link><pubDate>Wed, 02 Nov 2022 18:00:24 +0200</pubDate><guid>https://mpostument.com/2022/11/02/go-variables/</guid><description>Hello!
+&lt;/div></content></item><item><title>Go Variables</title><link>https://mpostument.com/programming/golang/basics/go-variables/</link><pubDate>Wed, 02 Nov 2022 18:00:24 +0200</pubDate><guid>https://mpostument.com/programming/golang/basics/go-variables/</guid><description>Hello!
 Today we will talk about variables in golang. There are three ways to create variables, let&amp;rsquo;s try each of them.
 Var keyword The first way is to create a variable using the var keyword. This is how you can create a variable that will have no value (will have an initial value depending on variable type). It looks like this var PARAM_NAME PARAM_TYPE for example var level int
 package main import &amp;#34;fmt&amp;#34; func main() { var level int fmt.</description><content>&lt;p>Hello!&lt;/p>
@@ -2236,11 +2236,11 @@ package main import &amp;#34;fmt&amp;#34; func main() { var level int fmt.</desc
 &lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/w3q_VVYFDKc" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Golang - Setting Up Development Environment</title><link>https://mpostument.com/2022/10/28/setup-go/</link><pubDate>Fri, 28 Oct 2022 21:31:30 +0300</pubDate><guid>https://mpostument.com/2022/10/28/setup-go/</guid><description>Hello!
-This post is the start of a series of posts about golang. In this one, we will install golang and configure vscode.
+&lt;/div></content></item><item><title>Golang - Setting Up Development Environment</title><link>https://mpostument.com/programming/golang/basics/setup-go/</link><pubDate>Fri, 28 Oct 2022 21:31:30 +0300</pubDate><guid>https://mpostument.com/programming/golang/basics/setup-go/</guid><description>Hello!
+This programming is the start of a series of posts about golang. In this one, we will install golang and configure vscode.
 Install go The current version of golang can be downloaded from official site. I&amp;rsquo;m using Linux so I&amp;rsquo;ll download the Linux version
 $ wget https://go.dev/dl/go1.19.2.linux-amd64.tar.gz --2022-10-28 22:35:40-- https://go.dev/dl/go1.19.2.linux-amd64.tar.gz Resolving go.dev (go.dev)... 216.239.36.21, 216.239.34.21, 216.239.38.21, ... Connecting to go.dev (go.dev)|216.239.36.21|:443... connected. HTTP request sent, awaiting response... 302 Found Location: https://dl.</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>This post is the start of a series of posts about golang. In this one, we will install golang and configure vscode.&lt;/p>
+&lt;p>This programming is the start of a series of posts about golang. In this one, we will install golang and configure vscode.&lt;/p>
 &lt;h2 id="install-go">Install go&lt;/h2>
 &lt;p>The current version of golang can be downloaded from &lt;a href="https://go.dev/dl/">official site&lt;/a>. I&amp;rsquo;m using Linux so I&amp;rsquo;ll download the Linux version&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>$ wget https://go.dev/dl/go1.19.2.linux-amd64.tar.gz
@@ -2319,7 +2319,7 @@ Enter &lt;code>go&lt;/code> in the search, select &lt;code>Go&lt;/code>, and cli
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/Lk6gB5q2xBw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Docker Sdk Part One</title><link>https://mpostument.com/2022/03/22/docker-sdk-part-one/</link><pubDate>Tue, 22 Mar 2022 20:31:29 +0200</pubDate><guid>https://mpostument.com/2022/03/22/docker-sdk-part-one/</guid><description>Hi there!
+&lt;/div></content></item><item><title>Docker Sdk Part One</title><link>https://mpostument.com/programming/golang/docker-sdk-part-one/</link><pubDate>Tue, 22 Mar 2022 20:31:29 +0200</pubDate><guid>https://mpostument.com/programming/golang/docker-sdk-part-one/</guid><description>Hi there!
 This is the first part of the article about docker SDK. In the current article, we will see how with the help of golang it is possible to make pull and list docker images.
 Docker pull As usual, initialize the go module, load the docker SDK and create the main.go file
 go mod init go get github.com/docker/docker/client Let&amp;rsquo;s create a PullImage method in which we will create a docker client using the client.</description><content>&lt;p>Hi there!&lt;/p>
@@ -2421,7 +2421,7 @@ go mod init go get github.com/docker/docker/client Let&amp;rsquo;s create a Pull
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>tiangolo/uvicorn-gunicorn-fastapi:python3.8&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#ae81ff">1014169179&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>lambci/lambda:build-python3.8&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#ae81ff">1962950336&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>selenoid/chrome:77.0&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#ae81ff">891512369&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Using Mongo With Go</title><link>https://mpostument.com/2022/03/15/using-mongo-with-go/</link><pubDate>Tue, 15 Mar 2022 20:29:54 +0200</pubDate><guid>https://mpostument.com/2022/03/15/using-mongo-with-go/</guid><description>Hi there!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Using Mongo With Go</title><link>https://mpostument.com/programming/golang/using-mongo-with-go/</link><pubDate>Tue, 15 Mar 2022 20:29:54 +0200</pubDate><guid>https://mpostument.com/programming/golang/using-mongo-with-go/</guid><description>Hi there!
 Today we will look at how to use mongo with golang. And let&amp;rsquo;s start with the launch of mongo. I will use docker-compose. To do this, create a file named docker-compose.yml. In the file, you need to specify which version of the mongo to use. I&amp;rsquo;m not specifying the version which means that the latest version of mongo will be used. You must also specify a username and password and the port that will be open for access.</description><content>&lt;p>Hi there!&lt;/p>
 &lt;p>Today we will look at how to use mongo with golang. And let&amp;rsquo;s start with the launch of mongo. I will use docker-compose. To do this, create a file named &lt;code>docker-compose.yml&lt;/code>. In the file, you need to specify which version of the mongo to use. I&amp;rsquo;m not specifying the version which means that the latest version of mongo will be used. You must also specify a username and password and the port that will be open for access.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">version&lt;/span>: &lt;span style="color:#e6db74">&amp;#39;3.1&amp;#39;&lt;/span>
@@ -2531,7 +2531,7 @@ To do this, connect to the docker container&lt;/p>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">user&lt;/span>)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You can also use the Find method instead of FindOne, which will return many objects.&lt;/p></content></item><item><title>Using Postgres With Golang</title><link>https://mpostument.com/2022/02/20/using-postgres-with-go/</link><pubDate>Sun, 20 Feb 2022 20:37:23 +0200</pubDate><guid>https://mpostument.com/2022/02/20/using-postgres-with-go/</guid><description>Hello!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You can also use the Find method instead of FindOne, which will return many objects.&lt;/p></content></item><item><title>Using Postgres With Golang</title><link>https://mpostument.com/programming/golang/using-postgres-with-go/</link><pubDate>Sun, 20 Feb 2022 20:37:23 +0200</pubDate><guid>https://mpostument.com/programming/golang/using-postgres-with-go/</guid><description>Hello!
 Today we will look at how we can use golang to connect to the Postgres database and execute queries. To work with the database we will use github.com/jackc/pgx.
 Let&amp;rsquo;s start with initializing the module and installing the driver for the database.
 go mod init go get github.com/jackc/pgx/v4 After that pgx will be available for use in code.
@@ -2624,7 +2624,7 @@ The database is ready to work, and now we can start writing code.&lt;/p>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">user&lt;/span>)
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>Pgx&lt;/code> can also be used as a driver for the built-in &lt;code>sql&lt;/code> package&lt;/p></content></item><item><title>WaitGroup</title><link>https://mpostument.com/2022/02/02/wait-groups/</link><pubDate>Wed, 02 Feb 2022 20:58:30 +0200</pubDate><guid>https://mpostument.com/2022/02/02/wait-groups/</guid><description>Hello!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>Pgx&lt;/code> can also be used as a driver for the built-in &lt;code>sql&lt;/code> package&lt;/p></content></item><item><title>WaitGroup</title><link>https://mpostument.com/programming/golang/wait-groups/</link><pubDate>Wed, 02 Feb 2022 20:58:30 +0200</pubDate><guid>https://mpostument.com/programming/golang/wait-groups/</guid><description>Hello!
 Today we will learn what is WaitGroup in golang and we will look how to apply them on an example of the program for files search.
 WaitGroup is waiting for the completion of go routines. The main go routine calls the Add method, and then each go routine calls the Done method when the routine ends.
 Let&amp;rsquo;s start with the findFile method. In this method we read all files and directories in the root folder.</description><content>&lt;p>Hello!&lt;/p>
@@ -2705,7 +2705,7 @@ Let&amp;rsquo;s start with the findFile method. In this method we read all files
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Matched&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">file&lt;/span>)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>A few things have been added here. In the &lt;code>findFile&lt;/code> method, lock was added before adding file names to list. To ensure that routines do not overwrite data. Another thing that has been added is &lt;code>waitGroup&lt;/code>. Before the each &lt;code>go&lt;/code> routine call, the &lt;code>waitGroup.Add(1)&lt;/code> call is added, and after the &lt;code>go&lt;/code> routine, &lt;code>waitGroup.Done()&lt;/code> is called. And to the main method added &lt;code>waitGroup.Wait()&lt;/code> which will wait while all &lt;code>go&lt;/code> routines finish work. And then a list of all files will be displayed.&lt;/p></content></item><item><title>Read and Write lock in Go</title><link>https://mpostument.com/2022/01/31/rwlock/</link><pubDate>Mon, 31 Jan 2022 19:30:37 +0200</pubDate><guid>https://mpostument.com/2022/01/31/rwlock/</guid><description>Hello!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>A few things have been added here. In the &lt;code>findFile&lt;/code> method, lock was added before adding file names to list. To ensure that routines do not overwrite data. Another thing that has been added is &lt;code>waitGroup&lt;/code>. Before the each &lt;code>go&lt;/code> routine call, the &lt;code>waitGroup.Add(1)&lt;/code> call is added, and after the &lt;code>go&lt;/code> routine, &lt;code>waitGroup.Done()&lt;/code> is called. And to the main method added &lt;code>waitGroup.Wait()&lt;/code> which will wait while all &lt;code>go&lt;/code> routines finish work. And then a list of all files will be displayed.&lt;/p></content></item><item><title>Read and Write lock in Go</title><link>https://mpostument.com/programming/golang/rwlock/</link><pubDate>Mon, 31 Jan 2022 19:30:37 +0200</pubDate><guid>https://mpostument.com/programming/golang/rwlock/</guid><description>Hello!
 Today we will learn what is RWMutex and how to use it. RWMutex is a read/write exclusion lock. A lock can have any number of readers or one writer.
 RWMutex has the following methods:
 func (rw *RWMutex) Lock() // Write Lock func (rw *RWMutex) RLock() // Read Lock func (rw *RWMutex) RUnlock() // Read Unlock func (rw *RWMutex) Unlock() // Write Unlock Now let&amp;rsquo;s see how it can be used.</description><content>&lt;p>Hello!&lt;/p>
@@ -2797,7 +2797,7 @@ RWMutex is a read/write exclusion lock. A lock can have any number of readers or
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Released read lock &lt;span style="color:#ae81ff">2&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Writing &lt;span style="color:#ae81ff">1&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Released write lock &lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Latest post in GitHub readme</title><link>https://mpostument.com/2021/03/06/latest-post-in-github-readme/</link><pubDate>Sat, 06 Mar 2021 18:56:24 +0200</pubDate><guid>https://mpostument.com/2021/03/06/latest-post-in-github-readme/</guid><description>Hello!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Latest programming in GitHub readme</title><link>https://mpostument.com/programming/golang/latest-post-in-github-readme/</link><pubDate>Sat, 06 Mar 2021 18:56:24 +0200</pubDate><guid>https://mpostument.com/programming/golang/latest-post-in-github-readme/</guid><description>Hello!
 Today I will show how to automatically generate GitHub Readme with the latest blog posts using go. In GitHub you need to create a repository named as your GitHub profile. My GitHub profile is called mpostument, so I&amp;rsquo;ll create a repository with the same name.
 I clone the repository and call go mod init in it, in order to initialize the go module which will generate readme. At the root of the repository you need to create main.</description><content>&lt;p>Hello!&lt;/p>
 &lt;p>Today I will show how to automatically generate GitHub Readme with the latest blog posts using go.
@@ -2836,14 +2836,14 @@ The code itself is quite simple, read the template using &lt;code>template.Parse
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">postList&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> []&lt;span style="color:#a6e22e">ReadmeData&lt;/span>{}
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">index&lt;/span>, &lt;span style="color:#a6e22e">post&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">feed&lt;/span>.&lt;span style="color:#a6e22e">Items&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">index&lt;/span>, &lt;span style="color:#a6e22e">programming&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">feed&lt;/span>.&lt;span style="color:#a6e22e">Items&lt;/span> {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">index&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">7&lt;/span> {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">readmeData&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ReadmeData&lt;/span>{
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Title&lt;/span>: &lt;span style="color:#a6e22e">post&lt;/span>.&lt;span style="color:#a6e22e">Title&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Link&lt;/span>: &lt;span style="color:#a6e22e">post&lt;/span>.&lt;span style="color:#a6e22e">Link&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Title&lt;/span>: &lt;span style="color:#a6e22e">programming&lt;/span>.&lt;span style="color:#a6e22e">Title&lt;/span>,
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Link&lt;/span>: &lt;span style="color:#a6e22e">programming&lt;/span>.&lt;span style="color:#a6e22e">Link&lt;/span>,
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">postList&lt;/span> = append(&lt;span style="color:#a6e22e">postList&lt;/span>, &lt;span style="color:#a6e22e">readmeData&lt;/span>)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
@@ -2897,7 +2897,7 @@ This file is a configuration of the steps that GitHubActions will call. The acti
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> git add -A
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> git commit -m &amp;#34;Updated readme content&amp;#34; || exit 0
 &lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#e6db74"> git push&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Ebs Auto Resize</title><link>https://mpostument.com/2021/02/06/ebs-auto-resize/</link><pubDate>Sat, 06 Feb 2021 18:14:40 +0200</pubDate><guid>https://mpostument.com/2021/02/06/ebs-auto-resize/</guid><description>Hi there!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Ebs Auto Resize</title><link>https://mpostument.com/programming/golang/ebs-auto-resize/</link><pubDate>Sat, 06 Feb 2021 18:14:40 +0200</pubDate><guid>https://mpostument.com/programming/golang/ebs-auto-resize/</guid><description>Hi there!
 Today we will make a script for automatic resizing of EBS volume using golang and AWS SDK version 2. To do this, I need to perform a few steps: get a list of volumes, filter those volumes in which the amount of free memory is less than the threshold, find the ebs id that corresponds to this volume. Resize by a specified percentage and increase the disk size on the file system.</description><content>&lt;p>Hi there!&lt;/p>
 &lt;p>Today we will make a script for automatic resizing of EBS volume using golang and AWS SDK version 2.
 To do this, I need to perform a few steps: get a list of volumes, filter those volumes in which the amount of free memory is less than the threshold, find the ebs id that corresponds to this volume. Resize by a specified percentage and increase the disk size on the file system.&lt;/p>
@@ -3179,7 +3179,7 @@ If it is xfs then called &lt;code>xfs_growfs&lt;/code> in other cases it is &lt;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After a few seconds, the disk has a new size.&lt;/p></content></item><item><title>Failed Asg Event Notification</title><link>https://mpostument.com/2021/01/03/failed-asg-event-notification/</link><pubDate>Sun, 03 Jan 2021 17:57:36 +0200</pubDate><guid>https://mpostument.com/2021/01/03/failed-asg-event-notification/</guid><description>Hello!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After a few seconds, the disk has a new size.&lt;/p></content></item><item><title>Failed Asg Event Notification</title><link>https://mpostument.com/programming/golang/failed-asg-event-notification/</link><pubDate>Sun, 03 Jan 2021 17:57:36 +0200</pubDate><guid>https://mpostument.com/programming/golang/failed-asg-event-notification/</guid><description>Hello!
 Today I want to show how with the help of AWS Lambda and Golang you can get messages in slack when Autoscaling could not create an Ec2 server. Deploy I automate using serverless.
 Let&amp;rsquo;s start with the installation of node and serverless. I use nvm to manage node versions.
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash nvm install v14.15.3 npm install -g serverless I will create a folder and initialize the go module in it.</description><content>&lt;p>Hello!&lt;/p>
@@ -3244,7 +3244,7 @@ Using &lt;code>strings.Builder&lt;/code> I create a message to be sent, by addin
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">SendSlackNotification&lt;/span>(&lt;span style="color:#a6e22e">url&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">data&lt;/span> &lt;span style="color:#66d9ef">interface&lt;/span>{}) (&lt;span style="color:#a6e22e">bodyString&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#66d9ef">error&lt;/span>) {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">jsonString&lt;/span>, &lt;span style="color:#a6e22e">_&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">json&lt;/span>.&lt;span style="color:#a6e22e">Marshal&lt;/span>(&lt;span style="color:#a6e22e">data&lt;/span>)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">req&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">http&lt;/span>.&lt;span style="color:#a6e22e">NewRequest&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;POST&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">url&lt;/span>, &lt;span style="color:#a6e22e">bytes&lt;/span>.&lt;span style="color:#a6e22e">NewBuffer&lt;/span>(&lt;span style="color:#a6e22e">jsonString&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">req&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">http&lt;/span>.&lt;span style="color:#a6e22e">NewRequest&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;programming&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">url&lt;/span>, &lt;span style="color:#a6e22e">bytes&lt;/span>.&lt;span style="color:#a6e22e">NewBuffer&lt;/span>(&lt;span style="color:#a6e22e">jsonString&lt;/span>))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">req&lt;/span>.&lt;span style="color:#a6e22e">Header&lt;/span>.&lt;span style="color:#a6e22e">Set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Content-Type&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;application/json&amp;#34;&lt;/span>)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">client&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">http&lt;/span>.&lt;span style="color:#a6e22e">Client&lt;/span>{}
@@ -3295,12 +3295,12 @@ At the root of the repository, I create a file &lt;code>serverless.yml&lt;/code>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>go mod tidy
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>OOS&lt;span style="color:#f92672">=&lt;/span>linux GOARCH&lt;span style="color:#f92672">=&lt;/span>amd64 go build -o bin/failed-asg-event-notification .
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sls deploy
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After that, if there is an event of the type &lt;code>EC2 Instance Launch Unsuccessful&lt;/code> from &lt;code>aws.autoscaling&lt;/code> the corresponding message will be sent to the slack.&lt;/p></content></item><item><title>Import Grafana Dashboards With Go</title><link>https://mpostument.com/2020/12/23/import-grafana-dashboards-with-go/</link><pubDate>Wed, 23 Dec 2020 23:18:28 +0200</pubDate><guid>https://mpostument.com/2020/12/23/import-grafana-dashboards-with-go/</guid><description>Hello!
-In the previous post I showed how you can export dashboards from Grafana. Now let&amp;rsquo;s see how they can be imported into Grafana.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After that, if there is an event of the type &lt;code>EC2 Instance Launch Unsuccessful&lt;/code> from &lt;code>aws.autoscaling&lt;/code> the corresponding message will be sent to the slack.&lt;/p></content></item><item><title>Import Grafana Dashboards With Go</title><link>https://mpostument.com/programming/golang/import-grafana-dashboards-with-go/</link><pubDate>Wed, 23 Dec 2020 23:18:28 +0200</pubDate><guid>https://mpostument.com/programming/golang/import-grafana-dashboards-with-go/</guid><description>Hello!
+In the previous programming I showed how you can export dashboards from Grafana. Now let&amp;rsquo;s see how they can be imported into Grafana.
 As always at the beginning there will be imports and main function
 package grafana import ( &amp;#34;context&amp;#34; &amp;#34;encoding/json&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;io/ioutil&amp;#34; &amp;#34;log&amp;#34; &amp;#34;os&amp;#34; &amp;#34;strings&amp;#34; &amp;#34;github.com/grafana-tools/sdk&amp;#34; ) func main() { } I will add some parameters:
 var ( filesInDir []os.FileInfo rawBoard []byte err error grafanaURL string apiKey string directory string ) filesInDir will store all dashboards from the file system.</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>In the previous &lt;a href="https://mpostument.com/2020/12/19/export-grafana-dashboards-with-go/" title="post">post&lt;/a> I showed how you can export dashboards from Grafana. Now let&amp;rsquo;s see how they can be imported into Grafana.&lt;/p>
+&lt;p>In the previous &lt;a href="https://mpostument.com/programming/golang/export-grafana-dashboards-with-go/" title="programming">programming&lt;/a> I showed how you can export dashboards from Grafana. Now let&amp;rsquo;s see how they can be imported into Grafana.&lt;/p>
 &lt;p>As always at the beginning there will be imports and main function&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">grafana&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
@@ -3361,7 +3361,7 @@ var ( filesInDir []os.FileInfo rawBoard []byte err error grafanaURL string apiKe
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Export Grafana Dashboards With Go</title><link>https://mpostument.com/2020/12/19/export-grafana-dashboards-with-go/</link><pubDate>Sat, 19 Dec 2020 18:27:35 +0200</pubDate><guid>https://mpostument.com/2020/12/19/export-grafana-dashboards-with-go/</guid><description>Hello!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Export Grafana Dashboards With Go</title><link>https://mpostument.com/programming/golang/export-grafana-dashboards-with-go/</link><pubDate>Sat, 19 Dec 2020 18:27:35 +0200</pubDate><guid>https://mpostument.com/programming/golang/export-grafana-dashboards-with-go/</guid><description>Hello!
 Let&amp;rsquo;s check how you can use go to export dashboards from Grafana. For interaction with Grafana I use sdk. Sdk can be installed using go get github.com/grafana-tools/sdk.
 Let&amp;rsquo;s start writing code. At the beginning of the file will be the package, import and main function
 package main import ( &amp;#34;context&amp;#34; &amp;#34;encoding/json&amp;#34; &amp;#34;fmt&amp;#34; &amp;#34;log&amp;#34; &amp;#34;os&amp;#34; &amp;#34;github.com/grafana-tools/sdk&amp;#34; ) func main() { } ) I will add some parameters:
@@ -3442,7 +3442,7 @@ For interaction with Grafana I use &lt;a href="https://github.com/grafana-tools/
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Printf&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;failed to encode dashboard json to file %s&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">fileName&lt;/span>)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In this method I check if there is a directory, if not I create it. Next in this directory, I create a file for dashboard using meta parameter as name and use &lt;code>json.NewEncoder&lt;/code> to write json to a file.&lt;/p></content></item><item><title>Filter Ebs Snapshot By Date With Go</title><link>https://mpostument.com/2020/12/05/filter-ebs-snapshot-by-date-with-go/</link><pubDate>Sat, 05 Dec 2020 17:53:29 +0200</pubDate><guid>https://mpostument.com/2020/12/05/filter-ebs-snapshot-by-date-with-go/</guid><description>Hello!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In this method I check if there is a directory, if not I create it. Next in this directory, I create a file for dashboard using meta parameter as name and use &lt;code>json.NewEncoder&lt;/code> to write json to a file.&lt;/p></content></item><item><title>Filter Ebs Snapshot By Date With Go</title><link>https://mpostument.com/programming/golang/filter-ebs-snapshot-by-date-with-go/</link><pubDate>Sat, 05 Dec 2020 17:53:29 +0200</pubDate><guid>https://mpostument.com/programming/golang/filter-ebs-snapshot-by-date-with-go/</guid><description>Hello!
 Today I will show how you can filter ebs snapshots by date with golang.
 To begin with I will create a folder and in it, I will initialize the go module
 mkdir snapshotFilter cd snapshotFilter go mod init snapshotFilter You need to create main.go which will contain the code. Let&amp;rsquo;s start with the main function and imports
@@ -3523,7 +3523,7 @@ Main function creates the ec2 client, &lt;code>snapshotName&lt;/code> and the &l
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Not found spashot with specific date&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">filterDate&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;going to use latest&amp;#34;&lt;/span>, &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">result&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>].&lt;span style="color:#a6e22e">StartTime&lt;/span>)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">result&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>].&lt;span style="color:#a6e22e">SnapshotId&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Get Lambdas in Vpc With Go</title><link>https://mpostument.com/2020/09/01/get-lambdas-in-vpc-with-go/</link><pubDate>Tue, 01 Sep 2020 17:40:16 +0300</pubDate><guid>https://mpostument.com/2020/09/01/get-lambdas-in-vpc-with-go/</guid><description>Hi there!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Get Lambdas in Vpc With Go</title><link>https://mpostument.com/programming/golang/get-lambdas-in-vpc-with-go/</link><pubDate>Tue, 01 Sep 2020 17:40:16 +0300</pubDate><guid>https://mpostument.com/programming/golang/get-lambdas-in-vpc-with-go/</guid><description>Hi there!
 Today I want to tell you how with go you can get a list of all AWS Lambda that are in the VPC. First you need to install golang. The latest version can be downloaded from the official website.
 Once golang is installed, create a folder for the scripts mkdir awsscripts
 Next you need to initialize the go.mod file. This file stores all the dependencies on external packages, and at the same time will make the go code module.</description><content>&lt;p>Hi there!&lt;/p>

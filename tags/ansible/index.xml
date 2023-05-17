@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ansible on Maksym Postument</title><link>https://mpostument.com/tags/ansible/</link><description>Recent content in Ansible on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 19 Oct 2022 17:28:26 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/ansible/index.xml" rel="self" type="application/rss+xml"/><item><title>Ansible Vault</title><link>https://mpostument.com/2022/10/19/ansible-vault/</link><pubDate>Wed, 19 Oct 2022 17:28:26 +0300</pubDate><guid>https://mpostument.com/2022/10/19/ansible-vault/</guid><description>Part 1 - Manage Ansible Versions With pyenv
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ansible on Maksym Postument</title><link>https://mpostument.com/tags/ansible/</link><description>Recent content in Ansible on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 19 Oct 2022 17:28:26 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/ansible/index.xml" rel="self" type="application/rss+xml"/><item><title>Ansible Vault</title><link>https://mpostument.com/programming/ansible/ansible-vault/</link><pubDate>Wed, 19 Oct 2022 17:28:26 +0300</pubDate><guid>https://mpostument.com/programming/ansible/ansible-vault/</guid><description>Part 1 - Manage Ansible Versions With pyenv
 Part 2 - Ansible Inventory
 Part 3 - Ansible Playbook
 Part 4 - Ansible Role
 Hello!
 What if we need to create a user in the database and store their password securely in code? This can be done using ansible vault. Ansible vault allows you to encrypt both the entire file and individual variables.
-Encrypted file Let&amp;rsquo;s create a file that will contain our variables.</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/09/19/manage-ansible-versions-with-pyenv/" title="Part 1 - Manage Ansible Versions With pyenv">Part 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/09/27/ansible-inventory/" title="Part 2 - Ansible Inventory">Part 2 - Ansible Inventory&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/10/04/ansible-playbook/" title="Part 3 - Ansible Playbook">Part 3 - Ansible Playbook&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/10/15/ansible-role/" title="Part 4 - Ansible Role">Part 4 - Ansible Role&lt;/a>&lt;/p>
+Encrypted file Let&amp;rsquo;s create a file that will contain our variables.</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/ansible/manage-ansible-versions-with-pyenv/" title="Part 1 - Manage Ansible Versions With pyenv">Part 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/ansible/ansible-inventory/" title="Part 2 - Ansible Inventory">Part 2 - Ansible Inventory&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/ansible/ansible-playbook/" title="Part 3 - Ansible Playbook">Part 3 - Ansible Playbook&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/ansible/ansible-role/" title="Part 4 - Ansible Role">Part 4 - Ansible Role&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
 &lt;p>What if we need to create a user in the database and store their password securely in code? This can be done using &lt;a href="https://docs.ansible.com/ansible/latest/user_guide/vault.html">ansible vault&lt;/a>. Ansible vault allows you to encrypt both the entire file and individual variables.&lt;/p>
 &lt;h2 id="encrypted-file">Encrypted file&lt;/h2>
@@ -34,7 +34,7 @@ Encrypted file Let&amp;rsquo;s create a file that will contain our variables.</d
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>---
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Run locally&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">hosts&lt;/span>: &lt;span style="color:#ae81ff">localhost&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">connection&lt;/span>: &lt;span style="color:#ae81ff">local &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">connection&lt;/span>: &lt;span style="color:#ae81ff">local&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">vars_files&lt;/span>:
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">vars.yml&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
@@ -121,7 +121,7 @@ Encrypted file Let&amp;rsquo;s create a file that will contain our variables.</d
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>---
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Run locally&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">hosts&lt;/span>: &lt;span style="color:#ae81ff">localhost&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">connection&lt;/span>: &lt;span style="color:#ae81ff">local &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">connection&lt;/span>: &lt;span style="color:#ae81ff">local&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">vars&lt;/span>:
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">admin_password&lt;/span>: !&lt;span style="color:#ae81ff">vault |&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">$ANSIBLE_VAULT;1.1;AES256&lt;/span>
@@ -153,13 +153,13 @@ Encrypted file Let&amp;rsquo;s create a file that will contain our variables.</d
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/2z46Ag-mclI" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Ansible Role</title><link>https://mpostument.com/2022/10/15/ansible-role/</link><pubDate>Sat, 15 Oct 2022 17:49:02 +0300</pubDate><guid>https://mpostument.com/2022/10/15/ansible-role/</guid><description>Part 1 - Manage Ansible Versions With pyenv
+&lt;/div></content></item><item><title>Ansible Role</title><link>https://mpostument.com/programming/ansible/ansible-role/</link><pubDate>Sat, 15 Oct 2022 17:49:02 +0300</pubDate><guid>https://mpostument.com/programming/ansible/ansible-role/</guid><description>Part 1 - Manage Ansible Versions With pyenv
 Part 2 - Ansible Inventory
 Part 3 - Ansible Playbook
 Hello!
-So what is a role in Ansible? Roles are a logical organization of Ansible code. For example, you can create a role that will install a MySQL database, put it in a separate repository, and make it publicly available or shared with other teams, and everyone should be able to use it</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/09/19/manage-ansible-versions-with-pyenv/" title="Part 1 - Manage Ansible Versions With pyenv">Part 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/09/27/ansible-inventory/" title="Part 2 - Ansible Inventory">Part 2 - Ansible Inventory&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/10/04/ansible-playbook/" title="Part 3 - Ansible Playbook">Part 3 - Ansible Playbook&lt;/a>&lt;/p>
+So what is a role in Ansible? Roles are a logical organization of Ansible code. For example, you can create a role that will install a MySQL database, put it in a separate repository, and make it publicly available or shared with other teams, and everyone should be able to use it</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/ansible/manage-ansible-versions-with-pyenv/" title="Part 1 - Manage Ansible Versions With pyenv">Part 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/ansible/ansible-inventory/" title="Part 2 - Ansible Inventory">Part 2 - Ansible Inventory&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/ansible/ansible-playbook/" title="Part 3 - Ansible Playbook">Part 3 - Ansible Playbook&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
 &lt;p>So what is a role in Ansible? Roles are a logical organization of Ansible code. For example, you can create a role that will install a MySQL database, put it in a separate repository, and make it publicly available or shared with other teams, and everyone should be able to use it&lt;/p>
 &lt;h2 id="create-a-role">Create a Role&lt;/h2>
@@ -455,13 +455,13 @@ This would normally be &lt;code>ansible-galaxy install ROLE_NAME&lt;/code>&lt;/p
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/oeihNr9e5I4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Ansible Playbook</title><link>https://mpostument.com/2022/10/04/ansible-playbook/</link><pubDate>Tue, 04 Oct 2022 22:51:59 +0300</pubDate><guid>https://mpostument.com/2022/10/04/ansible-playbook/</guid><description>Part 1 - Manage Ansible Versions With pyenv
+&lt;/div></content></item><item><title>Ansible Playbook</title><link>https://mpostument.com/programming/ansible/ansible-playbook/</link><pubDate>Tue, 04 Oct 2022 22:51:59 +0300</pubDate><guid>https://mpostument.com/programming/ansible/ansible-playbook/</guid><description>Part 1 - Manage Ansible Versions With pyenv
 Part 2 - Ansible Inventory
 Hello!
 Today I will show what ansible-playbook is and how to create it.
 Playbook Ansible Playbooks is an iterative, reusable, configuration management and deployment framework that is well-suited for deploying complex applications. If you need to run a task with Ansible more than once, you can do it with a playbook.
-Let&amp;rsquo;s create the simplest playbook. In the playbook, you need to specify its name, the group of servers on which it will be executed, and the tasks themselves.</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/09/19/manage-ansible-versions-with-pyenv/" title="Part 1 - Manage Ansible Versions With pyenv">Part 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/09/27/ansible-inventory/" title="Part 2 - Ansible Inventory">Part 2 - Ansible Inventory&lt;/a>&lt;/p>
+Let&amp;rsquo;s create the simplest playbook. In the playbook, you need to specify its name, the group of servers on which it will be executed, and the tasks themselves.</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/ansible/manage-ansible-versions-with-pyenv/" title="Part 1 - Manage Ansible Versions With pyenv">Part 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/ansible/ansible-inventory/" title="Part 2 - Ansible Inventory">Part 2 - Ansible Inventory&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
 &lt;p>Today I will show what ansible-playbook is and how to create it.&lt;/p>
 &lt;h2 id="playbook">Playbook&lt;/h2>
@@ -735,7 +735,7 @@ Let&amp;rsquo;s create the simplest playbook. In the playbook, you need to speci
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PLAY RECAP *********************************************************************************************************************
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>3.92.61.18 : ok&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">4&lt;/span> changed&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> unreachable&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> failed&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span> skipped&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> rescued&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span> ignored&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="loop">Loop&lt;/h2>
-&lt;p>Ansible has several types of &lt;a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html">loops&lt;/a>. Let&amp;rsquo;s start with the simplest loop through the list. In this post, we will check only the simplest one&lt;/p>
+&lt;p>Ansible has several types of &lt;a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html">loops&lt;/a>. Let&amp;rsquo;s start with the simplest loop through the list. In this programming, we will check only the simplest one&lt;/p>
 &lt;h3 id="simple-list">Simple list&lt;/h3>
 &lt;p>In this case, several users (testuser1 and testuser2) are created, which are specified in the loop block, and &lt;code>{{ item }}&lt;/code> is specified instead of the user name, which will be replaced by the user name when executed&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Add several users&lt;/span>
@@ -893,11 +893,11 @@ Let&amp;rsquo;s create the simplest playbook. In the playbook, you need to speci
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/k74GIVucO_Y" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Ansible Inventory</title><link>https://mpostument.com/2022/09/27/ansible-inventory/</link><pubDate>Tue, 27 Sep 2022 21:39:08 +0300</pubDate><guid>https://mpostument.com/2022/09/27/ansible-inventory/</guid><description>Part 1 - Manage Ansible Versions With pyenv
+&lt;/div></content></item><item><title>Ansible Inventory</title><link>https://mpostument.com/programming/ansible/ansible-inventory/</link><pubDate>Tue, 27 Sep 2022 21:39:08 +0300</pubDate><guid>https://mpostument.com/programming/ansible/ansible-inventory/</guid><description>Part 1 - Manage Ansible Versions With pyenv
 Hello!
 Today I will show you what inventory in Ansible and how to use them.
 Ansible has two types of inventory - static and dynamic. Static is used when we know in advance the list of servers on which Ansible should run. And dynamic when we do not have this data in advance and we want to receive it dynamically.
-Static inventory To use static inventory, it is enough to simply create a file, for example, inventory, and inside you can specify IP addresses, for example:</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/09/19/manage-ansible-versions-with-pyenv/" title="Part 1 - Manage Ansible Versions With pyenv">Part 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;/p>
+Static inventory To use static inventory, it is enough to simply create a file, for example, inventory, and inside you can specify IP addresses, for example:</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/ansible/manage-ansible-versions-with-pyenv/" title="Part 1 - Manage Ansible Versions With pyenv">Part 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
 &lt;p>Today I will show you what inventory in Ansible and how to use them.&lt;/p>
 &lt;p>Ansible has two types of inventory - static and dynamic. Static is used when we know in advance the list of servers on which Ansible should run. And dynamic when we do not have this data in advance and we want to receive it dynamically.&lt;/p>
@@ -987,13 +987,13 @@ Static inventory To use static inventory, it is enough to simply create a file, 
 &lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/k74GIVucO_Y" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Manage Ansible Versions With pyenv</title><link>https://mpostument.com/2022/09/19/manage-ansible-versions-with-pyenv/</link><pubDate>Mon, 19 Sep 2022 10:54:18 +0300</pubDate><guid>https://mpostument.com/2022/09/19/manage-ansible-versions-with-pyenv/</guid><description>Hello!
-This is the first post in the series about Ansible, in which I will show how you can manage versions of Ansible and Python using pyenv.
+&lt;/div></content></item><item><title>Manage Ansible Versions With pyenv</title><link>https://mpostument.com/programming/ansible/manage-ansible-versions-with-pyenv/</link><pubDate>Mon, 19 Sep 2022 10:54:18 +0300</pubDate><guid>https://mpostument.com/programming/ansible/manage-ansible-versions-with-pyenv/</guid><description>Hello!
+This is the first programming in the series about Ansible, in which I will show how you can manage versions of Ansible and Python using pyenv.
 Pyenv pyenv allows you to install different versions of python and also create a virtual env in which ansible will be installed.
 To install pyenv, you need to execute the command
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv and add pyenv to PATH
 echo &amp;#39;export PYENV_ROOT=&amp;#34;$HOME/.pyenv&amp;#34;&amp;#39; &amp;gt;&amp;gt; ~/.</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>This is the first post in the series about Ansible, in which I will show how you can manage versions of Ansible and Python using pyenv.&lt;/p>
+&lt;p>This is the first programming in the series about Ansible, in which I will show how you can manage versions of Ansible and Python using pyenv.&lt;/p>
 &lt;h2 id="pyenv">Pyenv&lt;/h2>
 &lt;p>&lt;a href="https://github.com/pyenv/pyenv">pyenv&lt;/a> allows you to install different versions of python and also create a virtual env in which ansible will be installed.&lt;/p>
 &lt;p>To install pyenv, you need to execute the command&lt;/p>

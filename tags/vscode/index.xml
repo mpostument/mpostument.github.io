@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>VSCode on Maksym Postument</title><link>https://mpostument.com/tags/vscode/</link><description>Recent content in VSCode on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 19 Oct 2022 17:28:26 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/vscode/index.xml" rel="self" type="application/rss+xml"/><item><title>Ansible Vault</title><link>https://mpostument.com/2022/10/19/ansible-vault/</link><pubDate>Wed, 19 Oct 2022 17:28:26 +0300</pubDate><guid>https://mpostument.com/2022/10/19/ansible-vault/</guid><description>Part 1 - Manage Ansible Versions With pyenv
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>VSCode on Maksym Postument</title><link>https://mpostument.com/tags/vscode/</link><description>Recent content in VSCode on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 19 Oct 2022 17:28:26 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/vscode/index.xml" rel="self" type="application/rss+xml"/><item><title>Ansible Vault</title><link>https://mpostument.com/programming/ansible/ansible-vault/</link><pubDate>Wed, 19 Oct 2022 17:28:26 +0300</pubDate><guid>https://mpostument.com/programming/ansible/ansible-vault/</guid><description>Part 1 - Manage Ansible Versions With pyenv
 Part 2 - Ansible Inventory
 Part 3 - Ansible Playbook
 Part 4 - Ansible Role
 Hello!
 What if we need to create a user in the database and store their password securely in code? This can be done using ansible vault. Ansible vault allows you to encrypt both the entire file and individual variables.
-Encrypted file Let&amp;rsquo;s create a file that will contain our variables.</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/09/19/manage-ansible-versions-with-pyenv/" title="Part 1 - Manage Ansible Versions With pyenv">Part 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/09/27/ansible-inventory/" title="Part 2 - Ansible Inventory">Part 2 - Ansible Inventory&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/10/04/ansible-playbook/" title="Part 3 - Ansible Playbook">Part 3 - Ansible Playbook&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/10/15/ansible-role/" title="Part 4 - Ansible Role">Part 4 - Ansible Role&lt;/a>&lt;/p>
+Encrypted file Let&amp;rsquo;s create a file that will contain our variables.</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/ansible/manage-ansible-versions-with-pyenv/" title="Part 1 - Manage Ansible Versions With pyenv">Part 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/ansible/ansible-inventory/" title="Part 2 - Ansible Inventory">Part 2 - Ansible Inventory&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/ansible/ansible-playbook/" title="Part 3 - Ansible Playbook">Part 3 - Ansible Playbook&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/ansible/ansible-role/" title="Part 4 - Ansible Role">Part 4 - Ansible Role&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
 &lt;p>What if we need to create a user in the database and store their password securely in code? This can be done using &lt;a href="https://docs.ansible.com/ansible/latest/user_guide/vault.html">ansible vault&lt;/a>. Ansible vault allows you to encrypt both the entire file and individual variables.&lt;/p>
 &lt;h2 id="encrypted-file">Encrypted file&lt;/h2>
@@ -34,7 +34,7 @@ Encrypted file Let&amp;rsquo;s create a file that will contain our variables.</d
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>---
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Run locally&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">hosts&lt;/span>: &lt;span style="color:#ae81ff">localhost&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">connection&lt;/span>: &lt;span style="color:#ae81ff">local &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">connection&lt;/span>: &lt;span style="color:#ae81ff">local&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">vars_files&lt;/span>:
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">vars.yml&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
@@ -121,7 +121,7 @@ Encrypted file Let&amp;rsquo;s create a file that will contain our variables.</d
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>---
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Run locally&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">hosts&lt;/span>: &lt;span style="color:#ae81ff">localhost&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">connection&lt;/span>: &lt;span style="color:#ae81ff">local &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">connection&lt;/span>: &lt;span style="color:#ae81ff">local&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">vars&lt;/span>:
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">admin_password&lt;/span>: !&lt;span style="color:#ae81ff">vault |&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">$ANSIBLE_VAULT;1.1;AES256&lt;/span>
@@ -153,13 +153,13 @@ Encrypted file Let&amp;rsquo;s create a file that will contain our variables.</d
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/2z46Ag-mclI" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Ansible Role</title><link>https://mpostument.com/2022/10/15/ansible-role/</link><pubDate>Sat, 15 Oct 2022 17:49:02 +0300</pubDate><guid>https://mpostument.com/2022/10/15/ansible-role/</guid><description>Part 1 - Manage Ansible Versions With pyenv
+&lt;/div></content></item><item><title>Ansible Role</title><link>https://mpostument.com/programming/ansible/ansible-role/</link><pubDate>Sat, 15 Oct 2022 17:49:02 +0300</pubDate><guid>https://mpostument.com/programming/ansible/ansible-role/</guid><description>Part 1 - Manage Ansible Versions With pyenv
 Part 2 - Ansible Inventory
 Part 3 - Ansible Playbook
 Hello!
-So what is a role in Ansible? Roles are a logical organization of Ansible code. For example, you can create a role that will install a MySQL database, put it in a separate repository, and make it publicly available or shared with other teams, and everyone should be able to use it</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/09/19/manage-ansible-versions-with-pyenv/" title="Part 1 - Manage Ansible Versions With pyenv">Part 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/09/27/ansible-inventory/" title="Part 2 - Ansible Inventory">Part 2 - Ansible Inventory&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/10/04/ansible-playbook/" title="Part 3 - Ansible Playbook">Part 3 - Ansible Playbook&lt;/a>&lt;/p>
+So what is a role in Ansible? Roles are a logical organization of Ansible code. For example, you can create a role that will install a MySQL database, put it in a separate repository, and make it publicly available or shared with other teams, and everyone should be able to use it</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/ansible/manage-ansible-versions-with-pyenv/" title="Part 1 - Manage Ansible Versions With pyenv">Part 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/ansible/ansible-inventory/" title="Part 2 - Ansible Inventory">Part 2 - Ansible Inventory&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/ansible/ansible-playbook/" title="Part 3 - Ansible Playbook">Part 3 - Ansible Playbook&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
 &lt;p>So what is a role in Ansible? Roles are a logical organization of Ansible code. For example, you can create a role that will install a MySQL database, put it in a separate repository, and make it publicly available or shared with other teams, and everyone should be able to use it&lt;/p>
 &lt;h2 id="create-a-role">Create a Role&lt;/h2>
@@ -455,13 +455,13 @@ This would normally be &lt;code>ansible-galaxy install ROLE_NAME&lt;/code>&lt;/p
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/oeihNr9e5I4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Ansible Playbook</title><link>https://mpostument.com/2022/10/04/ansible-playbook/</link><pubDate>Tue, 04 Oct 2022 22:51:59 +0300</pubDate><guid>https://mpostument.com/2022/10/04/ansible-playbook/</guid><description>Part 1 - Manage Ansible Versions With pyenv
+&lt;/div></content></item><item><title>Ansible Playbook</title><link>https://mpostument.com/programming/ansible/ansible-playbook/</link><pubDate>Tue, 04 Oct 2022 22:51:59 +0300</pubDate><guid>https://mpostument.com/programming/ansible/ansible-playbook/</guid><description>Part 1 - Manage Ansible Versions With pyenv
 Part 2 - Ansible Inventory
 Hello!
 Today I will show what ansible-playbook is and how to create it.
 Playbook Ansible Playbooks is an iterative, reusable, configuration management and deployment framework that is well-suited for deploying complex applications. If you need to run a task with Ansible more than once, you can do it with a playbook.
-Let&amp;rsquo;s create the simplest playbook. In the playbook, you need to specify its name, the group of servers on which it will be executed, and the tasks themselves.</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/09/19/manage-ansible-versions-with-pyenv/" title="Part 1 - Manage Ansible Versions With pyenv">Part 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/09/27/ansible-inventory/" title="Part 2 - Ansible Inventory">Part 2 - Ansible Inventory&lt;/a>&lt;/p>
+Let&amp;rsquo;s create the simplest playbook. In the playbook, you need to specify its name, the group of servers on which it will be executed, and the tasks themselves.</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/ansible/manage-ansible-versions-with-pyenv/" title="Part 1 - Manage Ansible Versions With pyenv">Part 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/ansible/ansible-inventory/" title="Part 2 - Ansible Inventory">Part 2 - Ansible Inventory&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
 &lt;p>Today I will show what ansible-playbook is and how to create it.&lt;/p>
 &lt;h2 id="playbook">Playbook&lt;/h2>
@@ -735,7 +735,7 @@ Let&amp;rsquo;s create the simplest playbook. In the playbook, you need to speci
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>PLAY RECAP *********************************************************************************************************************
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>3.92.61.18 : ok&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">4&lt;/span> changed&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> unreachable&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> failed&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span> skipped&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span> rescued&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span> ignored&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="loop">Loop&lt;/h2>
-&lt;p>Ansible has several types of &lt;a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html">loops&lt;/a>. Let&amp;rsquo;s start with the simplest loop through the list. In this post, we will check only the simplest one&lt;/p>
+&lt;p>Ansible has several types of &lt;a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html">loops&lt;/a>. Let&amp;rsquo;s start with the simplest loop through the list. In this programming, we will check only the simplest one&lt;/p>
 &lt;h3 id="simple-list">Simple list&lt;/h3>
 &lt;p>In this case, several users (testuser1 and testuser2) are created, which are specified in the loop block, and &lt;code>{{ item }}&lt;/code> is specified instead of the user name, which will be replaced by the user name when executed&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Add several users&lt;/span>
@@ -893,11 +893,11 @@ Let&amp;rsquo;s create the simplest playbook. In the playbook, you need to speci
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/k74GIVucO_Y" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Ansible Inventory</title><link>https://mpostument.com/2022/09/27/ansible-inventory/</link><pubDate>Tue, 27 Sep 2022 21:39:08 +0300</pubDate><guid>https://mpostument.com/2022/09/27/ansible-inventory/</guid><description>Part 1 - Manage Ansible Versions With pyenv
+&lt;/div></content></item><item><title>Ansible Inventory</title><link>https://mpostument.com/programming/ansible/ansible-inventory/</link><pubDate>Tue, 27 Sep 2022 21:39:08 +0300</pubDate><guid>https://mpostument.com/programming/ansible/ansible-inventory/</guid><description>Part 1 - Manage Ansible Versions With pyenv
 Hello!
 Today I will show you what inventory in Ansible and how to use them.
 Ansible has two types of inventory - static and dynamic. Static is used when we know in advance the list of servers on which Ansible should run. And dynamic when we do not have this data in advance and we want to receive it dynamically.
-Static inventory To use static inventory, it is enough to simply create a file, for example, inventory, and inside you can specify IP addresses, for example:</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/09/19/manage-ansible-versions-with-pyenv/" title="Part 1 - Manage Ansible Versions With pyenv">Part 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;/p>
+Static inventory To use static inventory, it is enough to simply create a file, for example, inventory, and inside you can specify IP addresses, for example:</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/ansible/manage-ansible-versions-with-pyenv/" title="Part 1 - Manage Ansible Versions With pyenv">Part 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
 &lt;p>Today I will show you what inventory in Ansible and how to use them.&lt;/p>
 &lt;p>Ansible has two types of inventory - static and dynamic. Static is used when we know in advance the list of servers on which Ansible should run. And dynamic when we do not have this data in advance and we want to receive it dynamically.&lt;/p>
@@ -987,13 +987,13 @@ Static inventory To use static inventory, it is enough to simply create a file, 
 &lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/k74GIVucO_Y" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Manage Ansible Versions With pyenv</title><link>https://mpostument.com/2022/09/19/manage-ansible-versions-with-pyenv/</link><pubDate>Mon, 19 Sep 2022 10:54:18 +0300</pubDate><guid>https://mpostument.com/2022/09/19/manage-ansible-versions-with-pyenv/</guid><description>Hello!
-This is the first post in the series about Ansible, in which I will show how you can manage versions of Ansible and Python using pyenv.
+&lt;/div></content></item><item><title>Manage Ansible Versions With pyenv</title><link>https://mpostument.com/programming/ansible/manage-ansible-versions-with-pyenv/</link><pubDate>Mon, 19 Sep 2022 10:54:18 +0300</pubDate><guid>https://mpostument.com/programming/ansible/manage-ansible-versions-with-pyenv/</guid><description>Hello!
+This is the first programming in the series about Ansible, in which I will show how you can manage versions of Ansible and Python using pyenv.
 Pyenv pyenv allows you to install different versions of python and also create a virtual env in which ansible will be installed.
 To install pyenv, you need to execute the command
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv and add pyenv to PATH
 echo &amp;#39;export PYENV_ROOT=&amp;#34;$HOME/.pyenv&amp;#34;&amp;#39; &amp;gt;&amp;gt; ~/.</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>This is the first post in the series about Ansible, in which I will show how you can manage versions of Ansible and Python using pyenv.&lt;/p>
+&lt;p>This is the first programming in the series about Ansible, in which I will show how you can manage versions of Ansible and Python using pyenv.&lt;/p>
 &lt;h2 id="pyenv">Pyenv&lt;/h2>
 &lt;p>&lt;a href="https://github.com/pyenv/pyenv">pyenv&lt;/a> allows you to install different versions of python and also create a virtual env in which ansible will be installed.&lt;/p>
 &lt;p>To install pyenv, you need to execute the command&lt;/p>
@@ -1094,7 +1094,7 @@ echo &amp;#39;export PYENV_ROOT=&amp;#34;$HOME/.pyenv&amp;#34;&amp;#39; &amp;gt;
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/pBobhqJrKZg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform Modules and Import</title><link>https://mpostument.com/2022/09/14/terraform-modules-and-import/</link><pubDate>Wed, 14 Sep 2022 20:41:58 +0300</pubDate><guid>https://mpostument.com/2022/09/14/terraform-modules-and-import/</guid><description>Part 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform Modules and Import</title><link>https://mpostument.com/programming/terraform/terraform-modules-and-import/</link><pubDate>Wed, 14 Sep 2022 20:41:58 +0300</pubDate><guid>https://mpostument.com/programming/terraform/terraform-modules-and-import/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Part 3 - Terraform State
 Part 4 - Terraform Template
@@ -1104,14 +1104,14 @@ Part 7 - Terraform Lifecycle
 Part 8 - Terraform Condition and Lookup
 Hello!
 Today we will see how you can import existing resources into terraform and how to organize the code into a module for future reuse.
-Import There is a situation when the resources have already been created and you need to start managing them using terraform.</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/31/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/11/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/21/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/28/terraform-lifecycle/" title="Part 6 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/09/09/terraform-variables/" title="Part 7 - Terraform Variables">Part 7 - Terraform Lifecycle&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/09/11/terraform-condition-and-lookup/" title="Part 8 - Terraform Condition and Lookup">Part 8 - Terraform Condition and Lookup&lt;/a>&lt;/p>
+Import There is a situation when the resources have already been created and you need to start managing them using terraform.</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/terraform/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-lifecycle/" title="Part 6 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-variables/" title="Part 7 - Terraform Variables">Part 7 - Terraform Lifecycle&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-condition-and-lookup/" title="Part 8 - Terraform Condition and Lookup">Part 8 - Terraform Condition and Lookup&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
 &lt;p>Today we will see how you can import existing resources into terraform and how to organize the code into a module for future reuse.&lt;/p>
 &lt;h2 id="import">Import&lt;/h2>
@@ -1654,7 +1654,7 @@ Import There is a situation when the resources have already been created and you
 &lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/uCapjyzxJBo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform Condition and Lookup</title><link>https://mpostument.com/2022/09/11/terraform-condition-and-lookup/</link><pubDate>Sun, 11 Sep 2022 11:23:40 +0300</pubDate><guid>https://mpostument.com/2022/09/11/terraform-condition-and-lookup/</guid><description>Part 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform Condition and Lookup</title><link>https://mpostument.com/programming/terraform/terraform-condition-and-lookup/</link><pubDate>Sun, 11 Sep 2022 11:23:40 +0300</pubDate><guid>https://mpostument.com/programming/terraform/terraform-condition-and-lookup/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Part 3 - Terraform State
 Part 4 - Terraform Template
@@ -1662,16 +1662,16 @@ Part 5 - Terraform Dynamic
 Part 6 - Terraform Lifecycle
 Part 7 - Terraform Lifecycle
 Hello!
-In this post, I will talk about conditions and lookups.
-Conditions Conditions in terraform are used to select one value depending on another. For example, if it is a dev environment, then use the t3.</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/31/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/11/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/21/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/28/terraform-lifecycle/" title="Part 6 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/09/09/terraform-variables/" title="Part 7 - Terraform Variables">Part 7 - Terraform Lifecycle&lt;/a>&lt;/p>
+In this programming, I will talk about conditions and lookups.
+Conditions Conditions in terraform are used to select one value depending on another. For example, if it is a dev environment, then use the t3.</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/terraform/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-lifecycle/" title="Part 6 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-variables/" title="Part 7 - Terraform Variables">Part 7 - Terraform Lifecycle&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
-&lt;p>In this post, I will talk about conditions and lookups.&lt;/p>
+&lt;p>In this programming, I will talk about conditions and lookups.&lt;/p>
 &lt;h2 id="conditions">Conditions&lt;/h2>
 &lt;p>Conditions in terraform are used to select one value depending on another. For example, if it is a dev environment, then use the t3.micro server type, and if it is a production environment, then use m5.large. This is easy to do with a condition. Conditions are written like &lt;code>condition ? true_val : false_val&lt;/code>. For server type conditions will look like &lt;code>var.env == &amp;quot;prod&amp;quot; ? &amp;quot;m5.large&amp;quot; : &amp;quot;t3.micro&amp;quot;&lt;/code>. Here I check whether the parameter &lt;code>env&lt;/code> has the value prod, and if so, I use m5.large, in all other cases it is t3.micro. The complete ec2 creation code will look like this.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-hcl" data-lang="hcl">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">variable&lt;/span> &lt;span style="color:#e6db74">&amp;#34;env&amp;#34;&lt;/span> {
@@ -1830,23 +1830,23 @@ Conditions Conditions in terraform are used to select one value depending on ano
 &lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/uN6sm22CyrE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform Variables</title><link>https://mpostument.com/2022/09/09/terraform-variables/</link><pubDate>Fri, 09 Sep 2022 20:31:09 +0300</pubDate><guid>https://mpostument.com/2022/09/09/terraform-variables/</guid><description>Part 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform Variables</title><link>https://mpostument.com/programming/terraform/terraform-variables/</link><pubDate>Fri, 09 Sep 2022 20:31:09 +0300</pubDate><guid>https://mpostument.com/programming/terraform/terraform-variables/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Part 3 - Terraform State
 Part 4 - Terraform Template
 Part 5 - Terraform Dynamic
 Part 6 - Terraform Lifecycle
 Hello!
-In this post, I will talk about variables in terraform and terraform data.
+In this programming, I will talk about variables in terraform and terraform data.
 Variables I will use the code from previous posts. I create a new file variables.tf and add the instance_type variable to it.
-variable &amp;#34;instance_type&amp;#34; { default = &amp;#34;t2.</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/31/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/11/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/21/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/28/terraform-lifecycle/" title="Part 5 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;/p>
+variable &amp;#34;instance_type&amp;#34; { default = &amp;#34;t2.</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/terraform/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-lifecycle/" title="Part 5 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
-&lt;p>In this post, I will talk about variables in terraform and terraform data.&lt;/p>
+&lt;p>In this programming, I will talk about variables in terraform and terraform data.&lt;/p>
 &lt;h2 id="variables">Variables&lt;/h2>
 &lt;p>I will use the code from previous posts. I create a new file &lt;code>variables.tf&lt;/code> and add the instance_type variable to it.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-hcl" data-lang="hcl">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">variable&lt;/span> &lt;span style="color:#e6db74">&amp;#34;instance_type&amp;#34;&lt;/span> {
@@ -2022,20 +2022,20 @@ After the variable is created, it can be used in the terraform code as &lt;code>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/MBIFya6WX-E" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform Lifecycle and Outputs</title><link>https://mpostument.com/2022/08/28/terraform-lifecycle/</link><pubDate>Sun, 28 Aug 2022 21:22:25 +0300</pubDate><guid>https://mpostument.com/2022/08/28/terraform-lifecycle/</guid><description>Part 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform Lifecycle and Outputs</title><link>https://mpostument.com/programming/terraform/terraform-lifecycle/</link><pubDate>Sun, 28 Aug 2022 21:22:25 +0300</pubDate><guid>https://mpostument.com/programming/terraform/terraform-lifecycle/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Part 3 - Terraform State
 Part 4 - Terraform Template
 Part 5 - Terraform Dynamic
 Hello!
-In this post i will explain what is lifecycle, dependent_on and outputs in terraform.
-Lifecycle create_before_destroy Lifecycle is a meta parameter supported by most resources. And with its help, you can control the behavior when creating/deleting resources. I will take the terraform ec2 creation code from one of the previous posts and add the lifecycle block to it.</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/31/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/11/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/21/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;/p>
+In this programming i will explain what is lifecycle, dependent_on and outputs in terraform.
+Lifecycle create_before_destroy Lifecycle is a meta parameter supported by most resources. And with its help, you can control the behavior when creating/deleting resources. I will take the terraform ec2 creation code from one of the previous posts and add the lifecycle block to it.</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/terraform/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
-&lt;p>In this post i will explain what is lifecycle, dependent_on and outputs in terraform.&lt;/p>
+&lt;p>In this programming i will explain what is lifecycle, dependent_on and outputs in terraform.&lt;/p>
 &lt;h2 id="lifecycle">Lifecycle&lt;/h2>
 &lt;h3 id="create_before_destroy">create_before_destroy&lt;/h3>
 &lt;p>Lifecycle is a meta parameter supported by most resources. And with its help, you can control the behavior when creating/deleting resources.
@@ -2375,17 +2375,17 @@ I will take the terraform ec2 creation code from one of the previous posts and a
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/qdGpvePGSJs" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform Dynamic</title><link>https://mpostument.com/2022/08/21/terraform-dynamic/</link><pubDate>Sun, 21 Aug 2022 20:25:57 +0300</pubDate><guid>https://mpostument.com/2022/08/21/terraform-dynamic/</guid><description>Part 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform Dynamic</title><link>https://mpostument.com/programming/terraform/terraform-dynamic/</link><pubDate>Sun, 21 Aug 2022 20:25:57 +0300</pubDate><guid>https://mpostument.com/programming/terraform/terraform-dynamic/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Part 3 - Terraform State
 Part 4 - Terraform Template
 Hello!
 In this article, I will show how to use the dynamic block on the example of creating an AWS Security Group.
 To begin with, I will create a Security Group without using the dynamic block. In this example, each rule is described in a separate ingress block.
-resource &amp;#34;aws_security_group&amp;#34; &amp;#34;test_sg&amp;#34; { name = &amp;#34;test-sg&amp;#34; description = &amp;#34;allow traffic to web app&amp;#34; vpc_id = &amp;#34;vcp-123&amp;#34; ingress { from_port = 8082 to_port = 8082 protocol = &amp;#34;tcp&amp;#34; cidr_blocks = [ &amp;#34;0.</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/31/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/11/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;/p>
+resource &amp;#34;aws_security_group&amp;#34; &amp;#34;test_sg&amp;#34; { name = &amp;#34;test-sg&amp;#34; description = &amp;#34;allow traffic to web app&amp;#34; vpc_id = &amp;#34;vcp-123&amp;#34; ingress { from_port = 8082 to_port = 8082 protocol = &amp;#34;tcp&amp;#34; cidr_blocks = [ &amp;#34;0.</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/terraform/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
 &lt;p>In this article, I will show how to use the dynamic block on the example of creating an AWS Security Group.&lt;/p>
 &lt;p>To begin with, I will create a Security Group without using the dynamic block. In this example, each rule is described in a separate ingress block.&lt;/p>
@@ -2486,13 +2486,13 @@ resource &amp;#34;aws_security_group&amp;#34; &amp;#34;test_sg&amp;#34; { name =
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/Aeu2sGehp7Q" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform Template</title><link>https://mpostument.com/2022/08/11/terraform-template/</link><pubDate>Thu, 11 Aug 2022 20:59:58 +0300</pubDate><guid>https://mpostument.com/2022/08/11/terraform-template/</guid><description>Part 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform Template</title><link>https://mpostument.com/programming/terraform/terraform-template/</link><pubDate>Thu, 11 Aug 2022 20:59:58 +0300</pubDate><guid>https://mpostument.com/programming/terraform/terraform-template/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Part 3 - Terraform State
 Hello!
-In this article, I will show how in terraform you can use static files or generate files dynamically. I will show it on the example of user_data in EC2. With the help of user_data, you can transfer a script that will be executed on the server at the time of creation. This file can be predefined with static content and transferred using terraform to user_data, or the content can be dynamically generated and transferred.</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/31/terraform-state/" title="Part 2 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;/p>
+In this article, I will show how in terraform you can use static files or generate files dynamically. I will show it on the example of user_data in EC2. With the help of user_data, you can transfer a script that will be executed on the server at the time of creation. This file can be predefined with static content and transferred using terraform to user_data, or the content can be dynamically generated and transferred.</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/terraform/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-state/" title="Part 2 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
 &lt;p>In this article, I will show how in terraform you can use static files or generate files dynamically. I will show it on the example of user_data in EC2. With the help of user_data, you can transfer a script that will be executed on the server at the time of creation. This file can be predefined with static content and transferred using terraform to user_data, or the content can be dynamically generated and transferred.&lt;/p>
 &lt;h2 id="terraform-file">Terraform file&lt;/h2>
@@ -2550,12 +2550,12 @@ In this article, I will show how in terraform you can use static files or genera
 &lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/Dl_Jdo3hMZM" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform State</title><link>https://mpostument.com/2022/07/31/terraform-state/</link><pubDate>Sun, 31 Jul 2022 20:30:06 +0300</pubDate><guid>https://mpostument.com/2022/07/31/terraform-state/</guid><description>Part 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform State</title><link>https://mpostument.com/programming/terraform/terraform-state/</link><pubDate>Sun, 31 Jul 2022 20:30:06 +0300</pubDate><guid>https://mpostument.com/programming/terraform/terraform-state/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Hello!
 In the previous article, I created an ec2 in AWS and then executed terraform destroy and terraform only deleted the created ec2 without affecting other resources. How did he do it?
-Local State To understand this, you need to look at the terraform directory after executing terraform apply. Immediately after terraform apply is executed, a file with name terraform.tfstate will be created with the following content</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;/p>
+Local State To understand this, you need to look at the terraform directory after executing terraform apply. Immediately after terraform apply is executed, a file with name terraform.tfstate will be created with the following content</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/terraform/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
 &lt;p>In the previous article, I created an ec2 in AWS and then executed &lt;code>terraform destroy&lt;/code> and terraform only deleted the created ec2 without affecting other resources. How did he do it?&lt;/p>
 &lt;h2 id="local-state">Local State&lt;/h2>
@@ -2817,11 +2817,11 @@ Terraform has such a concept as &lt;a href="https://www.terraform.io/language/se
 &lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/iPzrUvhlty4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform Basics</title><link>https://mpostument.com/2022/07/28/terraform-basics/</link><pubDate>Thu, 28 Jul 2022 20:27:17 +0300</pubDate><guid>https://mpostument.com/2022/07/28/terraform-basics/</guid><description>Part 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform Basics</title><link>https://mpostument.com/programming/terraform/terraform-basics/</link><pubDate>Thu, 28 Jul 2022 20:27:17 +0300</pubDate><guid>https://mpostument.com/programming/terraform/terraform-basics/</guid><description>Part 1 - Terraform Install
 Hello!
 In the previous article, we learn how to install terraform. And now we will learn how using terraform you can create and delete resources in AWS.
 In order for terraform to manage resources in AWS, you need to install terraform AWS provider. Terraform will do this automatically if I specify AWS provider in the terraform code and call terraform init.
-I will create a terraform_code directory and in this directory, I will create a file with the name provider.</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;/p>
+I will create a terraform_code directory and in this directory, I will create a file with the name provider.</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/terraform/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
 &lt;p>In the previous article, we learn how to install terraform. And now we will learn how using terraform you can create and delete resources in AWS.&lt;/p>
 &lt;p>In order for terraform to manage resources in AWS, you need to install terraform AWS provider. Terraform will do this automatically if I specify AWS provider in the terraform code and call &lt;code>terraform init&lt;/code>.&lt;/p>
@@ -3061,7 +3061,7 @@ I will create a terraform_code directory and in this directory, I will create a 
 &lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/XRcBZDi_mMw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Manage terraform with tfenv</title><link>https://mpostument.com/2022/07/26/terraform-install/</link><pubDate>Tue, 26 Jul 2022 20:54:23 +0300</pubDate><guid>https://mpostument.com/2022/07/26/terraform-install/</guid><description>Hello!
+&lt;/div></content></item><item><title>Manage terraform with tfenv</title><link>https://mpostument.com/programming/terraform/terraform-install/</link><pubDate>Tue, 26 Jul 2022 20:54:23 +0300</pubDate><guid>https://mpostument.com/programming/terraform/terraform-install/</guid><description>Hello!
 This is the first article in a series of articles about terraform. In it, we will learn how to install terraform using tfenv and how to configure vscode to work with terraform.
 tfenv You will need tfenv to get started. It makes it very easy to install and manage different versions of terraform. The tfenv code is located at github.
 To install, you need to clone git repository

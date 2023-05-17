@@ -1,0 +1,217 @@
+<!doctype html><html lang=en><head><title>Go Constants :: Maksym Postument</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Learn what is constants in golang and how to use them"><meta name=keywords content="Go,VSCode,Beginner,Golang,Constant"><meta name=robots content="noodp"><link rel=canonical href=https://mpostument.com/programming/golang/basics/go-constant/><script async src="https://www.googletagmanager.com/gtag/js?id=G-SBRJXS94DC"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-SBRJXS94DC",{anonymize_ip:!1})}</script><link rel=stylesheet href=https://mpostument.com/styles.css><link rel="shortcut icon" href=https://mpostument.com/img/theme-colors/blue.png><link rel=apple-touch-icon href=https://mpostument.com/img/theme-colors/blue.png><meta name=twitter:card content="summary"><meta name=twitter:site content="mpostument.com"><meta name=twitter:creator content="Maks_Postument"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="Go Constants"><meta property="og:description" content="Learn what is constants in golang and how to use them"><meta property="og:url" content="https://mpostument.com/programming/golang/basics/go-constant/"><meta property="og:site_name" content="Maksym Postument"><meta property="og:image" content="https://mpostument.com/go/go-constants.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="627"><meta property="article:section" content="Golang"><meta property="article:published_time" content="2022-11-12 07:46:18 +0200 +0200"><p align=center style=background-color:#23b0ff>Sign up for my <a href=https://tinyletter.com/mpostument>email
+newsletter</a> or use this <a href=/index.xml>RSS feed</a>. This is the best way to stay up-to-date with my latest content. Thank you for your continued support!</p><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8633398301520801" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/algoliasearch@4.14.2/dist/algoliasearch-lite.umd.js></script>
+<script src=https://cdn.jsdelivr.net/npm/@algolia/autocomplete-js></script>
+<script src=https://cdn.jsdelivr.net/npm/@algolia/autocomplete-preset-algolia></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@algolia/autocomplete-theme-classic><div id=autocomplete></div><script>var searchClient=algoliasearch("8HJOK7X4MI","a882cdf8954678175d442905d08d8926");const{autocomplete}=window["@algolia/autocomplete-js"],{getAlgoliaResults}=window["@algolia/autocomplete-preset-algolia"];autocomplete({container:"#autocomplete",placeholder:"Search",getSources({query:e}){return[{sourceId:"title",getItems(){return getAlgoliaResults({searchClient,queries:[{indexName:"mpostument",query:e,params:{hitsPerPage:5,attributesToSnippet:["title:15","description:35"],snippetEllipsisText:"…"}}]})},templates:{item({item:e,components:t,html:n}){return n`<div class="aa-ItemWrapper">
+                            <div class="aa-ItemContent">
+                              <div class="aa-ItemContentBody">
+                                <div class="aa-ItemContentTitle">
+                                  ${t.Highlight({hit:e,attribute:"title"})}
+                                </div>
+                                <div class="aa-ItemContentDescription">
+                                  ${t.Snippet({hit:e,attribute:"description"})}
+                                </div>
+                              </div>
+                            </div>
+                          </div>`}},getItemUrl({item:e}){return e.href},onSelect({item:e}){window.location.href=e.href}}]}})</script></head><body class=blue><div class="container center headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/><div class=logo>mpostument.com</div></a></div><ul class="menu menu--mobile"><li class=menu__trigger>Menu&nbsp;▾</li><li><ul class=menu__dropdown><li><a href=/>Home</a></li><li><a href=/programming/>Programming</a></li><li><a href=/drawing/>Drawing</a></li><li><a href=/guitar/>Guitar</a></li><li><a href=/projects/>Projects</a></li><li><a href=/tags/>Tags</a></li><li><a href=/categories/>Categories</a></li><hr><li><a href=https://mpostument.com/>English</a></li><li><a href=https://mpostument.com/ua/>Ukraine</a></li></ul></li></ul><ul class="menu menu--desktop menu--language-selector"><li class=menu__trigger>English&nbsp;▾</li><li><ul class=menu__dropdown><li><a href=https://mpostument.com/>English</a></li><li><a href=https://mpostument.com/ua/>Ukraine</a></li></ul></li></ul></div><nav class=navigation-menu><ul class="navigation-menu__inner menu--desktop"><li><a href=/>Home</a></li><li><a href=/programming/>Programming</a></li><li><a href=/drawing/>Drawing</a></li><li><a href=/guitar/>Guitar</a></li><li><a href=/projects/>Projects</a></li><li><a href=/tags/>Tags</a></li><li><a href=/categories/>Categories</a></li></ul></nav></header><div class=content><article class=post><h1 class=post-title><a href=https://mpostument.com/programming/golang/basics/go-constant/>Go Constants</a></h1><div class=post-meta><time class=post-date>2022-11-12 ::</time>
+<span class=post-author>Maksym Postument</span>
+<span class=post-reading-time>:: 4 min read (783 words)</span></div><span class=post-tags>#<a href=https://mpostument.com/tags/go/>Go</a>&nbsp;
+#<a href=https://mpostument.com/tags/beginner/>Beginner</a>&nbsp;</span>
+<img src=https://mpostument.com/go/go-constants.jpg class=post-cover alt="Go Constants" title="Cover Image"><div class=table-of-contents><h2>Table of Contents</h2><nav id=TableOfContents><ul><li><a href=#naming>Naming</a></li><li><a href=#shadowing>Shadowing</a></li><li><a href=#math-operations>Math Operations</a></li><li><a href=#iota>Iota</a></li><li><a href=#video>Video</a></li></ul></nav></div><div class=post-content><div><p>Hello!</p><p>Let&rsquo;s learn what constants are, how they should be named in golang, and also what iota is.</p><h2 id=naming>Naming<a href=#naming class=hanchor arialabel=Anchor>&#8983;</a></h2><p>If you are familiar with constants in other programming languages, you know that their names usually include only capital letters, for example, PORT_NUMBER. In golang, we cannot do this because by making the first letter uppercase, we will immediately make the constant available to other packages. Therefore, in golang, we name constants in the same way as variables portNumber or PortNumber if we want the constant to be available in other packages.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>portNumber</span> <span style=color:#66d9ef>int</span> = <span style=color:#ae81ff>80</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T&#34;</span>, <span style=color:#a6e22e>portNumber</span>, <span style=color:#a6e22e>portNumber</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span>80: int
+</span></span></code></pre></div><p>Just as with the variables, the type may be omitted</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>portNumber</span> = <span style=color:#ae81ff>80</span>
+</span></span></code></pre></div><p>The peculiarity of the constant is that it must have a value at the time of compilation, for example, if in the constant I try to take the power of the constant value, I will get an error, because it is calculated at the time of starting the program, and not at the compilation stage</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;math&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>portNumber</span> <span style=color:#66d9ef>float64</span> = <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Pow</span>(<span style=color:#ae81ff>2.0</span>, <span style=color:#ae81ff>2.0</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>portNumber</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span><span style=color:#75715e># command-line-arguments</span>
+</span></span><span style=display:flex><span>./main.go:9:29: math.Pow<span style=color:#f92672>(</span>2.0, 2.0<span style=color:#f92672>)</span> <span style=color:#f92672>(</span>value of type float64<span style=color:#f92672>)</span> is not constant
+</span></span></code></pre></div><h2 id=shadowing>Shadowing<a href=#shadowing class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Just like with variables, shadowing also works with constants.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>portNumber</span> <span style=color:#66d9ef>int32</span> = <span style=color:#ae81ff>80</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>portNumber</span> <span style=color:#66d9ef>int</span> = <span style=color:#ae81ff>8080</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>portNumber</span>, <span style=color:#a6e22e>portNumber</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>printConstant</span>()
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>printConstant</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>portNumber</span>, <span style=color:#a6e22e>portNumber</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span>8080: int
+</span></span><span style=display:flex><span>80: int32
+</span></span></code></pre></div><h2 id=math-operations>Math Operations<a href=#math-operations class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Mathematical operations work in the same way as variables</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>a</span> <span style=color:#66d9ef>int</span> = <span style=color:#ae81ff>8080</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>b</span> <span style=color:#66d9ef>int</span> = <span style=color:#ae81ff>10</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>a</span><span style=color:#f92672>+</span><span style=color:#a6e22e>b</span>, <span style=color:#a6e22e>a</span><span style=color:#f92672>+</span><span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>a</span><span style=color:#f92672>-</span><span style=color:#a6e22e>b</span>, <span style=color:#a6e22e>a</span><span style=color:#f92672>-</span><span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>a</span><span style=color:#f92672>*</span><span style=color:#a6e22e>b</span>, <span style=color:#a6e22e>a</span><span style=color:#f92672>*</span><span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>a</span><span style=color:#f92672>/</span><span style=color:#a6e22e>b</span>, <span style=color:#a6e22e>a</span><span style=color:#f92672>/</span><span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span>8090: int
+</span></span><span style=display:flex><span>8070: int
+</span></span><span style=display:flex><span>80800: int
+</span></span><span style=display:flex><span>808: int
+</span></span></code></pre></div><p>If we try to add constants of different types, we will get an error</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>a</span> <span style=color:#66d9ef>int32</span> = <span style=color:#ae81ff>8080</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>b</span> <span style=color:#66d9ef>int</span> = <span style=color:#ae81ff>10</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>a</span><span style=color:#f92672>+</span><span style=color:#a6e22e>b</span>, <span style=color:#a6e22e>a</span><span style=color:#f92672>+</span><span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span><span style=color:#75715e># command-line-arguments</span>
+</span></span><span style=display:flex><span>./main.go:9:25: invalid operation: a + b <span style=color:#f92672>(</span>mismatched types int32 and int<span style=color:#f92672>)</span>
+</span></span></code></pre></div><p>But there is one peculiarity here if we do not specify the type in one of the constants, but simply the value <code>8080</code>, then the compiler will automatically define it as an int. Then we will create another constant of type int16 and try to add them, then we will get a successful execution. This is because the compiler at the time of compilation replaces the constant with its value in all places where it is used.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>a</span> = <span style=color:#ae81ff>8080</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>b</span> <span style=color:#66d9ef>int16</span> = <span style=color:#ae81ff>10</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>a</span>, <span style=color:#a6e22e>a</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>b</span>, <span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>a</span><span style=color:#f92672>+</span><span style=color:#a6e22e>b</span>, <span style=color:#a6e22e>a</span><span style=color:#f92672>+</span><span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>To the compiler, this code will look like this</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>a</span> = <span style=color:#ae81ff>8080</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>const</span> <span style=color:#a6e22e>b</span> <span style=color:#66d9ef>int16</span> = <span style=color:#ae81ff>10</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#ae81ff>8080</span>, <span style=color:#ae81ff>8080</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#ae81ff>10</span>, <span style=color:#ae81ff>10</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#ae81ff>8080</span><span style=color:#f92672>+</span><span style=color:#ae81ff>10</span>, <span style=color:#ae81ff>8080</span><span style=color:#f92672>+</span><span style=color:#ae81ff>10</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>And as a result, we will get int16</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span>8080: int
+</span></span><span style=display:flex><span>10: int16
+</span></span><span style=display:flex><span>8090: int16
+</span></span></code></pre></div><h2 id=iota>Iota<a href=#iota class=hanchor arialabel=Anchor>&#8983;</a></h2><p>When creating constants, you can specify the special word <code>iota</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> (
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>a</span> = <span style=color:#66d9ef>iota</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>a</span>, <span style=color:#a6e22e>a</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span>0: int
+</span></span></code></pre></div><p><code>iota</code> allows you to create enum constants.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> (
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>a</span> = <span style=color:#66d9ef>iota</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>b</span> = <span style=color:#66d9ef>iota</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>c</span> = <span style=color:#66d9ef>iota</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>a</span>, <span style=color:#a6e22e>a</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>b</span>, <span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>c</span>, <span style=color:#a6e22e>c</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span>0: int
+</span></span><span style=display:flex><span>1: int
+</span></span><span style=display:flex><span>2: int
+</span></span></code></pre></div><p>The word <code>iota</code> for each constant is optional if these constants are in the same block</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> (
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>a</span> = <span style=color:#66d9ef>iota</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>b</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>c</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>a</span>, <span style=color:#a6e22e>a</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>b</span>, <span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>c</span>, <span style=color:#a6e22e>c</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span>0: int
+</span></span><span style=display:flex><span>1: int
+</span></span><span style=display:flex><span>2: int
+</span></span></code></pre></div><p>Sometimes it is necessary to omit the value in the constant</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> (
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>_</span> = <span style=color:#66d9ef>iota</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>a</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>b</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>c</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>a</span>, <span style=color:#a6e22e>a</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>b</span>, <span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>c</span>, <span style=color:#a6e22e>c</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span>1: int
+</span></span><span style=display:flex><span>2: int
+</span></span><span style=display:flex><span>3: int
+</span></span></code></pre></div><p>Also, <code>iota</code> can start not from zero if you add a number to it</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> (
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>a</span> = <span style=color:#66d9ef>iota</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>5</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>b</span>
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>c</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>a</span>, <span style=color:#a6e22e>a</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>b</span>, <span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v: %T\n&#34;</span>, <span style=color:#a6e22e>c</span>, <span style=color:#a6e22e>c</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span>$ go run main.go
+</span></span><span style=display:flex><span>5: int
+</span></span><span style=display:flex><span>6: int
+</span></span><span style=display:flex><span>7: int
+</span></span></code></pre></div><h2 id=video>Video<a href=#video class=hanchor arialabel=Anchor>&#8983;</a></h2><div style=position:relative;padding-bottom:56.25%;height:0;overflow:hidden><iframe src=https://www.youtube.com/embed/1VoUYyFbdBw style=position:absolute;top:0;left:0;width:100%;height:100%;border:0 allowfullscreen title="YouTube Video"></iframe></div></div></div><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//mpostument-com.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></article></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2023 Powered by <a href=http://gohugo.io>Hugo</a></span>
+<span>:: <a href=https://github.com/panr/hugo-theme-terminal target=_blank>Theme</a> made by <a href=https://github.com/panr target=_blank>panr</a></span></div></div></footer><script type=text/javascript src=/bundle.min.js></script></div></body></html>

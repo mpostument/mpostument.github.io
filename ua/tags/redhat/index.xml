@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>RedHat on Maksym Postument</title><link>https://mpostument.com/ua/tags/redhat/</link><description>Recent content in RedHat on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 19 Oct 2022 17:28:26 +0300</lastBuildDate><atom:link href="https://mpostument.com/ua/tags/redhat/index.xml" rel="self" type="application/rss+xml"/><item><title>Ansible Vault</title><link>https://mpostument.com/ua/2022/10/19/ansible-vault/</link><pubDate>Wed, 19 Oct 2022 17:28:26 +0300</pubDate><guid>https://mpostument.com/ua/2022/10/19/ansible-vault/</guid><description>Part 1 - Manage Ansible Versions With pyenv
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>RedHat on Maksym Postument</title><link>https://mpostument.com/ua/tags/redhat/</link><description>Recent content in RedHat on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 19 Oct 2022 17:28:26 +0300</lastBuildDate><atom:link href="https://mpostument.com/ua/tags/redhat/index.xml" rel="self" type="application/rss+xml"/><item><title>Ansible Vault</title><link>https://mpostument.com/ua/programming/ansible/ansible-vault/</link><pubDate>Wed, 19 Oct 2022 17:28:26 +0300</pubDate><guid>https://mpostument.com/ua/programming/ansible/ansible-vault/</guid><description>Part 1 - Manage Ansible Versions With pyenv
 Part 2 - Ansible Inventory
 Part 3 - Ansible Playbook
 Part 4 - Ansible Role
 Привіт!
 Що робити якщо нам потрібно створити користувача в базі даних і безпечно зберегти його пароль в коді? Це можна здійснити за допомогою ansible vault. Ansible vault дозволяє шифрувати як і цілий файл так окремі параметри.
 Encrypted file Створимо файл в якому будуть наші параметри.
-db_password: secure_password! admin_password: super_securee_password!</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/2022/09/19/manage-ansible-versions-with-pyenv/" title="Part 1 - Manage Ansible Versions With pyenv">Part 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/09/27/ansible-inventory/" title="Part 2 - Ansible Inventory">Part 2 - Ansible Inventory&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/10/04/ansible-playbook/" title="Part 3 - Ansible Playbook">Part 3 - Ansible Playbook&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/10/15/ansible-role/" title="Part 4 - Ansible Role">Part 4 - Ansible Role&lt;/a>&lt;/p>
+db_password: secure_password! admin_password: super_securee_password!</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/programming/ansible/manage-ansible-versions-with-pyenv/" title="Part 1 - Manage Ansible Versions With pyenv">Part 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/ansible/ansible-inventory/" title="Part 2 - Ansible Inventory">Part 2 - Ansible Inventory&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/ansible/ansible-playbook/" title="Part 3 - Ansible Playbook">Part 3 - Ansible Playbook&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/ansible/ansible-role/" title="Part 4 - Ansible Role">Part 4 - Ansible Role&lt;/a>&lt;/p>
 &lt;p>Привіт!&lt;/p>
 &lt;p>Що робити якщо нам потрібно створити користувача в базі даних і безпечно зберегти його пароль в коді? Це можна здійснити за допомогою &lt;a href="https://docs.ansible.com/ansible/latest/user_guide/vault.html">ansible vault&lt;/a>. Ansible vault дозволяє шифрувати як і цілий файл так окремі параметри.&lt;/p>
 &lt;h2 id="encrypted-file">Encrypted file&lt;/h2>
@@ -35,7 +35,7 @@ db_password: secure_password! admin_password: super_securee_password!</descripti
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>---
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Run localy&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">hosts&lt;/span>: &lt;span style="color:#ae81ff">localhost&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">connection&lt;/span>: &lt;span style="color:#ae81ff">local &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">connection&lt;/span>: &lt;span style="color:#ae81ff">local&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">vars_files&lt;/span>:
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">vars.yml&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
@@ -102,7 +102,7 @@ db_password: secure_password! admin_password: super_securee_password!</descripti
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yml" data-lang="yml">&lt;span style="display:flex;">&lt;span>---
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>- &lt;span style="color:#f92672">name&lt;/span>: &lt;span style="color:#ae81ff">Run localy&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">hosts&lt;/span>: &lt;span style="color:#ae81ff">localhost&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">connection&lt;/span>: &lt;span style="color:#ae81ff">local &lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">connection&lt;/span>: &lt;span style="color:#ae81ff">local&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">vars&lt;/span>:
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">admin_password&lt;/span>: !&lt;span style="color:#ae81ff">vault |&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#ae81ff">$ANSIBLE_VAULT;1.1;AES256&lt;/span>
@@ -154,7 +154,7 @@ db_password: secure_password! admin_password: super_securee_password!</descripti
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/2z46Ag-mclI" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Ansible Role</title><link>https://mpostument.com/ua/2022/10/15/ansible-role/</link><pubDate>Sat, 15 Oct 2022 17:49:02 +0300</pubDate><guid>https://mpostument.com/ua/2022/10/15/ansible-role/</guid><description>Привіт!
+&lt;/div></content></item><item><title>Ansible Role</title><link>https://mpostument.com/ua/programming/ansible/ansible-role/</link><pubDate>Sat, 15 Oct 2022 17:49:02 +0300</pubDate><guid>https://mpostument.com/ua/programming/ansible/ansible-role/</guid><description>Привіт!
 Так що таке ролі в ansible? Ролі це просто логічна організація ansible коду. Наприклад можна створити роль яка буде налаштовувати MySQL базу даних, покласти її в окремий репозиторій і викласти в відкритий доступ або поділитись з іншими командами які зможуть її перевикористовувати.
 Create Role Так як створити роль? Можна самому створити всю потрібну структуру файлів або ж використати команду ansible-galaxy role init ROLE_NAME.
 ansible-galaxy role init roles/httpd - Role roles/httpd was created successfully Я вказую roles/httpd для того щоб ansible створив теку roles.</description><content>&lt;p>Привіт!&lt;/p>
@@ -452,13 +452,13 @@ ansible-galaxy role init roles/httpd - Role roles/httpd was created successfully
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/oeihNr9e5I4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Ansible Playbook</title><link>https://mpostument.com/ua/2022/10/04/ansible-playbook/</link><pubDate>Tue, 04 Oct 2022 22:51:59 +0300</pubDate><guid>https://mpostument.com/ua/2022/10/04/ansible-playbook/</guid><description>Частина 1 - Manage Ansible Versions With pyenv
+&lt;/div></content></item><item><title>Ansible Playbook</title><link>https://mpostument.com/ua/programming/ansible/ansible-playbook/</link><pubDate>Tue, 04 Oct 2022 22:51:59 +0300</pubDate><guid>https://mpostument.com/ua/programming/ansible/ansible-playbook/</guid><description>Частина 1 - Manage Ansible Versions With pyenv
 Частина 2 - Ansible Inventory
 Привіт!
 Сьогодні покажу що таке ansible-playbook і як їх створювати.
 Playbook Ansible Playbooks це повторювана, багаторазова, систему керування конфігурацією та систему розгортання, яка добре підходить для розгортання складних програм. Якщо потрібно виконати завдання за допомогою Ansible більше одного разу, це можна зробити за допомогою playbook.
-Створимо найпростіший playbook. В playbook потрібно вказати його назву, групу серверів на якій він буде виконуватись та самі завдання.</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/2022/09/19/manage-ansible-versions-with-pyenv/" title="Частина 1 - Manage Ansible Versions With pyenv">Частина 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/09/27/ansible-inventory/" title="Частина 2 - Ansible Inventory">Частина 2 - Ansible Inventory&lt;/a>&lt;/p>
+Створимо найпростіший playbook. В playbook потрібно вказати його назву, групу серверів на якій він буде виконуватись та самі завдання.</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/programming/ansible/manage-ansible-versions-with-pyenv/" title="Частина 1 - Manage Ansible Versions With pyenv">Частина 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/ansible/ansible-inventory/" title="Частина 2 - Ansible Inventory">Частина 2 - Ansible Inventory&lt;/a>&lt;/p>
 &lt;p>Привіт!&lt;/p>
 &lt;p>Сьогодні покажу що таке ansible-playbook і як їх створювати.&lt;/p>
 &lt;h2 id="playbook">Playbook&lt;/h2>
@@ -915,11 +915,11 @@ Playbook Ansible Playbooks це повторювана, багаторазова
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/k74GIVucO_Y" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Ansible Inventory</title><link>https://mpostument.com/ua/2022/09/27/ansible-inventory/</link><pubDate>Tue, 27 Sep 2022 21:39:08 +0300</pubDate><guid>https://mpostument.com/ua/2022/09/27/ansible-inventory/</guid><description>Частина 1 - Manage Ansible Versions With pyenv
+&lt;/div></content></item><item><title>Ansible Inventory</title><link>https://mpostument.com/ua/programming/ansible/ansible-inventory/</link><pubDate>Tue, 27 Sep 2022 21:39:08 +0300</pubDate><guid>https://mpostument.com/ua/programming/ansible/ansible-inventory/</guid><description>Частина 1 - Manage Ansible Versions With pyenv
 Привіт!
 Сьогодні розкажу що таке inventory в ansible так яких типів він буває.
 В ansible є два типи inventory - це static та dynamic. Static використовується коли ми на перед знаємо список серверів на яких має відпрацювати ansible. А dynamic коли цих даних наперед ми не маємо і отримуємо динамічно.
-Static inventory Щоб використовувати static inventory достатньо просто створити файл наприклад inventory і в ньому можна вказувати ip адрес наприклад:</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/2022/09/19/manage-ansible-versions-with-pyenv/" title="Частина 1 - Manage Ansible Versions With pyenv">Частина 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;/p>
+Static inventory Щоб використовувати static inventory достатньо просто створити файл наприклад inventory і в ньому можна вказувати ip адрес наприклад:</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/programming/ansible/manage-ansible-versions-with-pyenv/" title="Частина 1 - Manage Ansible Versions With pyenv">Частина 1 - Manage Ansible Versions With pyenv&lt;/a>&lt;/p>
 &lt;p>Привіт!&lt;/p>
 &lt;p>Сьогодні розкажу що таке inventory в ansible так яких типів він буває.&lt;/p>
 &lt;p>В ansible є два типи inventory - це static та dynamic. Static використовується коли ми на перед знаємо список серверів на яких має відпрацювати ansible. А dynamic коли цих даних наперед ми не маємо і отримуємо динамічно.&lt;/p>
@@ -1008,7 +1008,7 @@ Static inventory Щоб використовувати static inventory дост
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Фільтри можна комбінувати один з одним. Всі можливі опції можна знайти в документації конкретного dynamic inventory(&lt;a href="https://docs.ansible.com/ansible/latest/collections/amazon/aws/aws_ec2_inventory.html#examples">AWS docs&lt;/a>).&lt;/p>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/k74GIVucO_Y" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Manage Ansible Versions With pyenv</title><link>https://mpostument.com/ua/2022/09/19/manage-ansible-versions-with-pyenv/</link><pubDate>Mon, 19 Sep 2022 10:54:18 +0300</pubDate><guid>https://mpostument.com/ua/2022/09/19/manage-ansible-versions-with-pyenv/</guid><description>Привіт!
+&lt;/div></content></item><item><title>Manage Ansible Versions With pyenv</title><link>https://mpostument.com/ua/programming/ansible/manage-ansible-versions-with-pyenv/</link><pubDate>Mon, 19 Sep 2022 10:54:18 +0300</pubDate><guid>https://mpostument.com/ua/programming/ansible/manage-ansible-versions-with-pyenv/</guid><description>Привіт!
 Це перший пост з циклу про ansible, в якому я покажу як можна управляти версіями ansible та python за допомогою pyenv.
 Pyenv pyenv дозволяє встановлювати різні версії python і також створювати virtual env в яких буде встановлено ansible.
 Для того щоб встановити pyenv потрібно виконати команду

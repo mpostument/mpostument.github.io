@@ -1,0 +1,136 @@
+<!doctype html><html lang=ua><head><title>AWS Synthetics With Terraform. Problems? :: Maksym Postument</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Which problems i faced when worked with aws_synthetics_canary terraform resource and how i solved them"><meta name=keywords content="Devops,AWS,Terraform,Synthetics"><meta name=robots content="noodp"><link rel=canonical href=https://mpostument.com/ua/programming/terraform/aws-synthetics-with-terraform/><script async src="https://www.googletagmanager.com/gtag/js?id=G-SBRJXS94DC"></script>
+<script>var doNotTrack=!1;if(!doNotTrack){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-SBRJXS94DC",{anonymize_ip:!1})}</script><link rel=stylesheet href=https://mpostument.com/styles.css><link rel="shortcut icon" href=https://mpostument.com/img/theme-colors/blue.png><link rel=apple-touch-icon href=https://mpostument.com/img/theme-colors/blue.png><meta name=twitter:card content="summary"><meta name=twitter:site content="mpostument.com"><meta name=twitter:creator content="Maks_Postument"><meta property="og:locale" content="ua"><meta property="og:type" content="article"><meta property="og:title" content="AWS Synthetics With Terraform. Problems?"><meta property="og:description" content="Which problems i faced when worked with aws_synthetics_canary terraform resource and how i solved them"><meta property="og:url" content="https://mpostument.com/ua/programming/terraform/aws-synthetics-with-terraform/"><meta property="og:site_name" content="Maksym Postument"><meta property="og:image" content="https://i.imgur.com/a4KQPvv.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="627"><meta property="article:section" content="Devops"><meta property="article:section" content="AWS"><meta property="article:published_time" content="2022-03-08 20:29:47 +0200 +0200"><p align=center style=background-color:#23b0ff>Sign up for my <a href=https://tinyletter.com/mpostument>email
+newsletter</a> or use this <a href=/index.xml>RSS feed</a>. This is the best way to stay up-to-date with my latest content. Thank you for your continued support!</p><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8633398301520801" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/algoliasearch@4.14.2/dist/algoliasearch-lite.umd.js></script>
+<script src=https://cdn.jsdelivr.net/npm/@algolia/autocomplete-js></script>
+<script src=https://cdn.jsdelivr.net/npm/@algolia/autocomplete-preset-algolia></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@algolia/autocomplete-theme-classic><div id=autocomplete></div><script>var searchClient=algoliasearch("8HJOK7X4MI","a882cdf8954678175d442905d08d8926");const{autocomplete}=window["@algolia/autocomplete-js"],{getAlgoliaResults}=window["@algolia/autocomplete-preset-algolia"];autocomplete({container:"#autocomplete",placeholder:"Search",getSources({query:e}){return[{sourceId:"title",getItems(){return getAlgoliaResults({searchClient,queries:[{indexName:"mpostument",query:e,params:{hitsPerPage:5,attributesToSnippet:["title:15","description:35"],snippetEllipsisText:"…"}}]})},templates:{item({item:e,components:t,html:n}){return n`<div class="aa-ItemWrapper">
+                            <div class="aa-ItemContent">
+                              <div class="aa-ItemContentBody">
+                                <div class="aa-ItemContentTitle">
+                                  ${t.Highlight({hit:e,attribute:"title"})}
+                                </div>
+                                <div class="aa-ItemContentDescription">
+                                  ${t.Snippet({hit:e,attribute:"description"})}
+                                </div>
+                              </div>
+                            </div>
+                          </div>`}},getItemUrl({item:e}){return e.href},onSelect({item:e}){window.location.href=e.href}}]}})</script></head><body class=blue><div class="container center headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/ua><div class=logo>mpostument.com</div></a></div><ul class="menu menu--mobile"><li class=menu__trigger>Menu&nbsp;▾</li><li><ul class=menu__dropdown><li><a href=/ua>Home</a></li><li><a href=/ua/programming/>Programming</a></li><li><a href=/ua/tags/>Tags</a></li><li><a href=/ua/categories/>Categories</a></li><hr><li><a href=https://mpostument.com/>English</a></li><li><a href=https://mpostument.com/ua/>Ukraine</a></li></ul></li></ul><ul class="menu menu--desktop menu--language-selector"><li class=menu__trigger>Ukraine&nbsp;▾</li><li><ul class=menu__dropdown><li><a href=https://mpostument.com/>English</a></li><li><a href=https://mpostument.com/ua/>Ukraine</a></li></ul></li></ul></div><nav class=navigation-menu><ul class="navigation-menu__inner menu--desktop"><li><a href=/ua>Home</a></li><li><a href=/ua/programming/>Programming</a></li><li><a href=/ua/tags/>Tags</a></li><li><a href=/ua/categories/>Categories</a></li></ul></nav></header><div class=content><article class=post><h1 class=post-title><a href=https://mpostument.com/ua/programming/terraform/aws-synthetics-with-terraform/>AWS Synthetics With Terraform. Problems?</a></h1><div class=post-meta><time class=post-date>2022-03-08 ::</time>
+<span class=post-author>Maksym Postument</span>
+<span class=post-reading-time>:: 4 min read (649 words)</span></div><span class=post-tags>#<a href=https://mpostument.com/ua/tags/aws/>AWS</a>&nbsp;
+#<a href=https://mpostument.com/ua/tags/devops/>Devops</a>&nbsp;
+#<a href=https://mpostument.com/ua/tags/terraform/>Terraform</a>&nbsp;</span>
+<img src=https://i.imgur.com/a4KQPvv.jpg class=post-cover alt="AWS Synthetics With Terraform. Problems?" title="Cover Image"><div class=post-content><div><p>Привіт!</p><p>Недавно я за допомогою terraform автоматизовував створення <code>AWS Synthetics</code>, і стикнувся з декількома проблемами та хочу поділитись як я їх вирішив.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#66d9ef>locals</span> {
+</span></span><span style=display:flex><span>  common_tags <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    cost-center <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;observability&#34;</span>
+</span></span><span style=display:flex><span>    label       <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;canary&#34;</span>
+</span></span><span style=display:flex><span>    environment <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;staging&#34;</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>data</span> <span style=color:#e6db74>&#34;archive_file&#34; &#34;login&#34;</span> {
+</span></span><span style=display:flex><span>  type       <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;zip&#34;</span>
+</span></span><span style=display:flex><span>  source_dir <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${path.module}/functions/login/&#34;</span>
+</span></span><span style=display:flex><span>  output_path <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${path.module}/functions/login.zip&#34;</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_synthetics_canary&#34; &#34;login&#34;</span> {
+</span></span><span style=display:flex><span>  name                 <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;login_test&#34;</span>
+</span></span><span style=display:flex><span>  artifact_s3_location <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;s3://my_canary_bucket/&#34;</span>
+</span></span><span style=display:flex><span>  execution_role_arn   <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;role_arn&#34;</span>
+</span></span><span style=display:flex><span>  handler              <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;index.handler&#34;</span>
+</span></span><span style=display:flex><span>  zip_file             <span style=color:#f92672>=</span> <span style=color:#66d9ef>data</span>.<span style=color:#66d9ef>archive_file</span>.<span style=color:#66d9ef>login</span>.<span style=color:#66d9ef>output_path</span>
+</span></span><span style=display:flex><span>  runtime_version      <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;syn-nodejs-puppeteer-3.4&#34;</span>
+</span></span><span style=display:flex><span>  start_canary         <span style=color:#f92672>=</span> <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>schedule</span> {
+</span></span><span style=display:flex><span>    expression <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;rate(5 minutes)&#34;</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>run_config</span> {
+</span></span><span style=display:flex><span>    timeout_in_seconds <span style=color:#f92672>=</span> <span style=color:#ae81ff>300</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  tags <span style=color:#f92672>=</span> <span style=color:#66d9ef>merge</span>(
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>local</span>.<span style=color:#66d9ef>common_tags</span>
+</span></span><span style=display:flex><span>  )
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Перша проблема з якою я стикнувся те що <code>Lambda</code> яку автоматично створює canary не має тегів. Щоб її протегати я використав <code>null_resource</code>. Arn лямбди можна отримати за допомогою <code>aws_synthetics_canary.login.engine_arn</code>, але проблема в тому що arn містить версію лямбди <code>arn:aws:lambda:us-east-1:123456789:function:my_lambda:15</code>. А для того, щоб могти протегувати версія не потрібна. Щоб з лямбди забрати версію я додав наступне в <code>locals</code>.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span>  lambda_regex       <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;arn:aws:lambda:[a-z]{2}-[a-z]+-\\d{1}:\\d{12}:function:[a-zA-Z0-9-_]+&#34;</span>
+</span></span><span style=display:flex><span>  login_lambda_name  <span style=color:#f92672>=</span> <span style=color:#66d9ef>regex</span>(<span style=color:#66d9ef>local</span>.<span style=color:#66d9ef>lambda_regex</span>, <span style=color:#66d9ef>aws_synthetics_canary</span>.<span style=color:#66d9ef>login</span>.<span style=color:#66d9ef>engine_arn</span>)
+</span></span></code></pre></div><p>Тепер коли є <code>Arn</code> за допомогою <code>null_resource</code> можна протегувати лямбду. <code>Triggers</code> вказує в яких випадках запускати <code>null_resource</code>. В цьому випадку <code>null_resource</code> буде запускатись якщо поміняється тег в мапі <code>common_tags</code> або ж поміняється <code>aws_synthetics_canary id</code> (коли canary буде перестворено). І в provisioner <code>"local-exec"</code> запускаю <code>aws lambda tag-resource</code> в який передаю <code>arn</code> лямбди і теги. Єдине що для <code>aws lambda</code> теги мають бути в правильному форматі, а в <code>terraform</code> вони в вигляді мапи. Щоб їх конвертувати в тип string потрібно наступне додати в <code>locals</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span>  tags               <span style=color:#f92672>=</span> trimsuffix(join(&#34; &#34;, formatlist(&#34;%s<span style=color:#f92672>=</span><span style=color:#960050;background-color:#1e0010>%</span><span style=color:#66d9ef>s</span>,<span style=color:#e6db74>&#34;, keys(local.common_tags), values(local.common_tags))), &#34;,&#34;</span>)
+</span></span></code></pre></div><p>Таким чином після створення <code>aws_synthetics_canary</code> буде протеговано і лямбду.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;null_resource&#34; &#34;tag_login_backend_lambda&#34;</span> {
+</span></span><span style=display:flex><span>  triggers <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    tags   <span style=color:#f92672>=</span> <span style=color:#66d9ef>local</span>.<span style=color:#66d9ef>tags</span>
+</span></span><span style=display:flex><span>    canary <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_synthetics_canary</span>.<span style=color:#66d9ef>login</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>provisioner</span> <span style=color:#e6db74>&#34;local-exec&#34;</span> {
+</span></span><span style=display:flex><span>    command <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;aws lambda tag-resource --resource ${local.login_lambda_name} --tags &#39;${local.tags}&#39;&#34;</span>
+</span></span><span style=display:flex><span>    environment <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>      AWS_PROFILE <span style=color:#f92672>=</span> <span style=color:#960050;background-color:#1e0010>&#34;</span><span style=color:#66d9ef>production</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  depends_on <span style=color:#f92672>=</span> [<span style=color:#66d9ef>aws_synthetics_canary</span>.<span style=color:#66d9ef>login</span>]
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Наступна проблема полягає в тому що aws_synthetics_canary ресурс не підтримує змінних оточення. Додати їх можна також за допомогою <code>null_resource</code>. Для цього ж знову потрібно додати змінні оточення в <code>locals</code>. В моєму випадку це буде мапа в якій буде тільки одна змінна це <code>app_url</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span>  canary_variables <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    &#34;app_url&#34; <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://mpostument.com&#34;</span>
+</span></span><span style=display:flex><span>  }
+</span></span></code></pre></div><p><code>Triggers</code> виглядає схоже до попереднього прикладу, тільки canary_variables з мапи потрібно перетворити в <code>string</code>, оскільки <code>triggers</code> підтримує тільки <code>string</code>. Складніше виглядає виклик команди <code>aws synthetics update-canary</code>, оскільки окрім змін оточення потрібно передати інші параметри, якщо їх не передати, то <code>aws cli</code> поставить їх в дефолтне значення.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;null_resource&#34; &#34;add_environment_variables_login_canary&#34;</span> {
+</span></span><span style=display:flex><span>  triggers <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    canary_variables <span style=color:#f92672>=</span> join(&#34;,&#34;, [for key, value in local.canary_variables : &#34;${key}<span style=color:#f92672>=</span><span style=color:#e6db74>${</span><span style=color:#960050;background-color:#1e0010>value</span><span style=color:#e6db74>}</span><span style=color:#960050;background-color:#1e0010>&#34;</span>])
+</span></span><span style=display:flex><span>    canary           <span style=color:#f92672>=</span> <span style=color:#66d9ef>aws_synthetics_canary</span>.<span style=color:#66d9ef>login</span>.<span style=color:#66d9ef>id</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>provisioner</span> <span style=color:#e6db74>&#34;local-exec&#34;</span> {
+</span></span><span style=display:flex><span>    command <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;aws synthetics update-canary --name ${aws_synthetics_canary.login.name} --run-config &#39;${jsonencode({ TimeoutInSeconds : aws_synthetics_canary.create.run_config[0].timeout_in_seconds, MemoryInMB : aws_synthetics_canary.create.run_config[0].memory_in_mb, ActiveTracing : aws_synthetics_canary.create.run_config[0].active_tracing, EnvironmentVariables : var.canary_variables })}&#39;&#34;</span>
+</span></span><span style=display:flex><span>    environment <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>      AWS_PROFILE <span style=color:#f92672>=</span> <span style=color:#66d9ef>var</span>.<span style=color:#66d9ef>aws_profile_name</span>
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>  depends_on <span style=color:#f92672>=</span> [<span style=color:#66d9ef>aws_synthetics_canary</span>.<span style=color:#66d9ef>create</span>]
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Ще одна проблема то що код canary автоматично не оновлюється, для того щоб він оновлювався назва архіву має бути іншою кожен раз. Це можна зробити за допомогою функції <code>filemd5</code>. Ось так виглядатиме <code>archive_file</code> з новими змінами</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#66d9ef>locals</span> {
+</span></span><span style=display:flex><span>  login_function_location <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${path.module}/functions/login/nodejs/node_modules/index.js&#34;</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>data</span> <span style=color:#e6db74>&#34;archive_file&#34; &#34;login&#34;</span> {
+</span></span><span style=display:flex><span>  type       <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;zip&#34;</span>
+</span></span><span style=display:flex><span>  source_dir <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${path.module}/functions/login/&#34;</span>
+</span></span><span style=display:flex><span>  output_path <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${path.module}/functions/login-${filemd5(local.login_function_location)}.zip&#34;</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Таким чином кожного разу буде рахуватись хеш файлу і якщо він змінився то новий файл буде створено і canary код буде оновлено</p><p>Ще є одна проблема що при виклику <code>terraform destroy</code> не видаляється лямбда яка автоматично створюється <code>aws_synthetics_canary</code>. ЇЇ я поки що ще не вирішив.</p><p>UPD:
+В AWS провайдері версії <a href=https://github.com/hashicorp/terraform-provider-aws/blob/main/CHANGELOG.md#450-march-11-2022>4.5.0</a> добавлена підтримка <code>environment_variables</code>. Для того щоб їх добавити потрібно в run_config вказати мапу з потрібними зміними оточення</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-hcl data-lang=hcl><span style=display:flex><span><span style=color:#66d9ef>locals</span> {
+</span></span><span style=display:flex><span>  canary_variables <span style=color:#f92672>=</span> {
+</span></span><span style=display:flex><span>    &#34;app_url&#34; <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;https://mpostument.com&#34;</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>  login_function_location <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${path.module}/functions/login/nodejs/node_modules/index.js&#34;</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>data</span> <span style=color:#e6db74>&#34;archive_file&#34; &#34;login&#34;</span> {
+</span></span><span style=display:flex><span>  type       <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;zip&#34;</span>
+</span></span><span style=display:flex><span>  source_dir <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${path.module}/functions/login/&#34;</span>
+</span></span><span style=display:flex><span>  output_path <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;${path.module}/functions/login-${filemd5(local.login_function_location)}.zip&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>resource</span> <span style=color:#e6db74>&#34;aws_synthetics_canary&#34; &#34;login&#34;</span> {
+</span></span><span style=display:flex><span>  name                 <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;login_test&#34;</span>
+</span></span><span style=display:flex><span>  artifact_s3_location <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;s3://my_canary_bucket/&#34;</span>
+</span></span><span style=display:flex><span>  execution_role_arn   <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;role_arn&#34;</span>
+</span></span><span style=display:flex><span>  handler              <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;index.handler&#34;</span>
+</span></span><span style=display:flex><span>  zip_file             <span style=color:#f92672>=</span> <span style=color:#66d9ef>data</span>.<span style=color:#66d9ef>archive_file</span>.<span style=color:#66d9ef>login</span>.<span style=color:#66d9ef>output_path</span>
+</span></span><span style=display:flex><span>  runtime_version      <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;syn-nodejs-puppeteer-3.4&#34;</span>
+</span></span><span style=display:flex><span>  start_canary         <span style=color:#f92672>=</span> <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>schedule</span> {
+</span></span><span style=display:flex><span>    expression <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;rate(5 minutes)&#34;</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>run_config</span> {
+</span></span><span style=display:flex><span>    timeout_in_seconds    <span style=color:#f92672>=</span> <span style=color:#ae81ff>300</span>
+</span></span><span style=display:flex><span>    environment_variables <span style=color:#f92672>=</span> <span style=color:#66d9ef>local</span>.<span style=color:#66d9ef>canary_variables</span>
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  tags <span style=color:#f92672>=</span> <span style=color:#66d9ef>merge</span>(
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>local</span>.<span style=color:#66d9ef>common_tags</span>
+</span></span><span style=display:flex><span>  )
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div></div></div><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//mpostument-com.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></article></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2023 Powered by <a href=http://gohugo.io>Hugo</a></span>
+<span>:: <a href=https://github.com/panr/hugo-theme-terminal target=_blank>Theme</a> made by <a href=https://github.com/panr target=_blank>panr</a></span></div></div></footer><script type=text/javascript src=/bundle.min.js></script></div></body></html>

@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AWS on Maksym Postument</title><link>https://mpostument.com/tags/aws/</link><description>Recent content in AWS on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 22 Sep 2022 22:45:30 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/aws/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS 101: EC2 Part 1</title><link>https://mpostument.com/2022/09/22/aws-101-ec2-part-1/</link><pubDate>Thu, 22 Sep 2022 22:45:30 +0300</pubDate><guid>https://mpostument.com/2022/09/22/aws-101-ec2-part-1/</guid><description>Hello!
-With this post, I will start a series about AWS, in which I will show how to use various AWS services, and automate them using terraform and the AWS SDK. And let&amp;rsquo;s start with the EC2 service.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AWS on Maksym Postument</title><link>https://mpostument.com/tags/aws/</link><description>Recent content in AWS on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 22 Sep 2022 22:45:30 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/aws/index.xml" rel="self" type="application/rss+xml"/><item><title>AWS 101: EC2 Part 1</title><link>https://mpostument.com/programming/aws/aws-101-ec2-part-1/</link><pubDate>Thu, 22 Sep 2022 22:45:30 +0300</pubDate><guid>https://mpostument.com/programming/aws/aws-101-ec2-part-1/</guid><description>Hello!
+With this programming, I will start a series about AWS, in which I will show how to use various AWS services, and automate them using terraform and the AWS SDK. And let&amp;rsquo;s start with the EC2 service.
 EC2 is the core compute component of AWS. In practice, EC2 makes life easier for developers by providing scalable, secure computing power on AWS. It makes scaling up or down much easier, can be integrated with several other services, and comes with a plan where you only pay for what you use.</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>With this post, I will start a series about AWS, in which I will show how to use various AWS services, and automate them using &lt;code>terraform&lt;/code> and the AWS SDK. And let&amp;rsquo;s start with the EC2 service.&lt;/p>
+&lt;p>With this programming, I will start a series about AWS, in which I will show how to use various AWS services, and automate them using &lt;code>terraform&lt;/code> and the AWS SDK. And let&amp;rsquo;s start with the EC2 service.&lt;/p>
 &lt;p>EC2 is the core compute component of AWS. In practice, EC2 makes life easier for developers by providing scalable, secure computing power on AWS. It makes scaling up or down much easier, can be integrated with several other services, and comes with a plan where you only pay for what you use.&lt;/p>
 &lt;h2 id="ui-overview">UI Overview&lt;/h2>
 &lt;p>&lt;img src="https://mpostument.com/aws/ec2/ec2-ui.png" alt="ec2-ui">&lt;/p>
@@ -110,7 +110,7 @@ Just click on Allocate Elastic IP Address&lt;/p>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In this example, the terraform execute a resource named aws_instance, to which we pass a set of parameters, the same ones we passed when creating the instance through the UI.&lt;/p>
-&lt;p>If you want to learn more about terraform and its usage, I recommend reading &lt;a href="https://mpostument.com/2022/07/26/terraform-install/" title="series of posts about terraform">series of posts about terraform&lt;/a>&lt;/p>
+&lt;p>If you want to learn more about terraform and its usage, I recommend reading &lt;a href="https://mpostument.com/programming/terraform/terraform-install/" title="series of posts about terraform">series of posts about terraform&lt;/a>&lt;/p>
 &lt;h2 id="golang-sdk">Golang SDK&lt;/h2>
 &lt;p>Another option for creating an instance is the AWS SDK, more specifically the &lt;a href="https://aws.github.io/aws-sdk-go-v2/docs/getting-started/">Golang AWS SDK&lt;/a>. To use it &lt;a href="https://go.dev/doc/install">golang must be installed&lt;/a> together with the &lt;a href="https://aws.github.io/aws-sdk-go-v2/docs/getting-started/#install-the-aws-sdk-for-go-v2">AWS SDK&lt;/a>&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
@@ -156,7 +156,7 @@ Just click on Allocate Elastic IP Address&lt;/p>
 &lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/-nJwDYvtgEs" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform Modules and Import</title><link>https://mpostument.com/2022/09/14/terraform-modules-and-import/</link><pubDate>Wed, 14 Sep 2022 20:41:58 +0300</pubDate><guid>https://mpostument.com/2022/09/14/terraform-modules-and-import/</guid><description>Part 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform Modules and Import</title><link>https://mpostument.com/programming/terraform/terraform-modules-and-import/</link><pubDate>Wed, 14 Sep 2022 20:41:58 +0300</pubDate><guid>https://mpostument.com/programming/terraform/terraform-modules-and-import/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Part 3 - Terraform State
 Part 4 - Terraform Template
@@ -166,14 +166,14 @@ Part 7 - Terraform Lifecycle
 Part 8 - Terraform Condition and Lookup
 Hello!
 Today we will see how you can import existing resources into terraform and how to organize the code into a module for future reuse.
-Import There is a situation when the resources have already been created and you need to start managing them using terraform.</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/31/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/11/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/21/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/28/terraform-lifecycle/" title="Part 6 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/09/09/terraform-variables/" title="Part 7 - Terraform Variables">Part 7 - Terraform Lifecycle&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/09/11/terraform-condition-and-lookup/" title="Part 8 - Terraform Condition and Lookup">Part 8 - Terraform Condition and Lookup&lt;/a>&lt;/p>
+Import There is a situation when the resources have already been created and you need to start managing them using terraform.</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/terraform/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-lifecycle/" title="Part 6 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-variables/" title="Part 7 - Terraform Variables">Part 7 - Terraform Lifecycle&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-condition-and-lookup/" title="Part 8 - Terraform Condition and Lookup">Part 8 - Terraform Condition and Lookup&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
 &lt;p>Today we will see how you can import existing resources into terraform and how to organize the code into a module for future reuse.&lt;/p>
 &lt;h2 id="import">Import&lt;/h2>
@@ -716,7 +716,7 @@ Import There is a situation when the resources have already been created and you
 &lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/uCapjyzxJBo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform Condition and Lookup</title><link>https://mpostument.com/2022/09/11/terraform-condition-and-lookup/</link><pubDate>Sun, 11 Sep 2022 11:23:40 +0300</pubDate><guid>https://mpostument.com/2022/09/11/terraform-condition-and-lookup/</guid><description>Part 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform Condition and Lookup</title><link>https://mpostument.com/programming/terraform/terraform-condition-and-lookup/</link><pubDate>Sun, 11 Sep 2022 11:23:40 +0300</pubDate><guid>https://mpostument.com/programming/terraform/terraform-condition-and-lookup/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Part 3 - Terraform State
 Part 4 - Terraform Template
@@ -724,16 +724,16 @@ Part 5 - Terraform Dynamic
 Part 6 - Terraform Lifecycle
 Part 7 - Terraform Lifecycle
 Hello!
-In this post, I will talk about conditions and lookups.
-Conditions Conditions in terraform are used to select one value depending on another. For example, if it is a dev environment, then use the t3.</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/31/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/11/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/21/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/28/terraform-lifecycle/" title="Part 6 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/09/09/terraform-variables/" title="Part 7 - Terraform Variables">Part 7 - Terraform Lifecycle&lt;/a>&lt;/p>
+In this programming, I will talk about conditions and lookups.
+Conditions Conditions in terraform are used to select one value depending on another. For example, if it is a dev environment, then use the t3.</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/terraform/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-lifecycle/" title="Part 6 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-variables/" title="Part 7 - Terraform Variables">Part 7 - Terraform Lifecycle&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
-&lt;p>In this post, I will talk about conditions and lookups.&lt;/p>
+&lt;p>In this programming, I will talk about conditions and lookups.&lt;/p>
 &lt;h2 id="conditions">Conditions&lt;/h2>
 &lt;p>Conditions in terraform are used to select one value depending on another. For example, if it is a dev environment, then use the t3.micro server type, and if it is a production environment, then use m5.large. This is easy to do with a condition. Conditions are written like &lt;code>condition ? true_val : false_val&lt;/code>. For server type conditions will look like &lt;code>var.env == &amp;quot;prod&amp;quot; ? &amp;quot;m5.large&amp;quot; : &amp;quot;t3.micro&amp;quot;&lt;/code>. Here I check whether the parameter &lt;code>env&lt;/code> has the value prod, and if so, I use m5.large, in all other cases it is t3.micro. The complete ec2 creation code will look like this.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-hcl" data-lang="hcl">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">variable&lt;/span> &lt;span style="color:#e6db74">&amp;#34;env&amp;#34;&lt;/span> {
@@ -892,23 +892,23 @@ Conditions Conditions in terraform are used to select one value depending on ano
 &lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/uN6sm22CyrE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform Variables</title><link>https://mpostument.com/2022/09/09/terraform-variables/</link><pubDate>Fri, 09 Sep 2022 20:31:09 +0300</pubDate><guid>https://mpostument.com/2022/09/09/terraform-variables/</guid><description>Part 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform Variables</title><link>https://mpostument.com/programming/terraform/terraform-variables/</link><pubDate>Fri, 09 Sep 2022 20:31:09 +0300</pubDate><guid>https://mpostument.com/programming/terraform/terraform-variables/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Part 3 - Terraform State
 Part 4 - Terraform Template
 Part 5 - Terraform Dynamic
 Part 6 - Terraform Lifecycle
 Hello!
-In this post, I will talk about variables in terraform and terraform data.
+In this programming, I will talk about variables in terraform and terraform data.
 Variables I will use the code from previous posts. I create a new file variables.tf and add the instance_type variable to it.
-variable &amp;#34;instance_type&amp;#34; { default = &amp;#34;t2.</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/31/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/11/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/21/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/28/terraform-lifecycle/" title="Part 5 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;/p>
+variable &amp;#34;instance_type&amp;#34; { default = &amp;#34;t2.</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/terraform/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-lifecycle/" title="Part 5 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
-&lt;p>In this post, I will talk about variables in terraform and terraform data.&lt;/p>
+&lt;p>In this programming, I will talk about variables in terraform and terraform data.&lt;/p>
 &lt;h2 id="variables">Variables&lt;/h2>
 &lt;p>I will use the code from previous posts. I create a new file &lt;code>variables.tf&lt;/code> and add the instance_type variable to it.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-hcl" data-lang="hcl">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">variable&lt;/span> &lt;span style="color:#e6db74">&amp;#34;instance_type&amp;#34;&lt;/span> {
@@ -1084,20 +1084,20 @@ After the variable is created, it can be used in the terraform code as &lt;code>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/MBIFya6WX-E" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform Lifecycle and Outputs</title><link>https://mpostument.com/2022/08/28/terraform-lifecycle/</link><pubDate>Sun, 28 Aug 2022 21:22:25 +0300</pubDate><guid>https://mpostument.com/2022/08/28/terraform-lifecycle/</guid><description>Part 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform Lifecycle and Outputs</title><link>https://mpostument.com/programming/terraform/terraform-lifecycle/</link><pubDate>Sun, 28 Aug 2022 21:22:25 +0300</pubDate><guid>https://mpostument.com/programming/terraform/terraform-lifecycle/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Part 3 - Terraform State
 Part 4 - Terraform Template
 Part 5 - Terraform Dynamic
 Hello!
-In this post i will explain what is lifecycle, dependent_on and outputs in terraform.
-Lifecycle create_before_destroy Lifecycle is a meta parameter supported by most resources. And with its help, you can control the behavior when creating/deleting resources. I will take the terraform ec2 creation code from one of the previous posts and add the lifecycle block to it.</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/31/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/11/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/21/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;/p>
+In this programming i will explain what is lifecycle, dependent_on and outputs in terraform.
+Lifecycle create_before_destroy Lifecycle is a meta parameter supported by most resources. And with its help, you can control the behavior when creating/deleting resources. I will take the terraform ec2 creation code from one of the previous posts and add the lifecycle block to it.</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/terraform/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
-&lt;p>In this post i will explain what is lifecycle, dependent_on and outputs in terraform.&lt;/p>
+&lt;p>In this programming i will explain what is lifecycle, dependent_on and outputs in terraform.&lt;/p>
 &lt;h2 id="lifecycle">Lifecycle&lt;/h2>
 &lt;h3 id="create_before_destroy">create_before_destroy&lt;/h3>
 &lt;p>Lifecycle is a meta parameter supported by most resources. And with its help, you can control the behavior when creating/deleting resources.
@@ -1437,17 +1437,17 @@ I will take the terraform ec2 creation code from one of the previous posts and a
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/qdGpvePGSJs" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform Dynamic</title><link>https://mpostument.com/2022/08/21/terraform-dynamic/</link><pubDate>Sun, 21 Aug 2022 20:25:57 +0300</pubDate><guid>https://mpostument.com/2022/08/21/terraform-dynamic/</guid><description>Part 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform Dynamic</title><link>https://mpostument.com/programming/terraform/terraform-dynamic/</link><pubDate>Sun, 21 Aug 2022 20:25:57 +0300</pubDate><guid>https://mpostument.com/programming/terraform/terraform-dynamic/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Part 3 - Terraform State
 Part 4 - Terraform Template
 Hello!
 In this article, I will show how to use the dynamic block on the example of creating an AWS Security Group.
 To begin with, I will create a Security Group without using the dynamic block. In this example, each rule is described in a separate ingress block.
-resource &amp;#34;aws_security_group&amp;#34; &amp;#34;test_sg&amp;#34; { name = &amp;#34;test-sg&amp;#34; description = &amp;#34;allow traffic to web app&amp;#34; vpc_id = &amp;#34;vcp-123&amp;#34; ingress { from_port = 8082 to_port = 8082 protocol = &amp;#34;tcp&amp;#34; cidr_blocks = [ &amp;#34;0.</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/31/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/08/11/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;/p>
+resource &amp;#34;aws_security_group&amp;#34; &amp;#34;test_sg&amp;#34; { name = &amp;#34;test-sg&amp;#34; description = &amp;#34;allow traffic to web app&amp;#34; vpc_id = &amp;#34;vcp-123&amp;#34; ingress { from_port = 8082 to_port = 8082 protocol = &amp;#34;tcp&amp;#34; cidr_blocks = [ &amp;#34;0.</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/terraform/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
 &lt;p>In this article, I will show how to use the dynamic block on the example of creating an AWS Security Group.&lt;/p>
 &lt;p>To begin with, I will create a Security Group without using the dynamic block. In this example, each rule is described in a separate ingress block.&lt;/p>
@@ -1548,13 +1548,13 @@ resource &amp;#34;aws_security_group&amp;#34; &amp;#34;test_sg&amp;#34; { name =
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/Aeu2sGehp7Q" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform Template</title><link>https://mpostument.com/2022/08/11/terraform-template/</link><pubDate>Thu, 11 Aug 2022 20:59:58 +0300</pubDate><guid>https://mpostument.com/2022/08/11/terraform-template/</guid><description>Part 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform Template</title><link>https://mpostument.com/programming/terraform/terraform-template/</link><pubDate>Thu, 11 Aug 2022 20:59:58 +0300</pubDate><guid>https://mpostument.com/programming/terraform/terraform-template/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Part 3 - Terraform State
 Hello!
-In this article, I will show how in terraform you can use static files or generate files dynamically. I will show it on the example of user_data in EC2. With the help of user_data, you can transfer a script that will be executed on the server at the time of creation. This file can be predefined with static content and transferred using terraform to user_data, or the content can be dynamically generated and transferred.</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/31/terraform-state/" title="Part 2 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;/p>
+In this article, I will show how in terraform you can use static files or generate files dynamically. I will show it on the example of user_data in EC2. With the help of user_data, you can transfer a script that will be executed on the server at the time of creation. This file can be predefined with static content and transferred using terraform to user_data, or the content can be dynamically generated and transferred.</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/terraform/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-state/" title="Part 2 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
 &lt;p>In this article, I will show how in terraform you can use static files or generate files dynamically. I will show it on the example of user_data in EC2. With the help of user_data, you can transfer a script that will be executed on the server at the time of creation. This file can be predefined with static content and transferred using terraform to user_data, or the content can be dynamically generated and transferred.&lt;/p>
 &lt;h2 id="terraform-file">Terraform file&lt;/h2>
@@ -1612,12 +1612,12 @@ In this article, I will show how in terraform you can use static files or genera
 &lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/Dl_Jdo3hMZM" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform State</title><link>https://mpostument.com/2022/07/31/terraform-state/</link><pubDate>Sun, 31 Jul 2022 20:30:06 +0300</pubDate><guid>https://mpostument.com/2022/07/31/terraform-state/</guid><description>Part 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform State</title><link>https://mpostument.com/programming/terraform/terraform-state/</link><pubDate>Sun, 31 Jul 2022 20:30:06 +0300</pubDate><guid>https://mpostument.com/programming/terraform/terraform-state/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Hello!
 In the previous article, I created an ec2 in AWS and then executed terraform destroy and terraform only deleted the created ec2 without affecting other resources. How did he do it?
-Local State To understand this, you need to look at the terraform directory after executing terraform apply. Immediately after terraform apply is executed, a file with name terraform.tfstate will be created with the following content</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;/p>
+Local State To understand this, you need to look at the terraform directory after executing terraform apply. Immediately after terraform apply is executed, a file with name terraform.tfstate will be created with the following content</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/terraform/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/programming/terraform/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
 &lt;p>In the previous article, I created an ec2 in AWS and then executed &lt;code>terraform destroy&lt;/code> and terraform only deleted the created ec2 without affecting other resources. How did he do it?&lt;/p>
 &lt;h2 id="local-state">Local State&lt;/h2>
@@ -1879,11 +1879,11 @@ Terraform has such a concept as &lt;a href="https://www.terraform.io/language/se
 &lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/iPzrUvhlty4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform Basics</title><link>https://mpostument.com/2022/07/28/terraform-basics/</link><pubDate>Thu, 28 Jul 2022 20:27:17 +0300</pubDate><guid>https://mpostument.com/2022/07/28/terraform-basics/</guid><description>Part 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform Basics</title><link>https://mpostument.com/programming/terraform/terraform-basics/</link><pubDate>Thu, 28 Jul 2022 20:27:17 +0300</pubDate><guid>https://mpostument.com/programming/terraform/terraform-basics/</guid><description>Part 1 - Terraform Install
 Hello!
 In the previous article, we learn how to install terraform. And now we will learn how using terraform you can create and delete resources in AWS.
 In order for terraform to manage resources in AWS, you need to install terraform AWS provider. Terraform will do this automatically if I specify AWS provider in the terraform code and call terraform init.
-I will create a terraform_code directory and in this directory, I will create a file with the name provider.</description><content>&lt;p>&lt;a href="https://mpostument.com/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;/p>
+I will create a terraform_code directory and in this directory, I will create a file with the name provider.</description><content>&lt;p>&lt;a href="https://mpostument.com/programming/terraform/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;/p>
 &lt;p>Hello!&lt;/p>
 &lt;p>In the previous article, we learn how to install terraform. And now we will learn how using terraform you can create and delete resources in AWS.&lt;/p>
 &lt;p>In order for terraform to manage resources in AWS, you need to install terraform AWS provider. Terraform will do this automatically if I specify AWS provider in the terraform code and call &lt;code>terraform init&lt;/code>.&lt;/p>
@@ -2123,7 +2123,7 @@ I will create a terraform_code directory and in this directory, I will create a 
 &lt;h2 id="video">Video&lt;/h2>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/XRcBZDi_mMw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>AWS Synthetics With Terraform. Problems?</title><link>https://mpostument.com/2022/03/08/aws-synthetics-with-terraform/</link><pubDate>Tue, 08 Mar 2022 20:29:47 +0200</pubDate><guid>https://mpostument.com/2022/03/08/aws-synthetics-with-terraform/</guid><description>Hi there!
+&lt;/div></content></item><item><title>AWS Synthetics With Terraform. Problems?</title><link>https://mpostument.com/programming/terraform/aws-synthetics-with-terraform/</link><pubDate>Tue, 08 Mar 2022 20:29:47 +0200</pubDate><guid>https://mpostument.com/programming/terraform/aws-synthetics-with-terraform/</guid><description>Hi there!
 Recently, I used terraform to automate the creation for AWS Synthetics, and I encountered several problems and I want to share how I solved them.
 locals { common_tags = { cost-center = &amp;#34;observability&amp;#34; label = &amp;#34;canary&amp;#34; environment = &amp;#34;staging&amp;#34; } } data &amp;#34;archive_file&amp;#34; &amp;#34;login&amp;#34; { type = &amp;#34;zip&amp;#34; source_dir = &amp;#34;${path.module}/functions/login/&amp;#34; output_path = &amp;#34;${path.module}/functions/login.zip&amp;#34; } resource &amp;#34;aws_synthetics_canary&amp;#34; &amp;#34;login&amp;#34; { name = &amp;#34;login_test&amp;#34; artifact_s3_location = &amp;#34;s3://my_canary_bucket/&amp;#34; execution_role_arn = &amp;#34;role_arn&amp;#34; handler = &amp;#34;index.</description><content>&lt;p>Hi there!&lt;/p>
 &lt;p>Recently, I used terraform to automate the creation for &lt;code>AWS Synthetics&lt;/code>, and I encountered several problems and I want to share how I solved them.&lt;/p>
@@ -2248,7 +2248,7 @@ Support for &lt;code>environment_variables&lt;/code> has been added in the AWS p
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">local&lt;/span>.&lt;span style="color:#66d9ef">common_tags&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> )
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Ebs Auto Resize</title><link>https://mpostument.com/2021/02/06/ebs-auto-resize/</link><pubDate>Sat, 06 Feb 2021 18:14:40 +0200</pubDate><guid>https://mpostument.com/2021/02/06/ebs-auto-resize/</guid><description>Hi there!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Ebs Auto Resize</title><link>https://mpostument.com/programming/golang/ebs-auto-resize/</link><pubDate>Sat, 06 Feb 2021 18:14:40 +0200</pubDate><guid>https://mpostument.com/programming/golang/ebs-auto-resize/</guid><description>Hi there!
 Today we will make a script for automatic resizing of EBS volume using golang and AWS SDK version 2. To do this, I need to perform a few steps: get a list of volumes, filter those volumes in which the amount of free memory is less than the threshold, find the ebs id that corresponds to this volume. Resize by a specified percentage and increase the disk size on the file system.</description><content>&lt;p>Hi there!&lt;/p>
 &lt;p>Today we will make a script for automatic resizing of EBS volume using golang and AWS SDK version 2.
 To do this, I need to perform a few steps: get a list of volumes, filter those volumes in which the amount of free memory is less than the threshold, find the ebs id that corresponds to this volume. Resize by a specified percentage and increase the disk size on the file system.&lt;/p>
@@ -2530,7 +2530,7 @@ If it is xfs then called &lt;code>xfs_growfs&lt;/code> in other cases it is &lt;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After a few seconds, the disk has a new size.&lt;/p></content></item><item><title>Failed Asg Event Notification</title><link>https://mpostument.com/2021/01/03/failed-asg-event-notification/</link><pubDate>Sun, 03 Jan 2021 17:57:36 +0200</pubDate><guid>https://mpostument.com/2021/01/03/failed-asg-event-notification/</guid><description>Hello!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After a few seconds, the disk has a new size.&lt;/p></content></item><item><title>Failed Asg Event Notification</title><link>https://mpostument.com/programming/golang/failed-asg-event-notification/</link><pubDate>Sun, 03 Jan 2021 17:57:36 +0200</pubDate><guid>https://mpostument.com/programming/golang/failed-asg-event-notification/</guid><description>Hello!
 Today I want to show how with the help of AWS Lambda and Golang you can get messages in slack when Autoscaling could not create an Ec2 server. Deploy I automate using serverless.
 Let&amp;rsquo;s start with the installation of node and serverless. I use nvm to manage node versions.
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash nvm install v14.15.3 npm install -g serverless I will create a folder and initialize the go module in it.</description><content>&lt;p>Hello!&lt;/p>
@@ -2595,7 +2595,7 @@ Using &lt;code>strings.Builder&lt;/code> I create a message to be sent, by addin
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">SendSlackNotification&lt;/span>(&lt;span style="color:#a6e22e">url&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">data&lt;/span> &lt;span style="color:#66d9ef">interface&lt;/span>{}) (&lt;span style="color:#a6e22e">bodyString&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#66d9ef">error&lt;/span>) {
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">jsonString&lt;/span>, &lt;span style="color:#a6e22e">_&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">json&lt;/span>.&lt;span style="color:#a6e22e">Marshal&lt;/span>(&lt;span style="color:#a6e22e">data&lt;/span>)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">req&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">http&lt;/span>.&lt;span style="color:#a6e22e">NewRequest&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;POST&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">url&lt;/span>, &lt;span style="color:#a6e22e">bytes&lt;/span>.&lt;span style="color:#a6e22e">NewBuffer&lt;/span>(&lt;span style="color:#a6e22e">jsonString&lt;/span>))
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">req&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">http&lt;/span>.&lt;span style="color:#a6e22e">NewRequest&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;programming&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">url&lt;/span>, &lt;span style="color:#a6e22e">bytes&lt;/span>.&lt;span style="color:#a6e22e">NewBuffer&lt;/span>(&lt;span style="color:#a6e22e">jsonString&lt;/span>))
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">req&lt;/span>.&lt;span style="color:#a6e22e">Header&lt;/span>.&lt;span style="color:#a6e22e">Set&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Content-Type&amp;#34;&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;application/json&amp;#34;&lt;/span>)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">client&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#f92672">&amp;amp;&lt;/span>&lt;span style="color:#a6e22e">http&lt;/span>.&lt;span style="color:#a6e22e">Client&lt;/span>{}
@@ -2646,7 +2646,7 @@ At the root of the repository, I create a file &lt;code>serverless.yml&lt;/code>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>go mod tidy
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>OOS&lt;span style="color:#f92672">=&lt;/span>linux GOARCH&lt;span style="color:#f92672">=&lt;/span>amd64 go build -o bin/failed-asg-event-notification .
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sls deploy
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After that, if there is an event of the type &lt;code>EC2 Instance Launch Unsuccessful&lt;/code> from &lt;code>aws.autoscaling&lt;/code> the corresponding message will be sent to the slack.&lt;/p></content></item><item><title>Filter Ebs Snapshot By Date With Go</title><link>https://mpostument.com/2020/12/05/filter-ebs-snapshot-by-date-with-go/</link><pubDate>Sat, 05 Dec 2020 17:53:29 +0200</pubDate><guid>https://mpostument.com/2020/12/05/filter-ebs-snapshot-by-date-with-go/</guid><description>Hello!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>After that, if there is an event of the type &lt;code>EC2 Instance Launch Unsuccessful&lt;/code> from &lt;code>aws.autoscaling&lt;/code> the corresponding message will be sent to the slack.&lt;/p></content></item><item><title>Filter Ebs Snapshot By Date With Go</title><link>https://mpostument.com/programming/golang/filter-ebs-snapshot-by-date-with-go/</link><pubDate>Sat, 05 Dec 2020 17:53:29 +0200</pubDate><guid>https://mpostument.com/programming/golang/filter-ebs-snapshot-by-date-with-go/</guid><description>Hello!
 Today I will show how you can filter ebs snapshots by date with golang.
 To begin with I will create a folder and in it, I will initialize the go module
 mkdir snapshotFilter cd snapshotFilter go mod init snapshotFilter You need to create main.go which will contain the code. Let&amp;rsquo;s start with the main function and imports
@@ -2727,7 +2727,7 @@ Main function creates the ec2 client, &lt;code>snapshotName&lt;/code> and the &l
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;Not found spashot with specific date&amp;#34;&lt;/span>, &lt;span style="color:#a6e22e">filterDate&lt;/span>.&lt;span style="color:#a6e22e">String&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;going to use latest&amp;#34;&lt;/span>, &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">result&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>].&lt;span style="color:#a6e22e">StartTime&lt;/span>)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#a6e22e">result&lt;/span>[&lt;span style="color:#ae81ff">0&lt;/span>].&lt;span style="color:#a6e22e">SnapshotId&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Nightfall Dlp Configuration</title><link>https://mpostument.com/2020/09/30/nightfall-dlp-configuration/</link><pubDate>Wed, 30 Sep 2020 21:52:21 +0300</pubDate><guid>https://mpostument.com/2020/09/30/nightfall-dlp-configuration/</guid><description>Hi there!
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item><item><title>Nightfall Dlp Configuration</title><link>https://mpostument.com/programming/ci/nightfall-dlp-configuration/</link><pubDate>Wed, 30 Sep 2020 21:52:21 +0300</pubDate><guid>https://mpostument.com/programming/ci/nightfall-dlp-configuration/</guid><description>Hi there!
 I want to talk today about DLP Nightfall. The Nightfall DLP Action scans your code commits upon Pull Request for sensitive information - like credentials &amp;amp; secrets, PII, credit card numbers &amp;amp; more - and posts review comments to your code hosting service automatically. The Nightfall DLP Action is intended to be used as a part of your CI to simplify the development process, improve your security, and ensure you never accidentally leak secrets or other sensitive information via an accidental commit.</description><content>&lt;p>Hi there!&lt;/p>
 &lt;p>I want to talk today about DLP Nightfall. The Nightfall DLP Action scans your code commits upon Pull Request for sensitive information - like credentials &amp;amp; secrets, PII, credit card numbers &amp;amp; more - and posts review comments to your code hosting service automatically. The Nightfall DLP Action is intended to be used as a part of your CI to simplify the development process, improve your security, and ensure you never accidentally leak secrets or other sensitive information via an accidental commit.&lt;br>
 I tried to implement DLP with Github Actions and want to share my results&lt;/p>
@@ -2802,7 +2802,7 @@ For example, I get such a error
 &lt;code>Suspicious content detected (3:***, type IP_ADDRESS)&lt;/code> on &lt;code>&amp;quot;arn:aws:s3:::usershome/{{name}}-{{data}}/*&amp;quot;&lt;/code>&lt;br>
 Or &lt;code>Suspicious content detected (ke********, type RANDOMLY_GENERATED_TOKEN)&lt;/code> on&lt;br>
 &lt;code>&amp;quot;Resource&amp;quot;: &amp;quot;arn:aws:kms:us-east-1:000000000:key/6a2b4d78-oy69-44ab-ce3d-43faca87fd14&amp;quot;&lt;/code>.&lt;br>
-Despite the false-positive part, the scanner allows you to find cluttered passwords and api keys&lt;/p></content></item><item><title>Deploy to ec2 with codedship</title><link>https://mpostument.com/2020/09/16/deploy-to-ec2-with-codeship/</link><pubDate>Wed, 16 Sep 2020 20:24:40 +0300</pubDate><guid>https://mpostument.com/2020/09/16/deploy-to-ec2-with-codeship/</guid><description>Hi there!
+Despite the false-positive part, the scanner allows you to find cluttered passwords and api keys&lt;/p></content></item><item><title>Deploy to ec2 with codedship</title><link>https://mpostument.com/programming/ci/deploy-to-ec2-with-codeship/</link><pubDate>Wed, 16 Sep 2020 20:24:40 +0300</pubDate><guid>https://mpostument.com/programming/ci/deploy-to-ec2-with-codeship/</guid><description>Hi there!
 Today I want to show how you can deploy code on AWS EC2 using CodeShip Basic. To do this, I will use the integration of Codeship with AWS CodeDeploy.
 CodeShip Configuration First you need to add a repository to CodeShip and go to the Deploy page Add a branch from which code will be deployed to ec2. In my case, the branch is master. Once the branch is added you need to scroll down to the Deployment section.</description><content>&lt;p>Hi there!&lt;/p>
 &lt;p>Today I want to show how you can deploy code on AWS EC2 using CodeShip Basic.
@@ -2876,7 +2876,7 @@ I have a node.js application for which you need to do yarn install and npm start
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>cd examples/demo-app/
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">(&lt;/span>npm run start-prod&lt;span style="color:#f92672">)&lt;/span>&amp;amp;
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This is very basic script to start application. For production is better to use pm2 package to start js application.&lt;br>
-Now after every push to master branch code will be deployed.&lt;/p></content></item><item><title>Get Lambdas in Vpc With Go</title><link>https://mpostument.com/2020/09/01/get-lambdas-in-vpc-with-go/</link><pubDate>Tue, 01 Sep 2020 17:40:16 +0300</pubDate><guid>https://mpostument.com/2020/09/01/get-lambdas-in-vpc-with-go/</guid><description>Hi there!
+Now after every push to master branch code will be deployed.&lt;/p></content></item><item><title>Get Lambdas in Vpc With Go</title><link>https://mpostument.com/programming/golang/get-lambdas-in-vpc-with-go/</link><pubDate>Tue, 01 Sep 2020 17:40:16 +0300</pubDate><guid>https://mpostument.com/programming/golang/get-lambdas-in-vpc-with-go/</guid><description>Hi there!
 Today I want to tell you how with go you can get a list of all AWS Lambda that are in the VPC. First you need to install golang. The latest version can be downloaded from the official website.
 Once golang is installed, create a folder for the scripts mkdir awsscripts
 Next you need to initialize the go.mod file. This file stores all the dependencies on external packages, and at the same time will make the go code module.</description><content>&lt;p>Hi there!&lt;/p>

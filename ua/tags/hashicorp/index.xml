@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HashiCorp on Maksym Postument</title><link>https://mpostument.com/ua/tags/hashicorp/</link><description>Recent content in HashiCorp on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 14 Sep 2022 20:41:58 +0300</lastBuildDate><atom:link href="https://mpostument.com/ua/tags/hashicorp/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraform Modules and Import</title><link>https://mpostument.com/ua/2022/09/14/terraform-modules-and-import/</link><pubDate>Wed, 14 Sep 2022 20:41:58 +0300</pubDate><guid>https://mpostument.com/ua/2022/09/14/terraform-modules-and-import/</guid><description>Part 1 - Terraform Install
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HashiCorp on Maksym Postument</title><link>https://mpostument.com/ua/tags/hashicorp/</link><description>Recent content in HashiCorp on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 14 Sep 2022 20:41:58 +0300</lastBuildDate><atom:link href="https://mpostument.com/ua/tags/hashicorp/index.xml" rel="self" type="application/rss+xml"/><item><title>Terraform Modules and Import</title><link>https://mpostument.com/ua/programming/terraform/terraform-modules-and-import/</link><pubDate>Wed, 14 Sep 2022 20:41:58 +0300</pubDate><guid>https://mpostument.com/ua/programming/terraform/terraform-modules-and-import/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Part 3 - Terraform State
 Part 4 - Terraform Template
@@ -8,14 +8,14 @@ Part 7 - Terraform Lifecycle
 Part 8 - Terraform Condition and Lookup
 Привіт!
 Сьогодні подивимось як можна імпортувати існуючі ресурси в terraform і як організувати код в модуль для зручного перевикористання.
-Import Буває ситуація коли ресурси вже створенні і ними потрібно почати управляти за допомогою terraform.</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/07/31/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/08/11/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/08/22/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/08/28/terraform-lifecycle/" title="Part 6 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/09/09/terraform-variables/" title="Part 7 - Terraform Variables">Part 7 - Terraform Lifecycle&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/09/11/terraform-condition-and-lookup/" title="Part 8 - Terraform Condition and Lookup">Part 8 - Terraform Condition and Lookup&lt;/a>&lt;/p>
+Import Буває ситуація коли ресурси вже створенні і ними потрібно почати управляти за допомогою terraform.</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-lifecycle/" title="Part 6 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-variables/" title="Part 7 - Terraform Variables">Part 7 - Terraform Lifecycle&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-condition-and-lookup/" title="Part 8 - Terraform Condition and Lookup">Part 8 - Terraform Condition and Lookup&lt;/a>&lt;/p>
 &lt;p>Привіт!&lt;/p>
 &lt;p>Сьогодні подивимось як можна імпортувати існуючі ресурси в terraform і як організувати код в модуль для зручного перевикористання.&lt;/p>
 &lt;h2 id="import">Import&lt;/h2>
@@ -557,7 +557,7 @@ Import Буває ситуація коли ресурси вже створен
 &lt;p>Тепер якщо спробувати імпортувати ресурс так як ми робили на початку не вийде тому що тепер ресурси мають інші назви. Наприклад aws_instance до модуля відображався як &lt;code>aws_instance.foo&lt;/code> тепер ж нове посилання буде &lt;code>module.common_server.aws_instance.foo&lt;/code>. Відповідно щоб імпортувати цей самий сервер що спочатку команда буде виглядати як &lt;code>terraform import module.common_server.aws_instance.foo i-0ea46560d61c09724&lt;/code>.&lt;/p>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/uCapjyzxJBo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform Condition and Lookup</title><link>https://mpostument.com/ua/2022/09/11/terraform-condition-and-lookup/</link><pubDate>Sun, 11 Sep 2022 11:23:40 +0300</pubDate><guid>https://mpostument.com/ua/2022/09/11/terraform-condition-and-lookup/</guid><description>Part 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform Condition and Lookup</title><link>https://mpostument.com/ua/programming/terraform/terraform-condition-and-lookup/</link><pubDate>Sun, 11 Sep 2022 11:23:40 +0300</pubDate><guid>https://mpostument.com/ua/programming/terraform/terraform-condition-and-lookup/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Part 3 - Terraform State
 Part 4 - Terraform Template
@@ -566,13 +566,13 @@ Part 6 - Terraform Lifecycle
 Part 7 - Terraform Lifecycle
 Привіт!
 В цьому пості розкажу про condition та lookups.
-Conditions Умови в terraform використовуються для того щоб вибрати одне значення в залежності від іншого. Наприклад якщо це дев середовище то використовувати тип сервера t3.micro а якщо продакшин то m5.</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/07/31/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/08/11/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/08/22/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/08/28/terraform-lifecycle/" title="Part 6 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/09/09/terraform-variables/" title="Part 7 - Terraform Variables">Part 7 - Terraform Lifecycle&lt;/a>&lt;/p>
+Conditions Умови в terraform використовуються для того щоб вибрати одне значення в залежності від іншого. Наприклад якщо це дев середовище то використовувати тип сервера t3.micro а якщо продакшин то m5.</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-lifecycle/" title="Part 6 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-variables/" title="Part 7 - Terraform Variables">Part 7 - Terraform Lifecycle&lt;/a>&lt;/p>
 &lt;p>Привіт!&lt;/p>
 &lt;p>В цьому пості розкажу про condition та lookups.&lt;/p>
 &lt;h2 id="conditions">Conditions&lt;/h2>
@@ -732,7 +732,7 @@ Conditions Умови в terraform використовуються для то�
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>І тепер яке б значення env параметра я б не передав потрібний тип сервера буде використано.&lt;/p>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/uN6sm22CyrE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform Variables</title><link>https://mpostument.com/ua/2022/09/09/terraform-variables/</link><pubDate>Fri, 09 Sep 2022 20:31:09 +0300</pubDate><guid>https://mpostument.com/ua/2022/09/09/terraform-variables/</guid><description>Part 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform Variables</title><link>https://mpostument.com/ua/programming/terraform/terraform-variables/</link><pubDate>Fri, 09 Sep 2022 20:31:09 +0300</pubDate><guid>https://mpostument.com/ua/programming/terraform/terraform-variables/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Part 3 - Terraform State
 Part 4 - Terraform Template
@@ -741,12 +741,12 @@ Part 6 - Terraform Lifecycle
 Привіт!
 В цьому пості розкажу про параметри в terraform та terraform data.
 Variables Використаю код з попередніх постів. Створю новий файл variables.tf і додам в ньому параметр instance_type.
-variable &amp;#34;instance_type&amp;#34; { default = &amp;#34;t2.micro&amp;#34; description = &amp;#34;Instance type for test instance&amp;#34; type = string } В цьому блоці до параметра instance_type додано декілька атрибутів:</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/07/31/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/08/11/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/08/22/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/08/28/terraform-lifecycle/" title="Part 6 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;/p>
+variable &amp;#34;instance_type&amp;#34; { default = &amp;#34;t2.micro&amp;#34; description = &amp;#34;Instance type for test instance&amp;#34; type = string } В цьому блоці до параметра instance_type додано декілька атрибутів:</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-lifecycle/" title="Part 6 - Terraform Lifecycle">Part 6 - Terraform Lifecycle&lt;/a>&lt;/p>
 &lt;p>Привіт!&lt;/p>
 &lt;p>В цьому пості розкажу про параметри в terraform та terraform data.&lt;/p>
 &lt;h2 id="variables">Variables&lt;/h2>
@@ -924,7 +924,7 @@ variable &amp;#34;instance_type&amp;#34; { default = &amp;#34;t2.micro&amp;#34; 
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/MBIFya6WX-E" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform Lifecycle and Outputs</title><link>https://mpostument.com/ua/2022/08/28/terraform-lifecycle/</link><pubDate>Sun, 28 Aug 2022 21:22:25 +0300</pubDate><guid>https://mpostument.com/ua/2022/08/28/terraform-lifecycle/</guid><description>Part 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform Lifecycle and Outputs</title><link>https://mpostument.com/ua/programming/terraform/terraform-lifecycle/</link><pubDate>Sun, 28 Aug 2022 21:22:25 +0300</pubDate><guid>https://mpostument.com/ua/programming/terraform/terraform-lifecycle/</guid><description>Part 1 - Terraform Install
 Part 2 - Terraform Basics
 Part 3 - Terraform State
 Part 4 - Terraform Template
@@ -932,11 +932,11 @@ Part 5 - Terraform Dynamic
 Привіт!
 Сьогодні розкажу про lifecycle, depends_on та outputs в terraform.
 Lifecycle create_before_destroy Lifecycle є мета параметром які підтримує більшість ресурсів. І за допомогою нього можна контролювати поведінку при створенні/видаленні ресурсів.
-Візьму terraform код створення ec2 з одного з попередніх постів і додам в нього блок lifecycle.</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/2022/07/26/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/07/28/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/07/31/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/08/11/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/08/22/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;/p>
+Візьму terraform код створення ec2 з одного з попередніх постів і додам в нього блок lifecycle.</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-install/" title="Part 1 - Terraform Install">Part 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-basics/" title="Part 2 - Terraform Basics">Part 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-state/" title="Part 3 - Terraform State">Part 3 - Terraform State&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-template/" title="Part 4 - Terraform Template">Part 4 - Terraform Template&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-dynamic/" title="Part 5 - Terraform Dynamic">Part 5 - Terraform Dynamic&lt;/a>&lt;/p>
 &lt;p>Привіт!&lt;/p>
 &lt;p>Сьогодні розкажу про lifecycle, depends_on та outputs в terraform.&lt;/p>
 &lt;h2 id="lifecycle">Lifecycle&lt;/h2>
@@ -1279,17 +1279,17 @@ dynamic &amp;ldquo;ingress&amp;rdquo; {
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/qdGpvePGSJs" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform Dynamic</title><link>https://mpostument.com/ua/2022/08/22/terraform-dynamic/</link><pubDate>Mon, 22 Aug 2022 20:25:57 +0300</pubDate><guid>https://mpostument.com/ua/2022/08/22/terraform-dynamic/</guid><description>Частина 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform Dynamic</title><link>https://mpostument.com/ua/programming/terraform/terraform-dynamic/</link><pubDate>Mon, 22 Aug 2022 20:25:57 +0300</pubDate><guid>https://mpostument.com/ua/programming/terraform/terraform-dynamic/</guid><description>Частина 1 - Terraform Install
 Частина 2 - Terraform Basics
 Частина 3 - Terraform State
 Частина 4 - Terraform Template
 Привіт!
 В цій статті покажу як використовувати блок dynamic на прикладі створення AWS Security Group.
 Для початку створю Security Group без використання блоку dynamic. В цьому прикладі кожне правило описане в окремому ingress блоці.
-resource &amp;#34;aws_security_group&amp;#34; &amp;#34;test_sg&amp;#34; { name = &amp;#34;test-sg&amp;#34; description = &amp;#34;allow traffic to web app&amp;#34; vpc_id = &amp;#34;vcp-123&amp;#34; ingress { from_port = 8082 to_port = 8082 protocol = &amp;#34;tcp&amp;#34; cidr_blocks = [ &amp;#34;0.</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/2022/07/26/terraform-install/" title="Частина 1 - Terraform Install">Частина 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/07/28/terraform-basics/" title="Частина 2 - Terraform Basics">Частина 2 - Terraform Basics&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/07/31/terraform-state/" title="Частина 3 - Terraform State">Частина 3 - Terraform State&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/08/11/terraform-template/" title="Частина 4 - Terraform Template">Частина 4 - Terraform Template&lt;/a>&lt;/p>
+resource &amp;#34;aws_security_group&amp;#34; &amp;#34;test_sg&amp;#34; { name = &amp;#34;test-sg&amp;#34; description = &amp;#34;allow traffic to web app&amp;#34; vpc_id = &amp;#34;vcp-123&amp;#34; ingress { from_port = 8082 to_port = 8082 protocol = &amp;#34;tcp&amp;#34; cidr_blocks = [ &amp;#34;0.</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-install/" title="Частина 1 - Terraform Install">Частина 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-basics/" title="Частина 2 - Terraform Basics">Частина 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-state/" title="Частина 3 - Terraform State">Частина 3 - Terraform State&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-template/" title="Частина 4 - Terraform Template">Частина 4 - Terraform Template&lt;/a>&lt;/p>
 &lt;p>Привіт!&lt;/p>
 &lt;p>В цій статті покажу як використовувати блок dynamic на прикладі створення AWS Security Group.&lt;/p>
 &lt;p>Для початку створю Security Group без використання блоку dynamic. В цьому прикладі кожне правило описане в окремому ingress блоці.&lt;/p>
@@ -1391,13 +1391,13 @@ resource &amp;#34;aws_security_group&amp;#34; &amp;#34;test_sg&amp;#34; { name =
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/Aeu2sGehp7Q" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform Template</title><link>https://mpostument.com/ua/2022/08/11/terraform-template/</link><pubDate>Thu, 11 Aug 2022 20:59:58 +0300</pubDate><guid>https://mpostument.com/ua/2022/08/11/terraform-template/</guid><description>Частина 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform Template</title><link>https://mpostument.com/ua/programming/terraform/terraform-template/</link><pubDate>Thu, 11 Aug 2022 20:59:58 +0300</pubDate><guid>https://mpostument.com/ua/programming/terraform/terraform-template/</guid><description>Частина 1 - Terraform Install
 Частина 2 - Terraform Basics
 Частина 3 - Terraform State
 Привіт!
-В цій статі я розкажу як в terraform можна використовувати статичні файли або ж генерувати файли динамічно. Покажу це на прикладі user_data в EC2. За допомогою user_data можна передати скрипт який виконається на сервері в момент створення. Цей файл можна мати одразу готовий і передавати за допомогою terraform в user_data, або ж контент можна генерувати динамічно і передавати в user_data.</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/2022/07/26/terraform-install/" title="Частина 1 - Terraform Install">Частина 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/07/28/terraform-basics/" title="Частина 2 - Terraform Basics">Частина 2 - Terraform Basics&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/07/31/terraform-state/" title="Частина 2 - Terraform State">Частина 3 - Terraform State&lt;/a>&lt;/p>
+В цій статі я розкажу як в terraform можна використовувати статичні файли або ж генерувати файли динамічно. Покажу це на прикладі user_data в EC2. За допомогою user_data можна передати скрипт який виконається на сервері в момент створення. Цей файл можна мати одразу готовий і передавати за допомогою terraform в user_data, або ж контент можна генерувати динамічно і передавати в user_data.</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-install/" title="Частина 1 - Terraform Install">Частина 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-basics/" title="Частина 2 - Terraform Basics">Частина 2 - Terraform Basics&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-state/" title="Частина 2 - Terraform State">Частина 3 - Terraform State&lt;/a>&lt;/p>
 &lt;p>Привіт!&lt;/p>
 &lt;p>В цій статі я розкажу як в terraform можна використовувати статичні файли або ж генерувати файли динамічно. Покажу це на прикладі user_data в EC2. За допомогою user_data можна передати скрипт який виконається на сервері в момент створення. Цей файл можна мати одразу готовий і передавати за допомогою terraform в user_data, або ж контент можна генерувати динамічно і передавати в user_data.&lt;/p>
 &lt;h2 id="terraform-file">Terraform file&lt;/h2>
@@ -1454,12 +1454,12 @@ resource &amp;#34;aws_security_group&amp;#34; &amp;#34;test_sg&amp;#34; { name =
 &lt;p>&lt;img src="https://i.imgur.com/p7GfshK.png" alt="template-site">&lt;/p>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/Dl_Jdo3hMZM" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform State</title><link>https://mpostument.com/ua/2022/07/31/terraform-state/</link><pubDate>Sun, 31 Jul 2022 20:30:06 +0300</pubDate><guid>https://mpostument.com/ua/2022/07/31/terraform-state/</guid><description>Частина 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform State</title><link>https://mpostument.com/ua/programming/terraform/terraform-state/</link><pubDate>Sun, 31 Jul 2022 20:30:06 +0300</pubDate><guid>https://mpostument.com/ua/programming/terraform/terraform-state/</guid><description>Частина 1 - Terraform Install
 Частина 2 - Terraform Basics
 Привіт!
 В попередній статті я створював ec2 в AWS і після того викликав terraform destroy і terraform видалив тільки ec2 який створив, не зачепивши інших ресурсів. Як ж йому це вдалось?
-Local State Щоб це зрозуміти потрібно подивитись на terraform директорію після того як виконався terraform apply. Одразу після виклику terraform apply буде створено файл з назвою terraform.tfstate з наступним контентом</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/2022/07/26/terraform-install/" title="Частина 1 - Terraform Install">Частина 1 - Terraform Install&lt;/a>&lt;br>
-&lt;a href="https://mpostument.com/ua/2022/07/28/terraform-basics/" title="Частина 2 - Terraform Basics">Частина 2 - Terraform Basics&lt;/a>&lt;/p>
+Local State Щоб це зрозуміти потрібно подивитись на terraform директорію після того як виконався terraform apply. Одразу після виклику terraform apply буде створено файл з назвою terraform.tfstate з наступним контентом</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-install/" title="Частина 1 - Terraform Install">Частина 1 - Terraform Install&lt;/a>&lt;br>
+&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-basics/" title="Частина 2 - Terraform Basics">Частина 2 - Terraform Basics&lt;/a>&lt;/p>
 &lt;p>Привіт!&lt;/p>
 &lt;p>В попередній статті я створював ec2 в AWS і після того викликав &lt;code>terraform destroy&lt;/code> і terraform видалив тільки ec2 який створив, не зачепивши інших ресурсів. Як ж йому це вдалось?&lt;/p>
 &lt;h2 id="local-state">Local State&lt;/h2>
@@ -1720,11 +1720,11 @@ Local State Щоб це зрозуміти потрібно подивитись
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Після цього тільки один запуск terraform буде працювати, якщо хтось запустить terraform в паралель то він всього лиш отримає повідомлення що state зараз є заблокованим.&lt;/p>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/iPzrUvhlty4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Terraform Basics</title><link>https://mpostument.com/ua/2022/07/28/terraform-basics/</link><pubDate>Thu, 28 Jul 2022 20:27:17 +0300</pubDate><guid>https://mpostument.com/ua/2022/07/28/terraform-basics/</guid><description>Частина 1 - Terraform Install
+&lt;/div></content></item><item><title>Terraform Basics</title><link>https://mpostument.com/ua/programming/terraform/terraform-basics/</link><pubDate>Thu, 28 Jul 2022 20:27:17 +0300</pubDate><guid>https://mpostument.com/ua/programming/terraform/terraform-basics/</guid><description>Частина 1 - Terraform Install
 Привіт!
 В попередній статті ми розглянули як встановити terraform. А зараз розглянемо як за допомогою terraform можна створювати та видаляти ресурси в AWS.
 Для того щоб terraform міг керувати ресурсами в AWS потрібно встановити terraform AWS provider. Terraform зробить це автоматично якщо я вкажу використовувати AWS provider в terraform коді і викличу terraform init.
-Для цього я створю директорію terraform_code і в ній створю файл provider.</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/2022/07/26/terraform-install/" title="Частина 1 - Terraform Install">Частина 1 - Terraform Install&lt;/a>&lt;/p>
+Для цього я створю директорію terraform_code і в ній створю файл provider.</description><content>&lt;p>&lt;a href="https://mpostument.com/ua/programming/terraform/terraform-install/" title="Частина 1 - Terraform Install">Частина 1 - Terraform Install&lt;/a>&lt;/p>
 &lt;p>Привіт!&lt;/p>
 &lt;p>В попередній статті ми розглянули як встановити terraform. А зараз розглянемо як за допомогою terraform можна створювати та видаляти ресурси в AWS.&lt;/p>
 &lt;p>Для того щоб terraform міг керувати ресурсами в AWS потрібно встановити terraform AWS provider. Terraform зробить це автоматично якщо я вкажу використовувати AWS provider в terraform коді і викличу &lt;code>terraform init&lt;/code>.&lt;/p>
@@ -1963,7 +1963,7 @@ Local State Щоб це зрозуміти потрібно подивитись
 &lt;p>Для того щоб видалити створенні ресурси можна запустити &lt;code>terraform destroy&lt;/code>&lt;/p>
 &lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
 &lt;iframe src="https://www.youtube.com/embed/XRcBZDi_mMw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Manage terraform with tfenv</title><link>https://mpostument.com/ua/2022/07/26/terraform-install/</link><pubDate>Tue, 26 Jul 2022 20:54:23 +0300</pubDate><guid>https://mpostument.com/ua/2022/07/26/terraform-install/</guid><description>Привіт!
+&lt;/div></content></item><item><title>Manage terraform with tfenv</title><link>https://mpostument.com/ua/programming/terraform/terraform-install/</link><pubDate>Tue, 26 Jul 2022 20:54:23 +0300</pubDate><guid>https://mpostument.com/ua/programming/terraform/terraform-install/</guid><description>Привіт!
 Це перша стаття з серії статей про terraform. В ній розглянемо як можна встановити terraform за допомогою tfenv та як налаштувати vscode для зручної роботи.
 tfenv Для початку буде потрібен tfenv. Він дозволяє дуже легко встановлювати та управляти різними версії terraform. Код tfenv знаходиться в github.
 Щоб встановити потрібно клонувати репозиторій
