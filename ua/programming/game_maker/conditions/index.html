@@ -51,11 +51,11 @@ newsletter</a> or use this <a href=/index.xml>RSS feed</a>. This is the best way
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>Якщо умов стає багато то в такому випадку краще використати switch.</p><h2 id=switch>Switch<a href=#switch class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Ось так виглядає switch</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>switch (<span style=color:#f92672>&lt;</span>expression<span style=color:#f92672>&gt;</span>)
 </span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    case <span style=color:#f92672>&lt;</span>constant1<span style=color:#f92672>&gt;</span>:
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>case</span> <span style=color:#f92672>&lt;</span>constant1<span style=color:#f92672>&gt;</span>:
 </span></span><span style=display:flex><span>        <span style=color:#f92672>&lt;</span>code<span style=color:#f92672>&gt;</span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>break</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    case <span style=color:#f92672>&lt;</span>constant2<span style=color:#f92672>&gt;</span>:
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>case</span> <span style=color:#f92672>&lt;</span>constant2<span style=color:#f92672>&gt;</span>:
 </span></span><span style=display:flex><span>        <span style=color:#f92672>&lt;</span>code<span style=color:#f92672>&gt;</span>
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>break</span>;
 </span></span><span style=display:flex><span>
@@ -66,19 +66,19 @@ newsletter</a> or use this <a href=/index.xml>RSS feed</a>. This is the best way
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>Наприклад ми можемо виконувати якусь дію в залежності від того яка клавіша натиснута. В дужках біля switch вказуємо keyboard_key яка є вбудованим параметром який приймає значення в залежності від того яка клавіша натиснута. І тоді описуємо кожен case. Якщо натиснута клавіша вверх переміщуємо героя вверх, якщо вниз то вниз і так далі</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>switch (keyboard_key)
 </span></span><span style=display:flex><span>{
-</span></span><span style=display:flex><span>    case vk_left:
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>case</span> vk_left:
 </span></span><span style=display:flex><span>        x <span style=color:#f92672>-=</span> <span style=color:#ae81ff>4</span>;
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>break</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    case vk_right:
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>case</span> vk_right:
 </span></span><span style=display:flex><span>        x <span style=color:#f92672>+=</span> <span style=color:#ae81ff>4</span>;
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>break</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    case vk_up:
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>case</span> vk_up:
 </span></span><span style=display:flex><span>        y <span style=color:#f92672>-=</span> <span style=color:#ae81ff>4</span>;
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>break</span>;
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>    case vk_down:
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>case</span> vk_down:
 </span></span><span style=display:flex><span>        y <span style=color:#f92672>+=</span> <span style=color:#ae81ff>4</span>;
 </span></span><span style=display:flex><span>    <span style=color:#66d9ef>break</span>;
 </span></span><span style=display:flex><span>}

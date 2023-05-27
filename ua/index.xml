@@ -2280,11 +2280,11 @@ if (&amp;lt;expression&amp;gt;) { &amp;lt;statement&amp;gt;; } else { &amp;lt;st
 &lt;p>Ось так виглядає switch&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>switch (&lt;span style="color:#f92672">&amp;lt;&lt;/span>expression&lt;span style="color:#f92672">&amp;gt;&lt;/span>)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> case &lt;span style="color:#f92672">&amp;lt;&lt;/span>constant1&lt;span style="color:#f92672">&amp;gt;&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">case&lt;/span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>constant1&lt;span style="color:#f92672">&amp;gt;&lt;/span>:
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>code&lt;span style="color:#f92672">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> case &lt;span style="color:#f92672">&amp;lt;&lt;/span>constant2&lt;span style="color:#f92672">&amp;gt;&lt;/span>:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">case&lt;/span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>constant2&lt;span style="color:#f92672">&amp;gt;&lt;/span>:
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>code&lt;span style="color:#f92672">&amp;gt;&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
@@ -2296,19 +2296,19 @@ if (&amp;lt;expression&amp;gt;) { &amp;lt;statement&amp;gt;; } else { &amp;lt;st
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Наприклад ми можемо виконувати якусь дію в залежності від того яка клавіша натиснута. В дужках біля switch вказуємо keyboard_key яка є вбудованим параметром який приймає значення в залежності від того яка клавіша натиснута. І тоді описуємо кожен case. Якщо натиснута клавіша вверх переміщуємо героя вверх, якщо вниз то вниз і так далі&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>switch (keyboard_key)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> case vk_left:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">case&lt;/span> vk_left:
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> x &lt;span style="color:#f92672">-=&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> case vk_right:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">case&lt;/span> vk_right:
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> x &lt;span style="color:#f92672">+=&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> case vk_up:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">case&lt;/span> vk_up:
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> y &lt;span style="color:#f92672">-=&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> case vk_down:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">case&lt;/span> vk_down:
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> y &lt;span style="color:#f92672">+=&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
