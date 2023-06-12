@@ -3,7 +3,46 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://mpostument.com/posts/</loc>
-    <lastmod>2023-06-05T18:03:31+03:00</lastmod>
+    <lastmod>2023-06-12T11:17:11+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/posts/programming/</loc>
+    <lastmod>2023-06-12T11:17:11+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/configuration-guide/</loc>
+    <lastmod>2023-06-12T11:17:11+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/devops/</loc>
+    <lastmod>2023-06-12T11:17:11+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/posts/programming/observability/otel-statsd/</loc>
+    <lastmod>2023-06-12T11:17:11+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/metrics-integration/</loc>
+    <lastmod>2023-06-12T11:17:11+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/monitoring/</loc>
+    <lastmod>2023-06-12T11:17:11+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/</loc>
+    <lastmod>2023-06-12T11:17:11+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/observability/</loc>
+    <lastmod>2023-06-12T11:17:11+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/opentelemetry/</loc>
+    <lastmod>2023-06-12T11:17:11+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/performance-monitoring/</loc>
+    <lastmod>2023-06-12T11:17:11+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/prometheus/</loc>
+    <lastmod>2023-06-12T11:17:11+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/statsd/</loc>
+    <lastmod>2023-06-12T11:17:11+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/</loc>
+    <lastmod>2023-06-12T11:17:11+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/posts/drawing/</loc>
     <lastmod>2023-06-05T18:03:31+03:00</lastmod>
@@ -17,16 +56,10 @@
     <loc>https://mpostument.com/categories/drawing/</loc>
     <lastmod>2023-06-05T18:03:31+03:00</lastmod>
   </url><url>
-    <loc>https://mpostument.com/tags/gesture/</loc>
-    <lastmod>2023-06-05T18:03:31+03:00</lastmod>
-  </url><url>
-    <loc>https://mpostument.com/</loc>
+    <loc>https://mpostument.com/tags/figuredrawing/</loc>
     <lastmod>2023-06-05T18:03:31+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/tags/proko/</loc>
-    <lastmod>2023-06-05T18:03:31+03:00</lastmod>
-  </url><url>
-    <loc>https://mpostument.com/tags/</loc>
     <lastmod>2023-06-05T18:03:31+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/posts/drawing/figure_drawing/week_four_landmark/</loc>
@@ -43,9 +76,6 @@
   </url><url>
     <loc>https://mpostument.com/posts/drawing/figure_drawing/week_one_gesture/</loc>
     <lastmod>2023-05-17T21:33:02+03:00</lastmod>
-  </url><url>
-    <loc>https://mpostument.com/posts/programming/</loc>
-    <lastmod>2023-02-20T22:20:19+02:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/tags/beginner/</loc>
     <lastmod>2023-02-20T22:20:19+02:00</lastmod>
@@ -135,9 +165,6 @@
     <lastmod>2022-10-19T17:28:26+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/categories/beginner/</loc>
-    <lastmod>2022-10-19T17:28:26+03:00</lastmod>
-  </url><url>
-    <loc>https://mpostument.com/tags/devops/</loc>
     <lastmod>2022-10-19T17:28:26+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/categories/devops/</loc>
@@ -294,9 +321,6 @@
     <lastmod>2021-02-06T18:14:40+02:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/posts/programming/golang/failed-asg-event-notification/</loc>
-    <lastmod>2021-01-03T17:57:36+02:00</lastmod>
-  </url><url>
-    <loc>https://mpostument.com/tags/monitoring/</loc>
     <lastmod>2021-01-03T17:57:36+02:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/categories/monitoring/</loc>
