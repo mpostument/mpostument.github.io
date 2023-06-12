@@ -6,11 +6,11 @@
     <description>Recent content in Devops on mpostument.com</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 12 Jun 2023 11:17:11 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/devops/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 11 Jun 2023 20:17:11 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Integrating StatsD Metrics with Prometheus Using OpenTelemetry</title>
       <link>https://mpostument.com/posts/programming/observability/otel-statsd/</link>
-      <pubDate>Mon, 12 Jun 2023 11:17:11 +0300</pubDate>
+      <pubDate>Sun, 11 Jun 2023 20:17:11 +0300</pubDate>
       
       <guid>https://mpostument.com/posts/programming/observability/otel-statsd/</guid>
       <description>In this post, we will explore the process of integrating StatsD metrics with Prometheus using OpenTelemetry (Otel). I will shares my firsthand experience and provides a step-by-step guide to help you set up the necessary configurations. If you are looking to receive StatsD metrics and send them to Prometheus for monitoring and analysis, this post is for you.</description>
