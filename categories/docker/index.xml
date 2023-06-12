@@ -1,103 +1,20 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Docker on Maksym Postument</title><link>https://mpostument.com/categories/docker/</link><description>Recent content in Docker on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 22 Mar 2022 20:31:29 +0200</lastBuildDate><atom:link href="https://mpostument.com/categories/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker Sdk Part One</title><link>https://mpostument.com/programming/golang/docker-sdk-part-one/</link><pubDate>Tue, 22 Mar 2022 20:31:29 +0200</pubDate><guid>https://mpostument.com/programming/golang/docker-sdk-part-one/</guid><description>Hi there!
-This is the first part of the article about docker SDK. In the current article, we will see how with the help of golang it is possible to make pull and list docker images.
-Docker pull As usual, initialize the go module, load the docker SDK and create the main.go file
-go mod init go get github.com/docker/docker/client Let&amp;rsquo;s create a PullImage method in which we will create a docker client using the client.</description><content>&lt;p>Hi there!&lt;/p>
-&lt;p>This is the first part of the article about docker SDK. In the current article, we will see how with the help of golang it is possible to make pull and list docker images.&lt;/p>
-&lt;h2 id="docker-pull">Docker pull&lt;/h2>
-&lt;p>As usual, initialize the go module, load the docker SDK and create the main.go file&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>go mod init
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>go get github.com/docker/docker/client
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Let&amp;rsquo;s create a &lt;code>PullImage&lt;/code> method in which we will create a docker client using the &lt;code>client.NewClientWithOpts&lt;/code> method, as arguments to this method we will pass &lt;code>client.FromEnv&lt;/code> which will take the docker configuration from environment variables and &lt;code>client.WithAPIVersionNegotiation()&lt;/code> which will automatically determine the available version docker API. Now with the help of the client and the method &lt;code>ImagePull&lt;/code> you can download the desired docker image. In the &lt;code>ImagePull&lt;/code> method you need to pass the context, the name of the docker image that can be downloaded, and &lt;code>types.ImagePullOptions{}&lt;/code>. In ImagePullOptions, you can pass authorization data if you need to download the docker image. At the very end, call &lt;code>io.Copy(os.Stdout, out)&lt;/code> to display the pull command result. In the main function, call &lt;code>PullImage&lt;/code> to load the docker image.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> (
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;context&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;io&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;os&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;log&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;github.com/docker/docker/api/types&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;github.com/docker/docker/client&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">PullImage&lt;/span>(&lt;span style="color:#a6e22e">imageName&lt;/span> &lt;span style="color:#66d9ef">string&lt;/span>) &lt;span style="color:#66d9ef">error&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ctx&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Background&lt;/span>()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">dockerClient&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">NewClientWithOpts&lt;/span>(&lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">FromEnv&lt;/span>, &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">WithAPIVersionNegotiation&lt;/span>())
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">out&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">dockerClient&lt;/span>.&lt;span style="color:#a6e22e">ImagePull&lt;/span>(&lt;span style="color:#a6e22e">ctx&lt;/span>, &lt;span style="color:#a6e22e">imageName&lt;/span>, &lt;span style="color:#a6e22e">types&lt;/span>.&lt;span style="color:#a6e22e">ImagePullOptions&lt;/span>{})
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">defer&lt;/span> &lt;span style="color:#a6e22e">out&lt;/span>.&lt;span style="color:#a6e22e">Close&lt;/span>()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">io&lt;/span>.&lt;span style="color:#a6e22e">Copy&lt;/span>(&lt;span style="color:#a6e22e">os&lt;/span>.&lt;span style="color:#a6e22e">Stdout&lt;/span>, &lt;span style="color:#a6e22e">out&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">PullImage&lt;/span>(&lt;span style="color:#e6db74">&amp;#34;debian&amp;#34;&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Running we will see the result&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">{&lt;/span>&lt;span style="color:#e6db74">&amp;#34;status&amp;#34;&lt;/span>:&lt;span style="color:#e6db74">&amp;#34;Pulling from library/debian&amp;#34;&lt;/span>,&lt;span style="color:#e6db74">&amp;#34;id&amp;#34;&lt;/span>:&lt;span style="color:#e6db74">&amp;#34;latest&amp;#34;&lt;/span>&lt;span style="color:#f92672">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">{&lt;/span>&lt;span style="color:#e6db74">&amp;#34;status&amp;#34;&lt;/span>:&lt;span style="color:#e6db74">&amp;#34;Digest: sha256:b42494c466d101bf06038e959e2e5acd227e1251987e79528e7d8b1f4040deaf&amp;#34;&lt;/span>&lt;span style="color:#f92672">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">{&lt;/span>&lt;span style="color:#e6db74">&amp;#34;status&amp;#34;&lt;/span>:&lt;span style="color:#e6db74">&amp;#34;Status: Image is up to date for debian:latest&amp;#34;&lt;/span>&lt;span style="color:#f92672">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="docker-list">Docker list&lt;/h2>
-&lt;p>Now let&amp;rsquo;s write a method for displaying the docker images list. To do this, create the method &lt;code>ListAllImages&lt;/code>. As in the previous example, create a docker client. Next, you need a filter that can be used to display the docker image according to some criteria. Since I want to display all docker images, the filter will remain empty. Now we will call a method &lt;code>ImageList&lt;/code> in which it is necessary to pass a context and structure &lt;code>ImageListOptions&lt;/code> which has two fields &lt;code>All&lt;/code> and &lt;code>Filters&lt;/code>. In &lt;code>Filters&lt;/code> we will pass the previously created filter, and in &lt;code>All&lt;/code> we will specify false. If you set &lt;code>All&lt;/code> to true, then all intermediate docker images will also be displayed. You can now print information about all containers in the loop.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">package&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">import&lt;/span> (
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;context&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;fmt&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;github.com/docker/docker/api/types&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;github.com/docker/docker/api/types/filters&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#e6db74">&amp;#34;github.com/docker/docker/client&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">ListAllImages&lt;/span>() &lt;span style="color:#66d9ef">error&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">ctx&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">context&lt;/span>.&lt;span style="color:#a6e22e">Background&lt;/span>()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">dockerClient&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">NewClientWithOpts&lt;/span>(&lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">FromEnv&lt;/span>, &lt;span style="color:#a6e22e">client&lt;/span>.&lt;span style="color:#a6e22e">WithAPIVersionNegotiation&lt;/span>())
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">filter&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">filters&lt;/span>.&lt;span style="color:#a6e22e">NewArgs&lt;/span>()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">images&lt;/span>, &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">dockerClient&lt;/span>.&lt;span style="color:#a6e22e">ImageList&lt;/span>(&lt;span style="color:#a6e22e">ctx&lt;/span>, &lt;span style="color:#a6e22e">types&lt;/span>.&lt;span style="color:#a6e22e">ImageListOptions&lt;/span>{
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">All&lt;/span>: &lt;span style="color:#66d9ef">false&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">Filters&lt;/span>: &lt;span style="color:#a6e22e">filter&lt;/span>,
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> })
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> &lt;span style="color:#a6e22e">_&lt;/span>, &lt;span style="color:#a6e22e">i&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#66d9ef">range&lt;/span> &lt;span style="color:#a6e22e">images&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">fmt&lt;/span>.&lt;span style="color:#a6e22e">Println&lt;/span>(&lt;span style="color:#a6e22e">i&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">func&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>() {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">:=&lt;/span> &lt;span style="color:#a6e22e">ListAllImages&lt;/span>()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#a6e22e">err&lt;/span> &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#66d9ef">nil&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#a6e22e">log&lt;/span>.&lt;span style="color:#a6e22e">Fatalln&lt;/span>(&lt;span style="color:#a6e22e">err&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>As a result, we will see:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">{&lt;/span>-1 &lt;span style="color:#ae81ff">1623251330&lt;/span> sha256:c0a98e816f894adc33b1c39d87925a5979391bde533b38d6e6eb41326b904e65 map&lt;span style="color:#f92672">[&lt;/span>maintainer:Sebastian Ramirez &amp;lt;tiangolo@gmail.com&amp;gt;&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">[&lt;/span>tiangolo/uvicorn-gunicorn-fastapi@sha256:f444216a887d0d4360edd5b69c78c1de530d0083a797176f9abf20f3f341b196&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">[&lt;/span>tiangolo/uvicorn-gunicorn-fastapi:python3.8&lt;span style="color:#f92672">]&lt;/span> -1 &lt;span style="color:#ae81ff">1014169179&lt;/span> 1014169179&lt;span style="color:#f92672">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">{&lt;/span>-1 &lt;span style="color:#ae81ff">1611933531&lt;/span> sha256:714c659c9f6f4a167fe294f9330387581007f1e86429d3460d1fc7bd7ee52ff7 map&lt;span style="color:#f92672">[]&lt;/span> &lt;span style="color:#f92672">[&lt;/span>lambci/lambda@sha256:22e9fbb4df8270efcebed96905edf0244dd595a8d6250f24200ad558c0a201bc&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">[&lt;/span>lambci/lambda:build-python3.8&lt;span style="color:#f92672">]&lt;/span> -1 &lt;span style="color:#ae81ff">1962950336&lt;/span> 1962950336&lt;span style="color:#f92672">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">{&lt;/span>-1 &lt;span style="color:#ae81ff">1568356668&lt;/span> sha256:db427f282c433e8470846e3daddd3f666cfdbf85235ff66b3b6814d3840648f4 map&lt;span style="color:#f92672">[]&lt;/span> &lt;span style="color:#f92672">[&lt;/span>selenoid/chrome@sha256:7be4763d02d4cd76c5081a4793485f9263ce4c25e56194b82567ecf597425f83&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">[&lt;/span>selenoid/chrome:77.0&lt;span style="color:#f92672">]&lt;/span> -1 &lt;span style="color:#ae81ff">891512369&lt;/span> 891512369&lt;span style="color:#f92672">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You can also display individual fields because the previous result is not easy to read. To do this in the loop, this call &lt;code>fmt.Println(i)&lt;/code> can be replaced by &lt;code>fmt.Println(i.RepoTags, i.Size)&lt;/code> and we get the following result:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>tiangolo/uvicorn-gunicorn-fastapi:python3.8&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#ae81ff">1014169179&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>lambci/lambda:build-python3.8&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#ae81ff">1962950336&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">[&lt;/span>selenoid/chrome:77.0&lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#ae81ff">891512369&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></content></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Docker on mpostument.com</title>
+    <link>https://mpostument.com/categories/docker/</link>
+    <description>Recent content in Docker on mpostument.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 22 Mar 2022 20:31:29 +0200</lastBuildDate><atom:link href="https://mpostument.com/categories/docker/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docker Sdk Part One</title>
+      <link>https://mpostument.com/posts/programming/golang/docker-sdk-part-one/</link>
+      <pubDate>Tue, 22 Mar 2022 20:31:29 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/docker-sdk-part-one/</guid>
+      <description>First article in series about docker SDK. In this article we will write docker pull and docker images commands with golang sdk</description>
+    </item>
+    
+  </channel>
+</rss>

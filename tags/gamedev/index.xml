@@ -1,318 +1,74 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GameDev on Maksym Postument</title><link>https://mpostument.com/tags/gamedev/</link><description>Recent content in GameDev on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 19 Nov 2022 12:23:22 +0200</lastBuildDate><atom:link href="https://mpostument.com/tags/gamedev/index.xml" rel="self" type="application/rss+xml"/><item><title>Game Maker - Timelines</title><link>https://mpostument.com/programming/game_maker/timeline/</link><pubDate>Sat, 19 Nov 2022 12:23:22 +0200</pubDate><guid>https://mpostument.com/programming/game_maker/timeline/</guid><description>Hello!
-Today we will see what a timeline is and how you can use it to create a series of events that will be launched one after another. We will also use the path that we already reviewed in the previous programming, to create objects and send them along a given path, like in TD games.
-Timeline Timeline is created like any other entity in Game Maker. By right-clicking on the Timelines folder and then Create -&amp;gt; Timeline.</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>Today we will see what a timeline is and how you can use it to create a series of events that will be launched one after another. We will also use the path that we already reviewed in the &lt;a href="https://mpostument.com/programming/game_maker/path/" title="the previous programming">previous programming&lt;/a>, to create objects and send them along a given path, like in TD games.&lt;/p>
-&lt;h2 id="timeline">Timeline&lt;/h2>
-&lt;p>Timeline is created like any other entity in Game Maker. By right-clicking on the Timelines folder and then Create -&amp;gt; Timeline. I will name it &lt;code>tml_spawn&lt;/code>.&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/timeline_create.jpg" alt="timeline_create">.&lt;/p>
-&lt;p>This is what the Timeline window looks like&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/timeline_props.jpg" alt="timeline_props">&lt;/p>
-&lt;p>You can add/remove elements using the Add and Remove buttons. The first element added will have a Moment of 0. Next, I&amp;rsquo;ll add another Moment but change its value to 60. Game Maker defaults to 60 frames per second. And accordingly, specifying 60 means that the second event will take place in 1 second after the previous one. If specified 120, it will mean 2 seconds, and so on. Now I will open Moment which has 0 and add the following code&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>instance_create_depth(x,y,&lt;span style="color:#ae81ff">1&lt;/span>,obj_enemy)
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This code will create an object based on the coordinates where the timeline will be placed. I will call Timeline in a circle to create objects, and I will leave the code in Moment with the value 60 empty to pause for 1 second between creating objects. In this case, I will create only one type of object, if necessary, you can create different types of objects with a different intervals. For example, a warrior appears in the first second, an archer in the second, a mage in the third, and so on in a loop.&lt;/p>
-&lt;p>Now we need to create an object that will run the timeline. To do this, I will create an obj_spawn object in the objects folder and add the Create event with the following code&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>timeline_index&lt;span style="color:#f92672">=&lt;/span>tml_spawn
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>timeline_loop&lt;span style="color:#f92672">=&lt;/span>true
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>timeline_running&lt;span style="color:#f92672">=&lt;/span>true
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>First, we indicate which timeline we will run, then we make the timeline run in a loop and turn on the timeline. After that, the timeline needs to be added to the room at the point with which our objects will go.
-You also need to create a path and an object with the sprite just like we did in this &lt;a href="https://mpostument.com/programming/game_maker/path/" title="programming">programming&lt;/a>. The object will contain the following code&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>path_start(pth_enemy, &lt;span style="color:#ae81ff">5&lt;/span>, path_action_stop, false)
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now let&amp;rsquo;s start the game and see how objects are created at one point and move along a given path&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/timeline_result.jpg" alt="timeline_result">&lt;/p>
-&lt;h2 id="video">Video&lt;/h2>
-&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-&lt;iframe src="https://www.youtube.com/embed/GVpC8JqXoZ8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Game Maker - Path</title><link>https://mpostument.com/programming/game_maker/path/</link><pubDate>Wed, 16 Nov 2022 19:27:49 +0200</pubDate><guid>https://mpostument.com/programming/game_maker/path/</guid><description>Hello!
-Let&amp;rsquo;s learn how paths work in GameMaker. With their help, you can set the trajectory along which the object will move.
-Path A path is created just like any other entity in GameMaker. In the Asset Browser, right-click and select Create-&amp;gt;Path.
-I will call it pth_enemy and in the window that appears, you can draw a path. It is preferable to start from the point 0, 0. And then by pressing the left mouse button, we indicate the points along which the object will move</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>Let&amp;rsquo;s learn how paths work in GameMaker. With their help, you can set the trajectory along which the object will move.&lt;/p>
-&lt;h2 id="path">Path&lt;/h2>
-&lt;p>A path is created just like any other entity in GameMaker. In the Asset Browser, right-click and select Create-&amp;gt;Path.&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/path_object.gif" alt="path">&lt;/p>
-&lt;p>I will call it &lt;code>pth_enemy&lt;/code> and in the window that appears, you can draw a path. It is preferable to start from the point 0, 0. And then by pressing the left mouse button, we indicate the points along which the object will move&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/path_draw.jpg" alt="path_draw">&lt;/p>
-&lt;p>There are also several important options in this window. The first one is &lt;code>Closed&lt;/code>, if it is pressed, the last point will be connected to the first&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/path_closed.jpg" alt="path_closed">&lt;/p>
-&lt;p>Another option is &lt;code>Smooth Curved&lt;/code>. If you specify it, the path lines will be rounded&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/path_curve.jpg" alt="path_curve">&lt;/p>
-&lt;h2 id="object-movement">Object movement&lt;/h2>
-&lt;p>Now that we have a path, we can tell the object to move along it. To do this, you need to create an object and add a sprite to it. For the object, add the &lt;code>Create&lt;/code> event and start a movement in it using the &lt;code>path_start&lt;/code> method, which accepts 4 arguments. The first is the name of the path along which to move, the second is the speed, and the third is what to do when the path ends (start again, go back in the opposite direction, continue or stop). And the last one is where to start the movement, from the coordinate point relative to the room (the coordinate from which we started drawing the path will be used) or relative to the object.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>path_start(pth_enemy, &lt;span style="color:#ae81ff">5&lt;/span>, path_action_continue, &lt;span style="color:#ae81ff">0&lt;/span>)
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>I place the object in the room and start the game and my object moves. The movement starts from the place where we placed the object because I specified 0 as the last parameter. If I set it as 1, then the movement will start from the zero point in the room.&lt;/p>
-&lt;h2 id="video">Video&lt;/h2>
-&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-&lt;iframe src="https://www.youtube.com/embed/pth37wn6VtU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Game Maker - Loops</title><link>https://mpostument.com/programming/game_maker/loops/</link><pubDate>Sun, 13 Nov 2022 09:25:57 +0200</pubDate><guid>https://mpostument.com/programming/game_maker/loops/</guid><description>Hello!
-The topic of today&amp;rsquo;s programming loops. The game maker has loops such as while, until, and repeat. We explored the for loop in the topic about arrays, you can read about it here.
-While loop The while loop works as long as the condition returns true. The while keyword is followed by a condition in parentheses, and as long as this condition returns true, the loop will continue. As soon as it becomes false, the loop ends immediately</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>The topic of today&amp;rsquo;s programming loops. The game maker has loops such as while, until, and repeat. We explored the for loop in the topic about arrays, you can read about it &lt;a href="https://mpostument.com/programming/game_maker/arrays/" title="here">here&lt;/a>.&lt;/p>
-&lt;h2 id="while-loop">While loop&lt;/h2>
-&lt;p>The while loop works as long as the condition returns true. The while keyword is followed by a condition in parentheses, and as long as this condition returns true, the loop will continue. As soon as it becomes false, the loop ends immediately&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">while&lt;/span> (&lt;span style="color:#f92672">&amp;lt;&lt;/span>expression&lt;span style="color:#f92672">&amp;gt;&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>statement&lt;span style="color:#f92672">&amp;gt;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>statement&lt;span style="color:#f92672">&amp;gt;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">...&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>First, I create the parameter &lt;code>i&lt;/code>, which has a value of 0, and then I start a loop in which I specify that it should work as long as &lt;code>i&lt;/code> is less than 5. In the loop, using &lt;code>draw_text&lt;/code>, I display the value of &lt;code>i&lt;/code> on the screen and increase &lt;code>i&lt;/code> by one. If this is not done, &lt;code>i&lt;/code> will always have the value 0 and our loop will never end and the game will not start. I added this code to the Draw Event.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">while&lt;/span> (i &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">5&lt;/span>){
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> draw_text(&lt;span style="color:#ae81ff">10&lt;/span>&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">70&lt;/span>&lt;span style="color:#f92672">*&lt;/span>i, &lt;span style="color:#ae81ff">10&lt;/span>, i)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> i&lt;span style="color:#f92672">++&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://mpostument.com/game_maker/while_loop.jpg" alt="while">&lt;/p>
-&lt;h2 id="do-until-loop">Do until loop&lt;/h2>
-&lt;p>The next loop is named do until. Unlike while, it works until the condition returns false, as soon as it becomes true, the loop ends immediately&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>do
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>statement&lt;span style="color:#f92672">&amp;gt;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>statement&lt;span style="color:#f92672">&amp;gt;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">...&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>until (&lt;span style="color:#f92672">&amp;lt;&lt;/span>expression&lt;span style="color:#f92672">&amp;gt;&lt;/span>);
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The result of this loop will be the same as the previous one within a while. But the condition here is different. We again have &lt;code>i&lt;/code>, which has a value of 0. Then we start a loop in which we display the value of &lt;code>i&lt;/code> on the screen and increase the value of &lt;code>i&lt;/code>, and then we check whether &lt;code>i&lt;/code> is greater than 5. If so, then we end the loop, and if not, then we continue.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>do {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> draw_text(&lt;span style="color:#ae81ff">10&lt;/span>&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">70&lt;/span>&lt;span style="color:#f92672">*&lt;/span>i, &lt;span style="color:#ae81ff">10&lt;/span>, i)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> i&lt;span style="color:#f92672">++&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>} until (i &lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#ae81ff">5&lt;/span>)
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The peculiarity of this loop is that even if &lt;code>i&lt;/code> initially has a value greater than 5. For example, 6, the loop will work once, because checking whether &lt;code>i&lt;/code> is greater than 5 occurs at the end of the loop, and thus the loop has time to complete one iteration.&lt;/p>
-&lt;h2 id="repeat">Repeat&lt;/h2>
-&lt;p>The last type of loop is a repeat. Unlike the previous options, there are no conditions here, and we simply indicate how many times to go through the loop&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>repeat (&lt;span style="color:#f92672">&amp;lt;&lt;/span>expression&lt;span style="color:#f92672">&amp;gt;&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>statement&lt;span style="color:#f92672">&amp;gt;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>statement&lt;span style="color:#f92672">&amp;gt;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">...&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Let&amp;rsquo;s try to implement the same thing that we implemented with the while and do loops. After the key repeat, we indicate in parentheses how many times the loop should be repeated, and in the body itself we execute the same code as before, output the value of &lt;code>i&lt;/code>, and increase it by one&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>repeat(&lt;span style="color:#ae81ff">5&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> draw_text(&lt;span style="color:#ae81ff">10&lt;/span>&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">70&lt;/span>&lt;span style="color:#f92672">*&lt;/span>i, &lt;span style="color:#ae81ff">10&lt;/span>, i)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> i&lt;span style="color:#f92672">++&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
-&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-&lt;iframe src="https://www.youtube.com/embed/m8l6w4fxFpo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Game Maker - Arrays and For Loop</title><link>https://mpostument.com/programming/game_maker/arrays/</link><pubDate>Wed, 09 Nov 2022 20:30:58 +0200</pubDate><guid>https://mpostument.com/programming/game_maker/arrays/</guid><description>Hello!
-In this programming, we will learn how to work with arrays in Game Maker.
-Arrays can contain many elements and then can be one-dimensional or multidimensional. Unlike other programming languages, an array in Game Maker does not need to be initialized. You can add an element to the array without array initialization. The name of the array comes first and its index is indicated in square brackets. Numbering starts from zero</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>In this programming, we will learn how to work with arrays in Game Maker.&lt;/p>
-&lt;p>Arrays can contain many elements and then can be one-dimensional or multidimensional. Unlike other programming languages, an array in Game Maker does not need to be initialized. You can add an element to the array without array initialization. The name of the array comes first and its index is indicated in square brackets. Numbering starts from zero&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>inventory[&lt;span style="color:#ae81ff">0&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;bow&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>inventory[&lt;span style="color:#ae81ff">1&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;arrow&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>As a result, it will look like an array of two elements [&amp;ldquo;bow&amp;rdquo;, &amp;ldquo;arrow&amp;rdquo;]. Two-dimensional arrays are also often used. To do this, you need to add one more square brackets which will indicate the row&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>inventory[&lt;span style="color:#ae81ff">0&lt;/span>][&lt;span style="color:#ae81ff">0&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;bow&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>inventory[&lt;span style="color:#ae81ff">0&lt;/span>][&lt;span style="color:#ae81ff">1&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;arrow&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>inventory[&lt;span style="color:#ae81ff">1&lt;/span>][&lt;span style="color:#ae81ff">0&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;sword&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>inventory[&lt;span style="color:#ae81ff">1&lt;/span>][&lt;span style="color:#ae81ff">0&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;shield&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In this case, it will look like a table with two rows and two columns.&lt;/p>
-&lt;h2 id="for-loop">For loop&lt;/h2>
-&lt;p>A for loop is often used to fill an array with data or read from it. This significantly reduces the amount of code that needs to be written. For example, if you need to add 100 elements to the array, you can copy the assignment line of the element to the array 100 times, but it is not very convenient to work with it. Let&amp;rsquo;s create an empty array of 100 elements.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>inventory[&lt;span style="color:#ae81ff">0&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;empty&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>inventory[&lt;span style="color:#ae81ff">1&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;empty&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>inventory[&lt;span style="color:#ae81ff">98&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;empty&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">...&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>inventory[&lt;span style="color:#ae81ff">99&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;empty&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If you use for loop, it will be much more compact. The for loop looks like this&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> (i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">99&lt;/span>, i&lt;span style="color:#f92672">++&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e"># CODE&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>i&lt;/code> indicates where we start the countdown. Next comes the condition that &lt;code>i&lt;/code> must be less than 99, as soon as it becomes 99, the cycle will end immediately. And at the end, we have &lt;code>i++&lt;/code>, which means that I will increase by 1. Thus, when the loop starts, we have &lt;code>i = 0&lt;/code>. After the first pass of the loop, &lt;code>i&lt;/code> increased by 1 and becomes equal to &lt;code>i = 1&lt;/code>. And so on until &lt;code>i&lt;/code> becomes 99. Then the cycle ends.&lt;/p>
-&lt;p>Let&amp;rsquo;s try to create an empty one-dimensional array using a loop.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> (i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">99&lt;/span>, i&lt;span style="color:#f92672">++&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> inventory[i] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;empty&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Thus, at each iteration of the loop, &lt;code>i&lt;/code> will increase and we will create an array of 100 elements with the value &amp;ldquo;empty&amp;rdquo;. This can be added to the &lt;code>Draw&lt;/code> event to display the array. But before that, it must be created. Its creation is defined in the &lt;code>Create&lt;/code> event. In &lt;code>draw_text&lt;/code>, I will add &lt;code>70*i&lt;/code> to the x coordinate, this is to create an indentation between the elements of the array. When i = 0, &lt;code>70*i&lt;/code> will also be 0. Then it will be 70, 140, and so on.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> (i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">99&lt;/span>, i&lt;span style="color:#f92672">++&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> draw_text(&lt;span style="color:#ae81ff">10&lt;/span>&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">70&lt;/span>&lt;span style="color:#f92672">*&lt;/span>i, &lt;span style="color:#ae81ff">10&lt;/span>, inventory[i])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://mpostument.com/game_maker/one_d_array.jpg" alt="1d">&lt;/p>
-&lt;p>A two-dimensional array can be created in the same way, only we will need two loops&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> (i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">99&lt;/span>, i&lt;span style="color:#f92672">++&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (j &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; j &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">99&lt;/span>, i&lt;span style="color:#f92672">++&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> inventory[i][j] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;empty&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>What will happen in this case? First, we start the first loop where &lt;code>i = 0&lt;/code>, then we immediately get into the second loop where &lt;code>j = 0&lt;/code>. And we make the first entry in the array at index [0][0]. Further, &lt;code>i&lt;/code> remains 0, and &lt;code>j&lt;/code> increases by 1. Therefore, we make an entry in the array at index [0][1] and so on until &lt;code>j&lt;/code> becomes 99. Then the nested loop ends and we return to the loop with &lt;code>i&lt;/code>. Here &lt;code>i&lt;/code> will increase by 1 and again go into a nested loop where &lt;code>j&lt;/code> is equal to 0. And we will write to the index [1][0] and again until &lt;code>j&lt;/code> becomes 99 and &lt;code>i&lt;/code> will increase by 1 until will reach 99 and then the loop will end.&lt;/p>
-&lt;p>To display a two-dimensional array, two cycles also be required. And everything else is the same as with one-dimensional&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">for&lt;/span> (i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">99&lt;/span>, i&lt;span style="color:#f92672">++&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span> (j &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; j &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">99&lt;/span>, i&lt;span style="color:#f92672">++&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> draw_text(&lt;span style="color:#ae81ff">10&lt;/span>&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">70&lt;/span>&lt;span style="color:#f92672">*&lt;/span>i, &lt;span style="color:#ae81ff">10&lt;/span>&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">70&lt;/span>&lt;span style="color:#f92672">*&lt;/span>j, inventory[i][j])
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="https://mpostument.com/game_maker/two_d_array.jpg" alt="2d">&lt;/p>
-&lt;h2 id="video">Video&lt;/h2>
-&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-&lt;iframe src="https://www.youtube.com/embed/63I2HLMvXnY" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Game Maker - Conditions</title><link>https://mpostument.com/programming/game_maker/conditions/</link><pubDate>Sun, 06 Nov 2022 13:30:58 +0200</pubDate><guid>https://mpostument.com/programming/game_maker/conditions/</guid><description>Hello!
-Let&amp;rsquo;s explore conditions in Game Maker. Conditions can be created using if/else or switch statements. Let&amp;rsquo;s try both options.
-If/Else In Game Maker if/else conditions are the same as in other programming languages. The block itself looks like this:
-if (&amp;lt;expression&amp;gt;) { &amp;lt;statement&amp;gt;; } else { &amp;lt;statement&amp;gt;; } For example, we can check the health of our object. If hp &amp;lt; 0, we destroy the object. In order to do this, we will use a new type of event called Step.</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>Let&amp;rsquo;s explore conditions in Game Maker. Conditions can be created using if/else or switch statements. Let&amp;rsquo;s try both options.&lt;/p>
-&lt;h2 id="ifelse">If/Else&lt;/h2>
-&lt;p>In Game Maker if/else conditions are the same as in other programming languages. The block itself looks like this:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#f92672">&amp;lt;&lt;/span>expression&lt;span style="color:#f92672">&amp;gt;&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>statement&lt;span style="color:#f92672">&amp;gt;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">else&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>statement&lt;span style="color:#f92672">&amp;gt;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>For example, we can check the health of our object. If hp &amp;lt; 0, we destroy the object. In order to do this, we will use a new type of event called &lt;code>Step&lt;/code>. This event is executed every frame. Usually, the main game logic happens in this event.&lt;/p>
-&lt;p>First, we set the initial amount of hp in the &lt;code>Create&lt;/code> event&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>hp &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">100&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Then add event &lt;code>Step&lt;/code> with the following code in it. In parentheses next to if is our condition. Where we check if hp is less than 100. In addition to &amp;lt;= less or equal, there is also &amp;lt; less than, &amp;gt; greater than, = equal to, not equal to, !=, &amp;gt;= greater or equal to. You can also use more than one condition at once, for this there is &amp;amp;&amp;amp; which means and and || which means or. You can write both symbols or letters in the code. And it can look like this if (hp &amp;lt;= and armor &amp;lt;= 0)&lt;/p>
-&lt;p>If our condition returns &lt;code>False&lt;/code> because the number of hp is greater than 0, we go to else. In else, we simply move our object diagonally and subtract 1 hp. If condition is checked every frame and after a few seconds the number of hp will be less than 0 and the object will be destroyed.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> (hp &lt;span style="color:#f92672">&amp;lt;=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> instance_destroy()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">else&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> x &lt;span style="color:#f92672">=&lt;/span> x &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> y &lt;span style="color:#f92672">=&lt;/span> y &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> hp &lt;span style="color:#f92672">=&lt;/span> hp &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If we need to use several conditions, we can use else if. For example, if there is less than 50 hp left, add another object&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> (hp &lt;span style="color:#f92672">&amp;lt;=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> instance_destroy()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> (hp &lt;span style="color:#f92672">&amp;lt;=&lt;/span> &lt;span style="color:#ae81ff">50&lt;/span>) {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> instance_create_layer(x, y, &lt;span style="color:#e6db74">&amp;#34;Instances&amp;#34;&lt;/span>, obj_vars)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">else&lt;/span> {
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> x &lt;span style="color:#f92672">=&lt;/span> x &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> y &lt;span style="color:#f92672">=&lt;/span> y &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> hp &lt;span style="color:#f92672">=&lt;/span> hp &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>If there are many conditions, then it is better to use switch.&lt;/p>
-&lt;h2 id="switch">Switch&lt;/h2>
-&lt;p>This is what a switch looks like&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>switch (&lt;span style="color:#f92672">&amp;lt;&lt;/span>expression&lt;span style="color:#f92672">&amp;gt;&lt;/span>)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">case&lt;/span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>constant1&lt;span style="color:#f92672">&amp;gt;&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>code&lt;span style="color:#f92672">&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">case&lt;/span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>constant2&lt;span style="color:#f92672">&amp;gt;&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>code&lt;span style="color:#f92672">&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">//&lt;/span> more cases (&lt;span style="color:#66d9ef">with&lt;/span> breaks)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> default:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">&amp;lt;&lt;/span>code&lt;span style="color:#f92672">&amp;gt;&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>For example, we can perform some action depending on which key is pressed. In the parentheses next to the switch, we specify keyboard_key, which is a built-in parameter that takes a value depending on which key is pressed. And then we describe each case. If the up key is pressed, we move the hero up, if down, then down, and so on&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>switch (keyboard_key)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>{
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">case&lt;/span> vk_left:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> x &lt;span style="color:#f92672">-=&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">case&lt;/span> vk_right:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> x &lt;span style="color:#f92672">+=&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">case&lt;/span> vk_up:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> y &lt;span style="color:#f92672">-=&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">case&lt;/span> vk_down:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> y &lt;span style="color:#f92672">+=&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">break&lt;/span>;
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>There may also be a default action in the case, it is performed if all other cases returned false.&lt;/p>
-&lt;h2 id="video">Video&lt;/h2>
-&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-&lt;iframe src="https://www.youtube.com/embed/b5odh89pfjg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Game Maker - Coordinates</title><link>https://mpostument.com/programming/game_maker/coordinates/</link><pubDate>Fri, 04 Nov 2022 19:17:15 +0200</pubDate><guid>https://mpostument.com/programming/game_maker/coordinates/</guid><description>Hello!
-Let&amp;rsquo;s consider how coordinates work in Game Maker.
-Room coordinates I will open the room (Room1) and if you move the mouse to the upper left corner, the coordinates x = 0, y = 0 will be there. If you move to the right/left, the x coordinate will change, and if you move up/down, the y coordinate will change.
-This is the basic information you need to know by coordinates.</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>Let&amp;rsquo;s consider how coordinates work in Game Maker.&lt;/p>
-&lt;h2 id="room-coordinates">Room coordinates&lt;/h2>
-&lt;p>I will open the room (Room1) and if you move the mouse to the upper left corner, the coordinates x = 0, y = 0 will be there. If you move to the right/left, the x coordinate will change, and if you move up/down, the y coordinate will change.&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/room_coordinates.jpg" alt="room_coordinates">&lt;/p>
-&lt;p>This is the basic information you need to know by coordinates. Now let&amp;rsquo;s try to add an object and move it&lt;/p>
-&lt;h2 id="object-coordinates">Object coordinates&lt;/h2>
-&lt;p>The object can be added to the room by any available coordinates. I will create an object. But for the object to be visible in the room, it needs a sprite. You can simply paint the object with some color. To do this, on the object page, you can click &lt;code>New Sprite&lt;/code> or Ctrl+Shift+N. A sprite window will open immediately where you can click &lt;code>Edit Image&lt;/code>, then a window will open in which you can draw your sprite&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/sprite_color.jpg" alt="sprite">&lt;/p>
-&lt;p>But a sprite will be created with the name Sprite1 and in the objects folder. It should be renamed and moved to the Sprites folder. I will rename it to &lt;code>spr_vars&lt;/code> so that it is clear that the sprite refers to my object called &lt;code>obj_vars&lt;/code>.&lt;/p>
-&lt;p>Now you can open the room and drag the object there&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/obj_in_room.jpg" alt="obj_in_room">&lt;/p>
-&lt;p>We also modify the object so that it prints the coordinates in which it is located.&lt;/p>
-&lt;p>I will add the event &lt;code>Create&lt;/code> to the object in which I will specify the initial coordinates&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>x &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>y &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>I will also add the &lt;code>Draw&lt;/code> event in which I will display the coordinates. I will use the &lt;code>draw_text&lt;/code> which is a method already known from previous posts. Before displaying the text, you need to add &lt;code>draw_self()&lt;/code> to draw the object itself. And then two execution of the &lt;code>draw_text&lt;/code> method for the X and Y coordinates. As the first argument, I pass x, which is equal to the x coordinate of the object. The same with y, but I shift the text by the y coordinate so that the text does not overlap with each other. And I print the following text &amp;ldquo;X: 0&amp;rdquo;. To do this, I add the string &amp;ldquo;X:&amp;rdquo; to the x coordinate. But since the x coordinate is an int, I first need to convert it to the string type.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>draw_self()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>draw_text(x, y&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">5&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;X:&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> string(x))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>draw_text(x, y&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">20&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;Y:&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> string(y))
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Press F5 to start the game&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/obj_with_coords.jpg" alt="obj_with_coords">&lt;/p>
-&lt;p>Now let&amp;rsquo;s add the ability to move the object and see the coordinates of the object. I&amp;rsquo;ll do it with the &lt;code>Global Left Down&lt;/code> type event. why do you need global? To be able to click anywhere in the room. If you use &lt;code>Left Down&lt;/code>, the click will be counted only if it is made on the object. And I will add the following code&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>x &lt;span style="color:#f92672">=&lt;/span> mouse_x
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>y &lt;span style="color:#f92672">=&lt;/span> mouse_y
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This code changes the coordinates of the object to the coordinates of the mouse cursor&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/move_coordinates.jpg" alt="move_coordinates">&lt;/p>
-&lt;h2 id="origin">Origin&lt;/h2>
-&lt;p>Every time we click, the upper left corner of the object is placed at this point. This is because the origin is set there. Origin is specified at the sprite level and can be changed. To do this, you need to open the sprite and you will immediately see that the origin is set to the upper left corner. With the help of the mouse, you can move it to any point or choose one of the existing options such as Top Left, Top Center, and others.&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/origin.jpg" alt="origin">&lt;/p>
-&lt;p>If I move the origin to another point and start the game and move the object, then exactly the place specified as the origin will fit in this point&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/center_origin.jpg" alt="center_origin">&lt;/p>
-&lt;p>But now, as you can see, the text that we display has shifted. Because it displays according to origin. Therefore, to redraw the text inside the object, the coordinates in the &lt;code>draw_text&lt;/code> method need to be changed&lt;/p>
-&lt;p>For example, this is the case if the origin is in the center&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>draw_self()
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>draw_text(x&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">20&lt;/span>, y&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">15&lt;/span>, &lt;span style="color:#e6db74">&amp;#34;X:&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> string(x))
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>draw_text(x&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">20&lt;/span>, y, &lt;span style="color:#e6db74">&amp;#34;Y:&amp;#34;&lt;/span> &lt;span style="color:#f92672">+&lt;/span> string(y))
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="video">Video&lt;/h2>
-&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-&lt;iframe src="https://www.youtube.com/embed/b5odh89pfjg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item><item><title>Game Maker - Variables</title><link>https://mpostument.com/programming/game_maker/variables/</link><pubDate>Sun, 30 Oct 2022 18:48:32 +0200</pubDate><guid>https://mpostument.com/programming/game_maker/variables/</guid><description>Hello!
-Let&amp;rsquo;s dive into the world of game development with Game Maker 2. And today we&amp;rsquo;ll start with options in Game Maker. Let&amp;rsquo;s create a new project by selecting New Blank and naming its variables.
-Object Parameters can be added to objects. The object can be almost anything, starting with the hero and enemies, and ending with objects that control some logic in the game. Right-click the Objects folder in the Assets Browser to create an object and select Create -&amp;gt; Object.</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>Let&amp;rsquo;s dive into the world of game development with Game Maker 2. And today we&amp;rsquo;ll start with options in Game Maker. Let&amp;rsquo;s create a new project by selecting &lt;code>New Blank&lt;/code> and naming its variables.&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/new_project.png" alt="project">&lt;/p>
-&lt;h2 id="object">Object&lt;/h2>
-&lt;p>Parameters can be added to objects. The object can be almost anything, starting with the hero and enemies, and ending with objects that control some logic in the game. Right-click the Objects folder in the Assets Browser to create an object and select Create -&amp;gt; Object.&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/object.jpg" alt="object_create">&lt;/p>
-&lt;p>An object named Object1 will be created. It needs to be renamed immediately. It is recommended to add a prefix to the name because if we have an object with the name hero and we want to add a sprite that will also be called hero, we will get an error that a file with that name already exists. Therefore, each object must have the obj_ prefix. Thus, the object that I will create will be called obj_vars.&lt;/p>
-&lt;p>After creation, the object will open immediately. Here you can specify a sprite for the object, specify whether it will be visible, and a few more options. Now we are interested in the events window. This is where we will write the code that will control our object.&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/object_params.jpg" alt="Object_params">&lt;/p>
-&lt;p>Click the Add Event button and select Create. Event type &lt;code>Create&lt;/code> is called when the object is created and it is convenient to set some initial characteristics here. Double-click the left mouse button to open the code editor.&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/create.jpg" alt="create">&lt;/p>
-&lt;h2 id="local-variables">Local Variables&lt;/h2>
-&lt;p>In the editor, we will create &lt;code>heroExp&lt;/code> parameters, which will be responsible for the experience of our object. These parameters are of type integer. We will also add the parameter &lt;code>heroName&lt;/code>, which will be of type string, and the parameter &lt;code>heroAlive&lt;/code>, which will be of type bool&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>heroExp &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">50&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>heroName &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;Maksym&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>heroAlive &lt;span style="color:#f92672">=&lt;/span> true
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Now let&amp;rsquo;s add another type of event called a draw. It is responsible for displaying the object. To do this, click &lt;code>Add Event&lt;/code> again and select Draw -&amp;gt; Draw in the list. I will open the editor for this type of event and write the following in the code&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>draw_text(&lt;span style="color:#ae81ff">20&lt;/span>, &lt;span style="color:#ae81ff">20&lt;/span>, heroExp)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>draw_text(&lt;span style="color:#ae81ff">20&lt;/span>, &lt;span style="color:#ae81ff">40&lt;/span>, heroName)
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>draw_text(&lt;span style="color:#ae81ff">20&lt;/span>, &lt;span style="color:#ae81ff">60&lt;/span>, heroAlive)
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The &lt;code>draw_text&lt;/code> function is used to display text, the first two parameters are the x and y coordinates, and the third parameter is the text to be displayed. Let&amp;rsquo;s now add our object to the room and try it and see what happens.&lt;/p>
-&lt;h2 id="add-the-object-to-a-room">Add the object to a room&lt;/h2>
-&lt;p>In the &lt;code>Assets Browser&lt;/code> you need to open the &lt;code>Rooms&lt;/code> folder and double-click on &lt;code>Room1&lt;/code>. The room window will open. In the top left, &lt;code>Instances&lt;/code> must be selected to be able to add objects to the room. Now our object can be simply dragged into the room. It is also worth changing the background color so that the text displaying the object is visible. To do this, in the room options, you need to select ``Background&amp;rsquo;&amp;rsquo; and choose a color (Color option). I chose black because the text will be white.&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/room_params.jpg" alt="room_params">&lt;/p>
-&lt;p>Now that everything is ready, press F5 to start the game.&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/game_maker/var_output.jpg" alt="var_print">&lt;/p>
-&lt;h2 id="dynamically-change-variables-value">Dynamically change variables value&lt;/h2>
-&lt;p>Now let&amp;rsquo;s try to add an event that will change the value of our parameters. Let&amp;rsquo;s add the &lt;code>Key Press - Up&lt;/code> event, which will be called every time the &lt;code>Up&lt;/code> button is pressed on the keyboard, and the &lt;code>Key Press - Space&lt;/code> event. The up button will add experience to our object and the space button will kill our object.&lt;/p>
-&lt;p>Add the following to the &lt;code>Key Press - Up&lt;/code> code&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>heroExp&lt;span style="color:#f92672">++&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And next code to &lt;code>Key Press - Space&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>heroAlive &lt;span style="color:#f92672">=&lt;/span> false
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And let&amp;rsquo;s start the game. If you press &lt;code>Up&lt;/code> or &lt;code>Space&lt;/code>, the parameters will be changed.&lt;/p>
-&lt;h2 id="global-vars">Global Vars&lt;/h2>
-&lt;p>Local parameters are available only within one object. If you want to add a parameter to which all objects will have access, you need to add &lt;code>global.&lt;/code> before the name of the parameter. Example&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">global&lt;/span>&lt;span style="color:#f92672">.&lt;/span>heroAlive &lt;span style="color:#f92672">=&lt;/span> true
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And now this parameter can be changed or used in other objects&lt;/p>
-&lt;h2 id="video">Video&lt;/h2>
-&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-&lt;iframe src="https://www.youtube.com/embed/0yEsno2nMbE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
-&lt;/div></content></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>GameDev on mpostument.com</title>
+    <link>https://mpostument.com/tags/gamedev/</link>
+    <description>Recent content in GameDev on mpostument.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 19 Nov 2022 12:23:22 +0200</lastBuildDate><atom:link href="https://mpostument.com/tags/gamedev/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Game Maker - Timelines</title>
+      <link>https://mpostument.com/posts/programming/game_maker/timeline/</link>
+      <pubDate>Sat, 19 Nov 2022 12:23:22 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/game_maker/timeline/</guid>
+      <description>Learn how to create a chain of events with GameMaker</description>
+    </item>
+    
+    <item>
+      <title>Game Maker - Path</title>
+      <link>https://mpostument.com/posts/programming/game_maker/path/</link>
+      <pubDate>Wed, 16 Nov 2022 19:27:49 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/game_maker/path/</guid>
+      <description>Learn how to move an object using the path in Game Maker</description>
+    </item>
+    
+    <item>
+      <title>Game Maker - Loops</title>
+      <link>https://mpostument.com/posts/programming/game_maker/loops/</link>
+      <pubDate>Sun, 13 Nov 2022 09:25:57 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/game_maker/loops/</guid>
+      <description>Learn how to use for, while, until and repeat loops in Game Maker</description>
+    </item>
+    
+    <item>
+      <title>Game Maker - Arrays and For Loop</title>
+      <link>https://mpostument.com/posts/programming/game_maker/arrays/</link>
+      <pubDate>Wed, 09 Nov 2022 20:30:58 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/game_maker/arrays/</guid>
+      <description>Explore arrays in game maker, and how to create/read them using for loop</description>
+    </item>
+    
+    <item>
+      <title>Game Maker - Conditions</title>
+      <link>https://mpostument.com/posts/programming/game_maker/conditions/</link>
+      <pubDate>Sun, 06 Nov 2022 13:30:58 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/game_maker/conditions/</guid>
+      <description>Learn how to use if/else and case statements in game maker</description>
+    </item>
+    
+    <item>
+      <title>Game Maker - Coordinates</title>
+      <link>https://mpostument.com/posts/programming/game_maker/coordinates/</link>
+      <pubDate>Fri, 04 Nov 2022 19:17:15 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/game_maker/coordinates/</guid>
+      <description>Let&amp;#39;s explore coordinates in game maker</description>
+    </item>
+    
+    <item>
+      <title>Game Maker - Variables</title>
+      <link>https://mpostument.com/posts/programming/game_maker/variables/</link>
+      <pubDate>Sun, 30 Oct 2022 18:48:32 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/game_maker/variables/</guid>
+      <description>Let&amp;#39;s learn Game Maker. In this article, i will show what is variables in Game Maker and how to use them</description>
+    </item>
+    
+  </channel>
+</rss>

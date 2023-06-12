@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>mpostument.com</title>
+    <link>https://mpostument.com/posts/programming/</link>
+    <description>Recent content on mpostument.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 20 Feb 2023 22:20:19 +0200</lastBuildDate><atom:link href="https://mpostument.com/posts/programming/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Goroutines in go</title>
+      <link>https://mpostument.com/posts/programming/golang/basics/go-routines/</link>
+      <pubDate>Mon, 20 Feb 2023 22:20:19 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/basics/go-routines/</guid>
+      <description>Learn what is goroutines in golang and how they can be used</description>
+    </item>
+    
+    <item>
+      <title>Interfaces in Go</title>
+      <link>https://mpostument.com/posts/programming/golang/basics/go-interfaces/</link>
+      <pubDate>Sun, 15 Jan 2023 12:53:46 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/basics/go-interfaces/</guid>
+      <description>Learn what is interfaces in golang and how they can be used</description>
+    </item>
+    
+    <item>
+      <title>Go Functions</title>
+      <link>https://mpostument.com/posts/programming/golang/basics/go-functions/</link>
+      <pubDate>Fri, 06 Jan 2023 15:46:51 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/basics/go-functions/</guid>
+      <description>Learn how to use functions in golang</description>
+    </item>
+    
+    <item>
+      <title>Pointers</title>
+      <link>https://mpostument.com/posts/programming/golang/basics/go-pointers/</link>
+      <pubDate>Fri, 30 Dec 2022 12:59:07 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/basics/go-pointers/</guid>
+      <description>Learn what is pointers in golang and how they can be used</description>
+    </item>
+    
+    <item>
+      <title>Defer, Panic, and Recovery in Golang</title>
+      <link>https://mpostument.com/posts/programming/golang/basics/go-defer-panic/</link>
+      <pubDate>Thu, 22 Dec 2022 12:44:28 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/basics/go-defer-panic/</guid>
+      <description>Learn how can defer can be used to run code after existing from function. What is panic and how the program can be recovered from panic</description>
+    </item>
+    
+    <item>
+      <title>Loops in golang</title>
+      <link>https://mpostument.com/posts/programming/golang/basics/go-loops/</link>
+      <pubDate>Sat, 17 Dec 2022 10:13:24 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/basics/go-loops/</guid>
+      <description>Learn how to use for loop in golang</description>
+    </item>
+    
+    <item>
+      <title>If and Switch in golang</title>
+      <link>https://mpostument.com/posts/programming/golang/basics/go-if-switch/</link>
+      <pubDate>Fri, 09 Dec 2022 19:10:00 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/basics/go-if-switch/</guid>
+      <description>Learn how to use if and switch statements in golang</description>
+    </item>
+    
+    <item>
+      <title>Maps and Structs in golang</title>
+      <link>https://mpostument.com/posts/programming/golang/basics/go-maps-structs/</link>
+      <pubDate>Sat, 03 Dec 2022 16:46:49 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/basics/go-maps-structs/</guid>
+      <description>Learn how to use maps and structs in golang</description>
+    </item>
+    
+    <item>
+      <title>Arrays and Slices in golang</title>
+      <link>https://mpostument.com/posts/programming/golang/basics/go-arrays-slices/</link>
+      <pubDate>Wed, 23 Nov 2022 15:41:57 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/basics/go-arrays-slices/</guid>
+      <description>Learn how to use array and slices in golang</description>
+    </item>
+    
+    <item>
+      <title>Game Maker - Timelines</title>
+      <link>https://mpostument.com/posts/programming/game_maker/timeline/</link>
+      <pubDate>Sat, 19 Nov 2022 12:23:22 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/game_maker/timeline/</guid>
+      <description>Learn how to create a chain of events with GameMaker</description>
+    </item>
+    
+    <item>
+      <title>Game Maker - Path</title>
+      <link>https://mpostument.com/posts/programming/game_maker/path/</link>
+      <pubDate>Wed, 16 Nov 2022 19:27:49 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/game_maker/path/</guid>
+      <description>Learn how to move an object using the path in Game Maker</description>
+    </item>
+    
+    <item>
+      <title>Game Maker - Loops</title>
+      <link>https://mpostument.com/posts/programming/game_maker/loops/</link>
+      <pubDate>Sun, 13 Nov 2022 09:25:57 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/game_maker/loops/</guid>
+      <description>Learn how to use for, while, until and repeat loops in Game Maker</description>
+    </item>
+    
+    <item>
+      <title>Go Constants</title>
+      <link>https://mpostument.com/posts/programming/golang/basics/go-constant/</link>
+      <pubDate>Sat, 12 Nov 2022 07:46:18 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/basics/go-constant/</guid>
+      <description>Learn what is constants in golang and how to use them</description>
+    </item>
+    
+    <item>
+      <title>Game Maker - Arrays and For Loop</title>
+      <link>https://mpostument.com/posts/programming/game_maker/arrays/</link>
+      <pubDate>Wed, 09 Nov 2022 20:30:58 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/game_maker/arrays/</guid>
+      <description>Explore arrays in game maker, and how to create/read them using for loop</description>
+    </item>
+    
+    <item>
+      <title>Basic Types in Go</title>
+      <link>https://mpostument.com/posts/programming/golang/basics/go-basic-types/</link>
+      <pubDate>Tue, 08 Nov 2022 19:54:39 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/basics/go-basic-types/</guid>
+      <description>Explore basic types in golang</description>
+    </item>
+    
+    <item>
+      <title>Game Maker - Conditions</title>
+      <link>https://mpostument.com/posts/programming/game_maker/conditions/</link>
+      <pubDate>Sun, 06 Nov 2022 13:30:58 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/game_maker/conditions/</guid>
+      <description>Learn how to use if/else and case statements in game maker</description>
+    </item>
+    
+    <item>
+      <title>Game Maker - Coordinates</title>
+      <link>https://mpostument.com/posts/programming/game_maker/coordinates/</link>
+      <pubDate>Fri, 04 Nov 2022 19:17:15 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/game_maker/coordinates/</guid>
+      <description>Let&amp;#39;s explore coordinates in game maker</description>
+    </item>
+    
+    <item>
+      <title>Go Variables</title>
+      <link>https://mpostument.com/posts/programming/golang/basics/go-variables/</link>
+      <pubDate>Wed, 02 Nov 2022 18:00:24 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/basics/go-variables/</guid>
+      <description>Let&amp;#39;s learn about variables in golang</description>
+    </item>
+    
+    <item>
+      <title>Game Maker - Variables</title>
+      <link>https://mpostument.com/posts/programming/game_maker/variables/</link>
+      <pubDate>Sun, 30 Oct 2022 18:48:32 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/game_maker/variables/</guid>
+      <description>Let&amp;#39;s learn Game Maker. In this article, i will show what is variables in Game Maker and how to use them</description>
+    </item>
+    
+    <item>
+      <title>Golang - Setting Up Development Environment</title>
+      <link>https://mpostument.com/posts/programming/golang/basics/setup-go/</link>
+      <pubDate>Fri, 28 Oct 2022 21:31:30 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/basics/setup-go/</guid>
+      <description>Install golang and configure vscode for a better codding experience</description>
+    </item>
+    
+    <item>
+      <title>Ansible Vault</title>
+      <link>https://mpostument.com/posts/programming/ansible/ansible-vault/</link>
+      <pubDate>Wed, 19 Oct 2022 17:28:26 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/ansible/ansible-vault/</guid>
+      <description>Fifth article in series about ansible. In this article, I will show how to store securely store sensitive data in ansible</description>
+    </item>
+    
+    <item>
+      <title>Ansible Role</title>
+      <link>https://mpostument.com/posts/programming/ansible/ansible-role/</link>
+      <pubDate>Sat, 15 Oct 2022 17:49:02 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/ansible/ansible-role/</guid>
+      <description>Fourth article in series about ansible. In this article, I will what is roles and how to use them</description>
+    </item>
+    
+    <item>
+      <title>Ansible Playbook</title>
+      <link>https://mpostument.com/posts/programming/ansible/ansible-playbook/</link>
+      <pubDate>Tue, 04 Oct 2022 22:51:59 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/ansible/ansible-playbook/</guid>
+      <description>Third article in series about ansible. In this article, I will show how to use a playbook to create reusable code</description>
+    </item>
+    
+    <item>
+      <title>Ansible Inventory</title>
+      <link>https://mpostument.com/posts/programming/ansible/ansible-inventory/</link>
+      <pubDate>Tue, 27 Sep 2022 21:39:08 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/ansible/ansible-inventory/</guid>
+      <description>Second article in series about ansible. In this article, I will show how to use static and dynamic ansible inventory</description>
+    </item>
+    
+    <item>
+      <title>AWS 101: EC2 Part 1</title>
+      <link>https://mpostument.com/posts/programming/aws/aws-101-ec2-part-1/</link>
+      <pubDate>Thu, 22 Sep 2022 22:45:30 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/aws/aws-101-ec2-part-1/</guid>
+      <description>Do you want to know more about AWS EC2? Check this programming and I will explain all you need to know about AWS</description>
+    </item>
+    
+    <item>
+      <title>Manage Ansible Versions With pyenv</title>
+      <link>https://mpostument.com/posts/programming/ansible/manage-ansible-versions-with-pyenv/</link>
+      <pubDate>Mon, 19 Sep 2022 10:54:18 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/ansible/manage-ansible-versions-with-pyenv/</guid>
+      <description>First article in series about ansible. In this article, i will show install pyenv, create virtualenv and install the required ansible version</description>
+    </item>
+    
+    <item>
+      <title>Terraform Modules and Import</title>
+      <link>https://mpostument.com/posts/programming/terraform/terraform-modules-and-import/</link>
+      <pubDate>Wed, 14 Sep 2022 20:41:58 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/terraform/terraform-modules-and-import/</guid>
+      <description>Ninth article in series about terraform. In this article, I will show how to import existing resources into state and create modules</description>
+    </item>
+    
+    <item>
+      <title>Terraform Condition and Lookup</title>
+      <link>https://mpostument.com/posts/programming/terraform/terraform-condition-and-lookup/</link>
+      <pubDate>Sun, 11 Sep 2022 11:23:40 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/terraform/terraform-condition-and-lookup/</guid>
+      <description>Eights article in series about terraform. In this article, I will show how to use conditions and lookups in terraform</description>
+    </item>
+    
+    <item>
+      <title>Terraform Variables</title>
+      <link>https://mpostument.com/posts/programming/terraform/terraform-variables/</link>
+      <pubDate>Fri, 09 Sep 2022 20:31:09 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/terraform/terraform-variables/</guid>
+      <description>Sixth article in series about terraform. In this article, i will show how to use lifecycle and outputs in terraform</description>
+    </item>
+    
+    <item>
+      <title>Terraform Lifecycle and Outputs</title>
+      <link>https://mpostument.com/posts/programming/terraform/terraform-lifecycle/</link>
+      <pubDate>Sun, 28 Aug 2022 21:22:25 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/terraform/terraform-lifecycle/</guid>
+      <description>Sixth article in series about terraform. In this article i will show how to use lifecycle and outputs in terraform</description>
+    </item>
+    
+    <item>
+      <title>Terraform Dynamic</title>
+      <link>https://mpostument.com/posts/programming/terraform/terraform-dynamic/</link>
+      <pubDate>Sun, 21 Aug 2022 20:25:57 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/terraform/terraform-dynamic/</guid>
+      <description>Fifth article in series about terraform. In this article i will show how to dynamic in terraform</description>
+    </item>
+    
+    <item>
+      <title>Terraform Template</title>
+      <link>https://mpostument.com/posts/programming/terraform/terraform-template/</link>
+      <pubDate>Thu, 11 Aug 2022 20:59:58 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/terraform/terraform-template/</guid>
+      <description>Fourth article in series about terraform. In this article i will show how to use file and templates in terraform</description>
+    </item>
+    
+    <item>
+      <title>Terraform State</title>
+      <link>https://mpostument.com/posts/programming/terraform/terraform-state/</link>
+      <pubDate>Sun, 31 Jul 2022 20:30:06 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/terraform/terraform-state/</guid>
+      <description>Third article in series about terraform. In this article i will show how to use terraform state</description>
+    </item>
+    
+    <item>
+      <title>Terraform Basics</title>
+      <link>https://mpostument.com/posts/programming/terraform/terraform-basics/</link>
+      <pubDate>Thu, 28 Jul 2022 20:27:17 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/terraform/terraform-basics/</guid>
+      <description>Second article in series about terraform. In this article i will show install terraform provider and create AWS EC2 using terraform</description>
+    </item>
+    
+    <item>
+      <title>Manage terraform with tfenv</title>
+      <link>https://mpostument.com/posts/programming/terraform/terraform-install/</link>
+      <pubDate>Tue, 26 Jul 2022 20:54:23 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/terraform/terraform-install/</guid>
+      <description>First article in series about terraform. In this article i will show how to manager terraform with tfenv and how to configure VSCode for work with terraform</description>
+    </item>
+    
+    <item>
+      <title>Docker Sdk Part One</title>
+      <link>https://mpostument.com/posts/programming/golang/docker-sdk-part-one/</link>
+      <pubDate>Tue, 22 Mar 2022 20:31:29 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/docker-sdk-part-one/</guid>
+      <description>First article in series about docker SDK. In this article we will write docker pull and docker images commands with golang sdk</description>
+    </item>
+    
+    <item>
+      <title>Using Mongo With Go</title>
+      <link>https://mpostument.com/posts/programming/golang/using-mongo-with-go/</link>
+      <pubDate>Tue, 15 Mar 2022 20:29:54 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/using-mongo-with-go/</guid>
+      <description>Learn how to use mongo with golang</description>
+    </item>
+    
+    <item>
+      <title>AWS Synthetics With Terraform. Problems?</title>
+      <link>https://mpostument.com/posts/programming/terraform/aws-synthetics-with-terraform/</link>
+      <pubDate>Tue, 08 Mar 2022 20:29:47 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/terraform/aws-synthetics-with-terraform/</guid>
+      <description>Which problems i faced when worked with aws_synthetics_canary terraform resource and how i solved them</description>
+    </item>
+    
+    <item>
+      <title>Using Postgres With Golang</title>
+      <link>https://mpostument.com/posts/programming/golang/using-postgres-with-go/</link>
+      <pubDate>Sun, 20 Feb 2022 20:37:23 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/using-postgres-with-go/</guid>
+      <description>Learn how to use postgres with golang using pgx</description>
+    </item>
+    
+    <item>
+      <title>Sorted Squared Array</title>
+      <link>https://mpostument.com/posts/programming/algorithms/sorted-squared-array/</link>
+      <pubDate>Mon, 14 Feb 2022 20:30:37 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/algorithms/sorted-squared-array/</guid>
+      <description>How to solve sorted squared array codding task</description>
+    </item>
+    
+    <item>
+      <title>WaitGroup</title>
+      <link>https://mpostument.com/posts/programming/golang/wait-groups/</link>
+      <pubDate>Wed, 02 Feb 2022 20:58:30 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/wait-groups/</guid>
+      <description>What is WaitGroup and how to use it</description>
+    </item>
+    
+    <item>
+      <title>Read and Write lock in Go</title>
+      <link>https://mpostument.com/posts/programming/golang/rwlock/</link>
+      <pubDate>Mon, 31 Jan 2022 19:30:37 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/rwlock/</guid>
+      <description>Learn how to use golang RWMutex</description>
+    </item>
+    
+    <item>
+      <title>Depth First Search</title>
+      <link>https://mpostument.com/posts/programming/algorithms/depth-first-search/</link>
+      <pubDate>Mon, 06 Sep 2021 20:19:11 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/algorithms/depth-first-search/</guid>
+      <description>Depth-first Search algorithm on golang</description>
+    </item>
+    
+    <item>
+      <title>Node Depths</title>
+      <link>https://mpostument.com/posts/programming/algorithms/node-depths/</link>
+      <pubDate>Thu, 26 Aug 2021 20:58:40 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/algorithms/node-depths/</guid>
+      <description>How to find the node depth</description>
+    </item>
+    
+    <item>
+      <title>Branch Sum</title>
+      <link>https://mpostument.com/posts/programming/algorithms/branch-sum/</link>
+      <pubDate>Mon, 23 Aug 2021 20:49:50 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/algorithms/branch-sum/</guid>
+      <description>How to solve branch sum codding task</description>
+    </item>
+    
+    <item>
+      <title>Find Closest Value in BST</title>
+      <link>https://mpostument.com/posts/programming/algorithms/find-closest-value-in-bst/</link>
+      <pubDate>Tue, 10 Aug 2021 20:02:00 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/algorithms/find-closest-value-in-bst/</guid>
+      <description>How to find the closest value in BST</description>
+    </item>
+    
+    <item>
+      <title>Validate Subsequence</title>
+      <link>https://mpostument.com/posts/programming/algorithms/validate-subsequence/</link>
+      <pubDate>Thu, 05 Aug 2021 21:00:32 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/algorithms/validate-subsequence/</guid>
+      <description>How to solve validate subsequence codding task</description>
+    </item>
+    
+    <item>
+      <title>Two Number Sum</title>
+      <link>https://mpostument.com/posts/programming/algorithms/two-number-sum/</link>
+      <pubDate>Wed, 04 Aug 2021 20:18:17 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/algorithms/two-number-sum/</guid>
+      <description>Solve two number sum codding task with two pointers</description>
+    </item>
+    
+    <item>
+      <title>Latest programming in GitHub readme</title>
+      <link>https://mpostument.com/posts/programming/golang/latest-post-in-github-readme/</link>
+      <pubDate>Sat, 06 Mar 2021 18:56:24 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/latest-post-in-github-readme/</guid>
+      <description>Automatic Readme generation for GitHub profile</description>
+    </item>
+    
+    <item>
+      <title>Ebs Auto Resize</title>
+      <link>https://mpostument.com/posts/programming/golang/ebs-auto-resize/</link>
+      <pubDate>Sat, 06 Feb 2021 18:14:40 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/ebs-auto-resize/</guid>
+      <description>Automatic AWS EBS resize with golang</description>
+    </item>
+    
+    <item>
+      <title>Failed Asg Event Notification</title>
+      <link>https://mpostument.com/posts/programming/golang/failed-asg-event-notification/</link>
+      <pubDate>Sun, 03 Jan 2021 17:57:36 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/failed-asg-event-notification/</guid>
+      <description>How to receive slack messages on failed attempt to create ec2 by autoscaling group</description>
+    </item>
+    
+    <item>
+      <title>Import Grafana Dashboards With Go</title>
+      <link>https://mpostument.com/posts/programming/golang/import-grafana-dashboards-with-go/</link>
+      <pubDate>Wed, 23 Dec 2020 23:18:28 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/import-grafana-dashboards-with-go/</guid>
+      <description>How to import Grafana dashboards with Go</description>
+    </item>
+    
+    <item>
+      <title>Export Grafana Dashboards With Go</title>
+      <link>https://mpostument.com/posts/programming/golang/export-grafana-dashboards-with-go/</link>
+      <pubDate>Sat, 19 Dec 2020 18:27:35 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/export-grafana-dashboards-with-go/</guid>
+      <description>How import grafana dashboards with Go</description>
+    </item>
+    
+    <item>
+      <title>Filter Ebs Snapshot By Date With Go</title>
+      <link>https://mpostument.com/posts/programming/golang/filter-ebs-snapshot-by-date-with-go/</link>
+      <pubDate>Sat, 05 Dec 2020 17:53:29 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/filter-ebs-snapshot-by-date-with-go/</guid>
+      <description>How to filter ebs snapshots by date with golang</description>
+    </item>
+    
+    <item>
+      <title>Custom Dns for Github Pages</title>
+      <link>https://mpostument.com/posts/programming/ci/custom-dns-for-github-pages-copy/</link>
+      <pubDate>Mon, 02 Nov 2020 16:19:52 +0200</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/ci/custom-dns-for-github-pages-copy/</guid>
+      <description>Add custom domain to GitHub Pages</description>
+    </item>
+    
+    <item>
+      <title>Deploy Hugo With Github Actions and Pages</title>
+      <link>https://mpostument.com/posts/programming/ci/deploy-hugo-with-github-actions-and-pages/</link>
+      <pubDate>Wed, 21 Oct 2020 20:19:26 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/ci/deploy-hugo-with-github-actions-and-pages/</guid>
+      <description>Deploy hugo website to GithubPages with GithubActions</description>
+    </item>
+    
+    <item>
+      <title>Blazor Server Authorization</title>
+      <link>https://mpostument.com/posts/programming/dotnet/blazor-server-authorization/</link>
+      <pubDate>Sat, 17 Oct 2020 19:04:41 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/dotnet/blazor-server-authorization/</guid>
+      <description>How to add authorization in BlazorServer</description>
+    </item>
+    
+    <item>
+      <title>Blazor Forms</title>
+      <link>https://mpostument.com/posts/programming/dotnet/blazor-server-forms/</link>
+      <pubDate>Fri, 16 Oct 2020 16:09:30 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/dotnet/blazor-server-forms/</guid>
+      <description>How to create form in Blazor Server</description>
+    </item>
+    
+    <item>
+      <title>Events in Blazor</title>
+      <link>https://mpostument.com/posts/programming/dotnet/events-in-blazor/</link>
+      <pubDate>Thu, 15 Oct 2020 11:37:56 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/dotnet/events-in-blazor/</guid>
+      <description>How to pass data from one component to another</description>
+    </item>
+    
+    <item>
+      <title>Component With Parameters</title>
+      <link>https://mpostument.com/posts/programming/dotnet/components-with-parameters/</link>
+      <pubDate>Wed, 14 Oct 2020 11:47:34 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/dotnet/components-with-parameters/</guid>
+      <description>How to use component with parameters in BlazorServer</description>
+    </item>
+    
+    <item>
+      <title>Three Ways to Organize Code in BlazorServer</title>
+      <link>https://mpostument.com/posts/programming/dotnet/three-ways-to-organize-code/</link>
+      <pubDate>Tue, 13 Oct 2020 13:42:30 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/dotnet/three-ways-to-organize-code/</guid>
+      <description>Три шляхи як організувати код в BlazorServer</description>
+    </item>
+    
+    <item>
+      <title>Create Page in Blazor</title>
+      <link>https://mpostument.com/posts/programming/dotnet/create-page-in-blazor/</link>
+      <pubDate>Mon, 12 Oct 2020 11:57:31 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/dotnet/create-page-in-blazor/</guid>
+      <description>How to create new page in blazor and add in to menu</description>
+    </item>
+    
+    <item>
+      <title>Blazor Server Logging</title>
+      <link>https://mpostument.com/posts/programming/dotnet/blazor-server-logging/</link>
+      <pubDate>Sat, 10 Oct 2020 19:01:49 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/dotnet/blazor-server-logging/</guid>
+      <description>Logging in blazor server</description>
+    </item>
+    
+    <item>
+      <title>Blazor Dependency Injection</title>
+      <link>https://mpostument.com/posts/programming/dotnet/blazor-server-dependency-injection/</link>
+      <pubDate>Wed, 07 Oct 2020 21:15:25 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/dotnet/blazor-server-dependency-injection/</guid>
+      <description>Dependency injection in Blazor Server</description>
+    </item>
+    
+    <item>
+      <title>Blazor Server Error Handling</title>
+      <link>https://mpostument.com/posts/programming/dotnet/blazor-server-error-handling/</link>
+      <pubDate>Tue, 06 Oct 2020 19:31:30 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/dotnet/blazor-server-error-handling/</guid>
+      <description>Error handling in Blazor Server</description>
+    </item>
+    
+    <item>
+      <title>Blazor Server Routing</title>
+      <link>https://mpostument.com/posts/programming/dotnet/blazor-server-routing/</link>
+      <pubDate>Thu, 01 Oct 2020 21:09:00 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/dotnet/blazor-server-routing/</guid>
+      <description>Routing in Blazor Server</description>
+    </item>
+    
+    <item>
+      <title>Nightfall Dlp Configuration</title>
+      <link>https://mpostument.com/posts/programming/ci/nightfall-dlp-configuration/</link>
+      <pubDate>Wed, 30 Sep 2020 21:52:21 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/ci/nightfall-dlp-configuration/</guid>
+      <description>Configure DLP Nightfall for your github project</description>
+    </item>
+    
+    <item>
+      <title>Deploy to ec2 with codedship</title>
+      <link>https://mpostument.com/posts/programming/ci/deploy-to-ec2-with-codeship/</link>
+      <pubDate>Wed, 16 Sep 2020 20:24:40 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/ci/deploy-to-ec2-with-codeship/</guid>
+      <description>Deploy you code to ec2 server with Codeship and AWS CodeDeploy</description>
+    </item>
+    
+    <item>
+      <title>Get Lambdas in Vpc With Go</title>
+      <link>https://mpostument.com/posts/programming/golang/get-lambdas-in-vpc-with-go/</link>
+      <pubDate>Tue, 01 Sep 2020 17:40:16 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/golang/get-lambdas-in-vpc-with-go/</guid>
+      <description>Get all your lambda in VPC with golang</description>
+    </item>
+    
+    <item>
+      <title>Build Dotnet Core With Travis</title>
+      <link>https://mpostument.com/posts/programming/dotnet/build-dotnet-core-with-travis/</link>
+      <pubDate>Mon, 31 Aug 2020 13:24:40 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/dotnet/build-dotnet-core-with-travis/</guid>
+      <description>Build and deploy .Net Core code with Travis CI</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,15 +1,20 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bean on Maksym Postument</title><link>https://mpostument.com/tags/bean/</link><description>Recent content in Bean on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 23 May 2023 18:33:02 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/bean/index.xml" rel="self" type="application/rss+xml"/><item><title>Week Two: Bean</title><link>https://mpostument.com/drawing/figure_drawing/week_two_bean/</link><pubDate>Tue, 23 May 2023 18:33:02 +0300</pubDate><guid>https://mpostument.com/drawing/figure_drawing/week_two_bean/</guid><description>Join me as I unveil my artistic discoveries from the second week of Proko&amp;rsquo;s Figure Drawing Fundamentals course. In this post, I&amp;rsquo;ll share my progress and showcase how I learned to harness the power of the bean—a foundational element in capturing the human figure.
-During this week, I delved into the fascinating concept of the &amp;ldquo;bean.&amp;rdquo; Acting as a simplified representation of the human form, it helped me capture gestures and movements with precision.</description><content>&lt;p>Join me as I unveil my artistic discoveries from the second week of Proko&amp;rsquo;s Figure Drawing Fundamentals course. In this post, I&amp;rsquo;ll share my progress and showcase how I learned to harness the power of the bean—a foundational element in capturing the human figure.&lt;/p>
-&lt;p>During this week, I delved into the fascinating concept of the &amp;ldquo;bean.&amp;rdquo; Acting as a simplified representation of the human form, it helped me capture gestures and movements with precision.&lt;/p>
-&lt;p>Take a glimpse at some of my finest drawings, where the bean played a pivotal role in capturing the dynamic beauty of the human figure.&lt;/p>
-&lt;p>Post will be updated with more drawing during this week&lt;/p>
-&lt;p>&lt;img src="https://mpostument.com/drawing/figure_drawing/week_two/1.jpg" alt="One">
-&lt;img src="https://mpostument.com/drawing/figure_drawing/week_two/2.jpg" alt="Two">
-&lt;img src="https://mpostument.com/drawing/figure_drawing/week_two/3.jpg" alt="Three">
-&lt;img src="https://mpostument.com/drawing/figure_drawing/week_two/4.jpg" alt="Four">
-&lt;img src="https://mpostument.com/drawing/figure_drawing/week_two/5.jpg" alt="Five">
-&lt;img src="https://mpostument.com/drawing/figure_drawing/week_two/6.jpg" alt="Six">
-&lt;img src="https://mpostument.com/drawing/figure_drawing/week_two/7.jpg" alt="Seven">
-&lt;img src="https://mpostument.com/drawing/figure_drawing/week_two/8.jpg" alt="Eight">
-&lt;img src="https://mpostument.com/drawing/figure_drawing/week_two/9.jpg" alt="Nine">
-&lt;img src="https://mpostument.com/drawing/figure_drawing/week_two/10.jpg" alt="Ten">&lt;/p></content></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Bean on mpostument.com</title>
+    <link>https://mpostument.com/tags/bean/</link>
+    <description>Recent content in Bean on mpostument.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 23 May 2023 18:33:02 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/bean/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Week Two: Bean</title>
+      <link>https://mpostument.com/posts/drawing/figure_drawing/week_two_bean/</link>
+      <pubDate>Tue, 23 May 2023 18:33:02 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/drawing/figure_drawing/week_two_bean/</guid>
+      <description>My second week. I am starting to lear bean with [Figure Drawing Fundamentals course by Proko.](https://www.proko.com/course/figure-drawing-fundamentals/overview)</description>
+    </item>
+    
+  </channel>
+</rss>

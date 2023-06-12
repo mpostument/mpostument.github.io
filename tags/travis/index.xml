@@ -1,62 +1,20 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Travis on Maksym Postument</title><link>https://mpostument.com/tags/travis/</link><description>Recent content in Travis on Maksym Postument</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 31 Aug 2020 13:24:40 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/travis/index.xml" rel="self" type="application/rss+xml"/><item><title>Build Dotnet Core With Travis</title><link>https://mpostument.com/programming/dotnet/build-dotnet-core-with-travis/</link><pubDate>Mon, 31 Aug 2020 13:24:40 +0300</pubDate><guid>https://mpostument.com/programming/dotnet/build-dotnet-core-with-travis/</guid><description>Hello!
-Today I want to show how you can build and deploy .net core with Travis.
-To get started, you need to create a Travis account. This requires you to login with your GitHub account. .travis.yml Configuration The next step is to create a .travis.yml file in the root of the repository.
-Example of my configuration file:
-language: csharp mono: none dotnet: 3.1.4 solution: awstaghelper.sln install: - dotnet restore script: - dotnet build --configuration Release --runtime win-x64 --output win-x64 - dotnet build --configuration Release --runtime win-x86 --output win-x86 - dotnet build --configuration Release --runtime linux-x64 --output linux-x64 - dotnet build --configuration Release --runtime osx-x64 --output osx-x64 before_deploy: - zip -r9 win-x64.</description><content>&lt;p>Hello!&lt;/p>
-&lt;p>Today I want to show how you can build and deploy .net core with &lt;a href="https://travis-ci.com/">Travis&lt;/a>.&lt;br>
-To get started, you need to create a Travis account. This requires you to &lt;a href="https://travis-ci.com/signin">login&lt;/a> with your GitHub account.
-&lt;img src="https://i.imgur.com/L9lOBo8.png" alt="Login">&lt;/p>
-&lt;h2 id="travisyml-configuration">.travis.yml Configuration&lt;/h2>
-&lt;p>The next step is to create a .travis.yml file in the root of the repository.&lt;br>
-Example of my configuration file:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">language&lt;/span>: &lt;span style="color:#ae81ff">csharp&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">mono&lt;/span>: &lt;span style="color:#ae81ff">none&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">dotnet&lt;/span>: &lt;span style="color:#ae81ff">3.1.4&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">solution&lt;/span>: &lt;span style="color:#ae81ff">awstaghelper.sln&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">install&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">dotnet restore&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">script&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">dotnet build --configuration Release --runtime win-x64 --output win-x64&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">dotnet build --configuration Release --runtime win-x86 --output win-x86&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">dotnet build --configuration Release --runtime linux-x64 --output linux-x64&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">dotnet build --configuration Release --runtime osx-x64 --output osx-x64&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">before_deploy&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">zip -r9 win-x64.zip win-x64&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">zip -r9 win-x86.zip win-x86&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">zip -r9 linux-x64.zip linux-x64&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">zip -r9 osx-x64.zip osx-x64&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">deploy&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">provider&lt;/span>: &lt;span style="color:#ae81ff">releases&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">api_key&lt;/span>: &lt;span style="color:#ae81ff">$api_key&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">file&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">win-x64.zip&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">win-x86.zip&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">linux-x64.zip&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> - &lt;span style="color:#ae81ff">osx-x64.zip&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">skip_cleanup&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">on&lt;/span>:
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">tags&lt;/span>: &lt;span style="color:#66d9ef">true&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="net-configuration">.Net configuration&lt;/h2>
-&lt;p>Now let&amp;rsquo;s review the config.&lt;br>
-Yml begins with the declaration of the programming language &lt;code>language: csharp&lt;/code>. &lt;code>mono&lt;/code>
-is none because the .net core is used. And the last is the .net core version. In my case it is &lt;code>dotnet: 3.1.4&lt;/code>. You also need to specify the name of the solution &lt;code>solution: awstaghelper.sln&lt;/code>.&lt;/p>
-&lt;h2 id="build-configuration">Build configuration&lt;/h2>
-&lt;p>Next are the build steps. Step &lt;code>install&lt;/code> used to install the necessary dependencies. &lt;code>dotnet restore&lt;/code> is optional as in the latest versions of dotnet &lt;code>restore&lt;/code> the command is automatically called when &lt;code>build&lt;/code>. Because of this, &lt;code>install&lt;/code> can be completely removed.&lt;/p>
-&lt;p>In the &lt;code>script&lt;/code> section there is a build of application. I call the &lt;code>build&lt;/code> command 4 times because I build for different OS: Windows, Linux, Mac. The operating system is indicated by the &lt;code>--runtime&lt;/code> key. A list of all runtime is available &lt;a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog#rid-graph">here&lt;/a>. &lt;code>--output&lt;/code> key specifies in which directory to put binaries.
-You can also add the &lt;code>/p:PublishSingleFile=true&lt;/code> key to get only one exe file as a result per OS. You can also add this key in the project settings in Visual Studio.&lt;/p>
-&lt;h2 id="deployment-configuration">Deployment configuration&lt;/h2>
-&lt;p>The &lt;code>before_deploy&lt;/code> section is called before the deployment to prepare the binary for release. At this stage, I make an archive with the binaries that I received after the builds for the each operating system.&lt;/p>
-&lt;p>In the &lt;code>deploy&lt;/code> section I use the &lt;code>releases&lt;/code> provider which releases on github. List of all providers - &lt;a href="https://docs.travis-ci.com/user/deployment/">docs.travis-ci.com&lt;/a>. A github token is required for deployment. You can generate it on &lt;a href="https://github.com/settings/tokens">GitHub&lt;/a>.
-The key must be saved in the travis configuration of the project. To do this, go to the project on &lt;a href="https://travis-ci.com/">Travis&lt;/a>. Open project/settings:
-&lt;img src="https://i.imgur.com/nHrz23b.png" alt="Config">.&lt;/p>
-&lt;p>In Environment Variables you need to add the generated key:
-&lt;img src="https://i.imgur.com/wfnfkzi.png" alt="Token">
-In &lt;code>file&lt;/code> you need to specify which files should be deployed using the provider. &lt;code>skip_cleanup: true&lt;/code> must be &lt;code>true&lt;/code> so that travis does not clear whipped files before deployment. &lt;code>on.tags: true&lt;/code> means that the deployment run only on github tags.&lt;/p>
-&lt;p>Once the file is ready you need to make run changes to the master and the build will start automatically. But the deployment will not take place, because it trigger only on tags. On &lt;a href="https://github.com/">GitHub&lt;/a> you need to create release for the desired repository. Once the release is done the build will run again, but this time with a deployment.&lt;/p>
-&lt;p>In &lt;a href="https://travis-ci.com/">Travis&lt;/a> you can see the following result:
-&lt;img src="https://i.imgur.com/02OKZ1R.png" alt="Build">&lt;/p></content></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Travis on mpostument.com</title>
+    <link>https://mpostument.com/tags/travis/</link>
+    <description>Recent content in Travis on mpostument.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 31 Aug 2020 13:24:40 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/travis/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Build Dotnet Core With Travis</title>
+      <link>https://mpostument.com/posts/programming/dotnet/build-dotnet-core-with-travis/</link>
+      <pubDate>Mon, 31 Aug 2020 13:24:40 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/dotnet/build-dotnet-core-with-travis/</guid>
+      <description>Build and deploy .Net Core code with Travis CI</description>
+    </item>
+    
+  </channel>
+</rss>
