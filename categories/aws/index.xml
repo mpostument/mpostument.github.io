@@ -80,15 +80,6 @@
     </item>
     
     <item>
-      <title>AWS Synthetics With Terraform. Problems?</title>
-      <link>https://mpostument.com/posts/programming/terraform/aws-synthetics-with-terraform/</link>
-      <pubDate>Tue, 08 Mar 2022 20:29:47 +0200</pubDate>
-      
-      <guid>https://mpostument.com/posts/programming/terraform/aws-synthetics-with-terraform/</guid>
-      <description>Which problems i faced when worked with aws_synthetics_canary terraform resource and how i solved them</description>
-    </item>
-    
-    <item>
       <title>Read and Write lock in Go</title>
       <link>https://mpostument.com/posts/programming/golang/rwlock/</link>
       <pubDate>Mon, 31 Jan 2022 19:30:37 +0200</pubDate>
