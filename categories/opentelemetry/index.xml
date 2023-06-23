@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>OpenTelemetry on mpostument.com</title>
+    <link>https://mpostument.com/categories/opentelemetry/</link>
+    <description>Recent content in OpenTelemetry on mpostument.com</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 21 Jun 2023 21:51:45 +0300</lastBuildDate><atom:link href="https://mpostument.com/categories/opentelemetry/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Monitoring Kibana with OpenTelemetry Collector: Gathering Logs and Metrics</title>
+      <link>https://mpostument.com/posts/programming/observability/otel-kibana/</link>
+      <pubDate>Wed, 21 Jun 2023 21:51:45 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/observability/otel-kibana/</guid>
+      <description>Learn how to effectively monitor Kibana using OpenTelemetry Collector in this informative guide. Discover how to gather both logs and metrics data by making specific configurations to Kibana and leveraging the Prometheus exporter. With step-by-step instructions and detailed explanations, you&amp;#39;ll gain insights into configuring logs and metrics, setting up receivers, configuring exporters, and creating an OTEL pipeline. Enhance your Kibana monitoring capabilities and optimize your observability with this comprehensive tutorial.</description>
+    </item>
+    
+    <item>
+      <title>Integrating StatsD Metrics with Prometheus Using OpenTelemetry</title>
+      <link>https://mpostument.com/posts/programming/observability/otel-statsd/</link>
+      <pubDate>Sun, 11 Jun 2023 20:17:11 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/observability/otel-statsd/</guid>
+      <description>In this post, we will explore the process of integrating StatsD metrics with Prometheus using OpenTelemetry (Otel). I will shares my firsthand experience and provides a step-by-step guide to help you set up the necessary configurations. If you are looking to receive StatsD metrics and send them to Prometheus for monitoring and analysis, this post is for you.</description>
+    </item>
+    
+  </channel>
+</rss>

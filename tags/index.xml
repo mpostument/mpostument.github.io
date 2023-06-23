@@ -6,7 +6,88 @@
     <description>Recent content in Tags on mpostument.com</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 13 Jun 2023 18:50:48 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 21 Jun 2023 21:51:45 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Configuration Guide</title>
+      <link>https://mpostument.com/tags/configuration-guide/</link>
+      <pubDate>Wed, 21 Jun 2023 21:51:45 +0300</pubDate>
+      
+      <guid>https://mpostument.com/tags/configuration-guide/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Devops</title>
+      <link>https://mpostument.com/tags/devops/</link>
+      <pubDate>Wed, 21 Jun 2023 21:51:45 +0300</pubDate>
+      
+      <guid>https://mpostument.com/tags/devops/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kibana</title>
+      <link>https://mpostument.com/tags/kibana/</link>
+      <pubDate>Wed, 21 Jun 2023 21:51:45 +0300</pubDate>
+      
+      <guid>https://mpostument.com/tags/kibana/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Metrics Integration</title>
+      <link>https://mpostument.com/tags/metrics-integration/</link>
+      <pubDate>Wed, 21 Jun 2023 21:51:45 +0300</pubDate>
+      
+      <guid>https://mpostument.com/tags/metrics-integration/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Monitoring</title>
+      <link>https://mpostument.com/tags/monitoring/</link>
+      <pubDate>Wed, 21 Jun 2023 21:51:45 +0300</pubDate>
+      
+      <guid>https://mpostument.com/tags/monitoring/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Observability</title>
+      <link>https://mpostument.com/tags/observability/</link>
+      <pubDate>Wed, 21 Jun 2023 21:51:45 +0300</pubDate>
+      
+      <guid>https://mpostument.com/tags/observability/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>OpenTelemetry</title>
+      <link>https://mpostument.com/tags/opentelemetry/</link>
+      <pubDate>Wed, 21 Jun 2023 21:51:45 +0300</pubDate>
+      
+      <guid>https://mpostument.com/tags/opentelemetry/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Performance Monitoring</title>
+      <link>https://mpostument.com/tags/performance-monitoring/</link>
+      <pubDate>Wed, 21 Jun 2023 21:51:45 +0300</pubDate>
+      
+      <guid>https://mpostument.com/tags/performance-monitoring/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Prometheus</title>
+      <link>https://mpostument.com/tags/prometheus/</link>
+      <pubDate>Wed, 21 Jun 2023 21:51:45 +0300</pubDate>
+      
+      <guid>https://mpostument.com/tags/prometheus/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Art</title>
       <link>https://mpostument.com/tags/art/</link>
@@ -67,78 +148,6 @@
       <pubDate>Tue, 13 Jun 2023 18:50:48 +0300</pubDate>
       
       <guid>https://mpostument.com/tags/skill-development/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Configuration Guide</title>
-      <link>https://mpostument.com/tags/configuration-guide/</link>
-      <pubDate>Sun, 11 Jun 2023 20:17:11 +0300</pubDate>
-      
-      <guid>https://mpostument.com/tags/configuration-guide/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Devops</title>
-      <link>https://mpostument.com/tags/devops/</link>
-      <pubDate>Sun, 11 Jun 2023 20:17:11 +0300</pubDate>
-      
-      <guid>https://mpostument.com/tags/devops/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Metrics Integration</title>
-      <link>https://mpostument.com/tags/metrics-integration/</link>
-      <pubDate>Sun, 11 Jun 2023 20:17:11 +0300</pubDate>
-      
-      <guid>https://mpostument.com/tags/metrics-integration/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Monitoring</title>
-      <link>https://mpostument.com/tags/monitoring/</link>
-      <pubDate>Sun, 11 Jun 2023 20:17:11 +0300</pubDate>
-      
-      <guid>https://mpostument.com/tags/monitoring/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Observability</title>
-      <link>https://mpostument.com/tags/observability/</link>
-      <pubDate>Sun, 11 Jun 2023 20:17:11 +0300</pubDate>
-      
-      <guid>https://mpostument.com/tags/observability/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>OpenTelemetry</title>
-      <link>https://mpostument.com/tags/opentelemetry/</link>
-      <pubDate>Sun, 11 Jun 2023 20:17:11 +0300</pubDate>
-      
-      <guid>https://mpostument.com/tags/opentelemetry/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Performance Monitoring</title>
-      <link>https://mpostument.com/tags/performance-monitoring/</link>
-      <pubDate>Sun, 11 Jun 2023 20:17:11 +0300</pubDate>
-      
-      <guid>https://mpostument.com/tags/performance-monitoring/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Prometheus</title>
-      <link>https://mpostument.com/tags/prometheus/</link>
-      <pubDate>Sun, 11 Jun 2023 20:17:11 +0300</pubDate>
-      
-      <guid>https://mpostument.com/tags/prometheus/</guid>
       <description></description>
     </item>
     
