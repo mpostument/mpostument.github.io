@@ -3,12 +3,39 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://mpostument.com/posts/</loc>
-    <lastmod>2023-06-22T21:51:45+03:00</lastmod>
+    <lastmod>2023-07-04T20:24:07+03:00</lastmod>
   </url><url>
-    <loc>https://mpostument.com/posts/programming/</loc>
-    <lastmod>2023-06-22T21:51:45+03:00</lastmod>
+    <loc>https://mpostument.com/posts/drawing/</loc>
+    <lastmod>2023-07-04T20:24:07+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/art/</loc>
+    <lastmod>2023-07-04T20:24:07+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/categories/</loc>
+    <lastmod>2023-07-04T20:24:07+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/drawing/</loc>
+    <lastmod>2023-07-04T20:24:07+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/categories/drawing/</loc>
+    <lastmod>2023-07-04T20:24:07+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/posts/drawing/nma/drawing_foundations_1/</loc>
+    <lastmod>2023-07-04T20:24:07+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/</loc>
+    <lastmod>2023-07-04T20:24:07+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/categories/new-master-academy/</loc>
+    <lastmod>2023-07-04T20:24:07+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/newmasteracademy/</loc>
+    <lastmod>2023-07-04T20:24:07+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/</loc>
+    <lastmod>2023-07-04T20:24:07+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/posts/programming/</loc>
     <lastmod>2023-06-22T21:51:45+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/tags/configuration-guide/</loc>
@@ -29,9 +56,6 @@
     <loc>https://mpostument.com/posts/programming/observability/otel-kibana/</loc>
     <lastmod>2023-06-22T21:51:45+03:00</lastmod>
   </url><url>
-    <loc>https://mpostument.com/</loc>
-    <lastmod>2023-06-22T21:51:45+03:00</lastmod>
-  </url><url>
     <loc>https://mpostument.com/tags/observability/</loc>
     <lastmod>2023-06-22T21:51:45+03:00</lastmod>
   </url><url>
@@ -48,9 +72,6 @@
     <lastmod>2023-06-22T21:51:45+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/tags/prometheus/</loc>
-    <lastmod>2023-06-22T21:51:45+03:00</lastmod>
-  </url><url>
-    <loc>https://mpostument.com/tags/</loc>
     <lastmod>2023-06-22T21:51:45+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/posts/programming/observability/otel-statsd/</loc>
@@ -418,8 +439,6 @@
   </url><url>
     <loc>https://mpostument.com/posts/projects/steamwishlistscraper/</loc>
     <lastmod>2019-05-29T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://mpostument.com/posts/drawing/</loc>
   </url><url>
     <loc>https://mpostument.com/posts/guitar/</loc>
   </url><url>
