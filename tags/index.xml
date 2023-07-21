@@ -6,7 +6,61 @@
     <description>Recent content in Tags on mpostument.com</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 11 Jul 2023 20:10:31 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 20 Jul 2023 20:51:45 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cluster</title>
+      <link>https://mpostument.com/tags/cluster/</link>
+      <pubDate>Thu, 20 Jul 2023 20:51:45 +0300</pubDate>
+      
+      <guid>https://mpostument.com/tags/cluster/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Elasticsearch</title>
+      <link>https://mpostument.com/tags/elasticsearch/</link>
+      <pubDate>Thu, 20 Jul 2023 20:51:45 +0300</pubDate>
+      
+      <guid>https://mpostument.com/tags/elasticsearch/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Logs</title>
+      <link>https://mpostument.com/tags/logs/</link>
+      <pubDate>Thu, 20 Jul 2023 20:51:45 +0300</pubDate>
+      
+      <guid>https://mpostument.com/tags/logs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Metrics</title>
+      <link>https://mpostument.com/tags/metrics/</link>
+      <pubDate>Thu, 20 Jul 2023 20:51:45 +0300</pubDate>
+      
+      <guid>https://mpostument.com/tags/metrics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Monitoring</title>
+      <link>https://mpostument.com/tags/monitoring/</link>
+      <pubDate>Thu, 20 Jul 2023 20:51:45 +0300</pubDate>
+      
+      <guid>https://mpostument.com/tags/monitoring/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>OpenTelemetry</title>
+      <link>https://mpostument.com/tags/opentelemetry/</link>
+      <pubDate>Thu, 20 Jul 2023 20:51:45 +0300</pubDate>
+      
+      <guid>https://mpostument.com/tags/opentelemetry/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>art courses</title>
       <link>https://mpostument.com/tags/art-courses/</link>
@@ -143,29 +197,11 @@
     </item>
     
     <item>
-      <title>Monitoring</title>
-      <link>https://mpostument.com/tags/monitoring/</link>
-      <pubDate>Thu, 22 Jun 2023 21:51:45 +0300</pubDate>
-      
-      <guid>https://mpostument.com/tags/monitoring/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Observability</title>
       <link>https://mpostument.com/tags/observability/</link>
       <pubDate>Thu, 22 Jun 2023 21:51:45 +0300</pubDate>
       
       <guid>https://mpostument.com/tags/observability/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>OpenTelemetry</title>
-      <link>https://mpostument.com/tags/opentelemetry/</link>
-      <pubDate>Thu, 22 Jun 2023 21:51:45 +0300</pubDate>
-      
-      <guid>https://mpostument.com/tags/opentelemetry/</guid>
       <description></description>
     </item>
     

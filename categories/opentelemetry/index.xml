@@ -6,7 +6,16 @@
     <description>Recent content in OpenTelemetry on mpostument.com</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 22 Jun 2023 21:51:45 +0300</lastBuildDate><atom:link href="https://mpostument.com/categories/opentelemetry/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 20 Jul 2023 20:51:45 +0300</lastBuildDate><atom:link href="https://mpostument.com/categories/opentelemetry/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Optimizing Elasticsearch Monitoring with OpenTelemetry: A Comprehensive Guide</title>
+      <link>https://mpostument.com/posts/programming/observability/otel-elasticsearch/</link>
+      <pubDate>Thu, 20 Jul 2023 20:51:45 +0300</pubDate>
+      
+      <guid>https://mpostument.com/posts/programming/observability/otel-elasticsearch/</guid>
+      <description>Learn how to enhance the monitoring of your Elasticsearch cluster using OpenTelemetry in this comprehensive guide. The article covers essential configurations, such as the Filelog Receiver for logs, Metrics Receiver for Elasticsearch metrics, and Hostmetrics Receiver for instance-level metrics like CPU and memory. Additionally, it explains the integration of Exporters and highlights the significance of OTEL in enabling dynamic indexing for Elasticsearch. With detailed insights and practical tips, this guide empowers you to optimize your Elasticsearch monitoring and effectively analyze log data for improved performance and management.</description>
+    </item>
+    
     <item>
       <title>Monitoring Kibana with OpenTelemetry Collector: Gathering Logs and Metrics</title>
       <link>https://mpostument.com/posts/programming/observability/otel-kibana/</link>

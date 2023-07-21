@@ -3,7 +3,46 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://mpostument.com/posts/</loc>
-    <lastmod>2023-07-11T20:10:31+03:00</lastmod>
+    <lastmod>2023-07-20T20:51:45+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/posts/programming/</loc>
+    <lastmod>2023-07-20T20:51:45+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/categories/</loc>
+    <lastmod>2023-07-20T20:51:45+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/cluster/</loc>
+    <lastmod>2023-07-20T20:51:45+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/elasticsearch/</loc>
+    <lastmod>2023-07-20T20:51:45+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/logs/</loc>
+    <lastmod>2023-07-20T20:51:45+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/metrics/</loc>
+    <lastmod>2023-07-20T20:51:45+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/monitoring/</loc>
+    <lastmod>2023-07-20T20:51:45+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/</loc>
+    <lastmod>2023-07-20T20:51:45+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/categories/observability/</loc>
+    <lastmod>2023-07-20T20:51:45+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/opentelemetry/</loc>
+    <lastmod>2023-07-20T20:51:45+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/categories/opentelemetry/</loc>
+    <lastmod>2023-07-20T20:51:45+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/posts/programming/observability/otel-elasticsearch/</loc>
+    <lastmod>2023-07-20T20:51:45+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/</loc>
+    <lastmod>2023-07-20T20:51:45+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/posts/drawing/</loc>
     <lastmod>2023-07-11T20:10:31+03:00</lastmod>
@@ -15,9 +54,6 @@
     <lastmod>2023-07-11T20:10:31+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/tags/artistic-journey/</loc>
-    <lastmod>2023-07-11T20:10:31+03:00</lastmod>
-  </url><url>
-    <loc>https://mpostument.com/categories/</loc>
     <lastmod>2023-07-11T20:10:31+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/categories/drawing/</loc>
@@ -32,9 +68,6 @@
     <loc>https://mpostument.com/tags/fundamentals/</loc>
     <lastmod>2023-07-11T20:10:31+03:00</lastmod>
   </url><url>
-    <loc>https://mpostument.com/</loc>
-    <lastmod>2023-07-11T20:10:31+03:00</lastmod>
-  </url><url>
     <loc>https://mpostument.com/tags/new-master-academy/</loc>
     <lastmod>2023-07-11T20:10:31+03:00</lastmod>
   </url><url>
@@ -45,9 +78,6 @@
     <lastmod>2023-07-11T20:10:31+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/tags/skill-development/</loc>
-    <lastmod>2023-07-11T20:10:31+03:00</lastmod>
-  </url><url>
-    <loc>https://mpostument.com/tags/</loc>
     <lastmod>2023-07-11T20:10:31+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/tags/art/</loc>
@@ -62,9 +92,6 @@
     <loc>https://mpostument.com/tags/newmasteracademy/</loc>
     <lastmod>2023-07-04T20:24:07+03:00</lastmod>
   </url><url>
-    <loc>https://mpostument.com/posts/programming/</loc>
-    <lastmod>2023-06-22T21:51:45+03:00</lastmod>
-  </url><url>
     <loc>https://mpostument.com/tags/configuration-guide/</loc>
     <lastmod>2023-06-22T21:51:45+03:00</lastmod>
   </url><url>
@@ -77,22 +104,10 @@
     <loc>https://mpostument.com/tags/metrics-integration/</loc>
     <lastmod>2023-06-22T21:51:45+03:00</lastmod>
   </url><url>
-    <loc>https://mpostument.com/tags/monitoring/</loc>
-    <lastmod>2023-06-22T21:51:45+03:00</lastmod>
-  </url><url>
     <loc>https://mpostument.com/posts/programming/observability/otel-kibana/</loc>
     <lastmod>2023-06-22T21:51:45+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/tags/observability/</loc>
-    <lastmod>2023-06-22T21:51:45+03:00</lastmod>
-  </url><url>
-    <loc>https://mpostument.com/categories/observability/</loc>
-    <lastmod>2023-06-22T21:51:45+03:00</lastmod>
-  </url><url>
-    <loc>https://mpostument.com/tags/opentelemetry/</loc>
-    <lastmod>2023-06-22T21:51:45+03:00</lastmod>
-  </url><url>
-    <loc>https://mpostument.com/categories/opentelemetry/</loc>
     <lastmod>2023-06-22T21:51:45+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/tags/performance-monitoring/</loc>
