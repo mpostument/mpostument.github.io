@@ -6,7 +6,25 @@
     <description>Recent content in Categories on mpostument.com</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 20 Jul 2023 20:51:45 +0300</lastBuildDate><atom:link href="https://mpostument.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 02 Aug 2023 21:59:31 +0300</lastBuildDate><atom:link href="https://mpostument.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Drawing</title>
+      <link>https://mpostument.com/categories/drawing/</link>
+      <pubDate>Wed, 02 Aug 2023 21:59:31 +0300</pubDate>
+      
+      <guid>https://mpostument.com/categories/drawing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>New Master Academy</title>
+      <link>https://mpostument.com/categories/new-master-academy/</link>
+      <pubDate>Wed, 02 Aug 2023 21:59:31 +0300</pubDate>
+      
+      <guid>https://mpostument.com/categories/new-master-academy/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Observability</title>
       <link>https://mpostument.com/categories/observability/</link>
@@ -22,24 +40,6 @@
       <pubDate>Thu, 20 Jul 2023 20:51:45 +0300</pubDate>
       
       <guid>https://mpostument.com/categories/opentelemetry/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Drawing</title>
-      <link>https://mpostument.com/categories/drawing/</link>
-      <pubDate>Tue, 11 Jul 2023 20:10:31 +0300</pubDate>
-      
-      <guid>https://mpostument.com/categories/drawing/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>New Master Academy</title>
-      <link>https://mpostument.com/categories/new-master-academy/</link>
-      <pubDate>Tue, 11 Jul 2023 20:10:31 +0300</pubDate>
-      
-      <guid>https://mpostument.com/categories/new-master-academy/</guid>
       <description></description>
     </item>
     
