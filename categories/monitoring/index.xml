@@ -4,35 +4,30 @@
     <title>Monitoring on mpostument.com</title>
     <link>https://mpostument.com/categories/monitoring/</link>
     <description>Recent content in Monitoring on mpostument.com</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.126.3</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 03 Jan 2021 17:57:36 +0200</lastBuildDate><atom:link href="https://mpostument.com/categories/monitoring/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 03 Jan 2021 17:57:36 +0200</lastBuildDate>
+    <atom:link href="https://mpostument.com/categories/monitoring/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Failed Asg Event Notification</title>
       <link>https://mpostument.com/posts/programming/golang/failed-asg-event-notification/</link>
       <pubDate>Sun, 03 Jan 2021 17:57:36 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/failed-asg-event-notification/</guid>
       <description>How to receive slack messages on failed attempt to create ec2 by autoscaling group</description>
     </item>
-    
     <item>
       <title>Import Grafana Dashboards With Go</title>
       <link>https://mpostument.com/posts/programming/golang/import-grafana-dashboards-with-go/</link>
       <pubDate>Wed, 23 Dec 2020 23:18:28 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/import-grafana-dashboards-with-go/</guid>
       <description>How to import Grafana dashboards with Go</description>
     </item>
-    
     <item>
       <title>Export Grafana Dashboards With Go</title>
       <link>https://mpostument.com/posts/programming/golang/export-grafana-dashboards-with-go/</link>
       <pubDate>Sat, 19 Dec 2020 18:27:35 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/export-grafana-dashboards-with-go/</guid>
       <description>How import grafana dashboards with Go</description>
     </item>
-    
   </channel>
 </rss>

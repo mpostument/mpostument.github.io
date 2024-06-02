@@ -4,17 +4,16 @@
     <title>Mongo on mpostument.com</title>
     <link>https://mpostument.com/tags/mongo/</link>
     <description>Recent content in Mongo on mpostument.com</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.126.3</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 15 Mar 2022 20:29:54 +0200</lastBuildDate><atom:link href="https://mpostument.com/tags/mongo/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 15 Mar 2022 20:29:54 +0200</lastBuildDate>
+    <atom:link href="https://mpostument.com/tags/mongo/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Using Mongo With Go</title>
       <link>https://mpostument.com/posts/programming/golang/using-mongo-with-go/</link>
       <pubDate>Tue, 15 Mar 2022 20:29:54 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/using-mongo-with-go/</guid>
       <description>Learn how to use mongo with golang</description>
     </item>
-    
   </channel>
 </rss>

@@ -4,44 +4,37 @@
     <title>mpostument.com</title>
     <link>https://mpostument.com/posts/projects/</link>
     <description>Recent content on mpostument.com</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.126.3</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 13 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://mpostument.com/posts/projects/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 13 Feb 2021 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://mpostument.com/posts/projects/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ebs-autoresize</title>
       <link>https://mpostument.com/posts/projects/ebs-autoresize/</link>
       <pubDate>Sat, 13 Feb 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://mpostument.com/posts/projects/ebs-autoresize/</guid>
       <description>Automatically resize AWS EBS based on used spaced</description>
     </item>
-    
     <item>
       <title>grafana-sync</title>
       <link>https://mpostument.com/posts/projects/grafana-sync/</link>
       <pubDate>Sat, 19 Dec 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://mpostument.com/posts/projects/grafana-sync/</guid>
       <description>Keep your grafana dashboards in sync</description>
     </item>
-    
     <item>
       <title>AWSTagHelper</title>
       <link>https://mpostument.com/posts/projects/awstaghelper/</link>
       <pubDate>Fri, 21 Aug 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://mpostument.com/posts/projects/awstaghelper/</guid>
       <description>AWS bulk tagging tool.</description>
     </item>
-    
     <item>
       <title>SteamWishlistScraper</title>
       <link>https://mpostument.com/posts/projects/steamwishlistscraper/</link>
       <pubDate>Wed, 29 May 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://mpostument.com/posts/projects/steamwishlistscraper/</guid>
       <description>Steam Wishlist Scraper</description>
     </item>
-    
   </channel>
 </rss>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Indie Game Development on mpostument.com</title>
+    <link>https://mpostument.com/tags/indie-game-development/</link>
+    <description>Recent content in Indie Game Development on mpostument.com</description>
+    <generator>Hugo -- 0.126.3</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 02 Jun 2024 20:36:09 +0300</lastBuildDate>
+    <atom:link href="https://mpostument.com/tags/indie-game-development/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Godot 2D Basics: Movement, Animation and Collision</title>
+      <link>https://mpostument.com/posts/programming/godot/godot_movement_collision/</link>
+      <pubDate>Sun, 02 Jun 2024 20:36:09 +0300</pubDate>
+      <guid>https://mpostument.com/posts/programming/godot/godot_movement_collision/</guid>
+      <description>In this video tutorial, we explore the fundamental concepts of 2D game development in Godot. Learn how to implement basic movement, create animations, and set up collision detection using GDScript. This guide is perfect for beginners and indie developers looking to get started with Godot&amp;#39;s powerful 2D engine. Follow along as we walk through each step to bring your 2D game ideas to life!</description>
+    </item>
+    <item>
+      <title>Godot Intro</title>
+      <link>https://mpostument.com/posts/programming/godot/godot_intro/</link>
+      <pubDate>Sun, 02 Jun 2024 20:29:38 +0300</pubDate>
+      <guid>https://mpostument.com/posts/programming/godot/godot_intro/</guid>
+      <description>In this tutorial, we dive into the basics of using Godot’s AnimationPlayer and scripting to create engaging animations and interactions. Learn how to set up a scene, animate a pixel art bow and arrow, and add a functional &amp;#39;FIRE&amp;#39; button in a post-apocalyptic Slavic style. Perfect for beginners and indie game developers looking to enhance their projects with smooth animations and simple scripts. Follow along for a step-by-step guide to bring your game assets to life in Godot!</description>
+    </item>
+  </channel>
+</rss>

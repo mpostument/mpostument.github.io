@@ -4,17 +4,16 @@
     <title>Dependency Injection on mpostument.com</title>
     <link>https://mpostument.com/tags/dependency-injection/</link>
     <description>Recent content in Dependency Injection on mpostument.com</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.126.3</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 07 Oct 2020 21:15:25 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/dependency-injection/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 07 Oct 2020 21:15:25 +0300</lastBuildDate>
+    <atom:link href="https://mpostument.com/tags/dependency-injection/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Blazor Dependency Injection</title>
       <link>https://mpostument.com/posts/programming/dotnet/blazor-server-dependency-injection/</link>
       <pubDate>Wed, 07 Oct 2020 21:15:25 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/dotnet/blazor-server-dependency-injection/</guid>
       <description>Dependency injection in Blazor Server</description>
     </item>
-    
   </channel>
 </rss>

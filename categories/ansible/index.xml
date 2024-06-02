@@ -4,53 +4,44 @@
     <title>Ansible on mpostument.com</title>
     <link>https://mpostument.com/categories/ansible/</link>
     <description>Recent content in Ansible on mpostument.com</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.126.3</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 19 Oct 2022 17:28:26 +0300</lastBuildDate><atom:link href="https://mpostument.com/categories/ansible/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 19 Oct 2022 17:28:26 +0300</lastBuildDate>
+    <atom:link href="https://mpostument.com/categories/ansible/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ansible Vault</title>
       <link>https://mpostument.com/posts/programming/ansible/ansible-vault/</link>
       <pubDate>Wed, 19 Oct 2022 17:28:26 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ansible/ansible-vault/</guid>
       <description>Fifth article in series about ansible. In this article, I will show how to store securely store sensitive data in ansible</description>
     </item>
-    
     <item>
       <title>Ansible Role</title>
       <link>https://mpostument.com/posts/programming/ansible/ansible-role/</link>
       <pubDate>Sat, 15 Oct 2022 17:49:02 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ansible/ansible-role/</guid>
       <description>Fourth article in series about ansible. In this article, I will what is roles and how to use them</description>
     </item>
-    
     <item>
       <title>Ansible Playbook</title>
       <link>https://mpostument.com/posts/programming/ansible/ansible-playbook/</link>
       <pubDate>Tue, 04 Oct 2022 22:51:59 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ansible/ansible-playbook/</guid>
       <description>Third article in series about ansible. In this article, I will show how to use a playbook to create reusable code</description>
     </item>
-    
     <item>
       <title>Ansible Inventory</title>
       <link>https://mpostument.com/posts/programming/ansible/ansible-inventory/</link>
       <pubDate>Tue, 27 Sep 2022 21:39:08 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ansible/ansible-inventory/</guid>
       <description>Second article in series about ansible. In this article, I will show how to use static and dynamic ansible inventory</description>
     </item>
-    
     <item>
       <title>Manage Ansible Versions With pyenv</title>
       <link>https://mpostument.com/posts/programming/ansible/manage-ansible-versions-with-pyenv/</link>
       <pubDate>Mon, 19 Sep 2022 10:54:18 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ansible/manage-ansible-versions-with-pyenv/</guid>
       <description>First article in series about ansible. In this article, i will show install pyenv, create virtualenv and install the required ansible version</description>
     </item>
-    
   </channel>
 </rss>

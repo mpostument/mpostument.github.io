@@ -4,233 +4,184 @@
     <title>Go on mpostument.com</title>
     <link>https://mpostument.com/tags/go/</link>
     <description>Recent content in Go on mpostument.com</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.126.3</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 20 Feb 2023 22:20:19 +0200</lastBuildDate><atom:link href="https://mpostument.com/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 20 Feb 2023 22:20:19 +0200</lastBuildDate>
+    <atom:link href="https://mpostument.com/tags/go/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Goroutines in go</title>
       <link>https://mpostument.com/posts/programming/golang/basics/go-routines/</link>
       <pubDate>Mon, 20 Feb 2023 22:20:19 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/basics/go-routines/</guid>
       <description>Learn what is goroutines in golang and how they can be used</description>
     </item>
-    
     <item>
       <title>Interfaces in Go</title>
       <link>https://mpostument.com/posts/programming/golang/basics/go-interfaces/</link>
       <pubDate>Sun, 15 Jan 2023 12:53:46 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/basics/go-interfaces/</guid>
       <description>Learn what is interfaces in golang and how they can be used</description>
     </item>
-    
     <item>
       <title>Go Functions</title>
       <link>https://mpostument.com/posts/programming/golang/basics/go-functions/</link>
       <pubDate>Fri, 06 Jan 2023 15:46:51 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/basics/go-functions/</guid>
       <description>Learn how to use functions in golang</description>
     </item>
-    
     <item>
       <title>Pointers</title>
       <link>https://mpostument.com/posts/programming/golang/basics/go-pointers/</link>
       <pubDate>Fri, 30 Dec 2022 12:59:07 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/basics/go-pointers/</guid>
       <description>Learn what is pointers in golang and how they can be used</description>
     </item>
-    
     <item>
       <title>Defer, Panic, and Recovery in Golang</title>
       <link>https://mpostument.com/posts/programming/golang/basics/go-defer-panic/</link>
       <pubDate>Thu, 22 Dec 2022 12:44:28 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/basics/go-defer-panic/</guid>
       <description>Learn how can defer can be used to run code after existing from function. What is panic and how the program can be recovered from panic</description>
     </item>
-    
     <item>
       <title>Loops in golang</title>
       <link>https://mpostument.com/posts/programming/golang/basics/go-loops/</link>
       <pubDate>Sat, 17 Dec 2022 10:13:24 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/basics/go-loops/</guid>
       <description>Learn how to use for loop in golang</description>
     </item>
-    
     <item>
       <title>If and Switch in golang</title>
       <link>https://mpostument.com/posts/programming/golang/basics/go-if-switch/</link>
       <pubDate>Fri, 09 Dec 2022 19:10:00 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/basics/go-if-switch/</guid>
       <description>Learn how to use if and switch statements in golang</description>
     </item>
-    
     <item>
       <title>Maps and Structs in golang</title>
       <link>https://mpostument.com/posts/programming/golang/basics/go-maps-structs/</link>
       <pubDate>Sat, 03 Dec 2022 16:46:49 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/basics/go-maps-structs/</guid>
       <description>Learn how to use maps and structs in golang</description>
     </item>
-    
     <item>
       <title>Arrays and Slices in golang</title>
       <link>https://mpostument.com/posts/programming/golang/basics/go-arrays-slices/</link>
       <pubDate>Wed, 23 Nov 2022 15:41:57 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/basics/go-arrays-slices/</guid>
       <description>Learn how to use array and slices in golang</description>
     </item>
-    
     <item>
       <title>Go Constants</title>
       <link>https://mpostument.com/posts/programming/golang/basics/go-constant/</link>
       <pubDate>Sat, 12 Nov 2022 07:46:18 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/basics/go-constant/</guid>
       <description>Learn what is constants in golang and how to use them</description>
     </item>
-    
     <item>
       <title>Basic Types in Go</title>
       <link>https://mpostument.com/posts/programming/golang/basics/go-basic-types/</link>
       <pubDate>Tue, 08 Nov 2022 19:54:39 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/basics/go-basic-types/</guid>
       <description>Explore basic types in golang</description>
     </item>
-    
     <item>
       <title>Go Variables</title>
       <link>https://mpostument.com/posts/programming/golang/basics/go-variables/</link>
       <pubDate>Wed, 02 Nov 2022 18:00:24 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/basics/go-variables/</guid>
       <description>Let&amp;#39;s learn about variables in golang</description>
     </item>
-    
     <item>
       <title>Golang - Setting Up Development Environment</title>
       <link>https://mpostument.com/posts/programming/golang/basics/setup-go/</link>
       <pubDate>Fri, 28 Oct 2022 21:31:30 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/basics/setup-go/</guid>
       <description>Install golang and configure vscode for a better codding experience</description>
     </item>
-    
     <item>
       <title>Docker Sdk Part One</title>
       <link>https://mpostument.com/posts/programming/golang/docker-sdk-part-one/</link>
       <pubDate>Tue, 22 Mar 2022 20:31:29 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/docker-sdk-part-one/</guid>
       <description>First article in series about docker SDK. In this article we will write docker pull and docker images commands with golang sdk</description>
     </item>
-    
     <item>
       <title>Using Mongo With Go</title>
       <link>https://mpostument.com/posts/programming/golang/using-mongo-with-go/</link>
       <pubDate>Tue, 15 Mar 2022 20:29:54 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/using-mongo-with-go/</guid>
       <description>Learn how to use mongo with golang</description>
     </item>
-    
     <item>
       <title>Using Postgres With Golang</title>
       <link>https://mpostument.com/posts/programming/golang/using-postgres-with-go/</link>
       <pubDate>Sun, 20 Feb 2022 20:37:23 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/using-postgres-with-go/</guid>
       <description>Learn how to use postgres with golang using pgx</description>
     </item>
-    
     <item>
       <title>WaitGroup</title>
       <link>https://mpostument.com/posts/programming/golang/wait-groups/</link>
       <pubDate>Wed, 02 Feb 2022 20:58:30 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/wait-groups/</guid>
       <description>What is WaitGroup and how to use it</description>
     </item>
-    
     <item>
       <title>Read and Write lock in Go</title>
       <link>https://mpostument.com/posts/programming/golang/rwlock/</link>
       <pubDate>Mon, 31 Jan 2022 19:30:37 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/rwlock/</guid>
       <description>Learn how to use golang RWMutex</description>
     </item>
-    
     <item>
       <title>Latest posts in GitHub readme</title>
       <link>https://mpostument.com/posts/programming/golang/latest-post-in-github-readme/</link>
       <pubDate>Sat, 06 Mar 2021 18:56:24 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/latest-post-in-github-readme/</guid>
       <description>Automatic Readme generation for GitHub profile</description>
     </item>
-    
     <item>
       <title>Ebs Auto Resize</title>
       <link>https://mpostument.com/posts/programming/golang/ebs-auto-resize/</link>
       <pubDate>Sat, 06 Feb 2021 18:14:40 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/ebs-auto-resize/</guid>
       <description>Automatic AWS EBS resize with golang</description>
     </item>
-    
     <item>
       <title>Failed Asg Event Notification</title>
       <link>https://mpostument.com/posts/programming/golang/failed-asg-event-notification/</link>
       <pubDate>Sun, 03 Jan 2021 17:57:36 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/failed-asg-event-notification/</guid>
       <description>How to receive slack messages on failed attempt to create ec2 by autoscaling group</description>
     </item>
-    
     <item>
       <title>Import Grafana Dashboards With Go</title>
       <link>https://mpostument.com/posts/programming/golang/import-grafana-dashboards-with-go/</link>
       <pubDate>Wed, 23 Dec 2020 23:18:28 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/import-grafana-dashboards-with-go/</guid>
       <description>How to import Grafana dashboards with Go</description>
     </item>
-    
     <item>
       <title>Export Grafana Dashboards With Go</title>
       <link>https://mpostument.com/posts/programming/golang/export-grafana-dashboards-with-go/</link>
       <pubDate>Sat, 19 Dec 2020 18:27:35 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/export-grafana-dashboards-with-go/</guid>
       <description>How import grafana dashboards with Go</description>
     </item>
-    
     <item>
       <title>Filter Ebs Snapshot By Date With Go</title>
       <link>https://mpostument.com/posts/programming/golang/filter-ebs-snapshot-by-date-with-go/</link>
       <pubDate>Sat, 05 Dec 2020 17:53:29 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/filter-ebs-snapshot-by-date-with-go/</guid>
       <description>How to filter ebs snapshots by date with golang</description>
     </item>
-    
     <item>
       <title>Get Lambdas in Vpc With Go</title>
       <link>https://mpostument.com/posts/programming/golang/get-lambdas-in-vpc-with-go/</link>
       <pubDate>Tue, 01 Sep 2020 17:40:16 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/get-lambdas-in-vpc-with-go/</guid>
       <description>Get all your lambda in VPC with golang</description>
     </item>
-    
   </channel>
 </rss>

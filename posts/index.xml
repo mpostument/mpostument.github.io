@@ -4,8 +4,9 @@
     <title>mpostument.com</title>
     <link>https://mpostument.com/posts/</link>
     <description>Recent content on mpostument.com</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.126.3</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 20 Jul 2023 20:51:45 +0300</lastBuildDate><atom:link href="https://mpostument.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate></lastBuildDate>
+    <atom:link href="https://mpostument.com/posts/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

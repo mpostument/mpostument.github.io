@@ -3,13 +3,73 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://mpostument.com/posts/</loc>
-    <lastmod>2023-07-20T20:51:45+03:00</lastmod>
+    <lastmod>2024-06-02T20:36:09+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/posts/programming/</loc>
-    <lastmod>2023-07-20T20:51:45+03:00</lastmod>
+    <lastmod>2024-06-02T20:36:09+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/categories/2d/</loc>
+    <lastmod>2024-06-02T20:36:09+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/2d-basics/</loc>
+    <lastmod>2024-06-02T20:36:09+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/animation/</loc>
+    <lastmod>2024-06-02T20:36:09+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/categories/</loc>
-    <lastmod>2023-07-20T20:51:45+03:00</lastmod>
+    <lastmod>2024-06-02T20:36:09+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/collision-detection/</loc>
+    <lastmod>2024-06-02T20:36:09+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/game-development/</loc>
+    <lastmod>2024-06-02T20:36:09+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/game-engine/</loc>
+    <lastmod>2024-06-02T20:36:09+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/game-tutorial/</loc>
+    <lastmod>2024-06-02T20:36:09+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/gdscript/</loc>
+    <lastmod>2024-06-02T20:36:09+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/godot/</loc>
+    <lastmod>2024-06-02T20:36:09+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/categories/godot/</loc>
+    <lastmod>2024-06-02T20:36:09+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/posts/programming/godot/godot_movement_collision/</loc>
+    <lastmod>2024-06-02T20:36:09+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/indie-game-development/</loc>
+    <lastmod>2024-06-02T20:36:09+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/movement/</loc>
+    <lastmod>2024-06-02T20:36:09+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/</loc>
+    <lastmod>2024-06-02T20:36:09+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/</loc>
+    <lastmod>2024-06-02T20:36:09+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/2d-animation/</loc>
+    <lastmod>2024-06-02T20:29:38+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/animationplayer/</loc>
+    <lastmod>2024-06-02T20:29:38+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/posts/programming/godot/godot_intro/</loc>
+    <lastmod>2024-06-02T20:29:38+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/pixel-art/</loc>
+    <lastmod>2024-06-02T20:29:38+03:00</lastmod>
+  </url><url>
+    <loc>https://mpostument.com/tags/scripting/</loc>
+    <lastmod>2024-06-02T20:29:38+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/tags/cluster/</loc>
     <lastmod>2023-07-20T20:51:45+03:00</lastmod>
@@ -26,9 +86,6 @@
     <loc>https://mpostument.com/tags/monitoring/</loc>
     <lastmod>2023-07-20T20:51:45+03:00</lastmod>
   </url><url>
-    <loc>https://mpostument.com/</loc>
-    <lastmod>2023-07-20T20:51:45+03:00</lastmod>
-  </url><url>
     <loc>https://mpostument.com/categories/observability/</loc>
     <lastmod>2023-07-20T20:51:45+03:00</lastmod>
   </url><url>
@@ -39,9 +96,6 @@
     <lastmod>2023-07-20T20:51:45+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/posts/programming/observability/otel-elasticsearch/</loc>
-    <lastmod>2023-07-20T20:51:45+03:00</lastmod>
-  </url><url>
-    <loc>https://mpostument.com/tags/</loc>
     <lastmod>2023-07-20T20:51:45+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/tags/configuration-guide/</loc>
@@ -344,6 +398,9 @@
     <loc>https://mpostument.com/posts/programming/golang/filter-ebs-snapshot-by-date-with-go/</loc>
     <lastmod>2020-12-05T17:53:29+02:00</lastmod>
   </url><url>
+    <loc>https://mpostument.com/categories/ci/cd/</loc>
+    <lastmod>2020-11-02T16:19:52+02:00</lastmod>
+  </url><url>
     <loc>https://mpostument.com/posts/programming/ci/custom-dns-for-github-pages-copy/</loc>
     <lastmod>2020-11-02T16:19:52+02:00</lastmod>
   </url><url>
@@ -368,7 +425,7 @@
     <loc>https://mpostument.com/tags/blazorserver/</loc>
     <lastmod>2020-10-17T19:04:41+03:00</lastmod>
   </url><url>
-    <loc>https://mpostument.com/categories/c#/</loc>
+    <loc>https://mpostument.com/categories/c%23/</loc>
     <lastmod>2020-10-17T19:04:41+03:00</lastmod>
   </url><url>
     <loc>https://mpostument.com/posts/programming/dotnet/blazor-server-forms/</loc>
@@ -434,11 +491,7 @@
     <loc>https://mpostument.com/posts/projects/steamwishlistscraper/</loc>
     <lastmod>2019-05-29T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://mpostument.com/posts/guitar/</loc>
-  </url><url>
     <loc>https://mpostument.com/archives/</loc>
-  </url><url>
-    <loc>https://mpostument.com/categories/ci/cd/</loc>
   </url><url>
     <loc>https://mpostument.com/search/</loc>
   </url>

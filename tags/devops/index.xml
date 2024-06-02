@@ -4,269 +4,212 @@
     <title>Devops on mpostument.com</title>
     <link>https://mpostument.com/tags/devops/</link>
     <description>Recent content in Devops on mpostument.com</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.126.3</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 22 Jun 2023 21:51:45 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/devops/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 22 Jun 2023 21:51:45 +0300</lastBuildDate>
+    <atom:link href="https://mpostument.com/tags/devops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Monitoring Kibana with OpenTelemetry Collector: Gathering Logs and Metrics</title>
       <link>https://mpostument.com/posts/programming/observability/otel-kibana/</link>
       <pubDate>Thu, 22 Jun 2023 21:51:45 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/observability/otel-kibana/</guid>
       <description>Learn how to effectively monitor Kibana using OpenTelemetry Collector in this informative guide. Discover how to gather both logs and metrics data by making specific configurations to Kibana and leveraging the Prometheus exporter. With step-by-step instructions and detailed explanations, you&amp;#39;ll gain insights into configuring logs and metrics, setting up receivers, configuring exporters, and creating an OTEL pipeline. Enhance your Kibana monitoring capabilities and optimize your observability with this comprehensive tutorial.</description>
     </item>
-    
     <item>
       <title>Integrating StatsD Metrics with Prometheus Using OpenTelemetry</title>
       <link>https://mpostument.com/posts/programming/observability/otel-statsd/</link>
       <pubDate>Sun, 11 Jun 2023 20:17:11 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/observability/otel-statsd/</guid>
       <description>In this post, we will explore the process of integrating StatsD metrics with Prometheus using OpenTelemetry (Otel). I will shares my firsthand experience and provides a step-by-step guide to help you set up the necessary configurations. If you are looking to receive StatsD metrics and send them to Prometheus for monitoring and analysis, this post is for you.</description>
     </item>
-    
     <item>
       <title>Ansible Vault</title>
       <link>https://mpostument.com/posts/programming/ansible/ansible-vault/</link>
       <pubDate>Wed, 19 Oct 2022 17:28:26 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ansible/ansible-vault/</guid>
       <description>Fifth article in series about ansible. In this article, I will show how to store securely store sensitive data in ansible</description>
     </item>
-    
     <item>
       <title>Ansible Role</title>
       <link>https://mpostument.com/posts/programming/ansible/ansible-role/</link>
       <pubDate>Sat, 15 Oct 2022 17:49:02 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ansible/ansible-role/</guid>
       <description>Fourth article in series about ansible. In this article, I will what is roles and how to use them</description>
     </item>
-    
     <item>
       <title>Ansible Playbook</title>
       <link>https://mpostument.com/posts/programming/ansible/ansible-playbook/</link>
       <pubDate>Tue, 04 Oct 2022 22:51:59 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ansible/ansible-playbook/</guid>
       <description>Third article in series about ansible. In this article, I will show how to use a playbook to create reusable code</description>
     </item>
-    
     <item>
       <title>Ansible Inventory</title>
       <link>https://mpostument.com/posts/programming/ansible/ansible-inventory/</link>
       <pubDate>Tue, 27 Sep 2022 21:39:08 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ansible/ansible-inventory/</guid>
       <description>Second article in series about ansible. In this article, I will show how to use static and dynamic ansible inventory</description>
     </item>
-    
     <item>
       <title>AWS 101: EC2 Part 1</title>
       <link>https://mpostument.com/posts/programming/aws/aws-101-ec2-part-1/</link>
       <pubDate>Thu, 22 Sep 2022 22:45:30 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/aws/aws-101-ec2-part-1/</guid>
       <description>Do you want to know more about AWS EC2? Check this programming and I will explain all you need to know about AWS</description>
     </item>
-    
     <item>
       <title>Manage Ansible Versions With pyenv</title>
       <link>https://mpostument.com/posts/programming/ansible/manage-ansible-versions-with-pyenv/</link>
       <pubDate>Mon, 19 Sep 2022 10:54:18 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ansible/manage-ansible-versions-with-pyenv/</guid>
       <description>First article in series about ansible. In this article, i will show install pyenv, create virtualenv and install the required ansible version</description>
     </item>
-    
     <item>
       <title>Terraform Modules and Import</title>
       <link>https://mpostument.com/posts/programming/terraform/terraform-modules-and-import/</link>
       <pubDate>Wed, 14 Sep 2022 20:41:58 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/terraform/terraform-modules-and-import/</guid>
       <description>Ninth article in series about terraform. In this article, I will show how to import existing resources into state and create modules</description>
     </item>
-    
     <item>
       <title>Terraform Condition and Lookup</title>
       <link>https://mpostument.com/posts/programming/terraform/terraform-condition-and-lookup/</link>
       <pubDate>Sun, 11 Sep 2022 11:23:40 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/terraform/terraform-condition-and-lookup/</guid>
       <description>Eights article in series about terraform. In this article, I will show how to use conditions and lookups in terraform</description>
     </item>
-    
     <item>
       <title>Terraform Variables</title>
       <link>https://mpostument.com/posts/programming/terraform/terraform-variables/</link>
       <pubDate>Fri, 09 Sep 2022 20:31:09 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/terraform/terraform-variables/</guid>
       <description>Sixth article in series about terraform. In this article, i will show how to use lifecycle and outputs in terraform</description>
     </item>
-    
     <item>
       <title>Terraform Lifecycle and Outputs</title>
       <link>https://mpostument.com/posts/programming/terraform/terraform-lifecycle/</link>
       <pubDate>Sun, 28 Aug 2022 21:22:25 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/terraform/terraform-lifecycle/</guid>
       <description>Sixth article in series about terraform. In this article i will show how to use lifecycle and outputs in terraform</description>
     </item>
-    
     <item>
       <title>Terraform Dynamic</title>
       <link>https://mpostument.com/posts/programming/terraform/terraform-dynamic/</link>
       <pubDate>Sun, 21 Aug 2022 20:25:57 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/terraform/terraform-dynamic/</guid>
       <description>Fifth article in series about terraform. In this article i will show how to dynamic in terraform</description>
     </item>
-    
     <item>
       <title>Terraform Template</title>
       <link>https://mpostument.com/posts/programming/terraform/terraform-template/</link>
       <pubDate>Thu, 11 Aug 2022 20:59:58 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/terraform/terraform-template/</guid>
       <description>Fourth article in series about terraform. In this article i will show how to use file and templates in terraform</description>
     </item>
-    
     <item>
       <title>Terraform State</title>
       <link>https://mpostument.com/posts/programming/terraform/terraform-state/</link>
       <pubDate>Sun, 31 Jul 2022 20:30:06 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/terraform/terraform-state/</guid>
       <description>Third article in series about terraform. In this article i will show how to use terraform state</description>
     </item>
-    
     <item>
       <title>Terraform Basics</title>
       <link>https://mpostument.com/posts/programming/terraform/terraform-basics/</link>
       <pubDate>Thu, 28 Jul 2022 20:27:17 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/terraform/terraform-basics/</guid>
       <description>Second article in series about terraform. In this article i will show install terraform provider and create AWS EC2 using terraform</description>
     </item>
-    
     <item>
       <title>Manage terraform with tfenv</title>
       <link>https://mpostument.com/posts/programming/terraform/terraform-install/</link>
       <pubDate>Tue, 26 Jul 2022 20:54:23 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/terraform/terraform-install/</guid>
       <description>First article in series about terraform. In this article i will show how to manager terraform with tfenv and how to configure VSCode for work with terraform</description>
     </item>
-    
     <item>
       <title>AWS Synthetics With Terraform: Overcoming Challenges and Enhancing Automation</title>
       <link>https://mpostument.com/posts/programming/terraform/aws-synthetics-with-terraform/</link>
       <pubDate>Tue, 08 Mar 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/terraform/aws-synthetics-with-terraform/</guid>
       <description>Discover the solutions to common problems encountered when using the aws_synthetics_canary Terraform resource and how to overcome them</description>
     </item>
-    
     <item>
       <title>Latest posts in GitHub readme</title>
       <link>https://mpostument.com/posts/programming/golang/latest-post-in-github-readme/</link>
       <pubDate>Sat, 06 Mar 2021 18:56:24 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/latest-post-in-github-readme/</guid>
       <description>Automatic Readme generation for GitHub profile</description>
     </item>
-    
     <item>
       <title>Ebs Auto Resize</title>
       <link>https://mpostument.com/posts/programming/golang/ebs-auto-resize/</link>
       <pubDate>Sat, 06 Feb 2021 18:14:40 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/ebs-auto-resize/</guid>
       <description>Automatic AWS EBS resize with golang</description>
     </item>
-    
     <item>
       <title>Failed Asg Event Notification</title>
       <link>https://mpostument.com/posts/programming/golang/failed-asg-event-notification/</link>
       <pubDate>Sun, 03 Jan 2021 17:57:36 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/failed-asg-event-notification/</guid>
       <description>How to receive slack messages on failed attempt to create ec2 by autoscaling group</description>
     </item>
-    
     <item>
       <title>Import Grafana Dashboards With Go</title>
       <link>https://mpostument.com/posts/programming/golang/import-grafana-dashboards-with-go/</link>
       <pubDate>Wed, 23 Dec 2020 23:18:28 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/import-grafana-dashboards-with-go/</guid>
       <description>How to import Grafana dashboards with Go</description>
     </item>
-    
     <item>
       <title>Export Grafana Dashboards With Go</title>
       <link>https://mpostument.com/posts/programming/golang/export-grafana-dashboards-with-go/</link>
       <pubDate>Sat, 19 Dec 2020 18:27:35 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/export-grafana-dashboards-with-go/</guid>
       <description>How import grafana dashboards with Go</description>
     </item>
-    
     <item>
       <title>Filter Ebs Snapshot By Date With Go</title>
       <link>https://mpostument.com/posts/programming/golang/filter-ebs-snapshot-by-date-with-go/</link>
       <pubDate>Sat, 05 Dec 2020 17:53:29 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/filter-ebs-snapshot-by-date-with-go/</guid>
       <description>How to filter ebs snapshots by date with golang</description>
     </item>
-    
     <item>
       <title>Custom Dns for Github Pages</title>
       <link>https://mpostument.com/posts/programming/ci/custom-dns-for-github-pages-copy/</link>
       <pubDate>Mon, 02 Nov 2020 16:19:52 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ci/custom-dns-for-github-pages-copy/</guid>
       <description>Add custom domain to GitHub Pages</description>
     </item>
-    
     <item>
       <title>Deploy Hugo With Github Actions and Pages</title>
       <link>https://mpostument.com/posts/programming/ci/deploy-hugo-with-github-actions-and-pages/</link>
       <pubDate>Wed, 21 Oct 2020 20:19:26 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ci/deploy-hugo-with-github-actions-and-pages/</guid>
       <description>Deploy hugo website to GithubPages with GithubActions</description>
     </item>
-    
     <item>
       <title>Deploy to ec2 with codedship</title>
       <link>https://mpostument.com/posts/programming/ci/deploy-to-ec2-with-codeship/</link>
       <pubDate>Wed, 16 Sep 2020 20:24:40 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ci/deploy-to-ec2-with-codeship/</guid>
       <description>Deploy you code to ec2 server with Codeship and AWS CodeDeploy</description>
     </item>
-    
     <item>
       <title>Get Lambdas in Vpc With Go</title>
       <link>https://mpostument.com/posts/programming/golang/get-lambdas-in-vpc-with-go/</link>
       <pubDate>Tue, 01 Sep 2020 17:40:16 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/get-lambdas-in-vpc-with-go/</guid>
       <description>Get all your lambda in VPC with golang</description>
     </item>
-    
     <item>
       <title>Build Dotnet Core With Travis</title>
       <link>https://mpostument.com/posts/programming/dotnet/build-dotnet-core-with-travis/</link>
       <pubDate>Mon, 31 Aug 2020 13:24:40 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/dotnet/build-dotnet-core-with-travis/</guid>
       <description>Build and deploy .Net Core code with Travis CI</description>
     </item>
-    
   </channel>
 </rss>

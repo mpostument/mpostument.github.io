@@ -4,26 +4,23 @@
     <title>Multithreading on mpostument.com</title>
     <link>https://mpostument.com/tags/multithreading/</link>
     <description>Recent content in Multithreading on mpostument.com</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.126.3</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 02 Feb 2022 20:58:30 +0200</lastBuildDate><atom:link href="https://mpostument.com/tags/multithreading/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 02 Feb 2022 20:58:30 +0200</lastBuildDate>
+    <atom:link href="https://mpostument.com/tags/multithreading/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>WaitGroup</title>
       <link>https://mpostument.com/posts/programming/golang/wait-groups/</link>
       <pubDate>Wed, 02 Feb 2022 20:58:30 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/wait-groups/</guid>
       <description>What is WaitGroup and how to use it</description>
     </item>
-    
     <item>
       <title>Read and Write lock in Go</title>
       <link>https://mpostument.com/posts/programming/golang/rwlock/</link>
       <pubDate>Mon, 31 Jan 2022 19:30:37 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/rwlock/</guid>
       <description>Learn how to use golang RWMutex</description>
     </item>
-    
   </channel>
 </rss>

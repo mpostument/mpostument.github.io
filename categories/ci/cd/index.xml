@@ -4,52 +4,44 @@
     <title>CI/CD on mpostument.com</title>
     <link>https://mpostument.com/categories/ci/cd/</link>
     <description>Recent content in CI/CD on mpostument.com</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language><atom:link href="https://mpostument.com/categories/ci/cd/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- 0.126.3</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 02 Nov 2020 16:19:52 +0200</lastBuildDate>
+    <atom:link href="https://mpostument.com/categories/ci/cd/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Custom Dns for Github Pages</title>
       <link>https://mpostument.com/posts/programming/ci/custom-dns-for-github-pages-copy/</link>
       <pubDate>Mon, 02 Nov 2020 16:19:52 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ci/custom-dns-for-github-pages-copy/</guid>
       <description>Add custom domain to GitHub Pages</description>
     </item>
-    
     <item>
       <title>Deploy Hugo With Github Actions and Pages</title>
       <link>https://mpostument.com/posts/programming/ci/deploy-hugo-with-github-actions-and-pages/</link>
       <pubDate>Wed, 21 Oct 2020 20:19:26 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ci/deploy-hugo-with-github-actions-and-pages/</guid>
       <description>Deploy hugo website to GithubPages with GithubActions</description>
     </item>
-    
     <item>
       <title>Nightfall Dlp Configuration</title>
       <link>https://mpostument.com/posts/programming/ci/nightfall-dlp-configuration/</link>
       <pubDate>Wed, 30 Sep 2020 21:52:21 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ci/nightfall-dlp-configuration/</guid>
       <description>Configure DLP Nightfall for your github project</description>
     </item>
-    
     <item>
       <title>Deploy to ec2 with codedship</title>
       <link>https://mpostument.com/posts/programming/ci/deploy-to-ec2-with-codeship/</link>
       <pubDate>Wed, 16 Sep 2020 20:24:40 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ci/deploy-to-ec2-with-codeship/</guid>
       <description>Deploy you code to ec2 server with Codeship and AWS CodeDeploy</description>
     </item>
-    
     <item>
       <title>Build Dotnet Core With Travis</title>
       <link>https://mpostument.com/posts/programming/dotnet/build-dotnet-core-with-travis/</link>
       <pubDate>Mon, 31 Aug 2020 13:24:40 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/dotnet/build-dotnet-core-with-travis/</guid>
       <description>Build and deploy .Net Core code with Travis CI</description>
     </item>
-    
   </channel>
 </rss>

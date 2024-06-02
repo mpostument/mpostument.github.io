@@ -4,17 +4,16 @@
     <title>Postgres on mpostument.com</title>
     <link>https://mpostument.com/tags/postgres/</link>
     <description>Recent content in Postgres on mpostument.com</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.126.3</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 20 Feb 2022 20:37:23 +0200</lastBuildDate><atom:link href="https://mpostument.com/tags/postgres/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 20 Feb 2022 20:37:23 +0200</lastBuildDate>
+    <atom:link href="https://mpostument.com/tags/postgres/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Using Postgres With Golang</title>
       <link>https://mpostument.com/posts/programming/golang/using-postgres-with-go/</link>
       <pubDate>Sun, 20 Feb 2022 20:37:23 +0200</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/golang/using-postgres-with-go/</guid>
       <description>Learn how to use postgres with golang using pgx</description>
     </item>
-    
   </channel>
 </rss>

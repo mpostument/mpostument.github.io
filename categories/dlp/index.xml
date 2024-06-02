@@ -4,17 +4,16 @@
     <title>DLP on mpostument.com</title>
     <link>https://mpostument.com/categories/dlp/</link>
     <description>Recent content in DLP on mpostument.com</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.126.3</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 30 Sep 2020 21:52:21 +0300</lastBuildDate><atom:link href="https://mpostument.com/categories/dlp/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 30 Sep 2020 21:52:21 +0300</lastBuildDate>
+    <atom:link href="https://mpostument.com/categories/dlp/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Nightfall Dlp Configuration</title>
       <link>https://mpostument.com/posts/programming/ci/nightfall-dlp-configuration/</link>
       <pubDate>Wed, 30 Sep 2020 21:52:21 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ci/nightfall-dlp-configuration/</guid>
       <description>Configure DLP Nightfall for your github project</description>
     </item>
-    
   </channel>
 </rss>

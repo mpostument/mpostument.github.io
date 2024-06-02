@@ -4,134 +4,107 @@
     <title>VSCode on mpostument.com</title>
     <link>https://mpostument.com/tags/vscode/</link>
     <description>Recent content in VSCode on mpostument.com</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.126.3</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 19 Oct 2022 17:28:26 +0300</lastBuildDate><atom:link href="https://mpostument.com/tags/vscode/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 19 Oct 2022 17:28:26 +0300</lastBuildDate>
+    <atom:link href="https://mpostument.com/tags/vscode/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ansible Vault</title>
       <link>https://mpostument.com/posts/programming/ansible/ansible-vault/</link>
       <pubDate>Wed, 19 Oct 2022 17:28:26 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ansible/ansible-vault/</guid>
       <description>Fifth article in series about ansible. In this article, I will show how to store securely store sensitive data in ansible</description>
     </item>
-    
     <item>
       <title>Ansible Role</title>
       <link>https://mpostument.com/posts/programming/ansible/ansible-role/</link>
       <pubDate>Sat, 15 Oct 2022 17:49:02 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ansible/ansible-role/</guid>
       <description>Fourth article in series about ansible. In this article, I will what is roles and how to use them</description>
     </item>
-    
     <item>
       <title>Ansible Playbook</title>
       <link>https://mpostument.com/posts/programming/ansible/ansible-playbook/</link>
       <pubDate>Tue, 04 Oct 2022 22:51:59 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ansible/ansible-playbook/</guid>
       <description>Third article in series about ansible. In this article, I will show how to use a playbook to create reusable code</description>
     </item>
-    
     <item>
       <title>Ansible Inventory</title>
       <link>https://mpostument.com/posts/programming/ansible/ansible-inventory/</link>
       <pubDate>Tue, 27 Sep 2022 21:39:08 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ansible/ansible-inventory/</guid>
       <description>Second article in series about ansible. In this article, I will show how to use static and dynamic ansible inventory</description>
     </item>
-    
     <item>
       <title>Manage Ansible Versions With pyenv</title>
       <link>https://mpostument.com/posts/programming/ansible/manage-ansible-versions-with-pyenv/</link>
       <pubDate>Mon, 19 Sep 2022 10:54:18 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/ansible/manage-ansible-versions-with-pyenv/</guid>
       <description>First article in series about ansible. In this article, i will show install pyenv, create virtualenv and install the required ansible version</description>
     </item>
-    
     <item>
       <title>Terraform Modules and Import</title>
       <link>https://mpostument.com/posts/programming/terraform/terraform-modules-and-import/</link>
       <pubDate>Wed, 14 Sep 2022 20:41:58 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/terraform/terraform-modules-and-import/</guid>
       <description>Ninth article in series about terraform. In this article, I will show how to import existing resources into state and create modules</description>
     </item>
-    
     <item>
       <title>Terraform Condition and Lookup</title>
       <link>https://mpostument.com/posts/programming/terraform/terraform-condition-and-lookup/</link>
       <pubDate>Sun, 11 Sep 2022 11:23:40 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/terraform/terraform-condition-and-lookup/</guid>
       <description>Eights article in series about terraform. In this article, I will show how to use conditions and lookups in terraform</description>
     </item>
-    
     <item>
       <title>Terraform Variables</title>
       <link>https://mpostument.com/posts/programming/terraform/terraform-variables/</link>
       <pubDate>Fri, 09 Sep 2022 20:31:09 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/terraform/terraform-variables/</guid>
       <description>Sixth article in series about terraform. In this article, i will show how to use lifecycle and outputs in terraform</description>
     </item>
-    
     <item>
       <title>Terraform Lifecycle and Outputs</title>
       <link>https://mpostument.com/posts/programming/terraform/terraform-lifecycle/</link>
       <pubDate>Sun, 28 Aug 2022 21:22:25 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/terraform/terraform-lifecycle/</guid>
       <description>Sixth article in series about terraform. In this article i will show how to use lifecycle and outputs in terraform</description>
     </item>
-    
     <item>
       <title>Terraform Dynamic</title>
       <link>https://mpostument.com/posts/programming/terraform/terraform-dynamic/</link>
       <pubDate>Sun, 21 Aug 2022 20:25:57 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/terraform/terraform-dynamic/</guid>
       <description>Fifth article in series about terraform. In this article i will show how to dynamic in terraform</description>
     </item>
-    
     <item>
       <title>Terraform Template</title>
       <link>https://mpostument.com/posts/programming/terraform/terraform-template/</link>
       <pubDate>Thu, 11 Aug 2022 20:59:58 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/terraform/terraform-template/</guid>
       <description>Fourth article in series about terraform. In this article i will show how to use file and templates in terraform</description>
     </item>
-    
     <item>
       <title>Terraform State</title>
       <link>https://mpostument.com/posts/programming/terraform/terraform-state/</link>
       <pubDate>Sun, 31 Jul 2022 20:30:06 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/terraform/terraform-state/</guid>
       <description>Third article in series about terraform. In this article i will show how to use terraform state</description>
     </item>
-    
     <item>
       <title>Terraform Basics</title>
       <link>https://mpostument.com/posts/programming/terraform/terraform-basics/</link>
       <pubDate>Thu, 28 Jul 2022 20:27:17 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/terraform/terraform-basics/</guid>
       <description>Second article in series about terraform. In this article i will show install terraform provider and create AWS EC2 using terraform</description>
     </item>
-    
     <item>
       <title>Manage terraform with tfenv</title>
       <link>https://mpostument.com/posts/programming/terraform/terraform-install/</link>
       <pubDate>Tue, 26 Jul 2022 20:54:23 +0300</pubDate>
-      
       <guid>https://mpostument.com/posts/programming/terraform/terraform-install/</guid>
       <description>First article in series about terraform. In this article i will show how to manager terraform with tfenv and how to configure VSCode for work with terraform</description>
     </item>
-    
   </channel>
 </rss>
