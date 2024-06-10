@@ -6,8 +6,15 @@
     <description>Recent content on mpostument.com</description>
     <generator>Hugo -- 0.126.3</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 02 Jun 2024 20:36:09 +0300</lastBuildDate>
+    <lastBuildDate>Sun, 09 Jun 2024 20:36:09 +0300</lastBuildDate>
     <atom:link href="https://mpostument.com/posts/programming/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Godot 2D Basics: Underwater Shooter</title>
+      <link>https://mpostument.com/posts/programming/godot/godot_underwater_shooter/</link>
+      <pubDate>Sun, 09 Jun 2024 20:36:09 +0300</pubDate>
+      <guid>https://mpostument.com/posts/programming/godot/godot_underwater_shooter/</guid>
+      <description>In this video, we dive into the world of game development with Godot to create an exciting underwater shooter game. Follow along as we guide you through using Area2D and RigidBody2D to control a shark that fires swords, taking down various sea creatures in a Slavic art style. You&amp;#39;ll learn how to set up the environment, animate characters, implement firing mechanics, and handle collisions. Whether you&amp;#39;re a beginner or looking to expand your skills, this tutorial provides everything you need to create your own unique underwater adventure game.</description>
+    </item>
     <item>
       <title>Godot 2D Basics: Movement, Animation and Collision</title>
       <link>https://mpostument.com/posts/programming/godot/godot_movement_collision/</link>
