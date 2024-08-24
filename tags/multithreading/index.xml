@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Multithreading on mpostument.com</title>
+    <title>Multithreading on Maksym Postument</title>
     <link>https://mpostument.com/tags/multithreading/</link>
-    <description>Recent content in Multithreading on mpostument.com</description>
-    <generator>Hugo -- 0.126.3</generator>
+    <description>Recent content in Multithreading on Maksym Postument</description>
+    <generator>Hugo -- 0.133.0</generator>
     <language>en</language>
     <lastBuildDate>Wed, 02 Feb 2022 20:58:30 +0200</lastBuildDate>
     <atom:link href="https://mpostument.com/tags/multithreading/index.xml" rel="self" type="application/rss+xml" />

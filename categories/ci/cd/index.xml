@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>CI/CD on mpostument.com</title>
+    <title>CI/CD on Maksym Postument</title>
     <link>https://mpostument.com/categories/ci/cd/</link>
-    <description>Recent content in CI/CD on mpostument.com</description>
-    <generator>Hugo -- 0.126.3</generator>
+    <description>Recent content in CI/CD on Maksym Postument</description>
+    <generator>Hugo -- 0.133.0</generator>
     <language>en</language>
     <lastBuildDate>Mon, 02 Nov 2020 16:19:52 +0200</lastBuildDate>
     <atom:link href="https://mpostument.com/categories/ci/cd/index.xml" rel="self" type="application/rss+xml" />
@@ -35,13 +35,6 @@
       <pubDate>Wed, 16 Sep 2020 20:24:40 +0300</pubDate>
       <guid>https://mpostument.com/posts/programming/ci/deploy-to-ec2-with-codeship/</guid>
       <description>Deploy you code to ec2 server with Codeship and AWS CodeDeploy</description>
-    </item>
-    <item>
-      <title>Build Dotnet Core With Travis</title>
-      <link>https://mpostument.com/posts/programming/dotnet/build-dotnet-core-with-travis/</link>
-      <pubDate>Mon, 31 Aug 2020 13:24:40 +0300</pubDate>
-      <guid>https://mpostument.com/posts/programming/dotnet/build-dotnet-core-with-travis/</guid>
-      <description>Build and deploy .Net Core code with Travis CI</description>
     </item>
   </channel>
 </rss>

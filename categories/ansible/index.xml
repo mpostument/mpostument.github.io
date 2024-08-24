@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Ansible on mpostument.com</title>
+    <title>Ansible on Maksym Postument</title>
     <link>https://mpostument.com/categories/ansible/</link>
-    <description>Recent content in Ansible on mpostument.com</description>
-    <generator>Hugo -- 0.126.3</generator>
+    <description>Recent content in Ansible on Maksym Postument</description>
+    <generator>Hugo -- 0.133.0</generator>
     <language>en</language>
     <lastBuildDate>Wed, 19 Oct 2022 17:28:26 +0300</lastBuildDate>
     <atom:link href="https://mpostument.com/categories/ansible/index.xml" rel="self" type="application/rss+xml" />
