@@ -27,8 +27,8 @@ Just click on Allocate Elastic IP Address</p><p><img alt=ec2-elastic loading=laz
 </span></span><span class=line><span class=cl><span class=p>)</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
-</span></span><span class=line><span class=cl>    <span class=c1>// Load the Shared AWS Configuration (~/.aws/config)
-</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=nx>cfg</span><span class=p>,</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nx>config</span><span class=p>.</span><span class=nf>LoadDefaultConfig</span><span class=p>(</span><span class=nx>context</span><span class=p>.</span><span class=nf>TODO</span><span class=p>(),</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// Load the Shared AWS Configuration (~/.aws/config)</span>
+</span></span><span class=line><span class=cl>    <span class=nx>cfg</span><span class=p>,</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nx>config</span><span class=p>.</span><span class=nf>LoadDefaultConfig</span><span class=p>(</span><span class=nx>context</span><span class=p>.</span><span class=nf>TODO</span><span class=p>(),</span>
 </span></span><span class=line><span class=cl>        <span class=nx>config</span><span class=p>.</span><span class=nf>WithSharedConfigProfile</span><span class=p>(</span><span class=s>&#34;default&#34;</span><span class=p>))</span>
 </span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
 </span></span><span class=line><span class=cl>        <span class=nx>log</span><span class=p>.</span><span class=nf>Fatal</span><span class=p>(</span><span class=nx>err</span><span class=p>)</span>
